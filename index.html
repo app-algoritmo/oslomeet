@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oslo Meet - Unindo Vozes Globais</title>
-    <meta name="description" content="Unindo vozes globais para grandes causas políticas, debates profundos e conscientização social. Compartilhe sua história e idéias sobre custo de vida.">
-    <meta property="og:title" content="Oslo Meet - Unindo Vozes Globais">
-    <meta property="og:description" content="Quer conversar sobre custo de vida e sobrevivência financeira? Participe do Oslo Meet!">
+    <title>Oslo Meet - Directory of Ideas & Businesses</title>
+    <meta name="description" content="Directory of Ideas & Businesses - Connecting Experiences, Inspiring Solutions. Discover innovative startups, connect with entrepreneurs, and find investment opportunities.">
+    <meta property="og:title" content="Oslo Meet - Directory of Ideas & Businesses">
+    <meta property="og:description" content="Connecting Experiences, Inspiring Solutions! Join the global entrepreneurial community at Oslo Meet!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://oslomeet.org">
     
@@ -71,12 +71,22 @@
         .tagline {
             font-size: 1.5rem;
             font-weight: 600;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             opacity: 0.95;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .current-theme {
@@ -86,21 +96,47 @@
             padding: 2rem;
             margin: 2rem 0;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 600px;
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
         
         .theme-title {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
         
         .theme-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .feature-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-item i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .feature-item h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
         }
         
         .cta-section {
@@ -108,30 +144,51 @@
         }
         
         .cta-text {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             margin-bottom: 2rem;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
         .cta-button {
             display: inline-block;
             background: white;
             color: #667eea;
-            padding: 18px 40px;
+            padding: 15px 30px;
             border-radius: 50px;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 2px solid transparent;
         }
         
+        .cta-button.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        .cta-button:hover {
             background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .cta-button.secondary:hover {
+            background: white;
+            color: #667eea;
         }
         
         .scroll-indicator {
@@ -179,7 +236,7 @@
         
         .about-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 3rem;
             align-items: center;
         }
@@ -207,6 +264,30 @@
             margin-bottom: 1rem;
         }
         
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
         /* Como Participar */
         .how-to-participate {
             padding: 5rem 0;
@@ -215,7 +296,7 @@
         
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -257,10 +338,54 @@
             font-size: 0.95rem;
         }
         
+        /* Target Audiences */
+        .target-section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+        
+        .target-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .target-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .target-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .target-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        .target-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .target-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
         /* Redes Sociais */
         .social-section {
             padding: 4rem 0;
-            background: #f8f9fa;
+            background: white;
             text-align: center;
         }
         
@@ -276,7 +401,7 @@
             align-items: center;
             gap: 0.5rem;
             padding: 1rem 1.5rem;
-            background: white;
+            background: #f8f9fa;
             border-radius: 10px;
             text-decoration: none;
             color: #333;
@@ -336,11 +461,16 @@
             }
             
             .theme-title {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
             
             .cta-text {
                 font-size: 1.4rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
             
             .social-links {
@@ -351,6 +481,10 @@
             .footer-content {
                 flex-direction: column;
                 text-align: center;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
         
@@ -365,6 +499,10 @@
             
             .container {
                 padding: 0 15px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
             }
         }
         
@@ -388,18 +526,39 @@
     <section class="hero">
         <div class="hero-content fade-in">
             <h1 class="logo">OSLO MEET</h1>
-            <p class="tagline">Unindo vozes globais para grandes causas políticas, debates profundos e conscientização social</p>
+            <p class="tagline">Directory of Ideas & Businesses</p>
+            <p class="subtitle">Connecting Experiences – Inspiring Solutions</p>
             
             <div class="current-theme">
-                <h2 class="theme-title">CUSTO DE VIDA</h2>
-                <p class="theme-subtitle">& Sobrevivência Financeira</p>
+                <h2 class="theme-title">DISCOVER</h2>
+                <p class="theme-subtitle">Ideas • Connect • Opportunities</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Innovative Ideas</h4>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-handshake"></i>
+                        <h4>Business Connect</h4>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-podcast"></i>
+                        <h4>Podcasts & Events</h4>
+                    </div>
+                </div>
             </div>
             
             <div class="cta-section">
-                <p class="cta-text">Vamos conversar sobre custo de vida?</p>
-                <a href="https://forms.gle/DzNFvJHUZECNs1CPA" target="_blank" class="cta-button">
-                     PARTICIPE AGORA
-                </a>
+                <p class="cta-text">Ready to join the global entrepreneurial community?</p>
+                <div class="cta-buttons">
+                    <a href="https://forms.gle/DzNFvJHUZECNs1CPA" target="_blank" class="cta-button">
+                        🚀 LIST YOUR BUSINESS
+                    </a>
+                    <a href="#how-to-participate" class="cta-button secondary">
+                        📅 SCHEDULE INTERVIEW
+                    </a>
+                </div>
             </div>
         </div>
         
@@ -411,51 +570,98 @@
     <!-- Sobre o Projeto -->
     <section class="about">
         <div class="container">
-            <h2 class="section-title">Sobre o Oslo Meet</h2>
+            <h2 class="section-title">About Oslo Meet</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>O Oslo Meet é uma plataforma que busca dar voz às pessoas reais, criando espaços para debates profundos sobre questões que realmente importam no nosso dia a dia.</p>
+                    <p>Oslo Meet is a comprehensive <strong>Directory of Ideas & Businesses</strong> that serves as a bridge between innovative entrepreneurs, forward-thinking investors, and conscious consumers worldwide.</p>
                     
-                    <p>Começamos falando sobre <strong>custo de vida e sobrevivência financeira</strong> porque sabemos que este é um desafio universal que afeta a todos nós, mas do qual poucos falam abertamente.</p>
+                    <p>We create a dynamic ecosystem where <strong>startups, small businesses, and social projects</strong> can showcase their innovations, connect with like-minded individuals, and find the resources they need to thrive.</p>
                     
-                    <p>Queremos ouvir suas estratégias, suas dificuldades, suas vitórias e seus aprendizados. Sua história pode inspirar e ajudar outras pessoas que passam pelos mesmos desafios.</p>
+                    <p>Through podcasts, interviews, and networking events, we amplify authentic voices and foster meaningful connections that drive real business growth and social impact.</p>
                 </div>
                 
                 <div class="highlight-box">
-                    <h3>Nossa Missão</h3>
-                    <p>Criar um espaço onde vozes autênticas se encontram para discutir, aprender e transformar realidades através do compartilhamento de experiências genuínas.</p>
+                    <h3>Our Mission</h3>
+                    <p>To create the world's most connected entrepreneurial ecosystem where innovative ideas meet opportunities, experiences inspire solutions, and businesses grow through authentic relationships.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">∞</span>
+                            <span class="stat-label">Ideas Listed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">🌍</span>
+                            <span class="stat-label">Global Reach</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">🤝</span>
+                            <span class="stat-label">Connections Made</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Target Audiences -->
+    <section class="target-section">
+        <div class="container">
+            <h2 class="section-title">Who We Serve</h2>
+            <div class="target-grid">
+                <div class="target-card">
+                    <div class="target-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>Entrepreneurs</h3>
+                    <p>List your startup, connect with peers, share your story through podcasts, and access networking events that accelerate your business growth.</p>
+                </div>
+                
+                <div class="target-card">
+                    <div class="target-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Investors</h3>
+                    <p>Discover promising startups, evaluate innovative business models, and connect directly with founders through our curated directory and events.</p>
+                </div>
+                
+                <div class="target-card">
+                    <div class="target-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Consumers</h3>
+                    <p>Explore cutting-edge products and services, support innovative businesses, and stay ahead of market trends through our content and events.</p>
                 </div>
             </div>
         </div>
     </section>
     
     <!-- Como Participar -->
-    <section class="how-to-participate">
+    <section class="how-to-participate" id="how-to-participate">
         <div class="container">
-            <h2 class="section-title">Como Participar</h2>
+            <h2 class="section-title">How to Participate</h2>
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Preencha o Formulário</h3>
-                    <p>Conte um pouco sobre você e sua história relacionada ao custo de vida</p>
+                    <h3>Submit Your Business</h3>
+                    <p>Fill out our comprehensive form to list your business, startup, or innovative idea in our global directory</p>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Seleção e Contato</h3>
-                    <p>Analisaremos as inscrições e entraremos em contato para agendar sua participação</p>
+                    <h3>Profile Review & Approval</h3>
+                    <p>Our team reviews submissions and creates optimized profiles to showcase your business effectively</p>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">3</div>
-                    <h3>Gravação</h3>
-                    <p>Participação em podcast/entrevista para compartilhar sua experiência</p>
+                    <h3>Connect & Network</h3>
+                    <p>Get featured in podcasts, participate in events, and connect with investors, partners, and customers</p>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">4</div>
-                    <h3>Impacto</h3>
-                    <p>Sua história ajuda outras pessoas e contribui para debates importantes</p>
+                    <h3>Grow & Scale</h3>
+                    <p>Leverage our platform to expand your network, increase visibility, and accelerate business growth</p>
                 </div>
             </div>
         </div>
@@ -464,7 +670,7 @@
     <!-- Redes Sociais -->
     <section class="social-section">
         <div class="container">
-            <h2 class="section-title">Siga-nos nas Redes</h2>
+            <h2 class="section-title">Follow Our Community</h2>
             <div class="social-links">
                 <a href="https://www.facebook.com/oslomeet/" class="social-link">
                     <i class="fab fa-facebook-f" style="color: #1877f2;"></i>
@@ -480,19 +686,15 @@
                     <i class="fab fa-youtube" style="color: #ff0000;"></i>
                     <span>YouTube</span>
                 </a>
-
-                </a>
                 
                 <a href="https://www.instagram.com/oslomeet1/" class="social-link">
                     <i class="fab fa-instagram" style="color: #E4405F;"></i>
                     <span>Instagram</span>
                 </a>
-
-                 </a>
                 
                 <a href="https://www.linkedin.com/showcase/oslomeet" class="social-link">
                     <i class="fab fa-linkedin" style="color: #0077B5;"></i>
-                    <span>Linkedin</span>
+                    <span>LinkedIn</span>
                 </a>
             </div>
         </div>
@@ -505,9 +707,11 @@
                 <div class="footer-logo">OSLO MEET</div>
                 <div class="footer-links">
                     <a href="https://oslomeet.org">www.oslomeet.org</a>
-                    <a href="mailto:oslomeet1@gmail.com">Contato</a>
+                    <a href="mailto:oslomeet1@gmail.com">Contact</a>
+                    <a href="#about">About</a>
+                    <a href="#how-to-participate">Join</a>
                 </div>
-                <div>&copy; 2025 Oslo Meet. Unindo vozes globais.</div>
+                <div>&copy; 2025 Oslo Meet. Connecting global entrepreneurs.</div>
             </div>
         </div>
     </footer>
@@ -526,15 +730,27 @@
             });
         });
         
-        // Smooth scroll para o indicador
+        // Smooth scroll para o indicador e links internos
         document.querySelector('.scroll-indicator').addEventListener('click', () => {
             document.querySelector('.about').scrollIntoView({ behavior: 'smooth' });
         });
         
-        // Tracking de cliques no CTA
-        document.querySelector('.cta-button').addEventListener('click', () => {
-            console.log('CTA clicked - Form access');
-            // Aqui você pode adicionar Google Analytics ou outros trackings
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Tracking de cliques nos CTAs
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                console.log('CTA clicked:', this.textContent.trim());
+                // Aqui você pode adicionar Google Analytics ou outros trackings
+            });
         });
     </script>
 </body>
