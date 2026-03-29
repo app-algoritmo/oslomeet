@@ -1,2 +1,3 @@
-# oslomeet-landingPage
-Oslo Meet Landing Page - Unindo vozes Globais
+# oslomeet
+Directory of Ideas & Business.
+Connecting Experiences - Inspiring Solutions.
