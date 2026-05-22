@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <!-- FAVICON Oslo Meet -->
-<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<meta name="apple-mobile-web-app-title" content="Oslo Meet" />
-<link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" />
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,12 +19,26 @@
     <meta property="og:url" content="https://oslomeet.org">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -34,21 +48,60 @@
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: #333;
+            color: var(--text-primary);
             overflow-x: hidden;
+            background: var(--dark-bg);
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            padding: 5px;
+        }
+        
+        .language-selector select option {
+            background: var(--dark-bg);
+            color: white;
+        }
+        
+        .language-selector i {
+            color: var(--accent-blue);
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: white;
             position: relative;
             overflow: hidden;
+            padding-top: 80px;
         }
         
         .hero::before {
@@ -59,6 +112,7 @@
             right: 0;
             bottom: 0;
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="60" cy="40" r="1" fill="white" opacity="0.05"/><circle cx="80" cy="80" r="1" fill="white" opacity="0.08"/><circle cx="30" cy="70" r="1" fill="white" opacity="0.06"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.4;
         }
         
         .hero-content {
@@ -69,82 +123,98 @@
         }
         
         .logo {
-            font-size: 4rem;
+            font-size: 4.5rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: -2px;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
         
         .tagline {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 600;
             margin-bottom: 1rem;
-            opacity: 0.95;
+            color: #c7d2fe;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 400;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+            margin-bottom: 3rem;
+            color: #94a3b8;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
         }
         
         .current-theme {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem;
             margin: 2rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         
         .theme-title {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .theme-subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
         }
         
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
         
         .feature-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 16px;
             text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
         }
         
         .feature-item i {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
             display: block;
+            color: #818cf8;
         }
         
         .feature-item h4 {
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 600;
+            color: #e2e8f0;
         }
         
         .cta-section {
@@ -152,10 +222,10 @@
         }
         
         .cta-text {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            color: #f1f5f9;
         }
         
         .cta-buttons {
@@ -166,66 +236,60 @@
         }
         
         .cta-button {
-            display: inline-block;
-            background: white;
-            color: #667eea;
-            padding: 15px 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 16px 32px;
             border-radius: 50px;
             text-decoration: none;
             font-size: 1rem;
             font-weight: 700;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 2px solid transparent;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            border: none;
+            cursor: pointer;
         }
         
         .cta-button.secondary {
             background: transparent;
             color: white;
-            border: 2px solid white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: none;
         }
         
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
-        }
-        
-        .cta-button:hover {
-            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
         }
         
         .cta-button.secondary:hover {
-            background: white;
-            color: #667eea;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
         }
         
         .scroll-indicator {
             position: absolute;
-            bottom: 30px;
+            bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
             color: white;
             font-size: 2rem;
-            opacity: 0.7;
+            opacity: 0.6;
             animation: bounce 2s infinite;
+            cursor: pointer;
         }
         
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
         }
         
-        /* Seção Sobre */
-        .about {
-            padding: 5rem 0;
-            background: #f8f9fa;
+        /* Sections General */
+        section {
+            padding: 6rem 0;
         }
         
         .container {
@@ -239,56 +303,71 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 3rem;
-            color: #333;
+            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* About Section */
+        .about {
+            background: var(--card-bg);
         }
         
         .about-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
             align-items: center;
         }
         
         .about-text {
             font-size: 1.1rem;
             line-height: 1.8;
-            color: #555;
+            color: var(--text-secondary);
         }
         
         .about-text p {
             margin-bottom: 1.5rem;
         }
         
+        .about-text strong {
+            color: #818cf8;
+        }
+        
         .highlight-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             color: white;
-            padding: 2rem;
-            border-radius: 15px;
+            padding: 2.5rem;
+            border-radius: 20px;
             text-align: center;
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
         }
         
         .highlight-box h3 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
         }
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
         
         .stat-item {
             text-align: center;
             padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
         }
         
         .stat-number {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            color: white;
             display: block;
+            margin-bottom: 0.5rem;
         }
         
         .stat-label {
@@ -296,203 +375,489 @@
             opacity: 0.9;
         }
         
-        /* Como Participar */
-        .how-to-participate {
-            padding: 5rem 0;
-            background: white;
-        }
-        
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .step {
-            text-align: center;
-            padding: 2rem 1rem;
-            border-radius: 15px;
-            transition: transform 0.3s ease;
-            background: #f8f9fa;
-        }
-        
-        .step:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .step-number {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            line-height: 50px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-        
-        .step h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-        
-        .step p {
-            color: #666;
-            font-size: 0.95rem;
-        }
-        
-        /* Target Audiences */
+        /* Target Section */
         .target-section {
-            padding: 5rem 0;
-            background: #f8f9fa;
+            background: var(--dark-bg);
         }
         
         .target-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 3rem;
         }
         
         .target-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
             text-align: center;
-            transition: transform 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
         }
         
         .target-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary-color);
         }
         
         .target-icon {
-            font-size: 3rem;
-            color: #667eea;
-            margin-bottom: 1rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .target-card h3 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #333;
+            color: white;
         }
         
         .target-card p {
-            color: #666;
+            color: var(--text-secondary);
             line-height: 1.6;
         }
         
-        /* Redes Sociais */
+        /* How to Participate */
+        .how-to-participate {
+            background: var(--card-bg);
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .step {
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #818cf8, #a78bfa);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .step:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(129, 140, 248, 0.3);
+        }
+        
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .step p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        /* Social Section */
         .social-section {
-            padding: 4rem 0;
-            background: white;
+            background: var(--dark-bg);
             text-align: center;
         }
         
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
+            gap: 1.5rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
         }
         
         .social-link {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            background: #f8f9fa;
-            border-radius: 10px;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
             text-decoration: none;
-            color: #333;
-            transition: transform 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            font-weight: 500;
         }
         
         .social-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-color);
         }
         
         .social-link i {
             font-size: 1.5rem;
         }
         
-        /* Footer */
-        .footer {
-            background: #333;
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
+        /* Cookie Banner */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            z-index: 9999;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
         }
         
-        .footer-content {
+        .cookie-banner.show {
+            transform: translateY(0);
+        }
+        
+        .cookie-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .cookie-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+        
+        .cookie-icon {
+            font-size: 2.5rem;
+            color: var(--accent-blue);
+            flex-shrink: 0;
+        }
+        
+        .cookie-text h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+        
+        .cookie-text p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cookie-text a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+        
+        .cookie-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .cookie-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .cookie-toggles {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .toggle-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: var(--border-color);
+            border-radius: 13px;
+            transition: background 0.3s;
+        }
+        
+        .toggle-switch.active {
+            background: var(--accent-blue);
+        }
+        
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        
+        .toggle-switch.active::after {
+            transform: translateX(24px);
+        }
+        
+        .toggle-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .cookie-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .cookie-btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .cookie-btn.primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        .cookie-btn.secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .cookie-btn.tertiary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+        }
+        
+        .cookie-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .cookie-btn.primary:hover {
+            background: #2563eb;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .cookie-btn.secondary:hover {
+            border-color: var(--text-secondary);
+            color: white;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #020617;
+            color: white;
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-blue);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .footer-social a:hover {
+            background: var(--accent-blue);
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
         
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .footer-links a {
-            color: #ccc;
+        .footer-bottom a {
+            color: var(--text-secondary);
             text-decoration: none;
             margin: 0 1rem;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
         }
         
-        .footer-links a:hover {
-            color: white;
+        .footer-bottom a:hover {
+            color: var(--accent-blue);
         }
         
-        /* Responsivo */
+        .developer-credit {
+            color: #fbbf24 !important;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .cookie-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .cookie-controls {
+                align-items: flex-start;
+            }
+        }
+        
         @media (max-width: 768px) {
             .logo {
-                font-size: 2.5rem;
+                font-size: 3rem;
             }
             
             .tagline {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             
             .theme-title {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
-            .cta-text {
-                font-size: 1.4rem;
+            .section-title {
+                font-size: 2rem;
             }
             
-            .cta-buttons {
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .cookie-buttons {
                 flex-direction: column;
-                align-items: center;
+                width: 100%;
             }
             
-            .social-links {
-                flex-direction: column;
-                align-items: center;
+            .cookie-btn {
+                width: 100%;
             }
             
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .feature-grid {
-                grid-template-columns: 1fr 1fr;
+            .language-selector {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
             }
         }
         
@@ -502,23 +867,28 @@
             }
             
             .current-theme {
-                padding: 1.5rem;
-            }
-            
-            .container {
-                padding: 0 15px;
+                padding: 2rem;
             }
             
             .feature-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
         }
         
-        /* Animações de entrada */
+        /* Animations */
         .fade-in {
             opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 1s ease forwards;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
         }
         
         @keyframes fadeIn {
@@ -527,83 +897,97 @@
                 transform: translateY(0);
             }
         }
+        
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content fade-in">
-            <h1 class="logo">OSLO MEET</h1>
-            <p class="tagline">Directory of Ideas & Businesses</p>
-            <p class="subtitle">Connecting Experiences – Inspiring Solutions</p>
+        <div class="hero-content">
+            <h1 class="logo fade-in">OSLO MEET</h1>
+            <p class="tagline fade-in delay-1" data-i18n="tagline">Directory of Ideas & Businesses</p>
+            <p class="subtitle fade-in delay-2" data-i18n="subtitle">Connecting Experiences – Inspiring Solutions</p>
             
-            <div class="current-theme">
-                <h2 class="theme-title">DISCOVER</h2>
-                <p class="theme-subtitle">Ideas • Connect • Opportunities</p>
+            <div class="current-theme fade-in delay-3">
+                <h2 class="theme-title" data-i18n="discover">DISCOVER</h2>
+                <p class="theme-subtitle" data-i18n="discoverSubtitle">Ideas • Connect • Opportunities</p>
                 
                 <div class="feature-grid">
                     <div class="feature-item">
                         <i class="fas fa-lightbulb"></i>
-                        <h4>Innovative Ideas</h4>
+                        <h4 data-i18n="feature1">Innovative Ideas</h4>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-handshake"></i>
-                        <h4>Business Connect</h4>
+                        <h4 data-i18n="feature2">Business Connect</h4>
                     </div>
                     <div class="feature-item">
                         <i class="fas fa-podcast"></i>
-                        <h4>Podcasts & Events</h4>
+                        <h4 data-i18n="feature3">Podcasts & Events</h4>
                     </div>
                 </div>
             </div>
             
-            <div class="cta-section">
-                <p class="cta-text">Ready to join the global entrepreneurial community?</p>
+            <div class="cta-section fade-in delay-3">
+                <p class="cta-text" data-i18n="ctaText">Ready to join the global entrepreneurial community?</p>
                 <div class="cta-buttons">
                     <a href="https://forms.gle/DzNFvJHUZECNs1CPA" target="_blank" class="cta-button">
-                        🚀 LIST YOUR BUSINESS
+                        <i class="fas fa-rocket"></i> <span data-i18n="listBusiness">LIST YOUR BUSINESS</span>
                     </a>
                     <a href="#how-to-participate" class="cta-button secondary">
-                        📅 SCHEDULE INTERVIEW
+                        <i class="fas fa-calendar"></i> <span data-i18n="scheduleInterview">SCHEDULE INTERVIEW</span>
                     </a>
                 </div>
             </div>
         </div>
         
-        <div class="scroll-indicator">
+        <div class="scroll-indicator" onclick="scrollToSection('about')">
             <i class="fas fa-chevron-down"></i>
         </div>
     </section>
     
-    <!-- Sobre o Projeto -->
-    <section class="about">
+    <!-- About Section -->
+    <section class="about" id="about">
         <div class="container">
-            <h2 class="section-title">About Oslo Meet</h2>
+            <h2 class="section-title" data-i18n="aboutTitle">About Oslo Meet</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Oslo Meet is a comprehensive <strong>Directory of Ideas & Businesses</strong> that serves as a bridge between innovative entrepreneurs, forward-thinking investors, and conscious consumers worldwide.</p>
+                    <p data-i18n="aboutText1">Oslo Meet is a comprehensive <strong>Directory of Ideas & Businesses</strong> that serves as a bridge between innovative entrepreneurs, forward-thinking investors, and conscious consumers worldwide.</p>
                     
-                    <p>We create a dynamic ecosystem where <strong>startups, small businesses, and social projects</strong> can showcase their innovations, connect with like-minded individuals, and find the resources they need to thrive.</p>
+                    <p data-i18n="aboutText2">We create a dynamic ecosystem where <strong>startups, small businesses, and social projects</strong> can showcase their innovations, connect with like-minded individuals, and find the resources they need to thrive.</p>
                     
-                    <p>Through podcasts, interviews, and networking events, we amplify authentic voices and foster meaningful connections that drive real business growth and social impact.</p>
+                    <p data-i18n="aboutText3">Through podcasts, interviews, and networking events, we amplify authentic voices and foster meaningful connections that drive real business growth and social impact.</p>
                 </div>
                 
                 <div class="highlight-box">
-                    <h3>Our Mission</h3>
-                    <p>To create the world's most connected entrepreneurial ecosystem where innovative ideas meet opportunities, experiences inspire solutions, and businesses grow through authentic relationships.</p>
+                    <h3 data-i18n="mission">Our Mission</h3>
+                    <p data-i18n="missionText">To create the world's most connected entrepreneurial ecosystem where innovative ideas meet opportunities, experiences inspire solutions, and businesses grow through authentic relationships.</p>
                     
                     <div class="stats-grid">
                         <div class="stat-item">
                             <span class="stat-number">∞</span>
-                            <span class="stat-label">Ideas Listed</span>
+                            <span class="stat-label" data-i18n="stat1">Ideas Listed</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number">🌍</span>
-                            <span class="stat-label">Global Reach</span>
+                            <span class="stat-label" data-i18n="stat2">Global Reach</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number">🤝</span>
-                            <span class="stat-label">Connections Made</span>
+                            <span class="stat-label" data-i18n="stat3">Connections Made</span>
                         </div>
                     </div>
                 </div>
@@ -614,94 +998,94 @@
     <!-- Target Audiences -->
     <section class="target-section">
         <div class="container">
-            <h2 class="section-title">Who We Serve</h2>
+            <h2 class="section-title" data-i18n="whoWeServe">Who We Serve</h2>
             <div class="target-grid">
                 <div class="target-card">
                     <div class="target-icon">
                         <i class="fas fa-rocket"></i>
                     </div>
-                    <h3>Entrepreneurs</h3>
-                    <p>List your startup, connect with peers, share your story through podcasts, and access networking events that accelerate your business growth.</p>
+                    <h3 data-i18n="entrepreneurs">Entrepreneurs</h3>
+                    <p data-i18n="entrepreneursText">List your startup, connect with peers, share your story through podcasts, and access networking events that accelerate your business growth.</p>
                 </div>
                 
                 <div class="target-card">
                     <div class="target-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Investors</h3>
-                    <p>Discover promising startups, evaluate innovative business models, and connect directly with founders through our curated directory and events.</p>
+                    <h3 data-i18n="investors">Investors</h3>
+                    <p data-i18n="investorsText">Discover promising startups, evaluate innovative business models, and connect directly with founders through our curated directory and events.</p>
                 </div>
                 
                 <div class="target-card">
                     <div class="target-icon">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3>Consumers</h3>
-                    <p>Explore cutting-edge products and services, support innovative businesses, and stay ahead of market trends through our content and events.</p>
+                    <h3 data-i18n="consumers">Consumers</h3>
+                    <p data-i18n="consumersText">Explore cutting-edge products and services, support innovative businesses, and stay ahead of market trends through our content and events.</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- Como Participar -->
+    <!-- How to Participate -->
     <section class="how-to-participate" id="how-to-participate">
         <div class="container">
-            <h2 class="section-title">How to Participate</h2>
+            <h2 class="section-title" data-i18n="howToParticipate">How to Participate</h2>
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Submit Your Business</h3>
-                    <p>Fill out our comprehensive form to list your business, startup, or innovative idea in our global directory</p>
+                    <h3 data-i18n="step1Title">Submit Your Business</h3>
+                    <p data-i18n="step1Text">Fill out our comprehensive form to list your business, startup, or innovative idea in our global directory</p>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Profile Review & Approval</h3>
-                    <p>Our team reviews submissions and creates optimized profiles to showcase your business effectively</p>
+                    <h3 data-i18n="step2Title">Profile Review & Approval</h3>
+                    <p data-i18n="step2Text">Our team reviews submissions and creates optimized profiles to showcase your business effectively</p>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">3</div>
-                    <h3>Connect & Network</h3>
-                    <p>Get featured in podcasts, participate in events, and connect with investors, partners, and customers</p>
+                    <h3 data-i18n="step3Title">Connect & Network</h3>
+                    <p data-i18n="step3Text">Get featured in podcasts, participate in events, and connect with investors, partners, and customers</p>
                 </div>
                 
                 <div class="step">
                     <div class="step-number">4</div>
-                    <h3>Grow & Scale</h3>
-                    <p>Leverage our platform to expand your network, increase visibility, and accelerate business growth</p>
+                    <h3 data-i18n="step4Title">Grow & Scale</h3>
+                    <p data-i18n="step4Text">Leverage our platform to expand your network, increase visibility, and accelerate business growth</p>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- Redes Sociais -->
+    <!-- Social Section -->
     <section class="social-section">
         <div class="container">
-            <h2 class="section-title">Follow Our Community</h2>
+            <h2 class="section-title" data-i18n="followUs">Follow Our Community</h2>
             <div class="social-links">
-                <a href="https://www.facebook.com/oslomeet/" class="social-link">
+                <a href="https://www.facebook.com/oslomeet/" class="social-link" target="_blank">
                     <i class="fab fa-facebook-f" style="color: #1877f2;"></i>
                     <span>Facebook</span>
                 </a>
                 
-                <a href="https://x.com/oslomeet" class="social-link">
-                    <i class="fab fa-twitter" style="color: #1da1f2;"></i>
+                <a href="https://x.com/oslomeet" class="social-link" target="_blank">
+                    <i class="fab fa-x-twitter" style="color: #1da1f2;"></i>
                     <span>Twitter/X</span>
                 </a>
                 
-                <a href="https://www.youtube.com/@OsloMeet" class="social-link">
+                <a href="https://www.youtube.com/@OsloMeet" class="social-link" target="_blank">
                     <i class="fab fa-youtube" style="color: #ff0000;"></i>
                     <span>YouTube</span>
                 </a>
                 
-                <a href="https://www.instagram.com/oslomeet1/" class="social-link">
+                <a href="https://www.instagram.com/oslomeet1/" class="social-link" target="_blank">
                     <i class="fab fa-instagram" style="color: #E4405F;"></i>
                     <span>Instagram</span>
                 </a>
                 
-                <a href="https://www.linkedin.com/showcase/oslomeet" class="social-link">
-                    <i class="fab fa-linkedin" style="color: #0077B5;"></i>
+                <a href="https://www.linkedin.com/showcase/oslomeet" class="social-link" target="_blank">
+                    <i class="fab fa-linkedin-in" style="color: #0077B5;"></i>
                     <span>LinkedIn</span>
                 </a>
             </div>
@@ -711,60 +1095,401 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">OSLO MEET</div>
-                <div class="footer-links">
-                    <a href="https://oslomeet.org">www.oslomeet.org</a>
-                    <a href="mailto:oslomeet1@gmail.com">Contact</a>
-                    <a href="#about">About</a>
-                    <a href="#how-to-participate">Join</a>
+            <div class="footer-grid">
+                <!-- Column 1: Brand -->
+                <div class="footer-brand">
+                    <h2>OSLO MEET</h2>
+                    <p data-i18n="footerSlogan">Connecting Experiences, Inspiring Solutions. The global directory for innovative ideas and businesses.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/oslomeet/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/oslomeet" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/oslomeet1/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
-                <div>&copy; 2026 Oslo Meet. Connecting global entrepreneurs.</div>
-                <a href="https://app-algoritmo.github.io/digital-solutions" 
-   target="_blank" 
-   rel="noopener noreferrer" 
-   style="margin: 0 10px; text-decoration: none; color: #D4AF37;">
-   Developed by Digital Solutions
-</a>
+                
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="footer-title" data-i18n="quickLinks">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-i18n="home">Home</a></li>
+                        <li><a href="#about" data-i18n="about">About</a></li>
+                        <li><a href="#how-to-participate" data-i18n="howToParticipate">How to Participate</a></li>
+                        <li><a href="https://oslomeet.org/contact" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Resources -->
+                <div>
+                    <h3 class="footer-title" data-i18n="resources">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-i18n="directory">Directory</a></li>
+                        <li><a href="#" data-i18n="podcasts">Podcasts</a></li>
+                        <li><a href="#" data-i18n="events">Events</a></li>
+                        <li><a href="#" data-i18n="blog">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Legal -->
+                <div>
+                    <h3 class="footer-title" data-i18n="legal">Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://oslomeet.org/contact" data-i18n="contact">Contact</a></li>
+                        <li><a href="#" data-i18n="terms">Terms of Service</a></li>
+                        <li><a href="#" data-i18n="privacy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="cookiePolicy">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>&copy; 2026 Oslo Meet. <span data-i18n="rights">All rights reserved.</span></div>
+                <div>
+                    <a href="https://oslomeet.org">www.oslomeet.org</a>
+                    <a href="mailto:oslomeet1@gmail.com">oslomeet1@gmail.com</a>
+                </div>
+                <div>
+                    <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener noreferrer" class="developer-credit">
+                        <i class="fas fa-code"></i> Developed by Digital Solutions
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
     
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div class="cookie-info">
+                <div class="cookie-icon">
+                    <i class="fas fa-cookie-bite"></i>
+                </div>
+                <div class="cookie-text">
+                    <h3 data-i18n="cookieTitle">Privacy & Cookies</h3>
+                    <p data-i18n="cookieText">We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our <a href="#" data-i18n="privacyPolicyLink">Privacy Policy</a>.</p>
+                </div>
+            </div>
+            <div class="cookie-controls">
+                <div class="cookie-toggles">
+                    <div class="toggle-item">
+                        <div class="toggle-switch active" onclick="toggleCookie(this, 'necessary')" title="Always active">
+                        </div>
+                        <span class="toggle-label" data-i18n="necessary">Necessary</span>
+                    </div>
+                    <div class="toggle-item">
+                        <div class="toggle-switch" onclick="toggleCookie(this, 'analytics')" title="Analytics"></div>
+                        <span class="toggle-label" data-i18n="analytics">Analytics</span>
+                    </div>
+                    <div class="toggle-item">
+                        <div class="toggle-switch" onclick="toggleCookie(this, 'marketing')" title="Marketing"></div>
+                        <span class="toggle-label" data-i18n="marketing">Marketing</span>
+                    </div>
+                </div>
+                <div class="cookie-buttons">
+                    <button class="cookie-btn secondary" onclick="saveCookieChoice()" data-i18n="saveChoice">Save Choice</button>
+                    <button class="cookie-btn primary" onclick="acceptAllCookies()" data-i18n="acceptAll">Accept All</button>
+                    <button class="cookie-btn tertiary" onclick="rejectCookies()" data-i18n="reject">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script>
-        // Animação suave ao rolar
-        window.addEventListener('scroll', () => {
-            const elements = document.querySelectorAll('.fade-in');
+        // Translations
+        const translations = {
+            en: {
+                tagline: "Directory of Ideas & Businesses",
+                subtitle: "Connecting Experiences – Inspiring Solutions",
+                discover: "DISCOVER",
+                discoverSubtitle: "Ideas • Connect • Opportunities",
+                feature1: "Innovative Ideas",
+                feature2: "Business Connect",
+                feature3: "Podcasts & Events",
+                ctaText: "Ready to join the global entrepreneurial community?",
+                listBusiness: "LIST YOUR BUSINESS",
+                scheduleInterview: "SCHEDULE INTERVIEW",
+                aboutTitle: "About Oslo Meet",
+                aboutText1: "Oslo Meet is a comprehensive <strong>Directory of Ideas & Businesses</strong> that serves as a bridge between innovative entrepreneurs, forward-thinking investors, and conscious consumers worldwide.",
+                aboutText2: "We create a dynamic ecosystem where <strong>startups, small businesses, and social projects</strong> can showcase their innovations, connect with like-minded individuals, and find the resources they need to thrive.",
+                aboutText3: "Through podcasts, interviews, and networking events, we amplify authentic voices and foster meaningful connections that drive real business growth and social impact.",
+                mission: "Our Mission",
+                missionText: "To create the world's most connected entrepreneurial ecosystem where innovative ideas meet opportunities, experiences inspire solutions, and businesses grow through authentic relationships.",
+                stat1: "Ideas Listed",
+                stat2: "Global Reach",
+                stat3: "Connections Made",
+                whoWeServe: "Who We Serve",
+                entrepreneurs: "Entrepreneurs",
+                entrepreneursText: "List your startup, connect with peers, share your story through podcasts, and access networking events that accelerate your business growth.",
+                investors: "Investors",
+                investorsText: "Discover promising startups, evaluate innovative business models, and connect directly with founders through our curated directory and events.",
+                consumers: "Consumers",
+                consumersText: "Explore cutting-edge products and services, support innovative businesses, and stay ahead of market trends through our content and events.",
+                howToParticipate: "How to Participate",
+                step1Title: "Submit Your Business",
+                step1Text: "Fill out our comprehensive form to list your business, startup, or innovative idea in our global directory",
+                step2Title: "Profile Review & Approval",
+                step2Text: "Our team reviews submissions and creates optimized profiles to showcase your business effectively",
+                step3Title: "Connect & Network",
+                step3Text: "Get featured in podcasts, participate in events, and connect with investors, partners, and customers",
+                step4Title: "Grow & Scale",
+                step4Text: "Leverage our platform to expand your network, increase visibility, and accelerate business growth",
+                followUs: "Follow Our Community",
+                footerSlogan: "Connecting Experiences, Inspiring Solutions. The global directory for innovative ideas and businesses.",
+                quickLinks: "Quick Links",
+                home: "Home",
+                about: "About",
+                contact: "Contact",
+                resources: "Resources",
+                directory: "Directory",
+                podcasts: "Podcasts",
+                events: "Events",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Terms of Service",
+                privacy: "Privacy Policy",
+                cookiePolicy: "Cookie Policy",
+                rights: "All rights reserved.",
+                cookieTitle: "Privacy & Cookies",
+                cookieText: "We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our",
+                privacyPolicyLink: "Privacy Policy",
+                necessary: "Necessary",
+                analytics: "Analytics",
+                marketing: "Marketing",
+                saveChoice: "Save Choice",
+                acceptAll: "Accept All",
+                reject: "Reject"
+            },
+            pt: {
+                tagline: "Diretório de Ideias e Negócios",
+                subtitle: "Conectando Experiências – Inspirando Soluções",
+                discover: "DESCUBRA",
+                discoverSubtitle: "Ideias • Conexões • Oportunidades",
+                feature1: "Ideias Inovadoras",
+                feature2: "Conexão Empresarial",
+                feature3: "Podcasts e Eventos",
+                ctaText: "Pronto para se juntar à comunidade empreendedora global?",
+                listBusiness: "CADASTRE SEU NEGÓCIO",
+                scheduleInterview: "AGENDE ENTREVISTA",
+                aboutTitle: "Sobre o Oslo Meet",
+                aboutText1: "O Oslo Meet é um abrangente <strong>Diretório de Ideias e Negócios</strong> que serve como ponte entre empreendedores inovadores, investidores visionários e consumidores conscientes em todo o mundo.",
+                aboutText2: "Criamos um ecossistema dinâmico onde <strong>startups, pequenas empresas e projetos sociais</strong> podem mostrar suas inovações, conectar-se com pessoas afins e encontrar os recursos necessários para prosperar.",
+                aboutText3: "Através de podcasts, entrevistas e eventos de networking, amplificamos vozes autênticas e promovemos conexões significativas que impulsionam o crescimento real dos negócios e o impacto social.",
+                mission: "Nossa Missão",
+                missionText: "Criar o ecossistema empreendedor mais conectado do mundo, onde ideias inovadoras encontram oportunidades, experiências inspiram soluções e negócios crescem através de relacionamentos autênticos.",
+                stat1: "Ideias Listadas",
+                stat2: "Alcance Global",
+                stat3: "Conexões Feitas",
+                whoWeServe: "Quem Atendemos",
+                entrepreneurs: "Empreendedores",
+                entrepreneursText: "Cadastre sua startup, conecte-se com colegas, compartilhe sua história através de podcasts e acesse eventos de networking que aceleram o crescimento do seu negócio.",
+                investors: "Investidores",
+                investorsText: "Descubra startups promissoras, avalie modelos de negócios inovadores e conecte-se diretamente com fundadores através do nosso diretório curado e eventos.",
+                consumers: "Consumidores",
+                consumersText: "Explore produtos e serviços de ponta, apoie negócios inovadores e mantenha-se à frente das tendências de mercado através do nosso conteúdo e eventos.",
+                howToParticipate: "Como Participar",
+                step1Title: "Cadastre seu Negócio",
+                step1Text: "Preencha nosso formulário completo para listar seu negócio, startup ou ideia inovadora em nosso diretório global",
+                step2Title: "Análise e Aprovação",
+                step2Text: "Nossa equipe analisa as submissões e cria perfis otimizados para mostrar seu negócio de forma eficaz",
+                step3Title: "Conecte-se e Faça Networking",
+                step3Text: "Seja destaque em podcasts, participe de eventos e conecte-se com investidores, parceiros e clientes",
+                step4Title: "Cresça e Escalone",
+                step4Text: "Aproveite nossa plataforma para expandir sua rede, aumentar a visibilidade e acelerar o crescimento do negócio",
+                followUs: "Siga Nossa Comunidade",
+                footerSlogan: "Conectando Experiências, Inspirando Soluções. O diretório global para ideias e negócios inovadores.",
+                quickLinks: "Links Rápidos",
+                home: "Início",
+                about: "Sobre",
+                contact: "Contato",
+                resources: "Recursos",
+                directory: "Diretório",
+                podcasts: "Podcasts",
+                events: "Eventos",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Termos de Serviço",
+                privacy: "Política de Privacidade",
+                cookiePolicy: "Política de Cookies",
+                rights: "Todos os direitos reservados.",
+                cookieTitle: "Privacidade e Cookies",
+                cookieText: "Utilizamos cookies para analisar o tráfego e personalizar anúncios. Você pode escolher quais aceitar. Leia nossa",
+                privacyPolicyLink: "Política de Privacidade",
+                necessary: "Necessários",
+                analytics: "Analytics",
+                marketing: "Marketing",
+                saveChoice: "Salvar Escolha",
+                acceptAll: "Aceitar Tudo",
+                reject: "Recusar"
+            },
+            es: {
+                tagline: "Directorio de Ideas y Negocios",
+                subtitle: "Conectando Experiencias – Inspirando Soluciones",
+                discover: "DESCUBRE",
+                discoverSubtitle: "Ideas • Conexiones • Oportunidades",
+                feature1: "Ideas Innovadoras",
+                feature2: "Conexión Empresarial",
+                feature3: "Podcasts y Eventos",
+                ctaText: "¿Listo para unirte a la comunidad emprendedora global?",
+                listBusiness: "REGISTRA TU NEGOCIO",
+                scheduleInterview: "PROGRAMAR ENTREVISTA",
+                aboutTitle: "Sobre Oslo Meet",
+                aboutText1: "Oslo Meet es un completo <strong>Directorio de Ideas y Negocios</strong> que sirve como puente entre emprendedores innovadores, inversores visionarios y consumidores conscientes en todo el mundo.",
+                aboutText2: "Creamos un ecosistema dinámico donde <strong>startups, pequeñas empresas y proyectos sociales</strong> pueden mostrar sus innovaciones, conectarse con personas afines y encontrar los recursos que necesitan para prosperar.",
+                aboutText3: "A través de podcasts, entrevistas y eventos de networking, amplificamos voces auténticas y fomentamos conexiones significativas que impulsan el crecimiento real del negocio y el impacto social.",
+                mission: "Nuestra Misión",
+                missionText: "Crear el ecosistema emprendedor más conectado del mundo donde las ideas innovadoras encuentran oportunidades, las experiencias inspiran soluciones y los negocios crecen a través de relaciones auténticas.",
+                stat1: "Ideas Listadas",
+                stat2: "Alcance Global",
+                stat3: "Conexiones Hechas",
+                whoWeServe: "A Quién Servimos",
+                entrepreneurs: "Emprendedores",
+                entrepreneursText: "Registra tu startup, conéctate con compañeros, comparte tu historia a través de podcasts y accede a eventos de networking que aceleran el crecimiento de tu negocio.",
+                investors: "Inversores",
+                investorsText: "Descubre startups prometedoras, evalúa modelos de negocio innovadores y conéctate directamente con fundadores a través de nuestro directorio curado y eventos.",
+                consumers: "Consumidores",
+                consumersText: "Explora productos y servicios de vanguardia, apoya negocios innovadores y mantente al tanto de las tendencias del mercado a través de nuestro contenido y eventos.",
+                howToParticipate: "Cómo Participar",
+                step1Title: "Registra tu Negocio",
+                step1Text: "Completa nuestro formulario integral para listar tu negocio, startup o idea innovadora en nuestro directorio global",
+                step2Title: "Revisión y Aprobación",
+                step2Text: "Nuestro equipo revisa las presentaciones y crea perfiles optimizados para mostrar tu negocio de manera efectiva",
+                step3Title: "Conecta y Haz Networking",
+                step3Text: "Sé destacado en podcasts, participa en eventos y conéctate con inversores, socios y clientes",
+                step4Title: "Crece y Escala",
+                step4Text: "Aprovecha nuestra plataforma para expandir tu red, aumentar la visibilidad y acelerar el crecimiento del negocio",
+                followUs: "Sigue Nuestra Comunidad",
+                footerSlogan: "Conectando Experiencias, Inspirando Soluciones. El directorio global para ideas y negocios innovadores.",
+                quickLinks: "Enlaces Rápidos",
+                home: "Inicio",
+                about: "Sobre",
+                contact: "Contacto",
+                resources: "Recursos",
+                directory: "Directorio",
+                podcasts: "Podcasts",
+                events: "Eventos",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Términos de Servicio",
+                privacy: "Política de Privacidad",
+                cookiePolicy: "Política de Cookies",
+                rights: "Todos los derechos reservados.",
+                cookieTitle: "Privacidad y Cookies",
+                cookieText: "Utilizamos cookies para analizar el tráfico y personalizar anuncios. Puedes elegir cuáles aceptar. Lee nuestra",
+                privacyPolicyLink: "Política de Privacidad",
+                necessary: "Necesarios",
+                analytics: "Analytics",
+                marketing: "Marketing",
+                saveChoice: "Guardar Elección",
+                acceptAll: "Aceptar Todo",
+                reject: "Rechazar"
+            }
+        };
+
+        // Language Change Function
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
             elements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-                
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add('fade-in');
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'STRONG' || element.innerHTML.includes('<strong>')) {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
                 }
             });
-        });
-        
-        // Smooth scroll para o indicador e links internos
-        document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            document.querySelector('.about').scrollIntoView({ behavior: 'smooth' });
-        });
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Cookie Banner Functions
+        function showCookieBanner() {
+            if (!localStorage.getItem('cookieConsent')) {
+                setTimeout(() => {
+                    document.getElementById('cookieBanner').classList.add('show');
+                }, 1000);
+            }
+        }
+
+        function toggleCookie(element, type) {
+            if (type === 'necessary') return; // Always active
+            element.classList.toggle('active');
+        }
+
+        function saveCookieChoice() {
+            const analytics = document.querySelector('.toggle-switch[onclick*="analytics"]').classList.contains('active');
+            const marketing = document.querySelector('.toggle-switch[onclick*="marketing"]').classList.contains('active');
+            
+            localStorage.setItem('cookieConsent', JSON.stringify({
+                necessary: true,
+                analytics: analytics,
+                marketing: marketing,
+                timestamp: new Date().toISOString()
+            }));
+            
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+
+        function acceptAllCookies() {
+            localStorage.setItem('cookieConsent', JSON.stringify({
+                necessary: true,
+                analytics: true,
+                marketing: true,
+                timestamp: new Date().toISOString()
+            }));
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+
+        function rejectCookies() {
+            localStorage.setItem('cookieConsent', JSON.stringify({
+                necessary: true,
+                analytics: false,
+                marketing: false,
+                timestamp: new Date().toISOString()
+            }));
+            document.getElementById('cookieBanner').classList.remove('show');
+        }
+
+        // Smooth Scroll
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            // Check for saved language preference or use browser default
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+            
+            // Show cookie banner
+            showCookieBanner();
+            
+            // Add scroll animation observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.target-card, .step, .feature-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
             });
         });
-        
-        // Tracking de cliques nos CTAs
-        document.querySelectorAll('.cta-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                console.log('CTA clicked:', this.textContent.trim());
-                // linha para adicionar Google Analytics ou outros trackings
-            });
+
+        // Close cookie banner on outside click (optional)
+        document.addEventListener('click', (e) => {
+            const banner = document.getElementById('cookieBanner');
+            if (!banner.contains(e.target) && banner.classList.contains('show')) {
+                // Optional: close banner when clicking outside
+            }
         });
     </script>
 </body>
