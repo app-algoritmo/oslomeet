@@ -197,11 +197,14 @@
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
         
         .feature-item:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-5px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
         }
         
         .feature-item i {
@@ -285,6 +288,138 @@
             0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 3rem;
+            position: relative;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+        
+        .modal-close:hover {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+            transform: rotate(90deg);
+        }
+        
+        .modal-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .modal-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .modal-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        
+        .modal-features li {
+            padding: 0.8rem 0;
+            color: #cbd5e1;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .modal-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .modal-features li i {
+            color: var(--accent-blue);
+            margin-top: 0.3rem;
+        }
+        
+        .modal-cta {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .modal-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
         }
         
         /* Sections General */
@@ -821,6 +956,10 @@
             .cookie-controls {
                 align-items: flex-start;
             }
+            
+            .modal-content {
+                padding: 2rem;
+            }
         }
         
         @media (max-width: 768px) {
@@ -858,6 +997,14 @@
                 top: 10px;
                 right: 10px;
                 padding: 6px 12px;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
             }
         }
         
@@ -899,7 +1046,7 @@
         }
         
         .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay:0.2s; }
         .delay-3 { animation-delay: 0.3s; }
     </style>
 </head>
@@ -926,19 +1073,19 @@
                 <p class="theme-subtitle" data-i18n="discoverSubtitle">Ideas • Connect • Opportunities</p>
                 
                 <div class="feature-grid">
-                    <div class="feature-item">
+                    <div class="feature-item" onclick="openModal('innovative')">
                         <i class="fas fa-lightbulb"></i>
                         <h4 data-i18n="feature1">Innovative Ideas</h4>
                     </div>
-                    <div class="feature-item">
+                    <div class="feature-item" onclick="openModal('business')">
                         <i class="fas fa-handshake"></i>
                         <h4 data-i18n="feature2">Business Connect</h4>
                     </div>
-                    <div class="feature-item">
+                    <div class="feature-item" onclick="openModal('podcasts')">
                         <i class="fas fa-podcast"></i>
                         <h4 data-i18n="feature3">Podcasts & Events</h4>
                     </div>
-                    <div class="feature-item">
+                    <div class="feature-item" onclick="openModal('investment')">
                         <i class="fas fa-chart-line"></i>
                         <h4 data-i18n="feature4">Investment Opportunities</h4>
                     </div>
@@ -948,7 +1095,7 @@
             <div class="cta-section fade-in delay-3">
                 <p class="cta-text" data-i18n="ctaText">Ready to join the global entrepreneurial community?</p>
                 <div class="cta-buttons">
-                    <a href="contact" target="_blank" class="cta-button">
+                    <a href="https://forms.gle/DzNFvJHUZECNs1CPA" target="_blank" class="cta-button">
                         <i class="fas fa-rocket"></i> <span data-i18n="listBusiness">LIST YOUR BUSINESS</span>
                     </a>
                     <a href="#how-to-participate" class="cta-button secondary">
@@ -962,6 +1109,111 @@
             <i class="fas fa-chevron-down"></i>
         </div>
     </section>
+
+    <!-- Modals -->
+    <!-- Modal 1: Innovative Ideas -->
+    <div class="modal-overlay" id="modal-innovative" onclick="closeModalOnOverlay(event, 'innovative')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('innovative')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h2 class="modal-title" data-i18n="modal1Title">Innovative Ideas</h2>
+            <p class="modal-description" data-i18n="modal1Desc">Discover groundbreaking ideas and innovative solutions from entrepreneurs around the world. Our platform showcases cutting-edge concepts that are shaping the future of business.</p>
+            <ul class="modal-features">
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal1Feat1">Browse thousands of innovative business ideas</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal1Feat2">Connect with creative entrepreneurs</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal1Feat3">Get inspired by success stories</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal1Feat4">Share your own innovative concepts</span></li>
+            </ul>
+            <div class="modal-cta">
+                <p data-i18n="modal1Cta">Ready to share your innovative idea?</p>
+                <a href="https://forms.gle/DzNFvJHUZECNs1CPA" target="_blank" class="cta-button">
+                    <i class="fas fa-rocket"></i> <span data-i18n="submitIdea">Submit Your Idea</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Business Connect -->
+    <div class="modal-overlay" id="modal-business" onclick="closeModalOnOverlay(event, 'business')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('business')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-icon">
+                <i class="fas fa-handshake"></i>
+            </div>
+            <h2 class="modal-title" data-i18n="modal2Title">Business Connect</h2>
+            <p class="modal-description" data-i18n="modal2Desc">Build meaningful connections with businesses, partners, and professionals worldwide. Our networking platform facilitates collaborations that drive growth and innovation.</p>
+            <ul class="modal-features">
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal2Feat1">Network with global entrepreneurs</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal2Feat2">Find strategic business partners</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal2Feat3">Join exclusive networking events</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal2Feat4">Create valuable partnerships</span></li>
+            </ul>
+            <div class="modal-cta">
+                <p data-i18n="modal2Cta">Start connecting today!</p>
+                <a href="contact.html" class="cta-button">
+                    <i class="fas fa-envelope"></i> <span data-i18n="getInTouch">Get in Touch</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Podcasts & Events -->
+    <div class="modal-overlay" id="modal-podcasts" onclick="closeModalOnOverlay(event, 'podcasts')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('podcasts')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-icon">
+                <i class="fas fa-podcast"></i>
+            </div>
+            <h2 class="modal-title" data-i18n="modal3Title">Podcasts & Events</h2>
+            <p class="modal-description" data-i18n="modal3Desc">Engage with inspiring content through our podcasts and participate in exclusive events. Learn from industry leaders and share your story with our global community.</p>
+            <ul class="modal-features">
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal3Feat1">Listen to entrepreneur podcasts</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal3Feat2">Attend virtual and in-person events</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal3Feat3">Get featured in our podcast series</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal3Feat4">Network at exclusive meetups</span></li>
+            </ul>
+            <div class="modal-cta">
+                <p data-i18n="modal3Cta">Want to be featured?</p>
+                <a href="contact.html" class="cta-button">
+                    <i class="fas fa-microphone"></i> <span data-i18n="applyNow">Apply Now</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Investment Opportunities -->
+    <div class="modal-overlay" id="modal-investment" onclick="closeModalOnOverlay(event, 'investment')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('investment')">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h2 class="modal-title" data-i18n="modal4Title">Investment Opportunities</h2>
+            <p class="modal-description" data-i18n="modal4Desc">Connect promising startups with visionary investors. Discover high-potential investment opportunities and help innovative businesses scale to new heights.</p>
+            <ul class="modal-features">
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal4Feat1">Access vetted startup opportunities</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal4Feat2">Connect with angel investors and VCs</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal4Feat3">Pitch to potential investors</span></li>
+                <li><i class="fas fa-check-circle"></i> <span data-i18n="modal4Feat4">Join investment networking events</span></li>
+            </ul>
+            <div class="modal-cta">
+                <p data-i18n="modal4Cta">Ready to invest or raise capital?</p>
+                <a href="contact.html" class="cta-button">
+                    <i class="fas fa-coins"></i> <span data-i18n="learnMore">Learn More</span>
+                </a>
+            </div>
+        </div>
+    </div>
     
     <!-- About Section -->
     <section class="about" id="about">
@@ -1263,7 +1515,43 @@
                 marketing: "Marketing",
                 saveChoice: "Save Choice",
                 acceptAll: "Accept All",
-                reject: "Reject"
+                reject: "Reject",
+                // Modal 1
+                modal1Title: "Innovative Ideas",
+                modal1Desc: "Discover groundbreaking ideas and innovative solutions from entrepreneurs around the world. Our platform showcases cutting-edge concepts that are shaping the future of business.",
+                modal1Feat1: "Browse thousands of innovative business ideas",
+                modal1Feat2: "Connect with creative entrepreneurs",
+                modal1Feat3: "Get inspired by success stories",
+                modal1Feat4: "Share your own innovative concepts",
+                modal1Cta: "Ready to share your innovative idea?",
+                submitIdea: "Submit Your Idea",
+                // Modal 2
+                modal2Title: "Business Connect",
+                modal2Desc: "Build meaningful connections with businesses, partners, and professionals worldwide. Our networking platform facilitates collaborations that drive growth and innovation.",
+                modal2Feat1: "Network with global entrepreneurs",
+                modal2Feat2: "Find strategic business partners",
+                modal2Feat3: "Join exclusive networking events",
+                modal2Feat4: "Create valuable partnerships",
+                modal2Cta: "Start connecting today!",
+                getInTouch: "Get in Touch",
+                // Modal 3
+                modal3Title: "Podcasts & Events",
+                modal3Desc: "Engage with inspiring content through our podcasts and participate in exclusive events. Learn from industry leaders and share your story with our global community.",
+                modal3Feat1: "Listen to entrepreneur podcasts",
+                modal3Feat2: "Attend virtual and in-person events",
+                modal3Feat3: "Get featured in our podcast series",
+                modal3Feat4: "Network at exclusive meetups",
+                modal3Cta: "Want to be featured?",
+                applyNow: "Apply Now",
+                // Modal 4
+                modal4Title: "Investment Opportunities",
+                modal4Desc: "Connect promising startups with visionary investors. Discover high-potential investment opportunities and help innovative businesses scale to new heights.",
+                modal4Feat1: "Access vetted startup opportunities",
+                modal4Feat2: "Connect with angel investors and VCs",
+                modal4Feat3: "Pitch to potential investors",
+                modal4Feat4: "Join investment networking events",
+                modal4Cta: "Ready to invest or raise capital?",
+                learnMore: "Learn More"
             },
             pt: {
                 tagline: "Diretório de Ideias e Negócios",
@@ -1326,7 +1614,43 @@
                 marketing: "Marketing",
                 saveChoice: "Salvar Escolha",
                 acceptAll: "Aceitar Tudo",
-                reject: "Recusar"
+                reject: "Recusar",
+                // Modal 1
+                modal1Title: "Ideias Inovadoras",
+                modal1Desc: "Descubra ideias revolucionárias e soluções inovadoras de empreendedores de todo o mundo. Nossa plataforma apresenta conceitos de ponta que estão moldando o futuro dos negócios.",
+                modal1Feat1: "Navegue por milhares de ideias de negócios inovadoras",
+                modal1Feat2: "Conecte-se com empreendedores criativos",
+                modal1Feat3: "Inspire-se com histórias de sucesso",
+                modal1Feat4: "Compartilhe seus próprios conceitos inovadores",
+                modal1Cta: "Pronto para compartilhar sua ideia inovadora?",
+                submitIdea: "Enviar Ideia",
+                // Modal 2
+                modal2Title: "Conexão Empresarial",
+                modal2Desc: "Construa conexões significativas com empresas, parceiros e profissionais de todo o mundo. Nossa plataforma de networking facilita colaborações que impulsionam o crescimento e a inovação.",
+                modal2Feat1: "Faça networking com empreendedores globais",
+                modal2Feat2: "Encontre parceiros estratégicos de negócios",
+                modal2Feat3: "Participe de eventos exclusivos de networking",
+                modal2Feat4: "Crie parcerias valiosas",
+                modal2Cta: "Comece a se conectar hoje!",
+                getInTouch: "Entre em Contato",
+                // Modal 3
+                modal3Title: "Podcasts e Eventos",
+                modal3Desc: "Engaje-se com conteúdo inspirador através dos nossos podcasts e participe de eventos exclusivos. Aprenda com líderes da indústria e compartilhe sua história com nossa comunidade global.",
+                modal3Feat1: "Ouça podcasts de empreendedores",
+                modal3Feat2: "Participe de eventos virtuais e presenciais",
+                modal3Feat3: "Seja destaque em nossa série de podcasts",
+                modal3Feat4: "Faça networking em encontros exclusivos",
+                modal3Cta: "Quer ser destaque?",
+                applyNow: "Candidate-se Agora",
+                // Modal 4
+                modal4Title: "Oportunidades de Investimento",
+                modal4Desc: "Conecte startups promissoras com investidores visionários. Descubra oportunidades de investimento de alto potencial e ajude negócios inovadores a escalar para novos patamares.",
+                modal4Feat1: "Acesse oportunidades de startups verificadas",
+                modal4Feat2: "Conecte-se com investidores-anjo e VCs",
+                modal4Feat3: "Apresente-se para investidores potenciais",
+                modal4Feat4: "Participe de eventos de networking de investimentos",
+                modal4Cta: "Pronto para investir ou captar recursos?",
+                learnMore: "Saiba Mais"
             },
             es: {
                 tagline: "Directorio de Ideas y Negocios",
@@ -1389,7 +1713,43 @@
                 marketing: "Marketing",
                 saveChoice: "Guardar Elección",
                 acceptAll: "Aceptar Todo",
-                reject: "Rechazar"
+                reject: "Rechazar",
+                // Modal 1
+                modal1Title: "Ideas Innovadoras",
+                modal1Desc: "Descubre ideas revolucionarias y soluciones innovadoras de emprendedores de todo el mundo. Nuestra plataforma presenta conceptos de vanguardia que están moldeando el futuro de los negocios.",
+                modal1Feat1: "Explora miles de ideas de negocios innovadoras",
+                modal1Feat2: "Conéctate con emprendedores creativos",
+                modal1Feat3: "Inspírate con historias de éxito",
+                modal1Feat4: "Comparte tus propios conceptos innovadores",
+                modal1Cta: "¿Listo para compartir tu idea innovadora?",
+                submitIdea: "Enviar Idea",
+                // Modal 2
+                modal2Title: "Conexión Empresarial",
+                modal2Desc: "Construye conexiones significativas con empresas, socios y profesionales de todo el mundo. Nuestra plataforma de networking facilita colaboraciones que impulsan el crecimiento y la innovación.",
+                modal2Feat1: "Haz networking con emprendedores globales",
+                modal2Feat2: "Encuentra socios estratégicos de negocios",
+                modal2Feat3: "Únete a eventos exclusivos de networking",
+                modal2Feat4: "Crea asociaciones valiosas",
+                modal2Cta: "¡Comienza a conectarte hoy!",
+                getInTouch: "Ponte en Contacto",
+                // Modal 3
+                modal3Title: "Podcasts y Eventos",
+                modal3Desc: "Participa en contenido inspirador a través de nuestros podcasts y asiste a eventos exclusivos. Aprende de líderes de la industria y comparte tu historia con nuestra comunidad global.",
+                modal3Feat1: "Escucha podcasts de emprendedores",
+                modal3Feat2: "Asiste a eventos virtuales y presenciales",
+                modal3Feat3: "Sé destacado en nuestra serie de podcasts",
+                modal3Feat4: "Haz networking en encuentros exclusivos",
+                modal3Cta: "¿Quieres ser destacado?",
+                applyNow: "Aplicar Ahora",
+                // Modal 4
+                modal4Title: "Oportunidades de Inversión",
+                modal4Desc: "Conecta startups prometedoras con inversores visionarios. Descubre oportunidades de inversión de alto potencial y ayuda a negocios innovadores a escalar a nuevas alturas.",
+                modal4Feat1: "Accede a oportunidades de startups verificadas",
+                modal4Feat2: "Conéctate con inversores ángel y VC",
+                modal4Feat3: "Preséntate a inversores potenciales",
+                modal4Feat4: "Únete a eventos de networking de inversiones",
+                modal4Cta: "¿Listo para invertir o captar capital?",
+                learnMore: "Más Información"
             }
         };
 
@@ -1409,6 +1769,34 @@
             document.documentElement.lang = lang;
             localStorage.setItem('preferredLanguage', lang);
         }
+
+        // Modal Functions
+        function openModal(modalName) {
+            document.getElementById('modal-' + modalName).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalName) {
+            document.getElementById('modal-' + modalName).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(event, modalName) {
+            if (event.target === document.getElementById('modal-' + modalName)) {
+                closeModal(modalName);
+            }
+        }
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const activeModals = document.querySelectorAll('.modal-overlay.active');
+                activeModals.forEach(modal => {
+                    const modalId = modal.id.replace('modal-', '');
+                    closeModal(modalId);
+                });
+            }
+        });
 
         // Cookie Banner Functions
         function showCookieBanner() {
