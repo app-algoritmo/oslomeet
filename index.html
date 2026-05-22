@@ -664,166 +664,163 @@
             font-size: 1.5rem;
         }
         
-        /* Cookie Banner */
+        /* Cookie Banner - Estilo barros.no */
         .cookie-banner {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--card-bg);
+            background: var(--dark-bg);
             border-top: 1px solid var(--border-color);
-            padding: 2rem;
+            padding: 1.5rem;
             z-index: 9999;
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
             transform: translateY(100%);
-            transition: transform 0.5s ease;
+            transition: transform 0.4s ease;
         }
         
         .cookie-banner.show {
             transform: translateY(0);
         }
         
-        .cookie-content {
+        .cookie-container {
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 2rem;
-            align-items: center;
         }
         
-        .cookie-info {
+        .cookie-header {
             display: flex;
-            align-items: flex-start;
-            gap: 1.5rem;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
         }
         
         .cookie-icon {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .cookie-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
             color: var(--accent-blue);
-            flex-shrink: 0;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
-        .cookie-text h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: white;
-        }
-        
-        .cookie-text p {
+        .cookie-description {
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1.2rem;
         }
         
-        .cookie-text a {
+        .cookie-description a {
             color: var(--accent-blue);
-            text-decoration: none;
-        }
-        
-        .cookie-text a:hover {
             text-decoration: underline;
         }
         
-        .cookie-controls {
+        .cookie-buttons-row {
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .cookie-toggles {
-            display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
         }
         
-        .toggle-item {
+        .cookie-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .cookie-btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent-blue);
+            color: var(--accent-blue);
+        }
+        
+        .cookie-btn-outline:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .cookie-btn-primary {
+            background: var(--accent-blue);
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .cookie-btn-primary:hover {
+            background: #2563eb;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .cookie-btn-text {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        .cookie-btn-text:hover {
+            color: var(--text-primary);
+        }
+        
+        .cookie-toggles-row {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .toggle-wrapper {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
             cursor: pointer;
         }
         
         .toggle-switch {
             position: relative;
-            width: 50px;
-            height: 26px;
+            width: 44px;
+            height: 24px;
             background: var(--border-color);
-            border-radius: 13px;
+            border-radius: 12px;
             transition: background 0.3s;
+            flex-shrink: 0;
         }
         
         .toggle-switch.active {
             background: var(--accent-blue);
         }
         
-        .toggle-switch::after {
-            content: '';
+        .toggle-circle {
             position: absolute;
             top: 3px;
             left: 3px;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             background: white;
             border-radius: 50%;
             transition: transform 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
-        .toggle-switch.active::after {
-            transform: translateX(24px);
+        .toggle-switch.active .toggle-circle {
+            transform: translateX(20px);
         }
         
         .toggle-label {
             font-size: 0.9rem;
             color: var(--text-secondary);
             font-weight: 500;
-        }
-        
-        .cookie-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .cookie-btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        
-        .cookie-btn.primary {
-            background: var(--accent-blue);
-            color: white;
-        }
-        
-        .cookie-btn.secondary {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-        }
-        
-        .cookie-btn.tertiary {
-            background: transparent;
-            color: var(--text-secondary);
-            border: none;
-        }
-        
-        .cookie-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .cookie-btn.primary:hover {
-            background: #2563eb;
-            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
-        }
-        
-        .cookie-btn.secondary:hover {
-            border-color: var(--text-secondary);
-            color: white;
         }
         
         /* Footer */
@@ -949,14 +946,6 @@
                 grid-template-columns: 1fr;
             }
             
-            .cookie-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .cookie-controls {
-                align-items: flex-start;
-            }
-            
             .modal-content {
                 padding: 2rem;
             }
@@ -984,13 +973,26 @@
                 gap: 2rem;
             }
             
-            .cookie-buttons {
+            .cookie-buttons-row {
                 flex-direction: column;
-                width: 100%;
+                gap: 0.8rem;
             }
             
             .cookie-btn {
                 width: 100%;
+            }
+            
+            .cookie-btn-primary {
+                min-width: auto;
+            }
+            
+            .cookie-toggles-row {
+                gap: 1.2rem;
+            }
+            
+            .toggle-wrapper {
+                flex: 1;
+                min-width: 120px;
             }
             
             .language-selector {
@@ -1046,7 +1048,7 @@
         }
         
         .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay:0.2s; }
+        .delay-2 { animation-delay: 0.2s; }
         .delay-3 { animation-delay: 0.3s; }
     </style>
 </head>
@@ -1130,7 +1132,7 @@
             </ul>
             <div class="modal-cta">
                 <p data-i18n="modal1Cta">Ready to share your innovative idea?</p>
-                <a href="contact" target="_blank" class="cta-button">
+                <a href="contact.html" target="_blank" class="cta-button">
                     <i class="fas fa-rocket"></i> <span data-i18n="submitIdea">Submit Your Idea</span>
                 </a>
             </div>
@@ -1414,38 +1416,52 @@
         </div>
     </footer>
     
-    <!-- Cookie Banner -->
+    <!-- Cookie Banner - Estilo barros.no -->
     <div class="cookie-banner" id="cookieBanner">
-        <div class="cookie-content">
-            <div class="cookie-info">
-                <div class="cookie-icon">
-                    <i class="fas fa-cookie-bite"></i>
-                </div>
-                <div class="cookie-text">
-                    <h3 data-i18n="cookieTitle">Privacy & Cookies</h3>
-                    <p data-i18n="cookieText">We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our <a href="privacy-policy.html" data-i18n="privacyPolicyLink">Privacy Policy</a>.</p>
-                </div>
+        <div class="cookie-container">
+            <div class="cookie-header">
+                <span class="cookie-icon">🍪</span>
+                <h3 data-i18n="cookieTitle">PRIVACIDADE & COOKIES</h3>
             </div>
-            <div class="cookie-controls">
-                <div class="cookie-toggles">
-                    <div class="toggle-item">
-                        <div class="toggle-switch active" onclick="toggleCookie(this, 'necessary')" title="Always active">
-                        </div>
-                        <span class="toggle-label" data-i18n="necessary">Necessary</span>
+            
+            <p class="cookie-description" data-i18n="cookieText">
+                Utilizamos cookies para analisar o tráfego e personalizar anúncios. 
+                Você pode escolher quais aceitar. Leia nossa 
+                <a href="privacy-policy.html" data-i18n="privacyLink">Política de Privacidade</a>.
+            </p>
+            
+            <div class="cookie-buttons-row">
+                <button class="cookie-btn cookie-btn-outline" onclick="saveCookieChoice()" data-i18n="saveChoice">
+                    SALVAR ESCOLHA
+                </button>
+                <button class="cookie-btn cookie-btn-primary" onclick="acceptAllCookies()" data-i18n="acceptAll">
+                    ACEITAR TUDO
+                </button>
+                <button class="cookie-btn cookie-btn-text" onclick="rejectCookies()" data-i18n="reject">
+                    RECUSAR
+                </button>
+            </div>
+            
+            <div class="cookie-toggles-row">
+                <div class="toggle-wrapper">
+                    <div class="toggle-switch active" onclick="toggleCookie(this, 'necessary')" title="Always active">
+                        <div class="toggle-circle"></div>
                     </div>
-                    <div class="toggle-item">
-                        <div class="toggle-switch" onclick="toggleCookie(this, 'analytics')" title="Analytics"></div>
-                        <span class="toggle-label" data-i18n="analytics">Analytics</span>
-                    </div>
-                    <div class="toggle-item">
-                        <div class="toggle-switch" onclick="toggleCookie(this, 'marketing')" title="Marketing"></div>
-                        <span class="toggle-label" data-i18n="marketing">Marketing</span>
-                    </div>
+                    <span class="toggle-label" data-i18n="necessary">Necessários</span>
                 </div>
-                <div class="cookie-buttons">
-                    <button class="cookie-btn secondary" onclick="saveCookieChoice()" data-i18n="saveChoice">Save Choice</button>
-                    <button class="cookie-btn primary" onclick="acceptAllCookies()" data-i18n="acceptAll">Accept All</button>
-                    <button class="cookie-btn tertiary" onclick="rejectCookies()" data-i18n="reject">Reject</button>
+                
+                <div class="toggle-wrapper">
+                    <div class="toggle-switch" onclick="toggleCookie(this, 'analytics')">
+                        <div class="toggle-circle"></div>
+                    </div>
+                    <span class="toggle-label" data-i18n="analytics">Analytics</span>
+                </div>
+                
+                <div class="toggle-wrapper">
+                    <div class="toggle-switch" onclick="toggleCookie(this, 'marketing')">
+                        <div class="toggle-circle"></div>
+                    </div>
+                    <span class="toggle-label" data-i18n="marketing">Marketing</span>
                 </div>
             </div>
         </div>
@@ -1507,16 +1523,16 @@
                 privacy: "Privacy Policy",
                 cookiePolicy: "Cookie Policy",
                 rights: "All rights reserved.",
-                cookieTitle: "Privacy & Cookies",
+                cookieTitle: "PRIVACY & COOKIES",
                 cookieText: "We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our",
-                privacyPolicyLink: "Privacy Policy",
+                privacyLink: "Privacy Policy",
                 necessary: "Necessary",
                 analytics: "Analytics",
                 marketing: "Marketing",
-                saveChoice: "Save Choice",
-                acceptAll: "Accept All",
-                reject: "Reject",
-                // Modal 1
+                saveChoice: "SAVE CHOICE",
+                acceptAll: "ACCEPT ALL",
+                reject: "REJECT",
+                // Modal translations...
                 modal1Title: "Innovative Ideas",
                 modal1Desc: "Discover groundbreaking ideas and innovative solutions from entrepreneurs around the world. Our platform showcases cutting-edge concepts that are shaping the future of business.",
                 modal1Feat1: "Browse thousands of innovative business ideas",
@@ -1525,7 +1541,6 @@
                 modal1Feat4: "Share your own innovative concepts",
                 modal1Cta: "Ready to share your innovative idea?",
                 submitIdea: "Submit Your Idea",
-                // Modal 2
                 modal2Title: "Business Connect",
                 modal2Desc: "Build meaningful connections with businesses, partners, and professionals worldwide. Our networking platform facilitates collaborations that drive growth and innovation.",
                 modal2Feat1: "Network with global entrepreneurs",
@@ -1534,7 +1549,6 @@
                 modal2Feat4: "Create valuable partnerships",
                 modal2Cta: "Start connecting today!",
                 getInTouch: "Get in Touch",
-                // Modal 3
                 modal3Title: "Podcasts & Events",
                 modal3Desc: "Engage with inspiring content through our podcasts and participate in exclusive events. Learn from industry leaders and share your story with our global community.",
                 modal3Feat1: "Listen to entrepreneur podcasts",
@@ -1543,7 +1557,6 @@
                 modal3Feat4: "Network at exclusive meetups",
                 modal3Cta: "Want to be featured?",
                 applyNow: "Apply Now",
-                // Modal 4
                 modal4Title: "Investment Opportunities",
                 modal4Desc: "Connect promising startups with visionary investors. Discover high-potential investment opportunities and help innovative businesses scale to new heights.",
                 modal4Feat1: "Access vetted startup opportunities",
@@ -1606,16 +1619,16 @@
                 privacy: "Política de Privacidade",
                 cookiePolicy: "Política de Cookies",
                 rights: "Todos os direitos reservados.",
-                cookieTitle: "Privacidade e Cookies",
+                cookieTitle: "PRIVACIDADE & COOKIES",
                 cookieText: "Utilizamos cookies para analisar o tráfego e personalizar anúncios. Você pode escolher quais aceitar. Leia nossa",
-                privacyPolicyLink: "Política de Privacidade",
+                privacyLink: "Política de Privacidade",
                 necessary: "Necessários",
                 analytics: "Analytics",
                 marketing: "Marketing",
-                saveChoice: "Salvar Escolha",
-                acceptAll: "Aceitar Tudo",
-                reject: "Recusar",
-                // Modal 1
+                saveChoice: "SALVAR ESCOLHA",
+                acceptAll: "ACEITAR TUDO",
+                reject: "RECUSAR",
+                // Modal translations...
                 modal1Title: "Ideias Inovadoras",
                 modal1Desc: "Descubra ideias revolucionárias e soluções inovadoras de empreendedores de todo o mundo. Nossa plataforma apresenta conceitos de ponta que estão moldando o futuro dos negócios.",
                 modal1Feat1: "Navegue por milhares de ideias de negócios inovadoras",
@@ -1624,7 +1637,6 @@
                 modal1Feat4: "Compartilhe seus próprios conceitos inovadores",
                 modal1Cta: "Pronto para compartilhar sua ideia inovadora?",
                 submitIdea: "Enviar Ideia",
-                // Modal 2
                 modal2Title: "Conexão Empresarial",
                 modal2Desc: "Construa conexões significativas com empresas, parceiros e profissionais de todo o mundo. Nossa plataforma de networking facilita colaborações que impulsionam o crescimento e a inovação.",
                 modal2Feat1: "Faça networking com empreendedores globais",
@@ -1633,7 +1645,6 @@
                 modal2Feat4: "Crie parcerias valiosas",
                 modal2Cta: "Comece a se conectar hoje!",
                 getInTouch: "Entre em Contato",
-                // Modal 3
                 modal3Title: "Podcasts e Eventos",
                 modal3Desc: "Engaje-se com conteúdo inspirador através dos nossos podcasts e participe de eventos exclusivos. Aprenda com líderes da indústria e compartilhe sua história com nossa comunidade global.",
                 modal3Feat1: "Ouça podcasts de empreendedores",
@@ -1642,7 +1653,6 @@
                 modal3Feat4: "Faça networking em encontros exclusivos",
                 modal3Cta: "Quer ser destaque?",
                 applyNow: "Candidate-se Agora",
-                // Modal 4
                 modal4Title: "Oportunidades de Investimento",
                 modal4Desc: "Conecte startups promissoras com investidores visionários. Descubra oportunidades de investimento de alto potencial e ajude negócios inovadores a escalar para novos patamares.",
                 modal4Feat1: "Acesse oportunidades de startups verificadas",
@@ -1705,16 +1715,16 @@
                 privacy: "Política de Privacidad",
                 cookiePolicy: "Política de Cookies",
                 rights: "Todos los derechos reservados.",
-                cookieTitle: "Privacidad y Cookies",
+                cookieTitle: "PRIVACIDAD & COOKIES",
                 cookieText: "Utilizamos cookies para analizar el tráfico y personalizar anuncios. Puedes elegir cuáles aceptar. Lee nuestra",
-                privacyPolicyLink: "Política de Privacidad",
+                privacyLink: "Política de Privacidad",
                 necessary: "Necesarios",
                 analytics: "Analytics",
                 marketing: "Marketing",
-                saveChoice: "Guardar Elección",
-                acceptAll: "Aceptar Todo",
-                reject: "Rechazar",
-                // Modal 1
+                saveChoice: "GUARDAR ELECCIÓN",
+                acceptAll: "ACEPTAR TODO",
+                reject: "RECHAZAR",
+                // Modal translations...
                 modal1Title: "Ideas Innovadoras",
                 modal1Desc: "Descubre ideas revolucionarias y soluciones innovadoras de emprendedores de todo el mundo. Nuestra plataforma presenta conceptos de vanguardia que están moldeando el futuro de los negocios.",
                 modal1Feat1: "Explora miles de ideas de negocios innovadoras",
@@ -1723,7 +1733,6 @@
                 modal1Feat4: "Comparte tus propios conceptos innovadores",
                 modal1Cta: "¿Listo para compartir tu idea innovadora?",
                 submitIdea: "Enviar Idea",
-                // Modal 2
                 modal2Title: "Conexión Empresarial",
                 modal2Desc: "Construye conexiones significativas con empresas, socios y profesionales de todo el mundo. Nuestra plataforma de networking facilita colaboraciones que impulsan el crecimiento y la innovación.",
                 modal2Feat1: "Haz networking con emprendedores globales",
@@ -1732,7 +1741,6 @@
                 modal2Feat4: "Crea asociaciones valiosas",
                 modal2Cta: "¡Comienza a conectarte hoy!",
                 getInTouch: "Ponte en Contacto",
-                // Modal 3
                 modal3Title: "Podcasts y Eventos",
                 modal3Desc: "Participa en contenido inspirador a través de nuestros podcasts y asiste a eventos exclusivos. Aprende de líderes de la industria y comparte tu historia con nuestra comunidad global.",
                 modal3Feat1: "Escucha podcasts de emprendedores",
@@ -1741,7 +1749,6 @@
                 modal3Feat4: "Haz networking en encuentros exclusivos",
                 modal3Cta: "¿Quieres ser destacado?",
                 applyNow: "Aplicar Ahora",
-                // Modal 4
                 modal4Title: "Oportunidades de Inversión",
                 modal4Desc: "Conecta startups prometedoras con inversores visionarios. Descubre oportunidades de inversión de alto potencial y ayuda a negocios innovadores a escalar a nuevas alturas.",
                 modal4Feat1: "Accede a oportunidades de startups verificadas",
@@ -1803,7 +1810,7 @@
             if (!localStorage.getItem('cookieConsent')) {
                 setTimeout(() => {
                     document.getElementById('cookieBanner').classList.add('show');
-                }, 1000);
+                }, 500);
             }
         }
 
@@ -1853,15 +1860,12 @@
 
         // Initialize
         window.addEventListener('load', () => {
-            // Check for saved language preference or use browser default
             const savedLang = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = savedLang;
             changeLanguage(savedLang);
             
-            // Show cookie banner
             showCookieBanner();
             
-            // Add scroll animation observer
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1878,14 +1882,7 @@
                 observer.observe(el);
             });
         });
-
-        // Close cookie banner on outside click (optional)
-        document.addEventListener('click', (e) => {
-            const banner = document.getElementById('cookieBanner');
-            if (!banner.contains(e.target) && banner.classList.contains('show')) {
-                // Optional: close banner when clicking outside
-            }
-        });
     </script>
 </body>
 </html>
+
