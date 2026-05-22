@@ -21,9 +21,7 @@
             --success-green: #10b981;
             --input-bg: #0f172a;
         }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: 'Inter', sans-serif;
             background: var(--dark-bg);
@@ -31,22 +29,18 @@
             line-height: 1.6;
             min-height: 100vh;
         }
-        
-        /* Header */
         .page-header {
             background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
             padding: 80px 20px 60px;
             text-align: center;
             position: relative;
         }
-        
         .page-header::before {
             content: '';
             position: absolute;
             inset: 0;
             background: radial-gradient(ellipse at center, rgba(139,92,246,0.1) 0%, transparent 70%);
         }
-        
         .page-header h1 {
             font-size: 2.5rem;
             font-weight: 800;
@@ -56,441 +50,127 @@
             -webkit-text-fill-color: transparent;
             position: relative;
         }
-        
-        .page-header p {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
+        .page-header p { color: var(--text-secondary); max-width: 600px; margin: 0 auto; position: relative; }
         .badge-ai {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(139,92,246,0.15);
-            color: var(--accent-purple);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(139,92,246,0.15); color: var(--accent-purple);
+            padding: 6px 16px; border-radius: 50px;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;
         }
-        
-        /* Form Container */
-        .form-container {
-            max-width: 800px;
-            margin: -40px auto 60px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 2;
-        }
-        
+        .form-container { max-width: 800px; margin: -40px auto 60px; padding: 0 20px; position: relative; z-index: 2; }
         .form-card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 3rem;
+            background: var(--card-bg); border-radius: 24px; padding: 3rem;
             border: 1px solid var(--border-color);
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
         }
-        
         .form-progress {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
+            display: flex; justify-content: space-between;
+            margin-bottom: 2.5rem; padding-bottom: 1.5rem;
             border-bottom: 1px solid var(--border-color);
         }
-        
         .progress-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            flex: 1;
-            position: relative;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 8px; flex: 1; position: relative;
         }
-        
         .progress-step::after {
-            content: '';
-            position: absolute;
-            top: 12px;
-            left: 50%;
-            right: -50%;
-            height: 2px;
-            background: var(--border-color);
-            z-index: 0;
+            content: ''; position: absolute; top: 12px; left: 50%; right: -50%;
+            height: 2px; background: var(--border-color); z-index: 0;
         }
-        
         .progress-step:last-child::after { display: none; }
-        
         .progress-step.active::after { background: var(--accent-purple); }
-        
         .step-number {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: var(--border-color);
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.9rem;
-            z-index: 1;
-            transition: all 0.3s;
+            width: 28px; height: 28px; border-radius: 50%;
+            background: var(--border-color); color: var(--text-secondary);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 0.9rem; z-index: 1; transition: all 0.3s;
         }
-        
-        .progress-step.active .step-number {
-            background: var(--accent-purple);
-            color: white;
-        }
-        
-        .step-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            text-align: center;
-        }
-        
-        .progress-step.active .step-label {
-            color: var(--accent-purple);
-            font-weight: 600;
-        }
-        
-        /* Form Steps */
+        .progress-step.active .step-number { background: var(--accent-purple); color: white; }
+        .step-label { font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+        .progress-step.active .step-label { color: var(--accent-purple); font-weight: 600; }
         .form-step { display: none; }
         .form-step.active { display: block; animation: fadeIn 0.4s ease; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .step-title {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            color: white;
-        }
-        
-        .step-subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-        }
-        
-        /* Form Fields */
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .step-title { font-size: 1.4rem; margin-bottom: 0.5rem; color: white; }
+        .step-subtitle { color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; }
         .form-group { margin-bottom: 1.5rem; }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-        
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; }
         .form-group label .required { color: #ef4444; }
-        
         .form-control {
-            width: 100%;
-            padding: 14px 18px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: white;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all 0.3s;
+            width: 100%; padding: 14px 18px; background: var(--input-bg);
+            border: 1px solid var(--border-color); border-radius: 10px;
+            color: white; font-family: inherit; font-size: 1rem; transition: all 0.3s;
         }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-        }
-        
+        .form-control:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
         .form-control::placeholder { color: var(--text-secondary); }
-        
         select.form-control {
             appearance: none;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 18px center;
-            padding-right: 45px;
-            cursor: pointer;
+            background-repeat: no-repeat; background-position: right 18px center;
+            padding-right: 45px; cursor: pointer;
         }
-        
-        select.form-control option {
-            background: var(--card-bg);
-            color: white;
-        }
-        
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        /* Tags Input */
+        select.form-control option { background: var(--card-bg); color: white; }
+        textarea.form-control { min-height: 120px; resize: vertical; }
         .tags-input {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 12px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            min-height: 50px;
+            display: flex; flex-wrap: wrap; gap: 8px; padding: 12px;
+            background: var(--input-bg); border: 1px solid var(--border-color);
+            border-radius: 10px; min-height: 50px;
         }
-        
-        .tags-input:focus-within {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-        }
-        
+        .tags-input:focus-within { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
         .tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(59,130,246,0.15);
-            color: #93c5fd;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(59,130,246,0.15); color: #93c5fd;
+            padding: 6px 12px; border-radius: 20px; font-size: 0.9rem;
         }
-        
-        .tag button {
-            background: none;
-            border: none;
-            color: inherit;
-            cursor: pointer;
-            padding: 0;
-            font-size: 1rem;
-            opacity: 0.7;
-        }
-        
+        .tag button { background: none; border: none; color: inherit; cursor: pointer; padding: 0; font-size: 1rem; opacity: 0.7; }
         .tag button:hover { opacity: 1; }
-        
-        .tags-input input {
-            flex: 1;
-            min-width: 120px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 0.95rem;
-            padding: 4px 0;
-        }
-        
+        .tags-input input { flex: 1; min-width: 120px; background: none; border: none; color: white; font-size: 0.95rem; padding: 4px 0; }
         .tags-input input::placeholder { color: var(--text-secondary); }
         .tags-input input:focus { outline: none; }
-        
-        /* Checkbox Grid */
-        .checkbox-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-        }
-        
+        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
         .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-            background: var(--input-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
+            display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+            background: var(--input-bg); border: 1px solid var(--border-color);
+            border-radius: 10px; cursor: pointer; transition: all 0.2s;
         }
-        
-        .checkbox-item:hover,
-        .checkbox-item:has(input:checked) {
-            border-color: var(--accent-purple);
-            background: rgba(139,92,246,0.05);
-        }
-        
-        .checkbox-item input {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--accent-purple);
-            cursor: pointer;
-        }
-        
-        .checkbox-item label {
-            margin: 0;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        
-        /* Pricing Selection */
-        .pricing-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
+        .checkbox-item:hover, .checkbox-item:has(input:checked) { border-color: var(--accent-purple); background: rgba(139,92,246,0.05); }
+        .checkbox-item input { width: 18px; height: 18px; accent-color: var(--accent-purple); cursor: pointer; }
+        .checkbox-item label { margin: 0; cursor: pointer; font-weight: 500; font-size: 0.95rem; }
+        .pricing-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
         .pricing-option {
-            padding: 1.5rem;
-            background: var(--input-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
+            padding: 1.5rem; background: var(--input-bg); border: 2px solid var(--border-color);
+            border-radius: 16px; text-align: center; cursor: pointer; transition: all 0.3s;
         }
-        
-        .pricing-option:hover,
-        .pricing-option.selected {
-            border-color: var(--accent-purple);
-            background: rgba(139,92,246,0.05);
-        }
-        
-        .pricing-option.selected {
-            box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
-        }
-        
-        .pricing-option h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .pricing-option .price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent-purple);
-        }
-        
-        .pricing-option .period {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        
-        .pricing-option .features {
-            list-style: none;
-            margin-top: 1rem;
-            text-align: left;
-        }
-        
-        .pricing-option .features li {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            padding: 4px 0;
-        }
-        
-        /* Navigation Buttons */
-        .form-nav {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-color);
-        }
-        
+        .pricing-option:hover, .pricing-option.selected { border-color: var(--accent-purple); background: rgba(139,92,246,0.05); }
+        .pricing-option.selected { box-shadow: 0 0 0 3px rgba(139,92,246,0.2); }
+        .pricing-option h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .pricing-option .price { font-size: 1.5rem; font-weight: 700; color: var(--accent-purple); }
+        .pricing-option .period { font-size: 0.85rem; color: var(--text-secondary); }
+        .pricing-option .features { list-style: none; margin-top: 1rem; text-align: left; }
+        .pricing-option .features li { font-size: 0.85rem; color: var(--text-secondary); padding: 4px 0; }
+        .form-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
         .btn {
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: none;
+            padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 1rem;
+            cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; border: none;
         }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255,255,255,0.05);
-            color: white;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139,92,246,0.4);
-        }
-        
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-        
-        /* Success State */
-        .success-state {
-            text-align: center;
-            padding: 3rem 2rem;
-            display: none;
-        }
-        
+        .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.05); color: white; }
+        .btn-primary { background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue)); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(139,92,246,0.4); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+        .success-state { text-align: center; padding: 3rem 2rem; display: none; }
         .success-state.active { display: block; }
-        
         .success-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--success-green), #059669);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            color: white;
+            width: 80px; height: 80px; background: linear-gradient(135deg, var(--success-green), #059669);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem; font-size: 2rem; color: white;
         }
-        
-        .success-state h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .success-state p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-        
-        .next-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .next-step {
-            padding: 1rem;
-            background: var(--input-bg);
-            border-radius: 12px;
-            text-align: left;
-        }
-        
-        .next-step i {
-            color: var(--accent-purple);
-            margin-bottom: 0.5rem;
-            display: block;
-            font-size: 1.2rem;
-        }
-        
-        .next-step h4 {
-            font-size: 0.95rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .next-step p {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin: 0;
-        }
-        
-        /* Responsive */
+        .success-state h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .success-state p { color: var(--text-secondary); margin-bottom: 2rem; }
+        .next-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .next-step { padding: 1rem; background: var(--input-bg); border-radius: 12px; text-align: left; }
+        .next-step i { color: var(--accent-purple); margin-bottom: 0.5rem; display: block; font-size: 1.2rem; }
+        .next-step h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
+        .next-step p { font-size: 0.85rem; color: var(--text-secondary); margin: 0; }
         @media (max-width: 768px) {
             .form-card { padding: 2rem; }
             .pricing-options { grid-template-columns: 1fr; }
@@ -500,14 +180,22 @@
     </style>
 </head>
 <body>
+    <!-- Language Selector -->
+    <div class="language-selector" style="position:fixed;top:20px;right:20px;z-index:1000;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:8px 16px;display:flex;align-items:center;gap:10px;">
+        <i class="fas fa-globe" style="color:var(--accent-blue)"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)" style="background:transparent;border:none;color:white;font-family:'Inter',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;outline:none;">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
     <!-- Header -->
     <header class="page-header">
-        <div class="badge-ai">
-            <i class="fas fa-brain"></i>
-            AI-Powered Onboarding
-        </div>
-        <h1>Join Oslo Meet</h1>
-        <p>Tell us about your business. Our AI will use this to find your perfect matches.</p>
+        <div class="badge-ai"><i class="fas fa-brain"></i> <span data-i18n="aiOnboarding">AI-Powered Onboarding</span></div>
+        <h1 data-i18n="joinTitle">Join Oslo Meet</h1>
+        <p data-i18n="joinSubtitle">Tell us about your business. Our AI will use this to find your perfect matches.</p>
     </header>
 
     <!-- Form -->
@@ -515,462 +203,95 @@
         <div class="form-card">
             <!-- Progress -->
             <div class="form-progress">
-                <div class="progress-step active" data-step="1">
-                    <div class="step-number">1</div>
-                    <div class="step-label">Company</div>
-                </div>
-                <div class="progress-step" data-step="2">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Goals</div>
-                </div>
-                <div class="progress-step" data-step="3">
-                    <div class="step-number">3</div>
-                    <div class="step-label">Matching</div>
-                </div>
-                <div class="progress-step" data-step="4">
-                    <div class="step-number">4</div>
-                    <div class="step-label">Plan</div>
-                </div>
+                <div class="progress-step active" data-step="1"><div class="step-number">1</div><div class="step-label" data-i18n="stepCompany">Company</div></div>
+                <div class="progress-step" data-step="2"><div class="step-number">2</div><div class="step-label" data-i18n="stepGoals">Goals</div></div>
+                <div class="progress-step" data-step="3"><div class="step-number">3</div><div class="step-label" data-i18n="stepMatching">Matching</div></div>
+                <div class="progress-step" data-step="4"><div class="step-number">4</div><div class="step-label" data-i18n="stepPlan">Plan</div></div>
             </div>
 
             <form id="smartForm">
-                <!-- STEP 1: Company Basics -->
+                <!-- STEP 1 -->
                 <div class="form-step active" id="step1">
-                    <h3 class="step-title">About Your Company</h3>
-                    <p class="step-subtitle">Basic information to build your AI profile</p>
-                    
+                    <h3 class="step-title" data-i18n="step1Title">About Your Company</h3>
+                    <p class="step-subtitle" data-i18n="step1Subtitle">Basic information to build your AI profile</p>
                     <div class="form-group">
-                        <label>Company Name <span class="required">*</span></label>
-                        <input type="text" class="form-control" name="companyName" required placeholder="e.g., NordicLogix AS">
+                        <label data-i18n="labelCompanyName">Company Name <span class="required">*</span></label>
+                        <input type="text" class="form-control" name="companyName" required placeholder="e.g., NordicLogix AS" data-i18n-placeholder="placeholderCompany">
                     </div>
-                    
                     <div class="form-group">
-                        <label>Industry / Sector <span class="required">*</span></label>
+                        <label data-i18n="labelIndustry">Industry / Sector <span class="required">*</span></label>
                         <select class="form-control" name="industry" required>
-                            <option value="">Select your primary sector</option>
-                            <option value="tech">Technology / Software</option>
-                            <option value="logistics">Logistics / Supply Chain</option>
-                            <option value="fintech">FinTech / Financial Services</option>
-                            <option value="health">HealthTech / Life Sciences</option>
-                            <option value="energy">Energy / Cleantech</option>
-                            <option value="retail">Retail / E-commerce</option>
-                            <option value="consulting">Consulting / Professional Services</option>
-                            <option value="creative">Creative / Media / Design</option>
-                            <option value="other">Other</option>
+                            <option value="" data-i18n="selectIndustry">Select your primary sector</option>
+                            <option value="tech" data-i18n="industryTech">Technology / Software</option>
+                            <option value="logistics" data-i18n="industryLogistics">Logistics / Supply Chain</option>
+                            <option value="fintech" data-i18n="industryFintech">FinTech / Financial Services</option>
+                            <option value="health" data-i18n="industryHealth">HealthTech / Life Sciences</option>
+                            <option value="energy" data-i18n="industryEnergy">Energy / Cleantech</option>
+                            <option value="retail" data-i18n="industryRetail">Retail / E-commerce</option>
+                            <option value="consulting" data-i18n="industryConsulting">Consulting / Professional Services</option>
+                            <option value="creative" data-i18n="industryCreative">Creative / Media / Design</option>
+                            <option value="other" data-i18n="industryOther">Other</option>
                         </select>
                     </div>
-                    
                     <div class="form-group">
-                        <label>Company Size</label>
+                        <label data-i18n="labelSize">Company Size</label>
                         <select class="form-control" name="companySize">
-                            <option value="">Select size</option>
-                            <option value="solo">Solo Founder</option>
-                            <option value="2-10">2-10 employees</option>
-                            <option value="11-50">11-50 employees</option>
-                            <option value="51-200">51-200 employees</option>
-                            <option value="200+">200+ employees</option>
+                            <option value="" data-i18n="selectSize">Select size</option>
+                            <option value="solo" data-i18n="sizeSolo">Solo Founder</option>
+                            <option value="2-10" data-i18n="sizeSmall">2-10 employees</option>
+                            <option value="11-50" data-i18n="sizeMedium">11-50 employees</option>
+                            <option value="51-200" data-i18n="sizeLarge">51-200 employees</option>
+                            <option value="200+" data-i18n="sizeEnterprise">200+ employees</option>
                         </select>
                     </div>
-                    
                     <div class="form-group">
-                        <label>Key Technologies / Expertise</label>
+                        <label data-i18n="labelTech">Key Technologies / Expertise</label>
                         <div class="tags-input" id="techTags">
                             <span class="tag">AI/ML <button type="button">×</button></span>
-                            <input type="text" placeholder="Add technology..." data-placeholder="Add...">
+                            <input type="text" placeholder="Add technology..." data-i18n-placeholder="placeholderAdd">
                         </div>
-                        <small style="color:var(--text-secondary);display:block;margin-top:6px">
-                            Add skills your team excels at (e.g., Python, logistics optimization, B2B sales)
-                        </small>
                     </div>
-                    
                     <div class="form-nav">
                         <div></div>
-                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">
-                            Continue <i class="fas fa-arrow-right"></i>
-                        </button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(2)" data-i18n="btnContinue">Continue <i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
 
-                <!-- STEP 2: Goals & Needs -->
+                <!-- STEP 2 -->
                 <div class="form-step" id="step2">
-                    <h3 class="step-title">What Are You Looking For?</h3>
-                    <p class="step-subtitle">Help our AI understand your strategic priorities</p>
-                    
+                    <h3 class="step-title" data-i18n="step2Title">What Are You Looking For?</h3>
+                    <p class="step-subtitle" data-i18n="step2Subtitle">Help our AI understand your strategic priorities</p>
                     <div class="form-group">
-                        <label>Primary Goals (select all that apply)</label>
+                        <label data-i18n="labelGoals">Primary Goals (select all that apply)</label>
                         <div class="checkbox-grid">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="goals" value="find_partners">
-                                <span>Find Business Partners</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="goals" value="find_clients">
-                                <span>Find New Clients</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="goals" value="raise_funding">
-                                <span>Raise Funding</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="goals" value="expand_market">
-                                <span>Expand to New Markets</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="goals" value="find_talent">
-                                <span>Hire Talent</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="goals" value="learn">
-                                <span>Learn & Network</span>
-                            </label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="find_partners"><span data-i18n="goalPartners">Find Business Partners</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="find_clients"><span data-i18n="goalClients">Find New Clients</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="raise_funding"><span data-i18n="goalFunding">Raise Funding</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="expand_market"><span data-i18n="goalExpand">Expand to New Markets</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="find_talent"><span data-i18n="goalTalent">Hire Talent</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="learn"><span data-i18n="goalLearn">Learn & Network</span></label>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        <label>What challenges are you trying to solve?</label>
-                        <textarea class="form-control" name="challenges" placeholder="e.g., 'We need AI to optimize our delivery routes' or 'Looking for co-founders with sales experience'..."></textarea>
+                        <label data-i18n="labelChallenges">What challenges are you trying to solve?</label>
+                        <textarea class="form-control" name="challenges" data-i18n-placeholder="placeholderChallenges"></textarea>
                     </div>
-                    
                     <div class="form-group">
-                        <label>Target Markets / Geographies</label>
+                        <label data-i18n="labelMarkets">Target Markets / Geographies</label>
                         <div class="tags-input" id="marketTags">
                             <span class="tag">Norway <button type="button">×</button></span>
-                            <input type="text" placeholder="Add market..." data-placeholder="Add...">
+                            <input type="text" data-i18n-placeholder="placeholderAdd">
                         </div>
                     </div>
-                    
                     <div class="form-nav">
-                        <button type="button" class="btn btn-secondary" onclick="prevStep(1)">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </button>
-                        <button type="button" class="btn btn-primary" onclick="nextStep(3)">
-                            Continue <i class="fas fa-arrow-right"></i>
-                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(1)" data-i18n="btnBack"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(3)" data-i18n="btnContinue">Continue <i class="fas fa-arrow-right"></i></button>
                     </div>
                 </div>
 
-                <!-- STEP 3: Matching Preferences -->
+                <!-- STEP 3 -->
                 <div class="form-step" id="step3">
-                    <h3 class="step-title">Smart Matching Preferences</h3>
-                    <p class="step-subtitle">Fine-tune how our AI finds connections for you</p>
-                    
+                    <h3 class="step-title" data-i18n="step3Title">Smart Matching Preferences</h3>
+                    <p class="step-subtitle" data-i18n="step3Subtitle">Fine-tune how our AI finds connections for you</p>
                     <div class="form-group">
-                        <label>I'm most interested in connecting with:</label>
-                        <div class="checkbox-grid">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="connectWith" value="startups">
-                                <span>Early-stage Startups</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="connectWith" value="scaleups">
-                                <span>Growth-stage Companies</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="connectWith" value="enterprises">
-                                <span>Large Enterprises</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="connectWith" value="investors">
-                                <span>Investors / VCs</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="connectWith" value="research">
-                                <span>Research / Academia</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="connectWith" value="public">
-                                <span>Public Sector</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Preferred collaboration types</label>
-                        <div class="checkbox-grid">
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="collabTypes" value="partnership">
-                                <span>Strategic Partnership</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="collabTypes" value="supplier">
-                                <span>Supplier / Vendor</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="collabTypes" value="integration">
-                                <span>Product Integration</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="collabTypes" value="pilot">
-                                <span>Pilot Project</span>
-                            </label>
-                            <label class="checkbox-item">
-                                <input type="checkbox" name="collabTypes" value="mentorship">
-                                <span>Mentorship / Advisory</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Anything else our AI should know?</label>
-                        <textarea class="form-control" name="additional" placeholder="Special requirements, deal-breakers, or unique value props..."></textarea>
-                    </div>
-                    
-                    <div class="form-nav">
-                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </button>
-                        <button type="button" class="btn btn-primary" onclick="nextStep(4)">
-                            Review & Join <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- STEP 4: Plan Selection -->
-                <div class="form-step" id="step4">
-                    <h3 class="step-title">Choose Your Membership</h3>
-                    <p class="step-subtitle">All plans include AI matching. Founding members get lifetime pricing.</p>
-                    
-                    <div class="pricing-options">
-                        <label class="pricing-option" onclick="selectPlan('starter', this)">
-                            <input type="radio" name="plan" value="starter" hidden>
-                            <h4>Starter</h4>
-                            <div class="price">NOK 1.490</div>
-                            <div class="period">/year</div>
-                            <ul class="features">
-                                <li>✓ AI-powered profile</li>
-                                <li>✓ 5 smart matches/month</li>
-                                <li>✓ Community events</li>
-                            </ul>
-                        </label>
-                        
-                        <label class="pricing-option selected" onclick="selectPlan('business', this)">
-                            <input type="radio" name="plan" value="business" hidden checked>
-                            <h4>Business</h4>
-                            <div class="price">NOK 3.900</div>
-                            <div class="period">/year</div>
-                            <ul class="features">
-                                <li>✓ Unlimited AI matches</li>
-                                <li>✓ Priority events</li>
-                                <li>✓ AI Concierge intros</li>
-                                <li>✓ Featured in feed</li>
-                            </ul>
-                        </label>
-                        
-                        <label class="pricing-option" onclick="selectPlan('partner', this)">
-                            <input type="radio" name="plan" value="partner" hidden>
-                            <h4>Partner</h4>
-                            <div class="price">NOK 12k+</div>
-                            <div class="period">/year</div>
-                            <ul class="features">
-                                <li>✓ Custom matching</li>
-                                <li>✓ Host events</li>
-                                <li>✓ Brand visibility</li>
-                                <li>✓ Dedicated manager</li>
-                            </ul>
-                        </label>
-                    </div>
-                    
-                    <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:1rem;margin:1.5rem 0">
-                        <strong style="color:var(--warning-orange)"><i class="fas fa-crown"></i> Founding Member Offer</strong>
-                        <p style="color:var(--text-secondary);font-size:0.9rem;margin:0.5rem 0 0">
-                            First 50 members: <strong>50% off lifetime pricing</strong> + exclusive badge + priority feature access.
-                            <label style="display:flex;align-items:center;gap:8px;margin-top:0.5rem;cursor:pointer">
-                                <input type="checkbox" id="founding" name="founding" style="width:18px;height:18px">
-                                <span style="font-size:0.9rem">Yes, reserve my Founding Member spot</span>
-                            </label>
-                        </p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Contact Email <span class="required">*</span></label>
-                        <input type="email" class="form-control" name="email" required placeholder="you@company.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label style="display:flex;align-items:flex-start;gap:10px">
-                            <input type="checkbox" required style="width:18px;height:18px;margin-top:4px">
-                            <span style="font-size:0.9rem;color:var(--text-secondary)">
-                                I agree to the <a href="#" style="color:var(--accent-blue)">Terms</a> and <a href="#" style="color:var(--accent-blue)">Privacy Policy</a>. 
-                                I consent to Oslo Meet using my profile data for AI matching purposes.
-                            </span>
-                        </label>
-                    </div>
-                    
-                    <div class="form-nav">
-                        <button type="button" class="btn btn-secondary" onclick="prevStep(3)">
-                            <i class="fas fa-arrow-left"></i> Back
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-rocket"></i> Join Oslo Meet
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Success State -->
-            <div class="success-state" id="successState">
-                <div class="success-icon"><i class="fas fa-check"></i></div>
-                <h3>Welcome to Oslo Meet!</h3>
-                <p>Your profile is being processed by our AI. You'll receive your first smart matches within 24 hours.</p>
-                
-                <div class="next-steps">
-                    <div class="next-step">
-                        <i class="fas fa-envelope"></i>
-                        <h4>Check your email</h4>
-                        <p>Confirmation + next steps sent to your inbox</p>
-                    </div>
-                    <div class="next-step">
-                        <i class="fas fa-user-circle"></i>
-                        <h4>Complete your profile</h4>
-                        <p>Add logo, website, and team details</p>
-                    </div>
-                    <div class="next-step">
-                        <i class="fas fa-calendar"></i>
-                        <h4>Join our kickoff event</h4>
-                        <p>Exclusive onboarding session for founders</p>
-                    </div>
-                </div>
-                
-                <a href="index.html" class="btn btn-secondary" style="margin-top:2rem">
-                    <i class="fas fa-home"></i> Return to Homepage
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // === Form Navigation ===
-        let currentStep = 1;
-        
-        function nextStep(step) {
-            // Simple validation for required fields
-            if (step === 2) {
-                const name = document.querySelector('[name="companyName"]').value;
-                const industry = document.querySelector('[name="industry"]').value;
-                if (!name || !industry) {
-                    alert('Please fill in company name and industry to continue.');
-                    return;
-                }
-            }
-            
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${step}`).classList.add('active');
-            
-            // Update progress
-            document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('active'));
-            for (let i = 1; i <= step; i++) {
-                document.querySelector(`.progress-step[data-step="${i}"]`).classList.add('active');
-            }
-            
-            currentStep = step;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        
-        function prevStep(step) {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${step}`).classList.add('active');
-            
-            document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('active'));
-            for (let i = 1; i <= step; i++) {
-                document.querySelector(`.progress-step[data-step="${i}"]`).classList.add('active');
-            }
-            
-            currentStep = step;
-        }
-        
-        // === Plan Selection ===
-        function selectPlan(plan, element) {
-            document.querySelectorAll('.pricing-option').forEach(el => el.classList.remove('selected'));
-            element.classList.add('selected');
-            element.querySelector('input').checked = true;
-        }
-        
-        // === Tags Input (Simplified) ===
-        function setupTagsInput(containerId) {
-            const container = document.getElementById(containerId);
-            const input = container.querySelector('input');
-            
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && input.value.trim()) {
-                    e.preventDefault();
-                    const tag = document.createElement('span');
-                    tag.className = 'tag';
-                    tag.innerHTML = `${input.value.trim()} <button type="button">×</button>`;
-                    container.insertBefore(tag, input);
-                    input.value = '';
-                    
-                    tag.querySelector('button').onclick = () => tag.remove();
-                }
-            });
-            
-            // Remove existing tags
-            container.querySelectorAll('.tag button').forEach(btn => {
-                btn.onclick = () => btn.closest('.tag').remove();
-            });
-        }
-        
-        setupTagsInput('techTags');
-        setupTagsInput('marketTags');
-        
-        // === Form Submission ===
-        document.getElementById('smartForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Collect form data
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-            
-            // Handle checkboxes (multiple values)
-            data.goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
-            data.connectWith = Array.from(document.querySelectorAll('input[name="connectWith"]:checked')).map(cb => cb.value);
-            data.collabTypes = Array.from(document.querySelectorAll('input[name="collabTypes"]:checked')).map(cb => cb.value);
-            
-            // Handle tags
-            data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0].textContent.trim()).filter(t => t);
-            data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0].textContent.trim()).filter(t => t);
-            
-            // Add metadata
-            data.submittedAt = new Date().toISOString();
-            data.source = 'join_page';
-            
-            // === FOR MVP: Send to webhook or store locally ===
-            console.log('📦 Form Data for AI Processing:', data);
-            
-            // Simulate API call
-            try {
-                // In production: await fetch('/api/webhook', { method: 'POST', body: JSON.stringify(data) })
-                
-                // Show success
-                document.querySelector('.form-card').style.display = 'none';
-                document.getElementById('successState').classList.add('active');
-                
-                // Optional: Send to Google Sheets / Airtable / Supabase
-                // sendToBackend(data);
-                
-            } catch (error) {
-                console.error('Submission error:', error);
-                alert('Something went wrong. Please try again or contact post@oslomeet.org');
-            }
-        });
-        
-        // === URL Params Handling (for pre-selecting plan/founding) ===
-        window.addEventListener('load', () => {
-            const params = new URLSearchParams(window.location.search);
-            
-            if (params.get('plan')) {
-                const plan = params.get('plan');
-                const option = document.querySelector(`.pricing-option input[value="${plan}"]`);
-                if (option) {
-                    option.closest('.pricing-option').click();
-                }
-            }
-            
-            if (params.get('founding') === 'true') {
-                document.getElementById('founding').checked = true;
-                // Auto-select business plan for founding
-                document.querySelector('.pricing-option input[value="business"]').closest('.pricing-option').click();
-            }
-        });
-    </script>
-</body>
-</html>
+                        <label data-i18n="labelConnectWith">I
