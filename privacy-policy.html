@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- FAVICON Oslo Meet -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Oslo Meet</title>
+    <meta name="description" content="Privacy Policy for Oslo Meet - Learn how we collect, use, and protect your personal information.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --input-bg: #0f172a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            min-height: 100vh;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            padding: 5px;
+        }
+        
+        .language-selector select option {
+            background: var(--dark-bg);
+            color: white;
+        }
+        
+        .language-selector i {
+            color: var(--accent-blue);
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Content Section */
+        .policy-section {
+            padding: 80px 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .policy-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .policy-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .policy-meta i {
+            color: var(--accent-blue);
+        }
+        
+        .policy-section h2 {
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1rem;
+            color: white;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .policy-section h2:first-of-type {
+            margin-top: 0;
+        }
+        
+        .policy-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.2rem;
+        }
+        
+        .policy-section ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .policy-section ul li {
+            color: #cbd5e1;
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .policy-section ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+        
+        .policy-section a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .policy-section a:hover {
+            text-decoration: underline;
+            color: #60a5fa;
+        }
+        
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+        
+        .highlight-box p {
+            margin: 0;
+            color: #e2e8f0;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #020617;
+            color: white;
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-blue);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .footer-social a:hover {
+            background: var(--accent-blue);
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-bottom a:hover {
+            color: var(--accent-blue);
+        }
+        
+        .developer-credit {
+            color: #fbbf24 !important;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .policy-wrapper {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .policy-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1 data-i18n="pageTitle">Privacy Policy</h1>
+        <p data-i18n="pageSubtitle">Your privacy is important to us. This policy explains how we collect, use, and protect your information.</p>
+    </header>
+
+    <!-- Policy Content -->
+    <section class="policy-section">
+        <div class="container">
+            <div class="policy-wrapper fade-in">
+                <div class="policy-meta">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span data-i18n="lastUpdated">Last Updated: January 2026</span>
+                </div>
+
+                <h2 data-i18n="introTitle">Introduction</h2>
+                <p data-i18n="introText">Welcome to Oslo Meet. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains what information we collect, how we use it, and what rights you have in relation to it.</p>
+
+                <h2 data-i18n="collectionTitle">Information We Collect</h2>
+                <p data-i18n="collectionText">We collect information that you provide directly to us, including:</p>
+                <ul>
+                    <li data-i18n="col1">Contact details (name, email address, phone number)</li>
+                    <li data-i18n="col2">Business information and project descriptions</li>
+                    <li data-i18n="col3">Communications and inquiries you send to us</li>
+                    <li data-i18n="col4">Technical data (IP address, browser type, device information)</li>
+                </ul>
+
+                <h2 data-i18n="usageTitle">How We Use Your Information</h2>
+                <p data-i18n="usageText">We use the collected information for the following purposes:</p>
+                <ul>
+                    <li data-i18n="use1">To provide and maintain our directory and services</li>
+                    <li data-i18n="use2">To process your submissions and feature requests</li>
+                    <li data-i18n="use3">To communicate with you about updates, events, and opportunities</li>
+                    <li data-i18n="use4">To improve our platform through analytics and user feedback</li>
+                    <li data-i18n="use5">To comply with legal obligations and protect our rights</li>
+                </ul>
+
+                <h2 data-i18n="cookiesTitle">Cookies & Tracking Technologies</h2>
+                <p data-i18n="cookiesText">We use cookies and similar tracking technologies to track activity on our platform and hold certain information. You can instruct your browser to refuse all cookies or indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our service.</p>
+                <div class="highlight-box">
+                    <p data-i18n="cookieNote">You can manage your cookie preferences at any time through the cookie banner on our website or your browser settings.</p>
+                </div>
+
+                <h2 data-i18n="sharingTitle">Data Sharing & Third Parties</h2>
+                <p data-i18n="sharingText">We do not sell your personal information. We may share your data with trusted third-party service providers who assist us in operating our platform, conducting business, or servicing you, under strict confidentiality agreements. We may also disclose information if required by law or to protect our rights.</p>
+
+                <h2 data-i18n="securityTitle">Data Security</h2>
+                <p data-i18n="securityText">We implement industry-standard security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. While we strive to use commercially acceptable means to protect your data, no method of transmission over the Internet is 100% secure.</p>
+
+                <h2 data-i18n="rightsTitle">Your Rights & Choices</h2>
+                <p data-i18n="rightsText">Depending on your location, you may have the following rights regarding your personal data:</p>
+                <ul>
+                    <li data-i18n="right1">Access, correct, or delete your personal information</li>
+                    <li data-i18n="right2">Object to or restrict processing of your data</li>
+                    <li data-i18n="right3">Request data portability</li>
+                    <li data-i18n="right4">Withdraw consent at any time</li>
+                </ul>
+                <p data-i18n="rightsContact">To exercise these rights, please contact us at <a href="mailto:post@barros.no">post@barros.no</a>.</p>
+
+                <h2 data-i18n="childrenTitle">Children's Privacy</h2>
+                <p data-i18n="childrenText">Our platform is not intended for children under the age of 16. We do not knowingly collect personal information from children. If you become aware that a child has provided us with personal data, please contact us immediately.</p>
+
+                <h2 data-i18n="changesTitle">Changes to This Policy</h2>
+                <p data-i18n="changesText">We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last Updated" date. We encourage you to review this policy periodically.</p>
+
+                <h2 data-i18n="contactPolicyTitle">Contact Us</h2>
+                <p data-i18n="contactPolicyText">If you have any questions about this Privacy Policy, please contact us:</p>
+                <ul>
+                    <li>Email: <a href="mailto:post@barros.no">post@barros.no</a></li>
+                    <li>Website: <a href="https://oslomeet.org/contact">oslomeet.org/contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1: Brand -->
+                <div class="footer-brand">
+                    <h2>OSLO MEET</h2>
+                    <p data-i18n="footerSlogan">Connecting Experiences, Inspiring Solutions. The global directory for innovative ideas and businesses.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/oslomeet/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/oslomeet" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/oslomeet1/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="footer-title" data-i18n="quickLinks">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html" data-i18n="home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="about">About</a></li>
+                        <li><a href="index.html#how-to-participate" data-i18n="howToParticipate">How to Participate</a></li>
+                        <li><a href="contact.html" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Resources -->
+                <div>
+                    <h3 class="footer-title" data-i18n="resources">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-i18n="directory">Directory</a></li>
+                        <li><a href="#" data-i18n="podcasts">Podcasts</a></li>
+                        <li><a href="#" data-i18n="events">Events</a></li>
+                        <li><a href="#" data-i18n="blog">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Legal -->
+                <div>
+                    <h3 class="footer-title" data-i18n="legal">Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact.html" data-i18n="contact">Contact</a></li>
+                        <li><a href="terms.html" data-i18n="terms">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html" data-i18n="privacy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="cookiePolicy">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>&copy; 2026 Oslo Meet. <span data-i18n="rights">All rights reserved.</span></div>
+                <div>
+                    <a href="https://oslomeet.org">www.oslomeet.org</a>
+                    <a href="mailto:post@barros.no">post@barros.no</a>
+                </div>
+                <div>
+                    <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener noreferrer" class="developer-credit">
+                        <i class="fas fa-code"></i> Developed by Digital Solutions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                pageTitle: "Privacy Policy",
+                pageSubtitle: "Your privacy is important to us. This policy explains how we collect, use, and protect your information.",
+                lastUpdated: "Last Updated: January 2026",
+                introTitle: "Introduction",
+                introText: "Welcome to Oslo Meet. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains what information we collect, how we use it, and what rights you have in relation to it.",
+                collectionTitle: "Information We Collect",
+                collectionText: "We collect information that you provide directly to us, including:",
+                col1: "Contact details (name, email address, phone number)",
+                col2: "Business information and project descriptions",
+                col3: "Communications and inquiries you send to us",
+                col4: "Technical data (IP address, browser type, device information)",
+                usageTitle: "How We Use Your Information",
+                usageText: "We use the collected information for the following purposes:",
+                use1: "To provide and maintain our directory and services",
+                use2: "To process your submissions and feature requests",
+                use3: "To communicate with you about updates, events, and opportunities",
+                use4: "To improve our platform through analytics and user feedback",
+                use5: "To comply with legal obligations and protect our rights",
+                cookiesTitle: "Cookies & Tracking Technologies",
+                cookiesText: "We use cookies and similar tracking technologies to track activity on our platform and hold certain information. You can instruct your browser to refuse all cookies or indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our service.",
+                cookieNote: "You can manage your cookie preferences at any time through the cookie banner on our website or your browser settings.",
+                sharingTitle: "Data Sharing & Third Parties",
+                sharingText: "We do not sell your personal information. We may share your data with trusted third-party service providers who assist us in operating our platform, conducting business, or servicing you, under strict confidentiality agreements. We may also disclose information if required by law or to protect our rights.",
+                securityTitle: "Data Security",
+                securityText: "We implement industry-standard security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. While we strive to use commercially acceptable means to protect your data, no method of transmission over the Internet is 100% secure.",
+                rightsTitle: "Your Rights & Choices",
+                rightsText: "Depending on your location, you may have the following rights regarding your personal data:",
+                right1: "Access, correct, or delete your personal information",
+                right2: "Object to or restrict processing of your data",
+                right3: "Request data portability",
+                right4: "Withdraw consent at any time",
+                rightsContact: 'To exercise these rights, please contact us at <a href="mailto:post@barros.no">post@barros.no</a>.',
+                childrenTitle: "Children's Privacy",
+                childrenText: "Our platform is not intended for children under the age of 16. We do not knowingly collect personal information from children. If you become aware that a child has provided us with personal data, please contact us immediately.",
+                changesTitle: "Changes to This Policy",
+                changesText: "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the \"Last Updated\" date. We encourage you to review this policy periodically.",
+                contactPolicyTitle: "Contact Us",
+                contactPolicyText: "If you have any questions about this Privacy Policy, please contact us:",
+                footerSlogan: "Connecting Experiences, Inspiring Solutions. The global directory for innovative ideas and businesses.",
+                quickLinks: "Quick Links",
+                home: "Home",
+                about: "About",
+                howToParticipate: "How to Participate",
+                contact: "Contact",
+                resources: "Resources",
+                directory: "Directory",
+                podcasts: "Podcasts",
+                events: "Events",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Terms of Service",
+                privacy: "Privacy Policy",
+                cookiePolicy: "Cookie Policy",
+                rights: "All rights reserved."
+            },
+            pt: {
+                pageTitle: "Política de Privacidade",
+                pageSubtitle: "Sua privacidade é importante para nós. Esta política explica como coletamos, usamos e protegemos suas informações.",
+                lastUpdated: "Última Atualização: Janeiro de 2026",
+                introTitle: "Introdução",
+                introText: "Bem-vindo ao Oslo Meet. Estamos comprometidos em proteger suas informações pessoais e seu direito à privacidade. Esta Política de Privacidade explica quais informações coletamos, como as usamos e quais direitos você tem em relação a elas.",
+                collectionTitle: "Informações que Coletamos",
+                collectionText: "Coletamos informações que você nos fornece diretamente, incluindo:",
+                col1: "Detalhes de contato (nome, endereço de e-mail, número de telefone)",
+                col2: "Informações comerciais e descrições de projetos",
+                col3: "Comunicações e consultas enviadas a nós",
+                col4: "Dados técnicos (endereço IP, tipo de navegador, informações do dispositivo)",
+                usageTitle: "Como Usamos Suas Informações",
+                usageText: "Usamos as informações coletadas para os seguintes propósitos:",
+                use1: "Fornecer e manter nosso diretório e serviços",
+                use2: "Processar suas inscrições e solicitações de recursos",
+                use3: "Comunicar atualizações, eventos e oportunidades",
+                use4: "Melhorar nossa plataforma através de análises e feedback",
+                use5: "Cumprir obrigações legais e proteger nossos direitos",
+                cookiesTitle: "Cookies e Tecnologias de Rastreamento",
+                cookiesText: "Usamos cookies e tecnologias semelhantes para rastrear a atividade em nossa plataforma e reter certas informações. Você pode instruir seu navegador a recusar todos os cookies ou indicar quando um cookie está sendo enviado. No entanto, se você não aceitar cookies, poderá não conseguir usar algumas partes do nosso serviço.",
+                cookieNote: "Você pode gerenciar suas preferências de cookies a qualquer momento através do banner de cookies em nosso site ou nas configurações do seu navegador.",
+                sharingTitle: "Compartilhamento de Dados e Terceiros",
+                sharingText: "Não vendemos suas informações pessoais. Podemos compartilhar seus dados com provedores de serviços terceirizados confiáveis que nos auxiliam na operação da plataforma, realização de negócios ou atendimento, sob acordos rigorosos de confidencialidade. Também podemos divulgar informações se exigido por lei ou para proteger nossos direitos.",
+                securityTitle: "Segurança de Dados",
+                securityText: "Implementamos medidas de segurança padrão da indústria para proteger suas informações pessoais contra acesso, alteração, divulgação ou destruição não autorizados. Embora nos esforcemos para usar meios comercialmente aceitáveis para proteger seus dados, nenhum método de transmissão pela Internet é 100% seguro.",
+                rightsTitle: "Seus Direitos e Escolhas",
+                rightsText: "Dependendo da sua localização, você pode ter os seguintes direitos em relação aos seus dados pessoais:",
+                right1: "Acessar, corrigir ou excluir suas informações pessoais",
+                right2: "Objetar ou restringir o processamento de seus dados",
+                right3: "Solicitar a portabilidade dos dados",
+                right4: "Retirar o consentimento a qualquer momento",
+                rightsContact: 'Para exercer esses direitos, entre em contato conosco em <a href="mailto:post@barros.no">post@barros.no</a>.',
+                childrenTitle: "Privacidade de Crianças",
+                childrenText: "Nossa plataforma não se destina a crianças menores de 16 anos. Não coletamos intencionalmente informações pessoais de crianças. Se você tiver conhecimento de que uma criança nos forneceu dados pessoais, entre em contato conosco imediatamente.",
+                changesTitle: "Alterações nesta Política",
+                changesText: "Podemos atualizar esta Política de Privacidade periodicamente. Notificaremos você sobre quaisquer alterações publicando a nova política nesta página e atualizando a data de \"Última Atualização\". Recomendamos que você revise esta política periodicamente.",
+                contactPolicyTitle: "Entre em Contato",
+                contactPolicyText: "Se você tiver alguma dúvida sobre esta Política de Privacidade, entre em contato conosco:",
+                footerSlogan: "Conectando Experiências, Inspirando Soluções. O diretório global para ideias e negócios inovadores.",
+                quickLinks: "Links Rápidos",
+                home: "Início",
+                about: "Sobre",
+                howToParticipate: "Como Participar",
+                contact: "Contato",
+                resources: "Recursos",
+                directory: "Diretório",
+                podcasts: "Podcasts",
+                events: "Eventos",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Termos de Serviço",
+                privacy: "Política de Privacidade",
+                cookiePolicy: "Política de Cookies",
+                rights: "Todos os direitos reservados."
+            },
+            es: {
+                pageTitle: "Política de Privacidad",
+                pageSubtitle: "Tu privacidad es importante para nosotros. Esta política explica cómo recopilamos, usamos y protegemos tu información.",
+                lastUpdated: "Última Actualización: Enero 2026",
+                introTitle: "Introducción",
+                introText: "Bienvenido a Oslo Meet. Estamos comprometidos a proteger tu información personal y tu derecho a la privacidad. Esta Política de Privacidad explica qué información recopilamos, cómo la usamos y qué derechos tienes al respecto.",
+                collectionTitle: "Información que Recopilamos",
+                collectionText: "Recopilamos la información que nos proporcionas directamente, incluyendo:",
+                col1: "Detalles de contacto (nombre, dirección de correo electrónico, número de teléfono)",
+                col2: "Información comercial y descripciones de proyectos",
+                col3: "Comunicaciones y consultas que nos envías",
+                col4: "Datos técnicos (dirección IP, tipo de navegador, información del dispositivo)",
+                usageTitle: "Cómo Usamos tu Información",
+                usageText: "Usamos la información recopilada para los siguientes propósitos:",
+                use1: "Proporcionar y mantener nuestro directorio y servicios",
+                use2: "Procesar tus envíos y solicitudes de funciones",
+                use3: "Comunicarnos contigo sobre actualizaciones, eventos y oportunidades",
+                use4: "Mejorar nuestra plataforma a través de análisis y comentarios de usuarios",
+                use5: "Cumplir con obligaciones legales y proteger nuestros derechos",
+                cookiesTitle: "Cookies y Tecnologías de Rastreo",
+                cookiesText: "Usamos cookies y tecnologías similares para rastrear la actividad en nuestra plataforma y retener cierta información. Puedes instruir a tu navegador para que rechace todas las cookies o indique cuándo se envía una cookie. Sin embargo, si no aceptas cookies, es posible que no puedas usar algunas partes de nuestro servicio.",
+                cookieNote: "Puedes administrar tus preferencias de cookies en cualquier momento a través del banner de cookies en nuestro sitio web o la configuración de tu navegador.",
+                sharingTitle: "Compartición de Datos y Terceros",
+                sharingText: "No vendemos tu información personal. Podemos compartir tus datos con proveedores de servicios externos confiables que nos ayudan a operar la plataforma, realizar negocios o atenderte, bajo estrictos acuerdos de confidencialidad. También podemos divulgar información si la ley lo exige o para proteger nuestros derechos.",
+                securityTitle: "Seguridad de Datos",
+                securityText: "Implementamos medidas de seguridad estándar de la industria para proteger tu información personal contra acceso, alteración, divulgación o destrucción no autorizados. Aunque nos esforzamos por usar medios comercialmente aceptables para proteger tus datos, ningún método de transmisión por Internet es 100% seguro.",
+                rightsTitle: "Tus Derechos y Opciones",
+                rightsText: "Dependiendo de tu ubicación, puedes tener los siguientes derechos respecto a tus datos personales:",
+                right1: "Acceder, corregir o eliminar tu información personal",
+                right2: "Objetar o restringir el procesamiento de tus datos",
+                right3: "Solicitar la portabilidad de datos",
+                right4: "Retirar el consentimiento en cualquier momento",
+                rightsContact: 'Para ejercer estos derechos, contáctanos en <a href="mailto:post@barros.no">post@barros.no</a>.',
+                childrenTitle: "Privacidad de Menores",
+                childrenText: "Nuestra plataforma no está destinada a menores de 16 años. No recopilamos intencionalmente información personal de niños. Si tienes conocimiento de que un niño nos ha proporcionado datos personales, contáctanos de inmediato.",
+                changesTitle: "Cambios en esta Política",
+                changesText: "Podemos actualizar esta Política de Privacidad de vez en cuando. Te notificaremos cualquier cambio publicando la nueva política en esta página y actualizando la fecha de \"Última Actualización\". Te recomendamos revisar esta política periódicamente.",
+                contactPolicyTitle: "Contáctanos",
+                contactPolicyText: "Si tienes alguna pregunta sobre esta Política de Privacidad, contáctanos:",
+                footerSlogan: "Conectando Experiencias, Inspirando Soluciones. El directorio global para ideas y negocios innovadores.",
+                quickLinks: "Enlaces Rápidos",
+                home: "Inicio",
+                about: "Sobre",
+                howToParticipate: "Cómo Participar",
+                contact: "Contacto",
+                resources: "Recursos",
+                directory: "Directorio",
+                podcasts: "Podcasts",
+                events: "Eventos",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Términos de Servicio",
+                privacy: "Política de Privacidad",
+                cookiePolicy: "Política de Cookies",
+                rights: "Todos los derechos reservados."
+            }
+        };
+
+        // Language Change Function
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    // Handle HTML content (like links inside text)
+                    if (element.innerHTML.includes('<a')) {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
