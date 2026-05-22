@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- FAVICON Oslo Meet -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Notice - Oslo Meet</title>
+    <meta name="description" content="Cookie Notice for Oslo Meet - Learn about how we use cookies and similar technologies on our platform.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --input-bg: #0f172a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            min-height: 100vh;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            padding: 5px;
+        }
+        
+        .language-selector select option {
+            background: var(--dark-bg);
+            color: white;
+        }
+        
+        .language-selector i {
+            color: var(--accent-blue);
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Content Section */
+        .notice-section {
+            padding: 80px 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .notice-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .notice-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .notice-meta i {
+            color: var(--accent-blue);
+        }
+        
+        .notice-section h2 {
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1rem;
+            color: white;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .notice-section h2:first-of-type {
+            margin-top: 0;
+        }
+        
+        .notice-section h2 i {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+        }
+        
+        .notice-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.2rem;
+        }
+        
+        .notice-section ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .notice-section ul li {
+            color: #cbd5e1;
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .notice-section ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+        
+        .notice-section a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .notice-section a:hover {
+            text-decoration: underline;
+            color: #60a5fa;
+        }
+        
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+        
+        .highlight-box p {
+            margin: 0;
+            color: #e2e8f0;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .info-card {
+            background: var(--input-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .info-card h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-card h4 i {
+            color: var(--accent-blue);
+        }
+        
+        .info-card p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 3rem 0;
+        }
+        
+        /* Table of Contents */
+        .toc {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .toc h3 {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .toc h3 i {
+            color: var(--accent-blue);
+        }
+        
+        .toc ol {
+            padding-left: 1.5rem;
+        }
+        
+        .toc ol li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc ol li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .toc ol li a:hover {
+            color: var(--accent-blue);
+        }
+        
+        /* Footer */
+        .footer {
+            background: #020617;
+            color: white;
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-blue);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .footer-social a:hover {
+            background: var(--accent-blue);
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-bottom a:hover {
+            color: var(--accent-blue);
+        }
+        
+        .developer-credit {
+            color: #fbbf24 !important;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .notice-wrapper {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .notice-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1 data-i18n="pageTitle">Cookie Notice</h1>
+        <p data-i18n="pageSubtitle">We use cookies and similar technologies to enhance your experience, analyze traffic, and personalize content.</p>
+    </header>
+
+    <!-- Notice Content -->
+    <section class="notice-section">
+        <div class="container">
+            <div class="notice-wrapper fade-in">
+                <div class="notice-meta">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span data-i18n="lastUpdated">Last Updated: January 2026</span>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h3><i class="fas fa-list"></i> <span data-i18n="tocTitle">Table of Contents</span></h3>
+                    <ol>
+                        <li><a href="#what-are-cookies" data-i18n="toc1">What Are Cookies?</a></li>
+                        <li><a href="#types-of-cookies" data-i18n="toc2">Types of Cookies We Use</a></li>
+                        <li><a href="#how-we-use" data-i18n="toc3">How We Use Cookies</a></li>
+                        <li><a href="#managing-cookies" data-i18n="toc4">Managing Your Cookie Preferences</a></li>
+                        <li><a href="#third-party" data-i18n="toc5">Third-Party Cookies</a></li>
+                        <li><a href="#security" data-i18n="toc6">Cookie Security & Retention</a></li>
+                        <li><a href="#changes" data-i18n="toc7">Changes to This Notice</a></li>
+                        <li><a href="#contact" data-i18n="toc8">Contact Us</a></li>
+                    </ol>
+                </div>
+
+                <h2 id="what-are-cookies"><i class="fas fa-cookie-bite"></i> <span data-i18n="whatTitle">1. What Are Cookies?</span></h2>
+                <p data-i18n="whatText">Cookies are small text files that are placed on your device when you visit a website. They are widely used to make websites work more efficiently, remember your preferences, and provide analytical information to website owners.</p>
+                <p data-i18n="whatText2">Similar technologies like web beacons, pixels, and local storage also serve comparable purposes and are covered under this notice.</p>
+
+                <h2 id="types-of-cookies"><i class="fas fa-layer-group"></i> <span data-i18n="typesTitle">2. Types of Cookies We Use</span></h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4><i class="fas fa-lock"></i> <span data-i18n="type1">Essential Cookies</span></h4>
+                        <p data-i18n="type1Desc">Required for the website to function properly. Cannot be disabled.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4><i class="fas fa-chart-bar"></i> <span data-i18n="type2">Analytics Cookies</span></h4>
+                        <p data-i18n="type2Desc">Help us understand how visitors interact with our platform.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4><i class="fas fa-bullhorn"></i> <span data-i18n="type3">Marketing Cookies</span></h4>
+                        <p data-i18n="type3Desc">Used to deliver relevant advertisements and track campaign effectiveness.</p>
+                    </div>
+                    <div class="info-card">
+                        <h4><i class="fas fa-sliders-h"></i> <span data-i18n="type4">Preference Cookies</span></h4>
+                        <p data-i18n="type4Desc">Remember your settings and language preferences for future visits.</p>
+                    </div>
+                </div>
+
+                <h2 id="how-we-use"><i class="fas fa-cogs"></i> <span data-i18n="howTitle">3. How We Use Cookies</span></h2>
+                <p data-i18n="howText">We use cookies and similar technologies for the following purposes:</p>
+                <ul>
+                    <li data-i18n="how1">To maintain your session and keep you logged in</li>
+                    <li data-i18n="how2">To remember your language and display preferences</li>
+                    <li data-i18n="how3">To analyze website traffic and user behavior patterns</li>
+                    <li data-i18n="how4">To personalize content and recommendations</li>
+                    <li data-i18n="how5">To measure the effectiveness of our marketing campaigns</li>
+                    <li data-i18n="how6">To improve platform performance and security</li>
+                </ul>
+
+                <h2 id="managing-cookies"><i class="fas fa-shield-alt"></i> <span data-i18n="manageTitle">4. Managing Your Cookie Preferences</span></h2>
+                <p data-i18n="manageText">You have full control over your cookie preferences. You can manage them in several ways:</p>
+                <ul>
+                    <li data-i18n="manage1">Use the cookie banner that appears when you first visit our site</li>
+                    <li data-i18n="manage2">Adjust your browser settings to block or delete cookies</li>
+                    <li data-i18n="manage3">Use private/incognito browsing mode for temporary sessions</li>
+                </ul>
+                <div class="highlight-box">
+                    <p data-i18n="manageNote">Note: Disabling certain cookies may affect the functionality of our platform and limit your user experience.</p>
+                </div>
+
+                <h2 id="third-party"><i class="fas fa-external-link-alt"></i> <span data-i18n="thirdTitle">5. Third-Party Cookies</span></h2>
+                <p data-i18n="thirdText">We may work with trusted third-party service providers who place cookies on our platform. These include:</p>
+                <ul>
+                    <li data-i18n="third1">Analytics providers (e.g., Google Analytics)</li>
+                    <li data-i18n="third2">Social media platforms (e.g., Facebook, LinkedIn, Twitter)</li>
+                    <li data-i18n="third3">Advertising networks and partners</li>
+                    <li data-i18n="third4">Payment processors and security services</li>
+                </ul>
+                <p data-i18n="thirdText2">We do not control these third-party cookies. We encourage you to review their respective privacy and cookie policies.</p>
+
+                <h2 id="security"><i class="fas fa-fingerprint"></i> <span data-i18n="securityTitle">6. Cookie Security & Retention</span></h2>
+                <p data-i18n="securityText">We implement security measures to protect cookie data from unauthorized access. Cookie retention periods vary based on their purpose:</p>
+                <ul>
+                    <li data-i18n="ret1">Session cookies: Deleted when you close your browser</li>
+                    <li data-i18n="ret2">Persistent cookies: Remain on your device for a set period (typically 30 days to 2 years)</li>
+                    <li data-i18n="ret3">Analytics cookies: Usually retained for up to 26 months</li>
+                </ul>
+
+                <h2 id="changes"><i class="fas fa-sync-alt"></i> <span data-i18n="changesTitle">7. Changes to This Notice</span></h2>
+                <p data-i18n="changesText">We may update this Cookie Notice periodically to reflect changes in our practices, technologies, or legal requirements. Material changes will be communicated through a notice on our platform or via email.</p>
+
+                <div class="section-divider"></div>
+
+                <h2 id="contact"><i class="fas fa-envelope"></i> <span data-i18n="contactTitle">8. Contact Us</span></h2>
+                <p data-i18n="contactText">If you have any questions about our use of cookies or this notice, please contact us:</p>
+                <ul>
+                    <li>Email: <a href="mailto:post@barros.no">post@barros.no</a></li>
+                    <li>Website: <a href="https://oslomeet.org/contact">oslomeet.org/contact</a></li>
+                </ul>
+                <div class="highlight-box">
+                    <p data-i18n="contactNote">For detailed information about how we process your personal data, please also review our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1: Brand -->
+                <div class="footer-brand">
+                    <h2>OSLO MEET</h2>
+                    <p data-i18n="footerSlogan">Connecting Experiences, Inspiring Solutions. The global directory for innovative ideas and businesses.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/oslomeet/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/oslomeet" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/oslomeet1/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="footer-title" data-i18n="quickLinks">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html" data-i18n="home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="about">About</a></li>
+                        <li><a href="index.html#how-to-participate" data-i18n="howToParticipate">How to Participate</a></li>
+                        <li><a href="contact.html" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Resources -->
+                <div>
+                    <h3 class="footer-title" data-i18n="resources">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-i18n="directory">Directory</a></li>
+                        <li><a href="#" data-i18n="podcasts">Podcasts</a></li>
+                        <li><a href="#" data-i18n="events">Events</a></li>
+                        <li><a href="#" data-i18n="blog">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Legal -->
+                <div>
+                    <h3 class="footer-title" data-i18n="legal">Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact.html" data-i18n="contact">Contact</a></li>
+                        <li><a href="terms-of-use.html" data-i18n="terms">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html" data-i18n="privacy">Privacy Policy</a></li>
+                        <li><a href="cookie-notice.html" data-i18n="cookiePolicy">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>&copy; 2026 Oslo Meet. <span data-i18n="rights">All rights reserved.</span></div>
+                <div>
+                    <a href="https://oslomeet.org">www.oslomeet.org</a>
+                    <a href="mailto:post@barros.no">post@barros.no</a>
+                </div>
+                <div>
+                    <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener noreferrer" class="developer-credit">
+                        <i class="fas fa-code"></i> Developed by Digital Solutions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                pageTitle: "Cookie Notice",
+                pageSubtitle: "We use cookies and similar technologies to enhance your experience, analyze traffic, and personalize content.",
+                lastUpdated: "Last Updated: January 2026",
+                tocTitle: "Table of Contents",
+                toc1: "What Are Cookies?",
+                toc2: "Types of Cookies We Use",
+                toc3: "How We Use Cookies",
+                toc4: "Managing Your Cookie Preferences",
+                toc5: "Third-Party Cookies",
+                toc6: "Cookie Security & Retention",
+                toc7: "Changes to This Notice",
+                toc8: "Contact Us",
+                whatTitle: "1. What Are Cookies?",
+                whatText: "Cookies are small text files that are placed on your device when you visit a website. They are widely used to make websites work more efficiently, remember your preferences, and provide analytical information to website owners.",
+                whatText2: "Similar technologies like web beacons, pixels, and local storage also serve comparable purposes and are covered under this notice.",
+                typesTitle: "2. Types of Cookies We Use",
+                type1: "Essential Cookies",
+                type1Desc: "Required for the website to function properly. Cannot be disabled.",
+                type2: "Analytics Cookies",
+                type2Desc: "Help us understand how visitors interact with our platform.",
+                type3: "Marketing Cookies",
+                type3Desc: "Used to deliver relevant advertisements and track campaign effectiveness.",
+                type4: "Preference Cookies",
+                type4Desc: "Remember your settings and language preferences for future visits.",
+                howTitle: "3. How We Use Cookies",
+                howText: "We use cookies and similar technologies for the following purposes:",
+                how1: "To maintain your session and keep you logged in",
+                how2: "To remember your language and display preferences",
+                how3: "To analyze website traffic and user behavior patterns",
+                how4: "To personalize content and recommendations",
+                how5: "To measure the effectiveness of our marketing campaigns",
+                how6: "To improve platform performance and security",
+                manageTitle: "4. Managing Your Cookie Preferences",
+                manageText: "You have full control over your cookie preferences. You can manage them in several ways:",
+                manage1: "Use the cookie banner that appears when you first visit our site",
+                manage2: "Adjust your browser settings to block or delete cookies",
+                manage3: "Use private/incognito browsing mode for temporary sessions",
+                manageNote: "Note: Disabling certain cookies may affect the functionality of our platform and limit your user experience.",
+                thirdTitle: "5. Third-Party Cookies",
+                thirdText: "We may work with trusted third-party service providers who place cookies on our platform. These include:",
+                third1: "Analytics providers (e.g., Google Analytics)",
+                third2: "Social media platforms (e.g., Facebook, LinkedIn, Twitter)",
+                third3: "Advertising networks and partners",
+                third4: "Payment processors and security services",
+                thirdText2: "We do not control these third-party cookies. We encourage you to review their respective privacy and cookie policies.",
+                securityTitle: "6. Cookie Security & Retention",
+                securityText: "We implement security measures to protect cookie data from unauthorized access. Cookie retention periods vary based on their purpose:",
+                ret1: "Session cookies: Deleted when you close your browser",
+                ret2: "Persistent cookies: Remain on your device for a set period (typically 30 days to 2 years)",
+                ret3: "Analytics cookies: Usually retained for up to 26 months",
+                changesTitle: "7. Changes to This Notice",
+                changesText: "We may update this Cookie Notice periodically to reflect changes in our practices, technologies, or legal requirements. Material changes will be communicated through a notice on our platform or via email.",
+                contactTitle: "8. Contact Us",
+                contactText: "If you have any questions about our use of cookies or this notice, please contact us:",
+                contactNote: 'For detailed information about how we process your personal data, please also review our <a href="privacy-policy.html">Privacy Policy</a>.',
+                footerSlogan: "Connecting Experiences, Inspiring Solutions. The global directory for innovative ideas and businesses.",
+                quickLinks: "Quick Links",
+                home: "Home",
+                about: "About",
+                howToParticipate: "How to Participate",
+                contact: "Contact",
+                resources: "Resources",
+                directory: "Directory",
+                podcasts: "Podcasts",
+                events: "Events",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Terms of Service",
+                privacy: "Privacy Policy",
+                cookiePolicy: "Cookie Policy",
+                rights: "All rights reserved."
+            },
+            pt: {
+                pageTitle: "Aviso de Cookies",
+                pageSubtitle: "Utilizamos cookies e tecnologias semelhantes para melhorar sua experiência, analisar tráfego e personalizar conteúdo.",
+                lastUpdated: "Última Atualização: Janeiro de 2026",
+                tocTitle: "Índice",
+                toc1: "O que são Cookies?",
+                toc2: "Tipos de Cookies que Utilizamos",
+                toc3: "Como Utilizamos os Cookies",
+                toc4: "Gerenciando suas Preferências de Cookies",
+                toc5: "Cookies de Terceiros",
+                toc6: "Segurança e Retenção de Cookies",
+                toc7: "Alterações neste Aviso",
+                toc8: "Entre em Contato",
+                whatTitle: "1. O que são Cookies?",
+                whatText: "Cookies são pequenos arquivos de texto colocados no seu dispositivo quando você visita um site. São amplamente utilizados para fazer os sites funcionarem com mais eficiência, lembrar suas preferências e fornecer informações analíticas aos proprietários.",
+                whatText2: "Tecnologias semelhantes como web beacons, pixels e armazenamento local também cumprem finalidades comparáveis e são abrangidas por este aviso.",
+                typesTitle: "2. Tipos de Cookies que Utilizamos",
+                type1: "Cookies Essenciais",
+                type1Desc: "Necessários para o funcionamento adequado do site. Não podem ser desativados.",
+                type2: "Cookies de Análise",
+                type2Desc: "Nos ajudam a entender como os visitantes interagem com nossa plataforma.",
+                type3: "Cookies de Marketing",
+                type3Desc: "Utilizados para entregar anúncios relevantes e medir a eficácia das campanhas.",
+                type4: "Cookies de Preferência",
+                type4Desc: "Lembram suas configurações e preferências de idioma para visitas futuras.",
+                howTitle: "3. Como Utilizamos os Cookies",
+                howText: "Utilizamos cookies e tecnologias semelhantes para os seguintes fins:",
+                how1: "Manter sua sessão e mantê-lo logado",
+                how2: "Lembrar suas preferências de idioma e exibição",
+                how3: "Analisar o tráfego do site e padrões de comportamento do usuário",
+                how4: "Personalizar conteúdo e recomendações",
+                how5: "Medir a eficácia de nossas campanhas de marketing",
+                how6: "Melhorar o desempenho e a segurança da plataforma",
+                manageTitle: "4. Gerenciando suas Preferências de Cookies",
+                manageText: "Você tem controle total sobre suas preferências de cookies. Pode gerenciá-las de várias formas:",
+                manage1: "Usar o banner de cookies que aparece na primeira visita",
+                manage2: "Ajustar as configurações do navegador para bloquear ou excluir cookies",
+                manage3: "Usar o modo de navegação anônima/privada para sessões temporárias",
+                manageNote: "Nota: Desativar certos cookies pode afetar a funcionalidade da nossa plataforma e limitar sua experiência.",
+                thirdTitle: "5. Cookies de Terceiros",
+                thirdText: "Podemos trabalhar com provedores de serviços terceirizados confiáveis que colocam cookies em nossa plataforma. Estes incluem:",
+                third1: "Provedores de análise (ex: Google Analytics)",
+                third2: "Plataformas de mídia social (ex: Facebook, LinkedIn, Twitter)",
+                third3: "Redes de publicidade e parceiros",
+                third4: "Processadores de pagamento e serviços de segurança",
+                thirdText2: "Não controlamos esses cookies de terceiros. Recomendamos que você revise suas respectivas políticas de privacidade e cookies.",
+                securityTitle: "6. Segurança e Retenção de Cookies",
+                securityText: "Implementamos medidas de segurança para proteger os dados de cookies contra acesso não autorizado. Os períodos de retenção variam conforme a finalidade:",
+                ret1: "Cookies de sessão: Excluídos ao fechar o navegador",
+                ret2: "Cookies persistentes: Permanecem no dispositivo por um período definido (geralmente 30 dias a 2 anos)",
+                ret3: "Cookies de análise: Geralmente retidos por até 26 meses",
+                changesTitle: "7. Alterações neste Aviso",
+                changesText: "Podemos atualizar este Aviso de Cookies periodicamente para refletir mudanças em nossas práticas, tecnologias ou requisitos legais. Alterações materiais serão comunicadas através de um aviso em nossa plataforma ou por e-mail.",
+                contactTitle: "8. Entre em Contato",
+                contactText: "Se você tiver alguma dúvida sobre nosso uso de cookies ou este aviso, entre em contato conosco:",
+                contactNote: 'Para informações detalhadas sobre como processamos seus dados pessoais, consulte também nossa <a href="privacy-policy.html">Política de Privacidade</a>.',
+                footerSlogan: "Conectando Experiências, Inspirando Soluções. O diretório global para ideias e negócios inovadores.",
+                quickLinks: "Links Rápidos",
+                home: "Início",
+                about: "Sobre",
+                howToParticipate: "Como Participar",
+                contact: "Contato",
+                resources: "Recursos",
+                directory: "Diretório",
+                podcasts: "Podcasts",
+                events: "Eventos",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Termos de Serviço",
+                privacy: "Política de Privacidade",
+                cookiePolicy: "Política de Cookies",
+                rights: "Todos os direitos reservados."
+            },
+            es: {
+                pageTitle: "Aviso de Cookies",
+                pageSubtitle: "Utilizamos cookies y tecnologías similares para mejorar tu experiencia, analizar el tráfico y personalizar contenido.",
+                lastUpdated: "Última Actualización: Enero 2026",
+                tocTitle: "Tabla de Contenidos",
+                toc1: "¿Qué son las Cookies?",
+                toc2: "Tipos de Cookies que Utilizamos",
+                toc3: "Cómo Utilizamos las Cookies",
+                toc4: "Gestión de tus Preferencias de Cookies",
+                toc5: "Cookies de Terceros",
+                toc6: "Seguridad y Retención de Cookies",
+                toc7: "Cambios en este Aviso",
+                toc8: "Contáctanos",
+                whatTitle: "1. ¿Qué son las Cookies?",
+                whatText: "Las cookies son pequeños archivos de texto que se colocan en tu dispositivo cuando visitas un sitio web. Se utilizan ampliamente para que los sitios funcionen con más eficiencia, recordar tus preferencias y proporcionar información analítica a los propietarios.",
+                whatText2: "Tecnologías similares como web beacons, píxeles y almacenamiento local también cumplen propósitos comparables y están cubiertas por este aviso.",
+                typesTitle: "2. Tipos de Cookies que Utilizamos",
+                type1: "Cookies Esenciales",
+                type1Desc: "Requeridas para el funcionamiento adecuado del sitio. No pueden desactivarse.",
+                type2: "Cookies de Análisis",
+                type2Desc: "Nos ayudan a entender cómo los visitantes interactúan con nuestra plataforma.",
+                type3: "Cookies de Marketing",
+                type3Desc: "Utilizadas para entregar anuncios relevantes y medir la eficacia de las campañas.",
+                type4: "Cookies de Preferencia",
+                type4Desc: "Recuerdan tus configuraciones y preferencias de idioma para futuras visitas.",
+                howTitle: "3. Cómo Utilizamos las Cookies",
+                howText: "Utilizamos cookies y tecnologías similares para los siguientes fines:",
+                how1: "Mantener tu sesión y mantenerte conectado",
+                how2: "Recordar tus preferencias de idioma y visualización",
+                how3: "Analizar el tráfico del sitio y patrones de comportamiento del usuario",
+                how4: "Personalizar contenido y recomendaciones",
+                how5: "Medir la eficacia de nuestras campañas de marketing",
+                how6: "Mejorar el rendimiento y la seguridad de la plataforma",
+                manageTitle: "4. Gestión de tus Preferencias de Cookies",
+                manageText: "Tienes control total sobre tus preferencias de cookies. Puedes gestionarlas de varias formas:",
+                manage1: "Usar el banner de cookies que aparece en tu primera visita",
+                manage2: "Ajustar la configuración de tu navegador para bloquear o eliminar cookies",
+                manage3: "Usar el modo de navegación anónima/privada para sesiones temporales",
+                manageNote: "Nota: Desactivar ciertas cookies puede afectar la funcionalidad de nuestra plataforma y limitar tu experiencia.",
+                thirdTitle: "5. Cookies de Terceros",
+                thirdText: "Podemos trabajar con proveedores de servicios externos confiables que colocan cookies en nuestra plataforma. Estos incluyen:",
+                third1: "Proveedores de análisis (ej: Google Analytics)",
+                third2: "Plataformas de redes sociales (ej: Facebook, LinkedIn, Twitter)",
+                third3: "Redes de publicidad y socios",
+                third4: "Procesadores de pagos y servicios de seguridad",
+                thirdText2: "No controlamos estas cookies de terceros. Te recomendamos revisar sus respectivas políticas de privacidad y cookies.",
+                securityTitle: "6. Seguridad y Retención de Cookies",
+                securityText: "Implementamos medidas de seguridad para proteger los datos de cookies contra accesos no autorizados. Los períodos de retención varían según su propósito:",
+                ret1: "Cookies de sesión: Se eliminan al cerrar tu navegador",
+                ret2: "Cookies persistentes: Permanecen en tu dispositivo por un período establecido (generalmente 30 días a 2 años)",
+                ret3: "Cookies de análisis: Generalmente retenidas por hasta 26 meses",
+                changesTitle: "7. Cambios en este Aviso",
+                changesText: "Podemos actualizar este Aviso de Cookies periódicamente para reflejar cambios en nuestras prácticas, tecnologías o requisitos legales. Los cambios materiales se comunicarán mediante un aviso en nuestra plataforma o por correo electrónico.",
+                contactTitle: "8. Contáctanos",
+                contactText: "Si tienes alguna pregunta sobre nuestro uso de cookies o este aviso, contáctanos:",
+                contactNote: 'Para información detallada sobre cómo procesamos tus datos personales, revisa también nuestra <a href="privacy-policy.html">Política de Privacidad</a>.',
+                footerSlogan: "Conectando Experiencias, Inspirando Soluciones. El directorio global para ideas y negocios innovadores.",
+                quickLinks: "Enlaces Rápidos",
+                home: "Inicio",
+                about: "Sobre",
+                howToParticipate: "Cómo Participar",
+                contact: "Contacto",
+                resources: "Recursos",
+                directory: "Directorio",
+                podcasts: "Podcasts",
+                events: "Eventos",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Términos de Servicio",
+                privacy: "Política de Privacidad",
+                cookiePolicy: "Política de Cookies",
+                rights: "Todos los derechos reservados."
+            }
+        };
+
+        // Language Change Function
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.innerHTML.includes('<a')) {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
