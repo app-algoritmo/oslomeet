@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- FAVICON Oslo Meet -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use - Oslo Meet</title>
+    <meta name="description" content="Terms of Use for Oslo Meet - Learn about the rules and guidelines for using our platform.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --success-green: #10b981;
+            --input-bg: #0f172a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            min-height: 100vh;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .language-selector select {
+            background: transparent;
+            border: none;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            outline: none;
+            padding: 5px;
+        }
+        
+        .language-selector select option {
+            background: var(--dark-bg);
+            color: white;
+        }
+        
+        .language-selector i {
+            color: var(--accent-blue);
+        }
+        
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Content Section */
+        .terms-section {
+            padding: 80px 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .terms-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .terms-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .terms-meta i {
+            color: var(--accent-blue);
+        }
+        
+        .terms-section h2 {
+            font-size: 1.5rem;
+            margin: 2.5rem 0 1rem;
+            color: white;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .terms-section h2:first-of-type {
+            margin-top: 0;
+        }
+        
+        .terms-section h2 i {
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+        }
+        
+        .terms-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.2rem;
+        }
+        
+        .terms-section ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .terms-section ul li {
+            color: #cbd5e1;
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .terms-section ul li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+        
+        .terms-section ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .terms-section ol li {
+            color: #cbd5e1;
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+        
+        .terms-section a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .terms-section a:hover {
+            text-decoration: underline;
+            color: #60a5fa;
+        }
+        
+        .highlight-box {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+        
+        .highlight-box p {
+            margin: 0;
+            color: #e2e8f0;
+        }
+        
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+        
+        .warning-box p {
+            margin: 0;
+            color: #e2e8f0;
+        }
+        
+        .section-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 3rem 0;
+        }
+        
+        /* Table of Contents */
+        .toc {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .toc h3 {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .toc h3 i {
+            color: var(--accent-blue);
+        }
+        
+        .toc ol {
+            padding-left: 1.5rem;
+        }
+        
+        .toc ol li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .toc ol li a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .toc ol li a:hover {
+            color: var(--accent-blue);
+        }
+        
+        /* Footer */
+        .footer {
+            background: #020617;
+            color: white;
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 80px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-brand h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-blue);
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .footer-social a:hover {
+            background: var(--accent-blue);
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-bottom a:hover {
+            color: var(--accent-blue);
+        }
+        
+        .developer-credit {
+            color: #fbbf24 !important;
+            font-weight: 500;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .terms-wrapper {
+                padding: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .terms-section h2 {
+                font-size: 1.3rem;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1 data-i18n="pageTitle">Terms of Use</h1>
+        <p data-i18n="pageSubtitle">Please read these terms carefully before using our platform. By accessing Oslo Meet, you agree to be bound by these terms.</p>
+    </header>
+
+    <!-- Terms Content -->
+    <section class="terms-section">
+        <div class="container">
+            <div class="terms-wrapper fade-in">
+                <div class="terms-meta">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span data-i18n="lastUpdated">Last Updated: January 2026</span>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h3><i class="fas fa-list"></i> <span data-i18n="tocTitle">Table of Contents</span></h3>
+                    <ol>
+                        <li><a href="#acceptance" data-i18n="toc1">Acceptance of Terms</a></li>
+                        <li><a href="#description" data-i18n="toc2">Description of Service</a></li>
+                        <li><a href="#accounts" data-i18n="toc3">User Accounts & Registration</a></li>
+                        <li><a href="#responsibilities" data-i18n="toc4">User Responsibilities</a></li>
+                        <li><a href="#intellectual" data-i18n="toc5">Intellectual Property Rights</a></li>
+                        <li><a href="#content" data-i18n="toc6">User-Generated Content</a></li>
+                        <li><a href="#prohibited" data-i18n="toc7">Prohibited Activities</a></li>
+                        <li><a href="#termination" data-i18n="toc8">Termination</a></li>
+                        <li><a href="#disclaimer" data-i18n="toc9">Disclaimer of Warranties</a></li>
+                        <li><a href="#liability" data-i18n="toc10">Limitation of Liability</a></li>
+                        <li><a href="#indemnification" data-i18n="toc11">Indemnification</a></li>
+                        <li><a href="#governing" data-i18n="toc12">Governing Law & Dispute Resolution</a></li>
+                        <li><a href="#changes" data-i18n="toc13">Changes to Terms</a></li>
+                        <li><a href="#contactTerms" data-i18n="toc14">Contact Information</a></li>
+                    </ol>
+                </div>
+
+                <h2 id="acceptance"><i class="fas fa-check-circle"></i> <span data-i18n="acceptanceTitle">1. Acceptance of Terms</span></h2>
+                <p data-i18n="acceptanceText">By accessing, browsing, or using Oslo Meet (the "Platform"), you acknowledge that you have read, understood, and agree to be bound by these Terms of Use. If you do not agree to these terms, please do not use our Platform.</p>
+                <div class="highlight-box">
+                    <p data-i18n="acceptanceNote">We reserve the right to modify these terms at any time. Continued use of the Platform after changes constitutes acceptance of the revised terms.</p>
+                </div>
+
+                <h2 id="description"><i class="fas fa-info-circle"></i> <span data-i18n="descriptionTitle">2. Description of Service</span></h2>
+                <p data-i18n="descriptionText">Oslo Meet is an online directory platform that connects innovative entrepreneurs, businesses, and investors worldwide. Our services include:</p>
+                <ul>
+                    <li data-i18n="desc1">Business and startup directory listings</li>
+                    <li data-i18n="desc2">Networking events and opportunities</li>
+                    <li data-i18n="desc3">Podcast features and interviews</li>
+                    <li data-i18n="desc4">Investment matchmaking services</li>
+                    <li data-i18n="desc5">Community resources and tools</li>
+                </ul>
+
+                <h2 id="accounts"><i class="fas fa-user-circle"></i> <span data-i18n="accountsTitle">3. User Accounts & Registration</span></h2>
+                <p data-i18n="accountsText">To access certain features, you may need to create an account. You agree to:</p>
+                <ul>
+                    <li data-i18n="acc1">Provide accurate and complete information during registration</li>
+                    <li data-i18n="acc2">Maintain the security of your account credentials</li>
+                    <li data-i18n="acc3">Notify us immediately of any unauthorized use of your account</li>
+                    <li data-i18n="acc4">Be at least 16 years of age to create an account</li>
+                </ul>
+                <div class="warning-box">
+                    <p data-i18n="accWarning">You are solely responsible for all activities that occur under your account.</p>
+                </div>
+
+                <h2 id="responsibilities"><i class="fas fa-balance-scale"></i> <span data-i18n="responsibilitiesTitle">4. User Responsibilities</span></h2>
+                <p data-i18n="responsibilitiesText">As a user of Oslo Meet, you agree to:</p>
+                <ul>
+                    <li data-i18n="resp1">Comply with all applicable laws and regulations</li>
+                    <li data-i18n="resp2">Provide truthful and accurate business information</li>
+                    <li data-i18n="resp3">Respect the intellectual property rights of others</li>
+                    <li data-i18n="resp4">Not engage in any activity that disrupts the Platform</li>
+                    <li data-i18n="resp5">Maintain professional conduct in all interactions</li>
+                </ul>
+
+                <h2 id="intellectual"><i class="fas fa-copyright"></i> <span data-i18n="intellectualTitle">5. Intellectual Property Rights</span></h2>
+                <p data-i18n="intellectualText">All content on Oslo Meet, including logos, designs, text, graphics, and software, is the property of Oslo Meet or its licensors and is protected by intellectual property laws.</p>
+                <ul>
+                    <li data-i18n="ip1">You may not reproduce, distribute, or create derivative works without our written consent</li>
+                    <li data-i18n="ip2">The Oslo Meet name and logo are registered trademarks</li>
+                    <li data-i18n="ip3">Business listings remain the intellectual property of their respective owners</li>
+                </ul>
+
+                <h2 id="content"><i class="fas fa-file-alt"></i> <span data-i18n="contentTitle">6. User-Generated Content</span></h2>
+                <p data-i18n="contentText">By submitting content to Oslo Meet, you grant us a non-exclusive, worldwide, royalty-free license to use, reproduce, and display that content in connection with our services.</p>
+                <div class="highlight-box">
+                    <p data-i18n="contentNote">You retain all rights to your original content, but grant us the right to showcase it on our Platform.</p>
+                </div>
+
+                <h2 id="prohibited"><i class="fas fa-ban"></i> <span data-i18n="prohibitedTitle">7. Prohibited Activities</span></h2>
+                <p data-i18n="prohibitedText">You may not:</p>
+                <ul>
+                    <li data-i18n="proh1">Use the Platform for any illegal or unauthorized purpose</li>
+                    <li data-i18n="proh2">Submit false or misleading business information</li>
+                    <li data-i18n="proh3">Harass, threaten, or defame other users</li>
+                    <li data-i18n="proh4">Attempt to gain unauthorized access to our systems</li>
+                    <li data-i18n="proh5">Use automated tools to scrape or harvest data</li>
+                    <li data-i18n="proh6">Post spam, malware, or malicious content</li>
+                </ul>
+
+                <h2 id="termination"><i class="fas fa-times-circle"></i> <span data-i18n="terminationTitle">8. Termination</span></h2>
+                <p data-i18n="terminationText">We reserve the right to suspend or terminate your access to the Platform at any time, without prior notice, for violations of these Terms. Upon termination:</p>
+                <ul>
+                    <li data-i18n="term1">Your account and associated data may be deleted</li>
+                    <li data-i18n="term2">You must cease all use of the Platform immediately</li>
+                    <li data-i18n="term3">Sections on intellectual property, disclaimers, and liability shall survive termination</li>
+                </ul>
+
+                <h2 id="disclaimer"><i class="fas fa-exclamation-triangle"></i> <span data-i18n="disclaimerTitle">9. Disclaimer of Warranties</span></h2>
+                <p data-i18n="disclaimerText">Oslo Meet is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that:</p>
+                <ul>
+                    <li data-i18n="discl1">The Platform will be uninterrupted or error-free</li>
+                    <li data-i18n="discl2">The information provided is accurate or complete</li>
+                    <li data-i18n="discl3">Business opportunities listed will result in successful outcomes</li>
+                </ul>
+
+                <h2 id="liability"><i class="fas fa-shield-alt"></i> <span data-i18n="liabilityTitle">10. Limitation of Liability</span></h2>
+                <p data-i18n="liabilityText">To the maximum extent permitted by law, Oslo Meet shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Platform.</p>
+                <div class="warning-box">
+                    <p data-i18n="liabilityNote">Our total liability shall not exceed the amount you have paid to us in the last 12 months, or $100 USD, whichever is greater.</p>
+                </div>
+
+                <h2 id="indemnification"><i class="fas fa-hand-holding-usd"></i> <span data-i18n="indemnificationTitle">11. Indemnification</span></h2>
+                <p data-i18n="indemnificationText">You agree to indemnify and hold harmless Oslo Meet, its directors, employees, and partners from any claims, damages, or expenses arising from your use of the Platform or violation of these Terms.</p>
+
+                <h2 id="governing"><i class="fas fa-gavel"></i> <span data-i18n="governingTitle">12. Governing Law & Dispute Resolution</span></h2>
+                <p data-i18n="governingText">These Terms shall be governed by the laws of Norway, without regard to its conflict of law provisions. Any disputes shall be resolved through:</p>
+                <ol>
+                    <li data-i18n="gov1">Good faith negotiation between the parties</li>
+                    <li data-i18n="gov2">Mediation by a neutral third party</li>
+                    <li data-i18n="gov3">Arbitration in Oslo, Norway if mediation fails</li>
+                </ol>
+
+                <h2 id="changes"><i class="fas fa-sync-alt"></i> <span data-i18n="changesTitle">13. Changes to Terms</span></h2>
+                <p data-i18n="changesText">We may update these Terms of Use at any time. Material changes will be communicated through email notification or a prominent notice on the Platform. We encourage you to review these terms regularly.</p>
+
+                <div class="section-divider"></div>
+
+                <h2 id="contactTerms"><i class="fas fa-envelope"></i> <span data-i18n="contactTermsTitle">14. Contact Information</span></h2>
+                <p data-i18n="contactTermsText">If you have any questions about these Terms of Use, please contact us:</p>
+                <ul>
+                    <li>Email: <a href="mailto:post@barros.no">post@barros.no</a></li>
+                    <li>Website: <a href="https://oslomeet.org/contact">oslomeet.org/contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Column 1: Brand -->
+                <div class="footer-brand">
+                    <h2>OSLO MEET</h2>
+                    <p data-i18n="footerSlogan">Connecting Experiences, Inspiring Solutions. The global directory for innovative ideas and businesses.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/oslomeet/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/oslomeet" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/oslomeet1/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Quick Links -->
+                <div>
+                    <h3 class="footer-title" data-i18n="quickLinks">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html" data-i18n="home">Home</a></li>
+                        <li><a href="index.html#about" data-i18n="about">About</a></li>
+                        <li><a href="index.html#how-to-participate" data-i18n="howToParticipate">How to Participate</a></li>
+                        <li><a href="contact.html" data-i18n="contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3: Resources -->
+                <div>
+                    <h3 class="footer-title" data-i18n="resources">Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-i18n="directory">Directory</a></li>
+                        <li><a href="#" data-i18n="podcasts">Podcasts</a></li>
+                        <li><a href="#" data-i18n="events">Events</a></li>
+                        <li><a href="#" data-i18n="blog">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4: Legal -->
+                <div>
+                    <h3 class="footer-title" data-i18n="legal">Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="contact.html" data-i18n="contact">Contact</a></li>
+                        <li><a href="terms-of-use.html" data-i18n="terms">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html" data-i18n="privacy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="cookiePolicy">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div>&copy; 2026 Oslo Meet. <span data-i18n="rights">All rights reserved.</span></div>
+                <div>
+                    <a href="https://oslomeet.org">www.oslomeet.org</a>
+                    <a href="mailto:post@barros.no">post@barros.no</a>
+                </div>
+                <div>
+                    <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener noreferrer" class="developer-credit">
+                        <i class="fas fa-code"></i> Developed by Digital Solutions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                pageTitle: "Terms of Use",
+                pageSubtitle: "Please read these terms carefully before using our platform. By accessing Oslo Meet, you agree to be bound by these terms.",
+                lastUpdated: "Last Updated: January 2026",
+                tocTitle: "Table of Contents",
+                toc1: "Acceptance of Terms",
+                toc2: "Description of Service",
+                toc3: "User Accounts & Registration",
+                toc4: "User Responsibilities",
+                toc5: "Intellectual Property Rights",
+                toc6: "User-Generated Content",
+                toc7: "Prohibited Activities",
+                toc8: "Termination",
+                toc9: "Disclaimer of Warranties",
+                toc10: "Limitation of Liability",
+                toc11: "Indemnification",
+                toc12: "Governing Law & Dispute Resolution",
+                toc13: "Changes to Terms",
+                toc14: "Contact Information",
+                acceptanceTitle: "1. Acceptance of Terms",
+                acceptanceText: "By accessing, browsing, or using Oslo Meet (the \"Platform\"), you acknowledge that you have read, understood, and agree to be bound by these Terms of Use. If you do not agree to these terms, please do not use our Platform.",
+                acceptanceNote: "We reserve the right to modify these terms at any time. Continued use of the Platform after changes constitutes acceptance of the revised terms.",
+                descriptionTitle: "2. Description of Service",
+                descriptionText: "Oslo Meet is an online directory platform that connects innovative entrepreneurs, businesses, and investors worldwide. Our services include:",
+                desc1: "Business and startup directory listings",
+                desc2: "Networking events and opportunities",
+                desc3: "Podcast features and interviews",
+                desc4: "Investment matchmaking services",
+                desc5: "Community resources and tools",
+                accountsTitle: "3. User Accounts & Registration",
+                accountsText: "To access certain features, you may need to create an account. You agree to:",
+                acc1: "Provide accurate and complete information during registration",
+                acc2: "Maintain the security of your account credentials",
+                acc3: "Notify us immediately of any unauthorized use of your account",
+                acc4: "Be at least 16 years of age to create an account",
+                accWarning: "You are solely responsible for all activities that occur under your account.",
+                responsibilitiesTitle: "4. User Responsibilities",
+                responsibilitiesText: "As a user of Oslo Meet, you agree to:",
+                resp1: "Comply with all applicable laws and regulations",
+                resp2: "Provide truthful and accurate business information",
+                resp3: "Respect the intellectual property rights of others",
+                resp4: "Not engage in any activity that disrupts the Platform",
+                resp5: "Maintain professional conduct in all interactions",
+                intellectualTitle: "5. Intellectual Property Rights",
+                intellectualText: "All content on Oslo Meet, including logos, designs, text, graphics, and software, is the property of Oslo Meet or its licensors and is protected by intellectual property laws.",
+                ip1: "You may not reproduce, distribute, or create derivative works without our written consent",
+                ip2: "The Oslo Meet name and logo are registered trademarks",
+                ip3: "Business listings remain the intellectual property of their respective owners",
+                contentTitle: "6. User-Generated Content",
+                contentText: "By submitting content to Oslo Meet, you grant us a non-exclusive, worldwide, royalty-free license to use, reproduce, and display that content in connection with our services.",
+                contentNote: "You retain all rights to your original content, but grant us the right to showcase it on our Platform.",
+                prohibitedTitle: "7. Prohibited Activities",
+                prohibitedText: "You may not:",
+                proh1: "Use the Platform for any illegal or unauthorized purpose",
+                proh2: "Submit false or misleading business information",
+                proh3: "Harass, threaten, or defame other users",
+                proh4: "Attempt to gain unauthorized access to our systems",
+                proh5: "Use automated tools to scrape or harvest data",
+                proh6: "Post spam, malware, or malicious content",
+                terminationTitle: "8. Termination",
+                terminationText: "We reserve the right to suspend or terminate your access to the Platform at any time, without prior notice, for violations of these Terms. Upon termination:",
+                term1: "Your account and associated data may be deleted",
+                term2: "You must cease all use of the Platform immediately",
+                term3: "Sections on intellectual property, disclaimers, and liability shall survive termination",
+                disclaimerTitle: "9. Disclaimer of Warranties",
+                disclaimerText: "Oslo Meet is provided \"as is\" and \"as available\" without warranties of any kind, either express or implied. We do not warrant that:",
+                discl1: "The Platform will be uninterrupted or error-free",
+                discl2: "The information provided is accurate or complete",
+                discl3: "Business opportunities listed will result in successful outcomes",
+                liabilityTitle: "10. Limitation of Liability",
+                liabilityText: "To the maximum extent permitted by law, Oslo Meet shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Platform.",
+                liabilityNote: "Our total liability shall not exceed the amount you have paid to us in the last 12 months, or $100 USD, whichever is greater.",
+                indemnificationTitle: "11. Indemnification",
+                indemnificationText: "You agree to indemnify and hold harmless Oslo Meet, its directors, employees, and partners from any claims, damages, or expenses arising from your use of the Platform or violation of these Terms.",
+                governingTitle: "12. Governing Law & Dispute Resolution",
+                governingText: "These Terms shall be governed by the laws of Norway, without regard to its conflict of law provisions. Any disputes shall be resolved through:",
+                gov1: "Good faith negotiation between the parties",
+                gov2: "Mediation by a neutral third party",
+                gov3: "Arbitration in Oslo, Norway if mediation fails",
+                changesTitle: "13. Changes to Terms",
+                changesText: "We may update these Terms of Use at any time. Material changes will be communicated through email notification or a prominent notice on the Platform. We encourage you to review these terms regularly.",
+                contactTermsTitle: "14. Contact Information",
+                contactTermsText: "If you have any questions about these Terms of Use, please contact us:",
+                footerSlogan: "Connecting Experiences, Inspiring Solutions. The global directory for innovative ideas and businesses.",
+                quickLinks: "Quick Links",
+                home: "Home",
+                about: "About",
+                howToParticipate: "How to Participate",
+                contact: "Contact",
+                resources: "Resources",
+                directory: "Directory",
+                podcasts: "Podcasts",
+                events: "Events",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Terms of Service",
+                privacy: "Privacy Policy",
+                cookiePolicy: "Cookie Policy",
+                rights: "All rights reserved."
+            },
+            pt: {
+                pageTitle: "Termos de Uso",
+                pageSubtitle: "Por favor, leia estes termos cuidadosamente antes de usar nossa plataforma. Ao acessar o Oslo Meet, você concorda em estar vinculado a estes termos.",
+                lastUpdated: "Última Atualização: Janeiro de 2026",
+                tocTitle: "Índice",
+                toc1: "Aceitação dos Termos",
+                toc2: "Descrição do Serviço",
+                toc3: "Contas de Usuário e Registro",
+                toc4: "Responsabilidades do Usuário",
+                toc5: "Direitos de Propriedade Intelectual",
+                toc6: "Conteúdo Gerado pelo Usuário",
+                toc7: "Atividades Proibidas",
+                toc8: "Rescisão",
+                toc9: "Isenção de Garantias",
+                toc10: "Limitação de Responsabilidade",
+                toc11: "Indenização",
+                toc12: "Lei Aplicável e Resolução de Disputas",
+                toc13: "Alterações nos Termos",
+                toc14: "Informações de Contato",
+                acceptanceTitle: "1. Aceitação dos Termos",
+                acceptanceText: "Ao acessar, navegar ou usar o Oslo Meet (a \"Plataforma\"), você reconhece que leu, entendeu e concorda em estar vinculado a estes Termos de Uso. Se você não concordar com estes termos, por favor, não use nossa Plataforma.",
+                acceptanceNote: "Reservamo-nos o direito de modificar estes termos a qualquer momento. O uso contínuo da Plataforma após alterações constitui aceitação dos termos revisados.",
+                descriptionTitle: "2. Descrição do Serviço",
+                descriptionText: "O Oslo Meet é uma plataforma de diretório online que conecta empreendedores inovadores, empresas e investidores em todo o mundo. Nossos serviços incluem:",
+                desc1: "Listagens de negócios e startups no diretório",
+                desc2: "Eventos de networking e oportunidades",
+                desc3: "Destaque em podcasts e entrevistas",
+                desc4: "Serviços de matchmaking de investimentos",
+                desc5: "Recursos e ferramentas da comunidade",
+                accountsTitle: "3. Contas de Usuário e Registro",
+                accountsText: "Para acessar certos recursos, você pode precisar criar uma conta. Você concorda em:",
+                acc1: "Fornecer informações precisas e completas durante o registro",
+                acc2: "Manter a segurança das credenciais da sua conta",
+                acc3: "Notificar-nos imediatamente de qualquer uso não autorizado da sua conta",
+                acc4: "Ter pelo menos 16 anos de idade para criar uma conta",
+                accWarning: "Você é o único responsável por todas as atividades que ocorrem sob sua conta.",
+                responsibilitiesTitle: "4. Responsabilidades do Usuário",
+                responsibilitiesText: "Como usuário do Oslo Meet, você concorda em:",
+                resp1: "Cumprir todas as leis e regulamentações aplicáveis",
+                resp2: "Fornecer informações comerciais verdadeiras e precisas",
+                resp3: "Respeitar os direitos de propriedade intelectual de outros",
+                resp4: "Não se envolver em nenhuma atividade que interrompa a Plataforma",
+                resp5: "Manter conduta profissional em todas as interações",
+                intellectualTitle: "5. Direitos de Propriedade Intelectual",
+                intellectualText: "Todo o conteúdo no Oslo Meet, incluindo logotipos, designs, texto, gráficos e software, é propriedade do Oslo Meet ou de seus licenciadores e é protegido pelas leis de propriedade intelectual.",
+                ip1: "Você não pode reproduzir, distribuir ou criar obras derivadas sem nosso consentimento por escrito",
+                ip2: "O nome e logotipo do Oslo Meet são marcas registradas",
+                ip3: "As listagens de negócios permanecem como propriedade intelectual de seus respectivos proprietários",
+                contentTitle: "6. Conteúdo Gerado pelo Usuário",
+                contentText: "Ao submeter conteúdo ao Oslo Meet, você nos concede uma licença não exclusiva, mundial e livre de royalties para usar, reproduzir e exibir esse conteúdo em conexão com nossos serviços.",
+                contentNote: "Você retém todos os direitos sobre seu conteúdo original, mas nos concede o direito de exibi-lo em nossa Plataforma.",
+                prohibitedTitle: "7. Atividades Proibidas",
+                prohibitedText: "Você não pode:",
+                proh1: "Usar a Plataforma para qualquer finalidade ilegal ou não autorizada",
+                proh2: "Submeter informações comerciais falsas ou enganosas",
+                proh3: "Assediar, ameaçar ou difamar outros usuários",
+                proh4: "Tentar obter acesso não autorizado aos nossos sistemas",
+                proh5: "Usar ferramentas automatizadas para extrair ou coletar dados",
+                proh6: "Postar spam, malware ou conteúdo malicioso",
+                terminationTitle: "8. Rescisão",
+                terminationText: "Reservamo-nos o direito de suspender ou encerrar seu acesso à Plataforma a qualquer momento, sem aviso prévio, por violações destes Termos. Após a rescisão:",
+                term1: "Sua conta e dados associados podem ser excluídos",
+                term2: "Você deve cessar imediatamente todo o uso da Plataforma",
+                term3: "As seções sobre propriedade intelectual, isenções e responsabilidade sobreviverão à rescisão",
+                disclaimerTitle: "9. Isenção de Garantias",
+                disclaimerText: "O Oslo Meet é fornecido \"como está\" e \"conforme disponível\" sem garantias de qualquer tipo, expressas ou implícitas. Não garantimos que:",
+                discl1: "A Plataforma será ininterrupta ou livre de erros",
+                discl2: "As informações fornecidas são precisas ou completas",
+                discl3: "As oportunidades de negócio listadas resultarão em resultados bem-sucedidos",
+                liabilityTitle: "10. Limitação de Responsabilidade",
+                liabilityText: "Na máxima extensão permitida pela lei, o Oslo Meet não será responsável por quaisquer danos indiretos, incidentais, especiais, consequenciais ou punitivos decorrentes do seu uso da Plataforma.",
+                liabilityNote: "Nossa responsabilidade total não excederá o valor que você nos pagou nos últimos 12 meses, ou 100 USD, o que for maior.",
+                indemnificationTitle: "11. Indenização",
+                indemnificationText: "Você concorda em indenizar e isentar o Oslo Meet, seus diretores, funcionários e parceiros de quaisquer reclamações, danos ou despesas decorrentes do seu uso da Plataforma ou violação destes Termos.",
+                governingTitle: "12. Lei Aplicável e Resolução de Disputas",
+                governingText: "Estes Termos serão regidos pelas leis da Noruega, sem considerar suas disposições de conflito de leis. Quaisquer disputas serão resolvidas através de:",
+                gov1: "Negociação de boa fé entre as partes",
+                gov2: "Mediação por uma terceira parte neutra",
+                gov3: "Arbitragem em Oslo, Noruega, se a mediação falhar",
+                changesTitle: "13. Alterações nos Termos",
+                changesText: "Podemos atualizar estes Termos de Uso a qualquer momento. Alterações materiais serão comunicadas através de notificação por e-mail ou um aviso proeminente na Plataforma. Recomendamos que você revise estes termos regularmente.",
+                contactTermsTitle: "14. Informações de Contato",
+                contactTermsText: "Se você tiver alguma dúvida sobre estes Termos de Uso, entre em contato conosco:",
+                footerSlogan: "Conectando Experiências, Inspirando Soluções. O diretório global para ideias e negócios inovadores.",
+                quickLinks: "Links Rápidos",
+                home: "Início",
+                about: "Sobre",
+                howToParticipate: "Como Participar",
+                contact: "Contato",
+                resources: "Recursos",
+                directory: "Diretório",
+                podcasts: "Podcasts",
+                events: "Eventos",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Termos de Serviço",
+                privacy: "Política de Privacidade",
+                cookiePolicy: "Política de Cookies",
+                rights: "Todos os direitos reservados."
+            },
+            es: {
+                pageTitle: "Términos de Uso",
+                pageSubtitle: "Por favor, lee estos términos cuidadosamente antes de usar nuestra plataforma. Al acceder a Oslo Meet, aceptas estar sujeto a estos términos.",
+                lastUpdated: "Última Actualización: Enero 2026",
+                tocTitle: "Tabla de Contenidos",
+                toc1: "Aceptación de Términos",
+                toc2: "Descripción del Servicio",
+                toc3: "Cuentas de Usuario y Registro",
+                toc4: "Responsabilidades del Usuario",
+                toc5: "Derechos de Propiedad Intelectual",
+                toc6: "Contenido Generado por el Usuario",
+                toc7: "Actividades Prohibidas",
+                toc8: "Terminación",
+                toc9: "Exención de Garantías",
+                toc10: "Limitación de Responsabilidad",
+                toc11: "Indemnización",
+                toc12: "Ley Aplicable y Resolución de Disputas",
+                toc13: "Cambios en los Términos",
+                toc14: "Información de Contacto",
+                acceptanceTitle: "1. Aceptación de Términos",
+                acceptanceText: "Al acceder, navegar o usar Oslo Meet (la \"Plataforma\"), reconoces que has leído, comprendido y aceptas estar sujeto a estos Términos de Uso. Si no aceptas estos términos, por favor no uses nuestra Plataforma.",
+                acceptanceNote: "Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de la Plataforma después de cambios constituye la aceptación de los términos revisados.",
+                descriptionTitle: "2. Descripción del Servicio",
+                descriptionText: "Oslo Meet es una plataforma de directorio en línea que conecta emprendedores innovadores, empresas e inversores en todo el mundo. Nuestros servicios incluyen:",
+                desc1: "Listados de negocios y startups en el directorio",
+                desc2: "Eventos de networking y oportunidades",
+                desc3: "Destacados en podcasts y entrevistas",
+                desc4: "Servicios de matchmaking de inversiones",
+                desc5: "Recursos y herramientas de la comunidad",
+                accountsTitle: "3. Cuentas de Usuario y Registro",
+                accountsText: "Para acceder a ciertas funciones, puede que necesites crear una cuenta. Aceptas:",
+                acc1: "Proporcionar información precisa y completa durante el registro",
+                acc2: "Mantener la seguridad de las credenciales de tu cuenta",
+                acc3: "Notificarnos inmediatamente de cualquier uso no autorizado de tu cuenta",
+                acc4: "Tener al menos 16 años de edad para crear una cuenta",
+                accWarning: "Eres el único responsable de todas las actividades que ocurran bajo tu cuenta.",
+                responsibilitiesTitle: "4. Responsabilidades del Usuario",
+                responsibilitiesText: "Como usuario de Oslo Meet, aceptas:",
+                resp1: "Cumplir con todas las leyes y regulaciones aplicables",
+                resp2: "Proporcionar información comercial veraz y precisa",
+                resp3: "Respetar los derechos de propiedad intelectual de otros",
+                resp4: "No participar en ninguna actividad que interrumpa la Plataforma",
+                resp5: "Mantener una conducta profesional en todas las interacciones",
+                intellectualTitle: "5. Derechos de Propiedad Intelectual",
+                intellectualText: "Todo el contenido en Oslo Meet, incluyendo logotipos, diseños, texto, gráficos y software, es propiedad de Oslo Meet o de sus licenciadores y está protegido por las leyes de propiedad intelectual.",
+                ip1: "No puedes reproducir, distribuir o crear obras derivadas sin nuestro consentimiento por escrito",
+                ip2: "El nombre y logotipo de Oslo Meet son marcas registradas",
+                ip3: "Los listados de negocios permanecen como propiedad intelectual de sus respectivos propietarios",
+                contentTitle: "6. Contenido Generado por el Usuario",
+                contentText: "Al enviar contenido a Oslo Meet, nos otorgas una licencia no exclusiva, mundial y libre de regalías para usar, reproducir y mostrar ese contenido en conexión con nuestros servicios.",
+                contentNote: "Conservas todos los derechos sobre tu contenido original, pero nos otorgas el derecho de mostrarlo en nuestra Plataforma.",
+                prohibitedTitle: "7. Actividades Prohibidas",
+                prohibitedText: "No puedes:",
+                proh1: "Usar la Plataforma para cualquier propósito ilegal o no autorizado",
+                proh2: "Enviar información comercial falsa o engañosa",
+                proh3: "Acosar, amenazar o difamar a otros usuarios",
+                proh4: "Intentar obtener acceso no autorizado a nuestros sistemas",
+                proh5: "Usar herramientas automatizadas para extraer o recolectar datos",
+                proh6: "Publicar spam, malware o contenido malicioso",
+                terminationTitle: "8. Terminación",
+                terminationText: "Nos reservamos el derecho de suspender o terminar tu acceso a la Plataforma en cualquier momento, sin previo aviso, por violaciones de estos Términos. Tras la terminación:",
+                term1: "Tu cuenta y datos asociados pueden ser eliminados",
+                term2: "Debes cesar inmediatamente todo uso de la Plataforma",
+                term3: "Las secciones sobre propiedad intelectual, exenciones y responsabilidad sobrevivirán a la terminación",
+                disclaimerTitle: "9. Exención de Garantías",
+                disclaimerText: "Oslo Meet se proporciona \"tal cual\" y \"según disponibilidad\" sin garantías de ningún tipo, expresas o implícitas. No garantizamos que:",
+                discl1: "La Plataforma será ininterrumpida o libre de errores",
+                discl2: "La información proporcionada sea precisa o completa",
+                discl3: "Las oportunidades de negocio listadas resultarán en resultados exitosos",
+                liabilityTitle: "10. Limitación de Responsabilidad",
+                liabilityText: "En la máxima extensión permitida por la ley, Oslo Meet no será responsable de ningún daño indirecto, incidental, especial, consecuencial o punitivo derivado del uso de la Plataforma.",
+                liabilityNote: "Nuestra responsabilidad total no excederá el monto que nos hayas pagado en los últimos 12 meses, o 100 USD, lo que sea mayor.",
+                indemnificationTitle: "11. Indemnización",
+                indemnificationText: "Aceptas indemnizar y eximir de responsabilidad a Oslo Meet, sus directores, empleados y socios de cualquier reclamo, daño o gasto derivado del uso de la Plataforma o violación de estos Términos.",
+                governingTitle: "12. Ley Aplicable y Resolución de Disputas",
+                governingText: "Estos Términos se regirán por las leyes de Noruega, sin considerar sus disposiciones de conflicto de leyes. Cualquier disputa se resolverá mediante:",
+                gov1: "Negociación de buena fe entre las partes",
+                gov2: "Mediación por una tercera parte neutral",
+                gov3: "Arbitraje en Oslo, Noruega si la mediación falla",
+                changesTitle: "13. Cambios en los Términos",
+                changesText: "Podemos actualizar estos Términos de Uso en cualquier momento. Los cambios materiales serán comunicados mediante notificación por correo electrónico o un aviso destacado en la Plataforma. Te recomendamos revisar estos términos regularmente.",
+                contactTermsTitle: "14. Información de Contacto",
+                contactTermsText: "Si tienes alguna pregunta sobre estos Términos de Uso, contáctanos:",
+                footerSlogan: "Conectando Experiencias, Inspirando Soluciones. El directorio global para ideas y negocios innovadores.",
+                quickLinks: "Enlaces Rápidos",
+                home: "Inicio",
+                about: "Sobre",
+                howToParticipate: "Cómo Participar",
+                contact: "Contacto",
+                resources: "Recursos",
+                directory: "Directorio",
+                podcasts: "Podcasts",
+                events: "Eventos",
+                blog: "Blog",
+                legal: "Legal",
+                terms: "Términos de Servicio",
+                privacy: "Política de Privacidad",
+                cookiePolicy: "Política de Cookies",
+                rights: "Todos los derechos reservados."
+            }
+        };
+
+        // Language Change Function
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    // Handle HTML content (like links inside text)
+                    if (element.innerHTML.includes('<a')) {
+                        element.innerHTML = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
