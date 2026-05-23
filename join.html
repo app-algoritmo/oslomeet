@@ -584,69 +584,92 @@
         setupTagsInput('techTags');
         setupTagsInput('marketTags');
 
-        // ============================================
-        // ENVIO PARA SUPABASE
-        // ============================================
-        document.getElementById('smartForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitBtn = document.querySelector('button[type="submit"]');
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = 'Processing...';
-            submitBtn.disabled = true;
+// ENVIO PARA SUPABASE (COM DEBUG)
+// ============================================
+document.getElementById('smartForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    console.log('🔍 DEBUG: Form submit triggered');
+    
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = 'Processing...';
+    submitBtn.disabled = true;
 
-            try {
-                // Coleta dados do formulário
-                const formData = new FormData(e.target);
-                const data = Object.fromEntries(formData.entries());
-                
-                // Coleta checkboxes e tags
-                data.goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
-                data.connectWith = Array.from(document.querySelectorAll('input[name="connectWith"]:checked')).map(cb => cb.value);
-                data.collabTypes = Array.from(document.querySelectorAll('input[name="collabTypes"]:checked')).map(cb => cb.value);
-                data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
-                data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
+    try {
+        // Verifica se as chaves estão configuradas corretamente
+        if (SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.includes('eyJhbGciOi')) {
+            throw new Error('⚠️ Configure suas chaves do Supabase primeiro!');
+        }
 
-                // Mapeia para estrutura do banco
-                const companyData = {
-                    name: data.companyName,
-                    industry: data.industry,
-                    size: data.companySize || null,
-                    contact_email: data.email,
-                    website: data.website || null,
-                    description: data.challenges || data.additional || null,
-                    goals: data.goals || [],
-                    tech_stack: data.technologies || [],
-                    target_markets: data.markets || [],
-                    visibility: 'public', // Default inicial
-                    created_at: new Date().toISOString()
-                };
+        // Coleta dados do formulário
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData.entries());
+        
+        // Coleta checkboxes e tags
+        data.goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
+        data.connectWith = Array.from(document.querySelectorAll('input[name="connectWith"]:checked')).map(cb => cb.value);
+        data.collabTypes = Array.from(document.querySelectorAll('input[name="collabTypes"]:checked')).map(cb => cb.value);
+        data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
+        data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
 
-                console.log('📦 Sending to Supabase:', companyData);
+        // Mapeia para estrutura do banco
+        const companyData = {
+            name: data.companyName,
+            industry: data.industry,
+            size: data.companySize || null,
+            contact_email: data.email,
+            website: data.website || null,
+            description: data.challenges || data.additional || null,
+            goals: data.goals || [],
+            tech_stack: data.technologies || [],
+            target_markets: data.markets || [],
+            visibility: 'public',
+            created_at: new Date().toISOString()
+        };
 
-                // Insere no Supabase
-                const { data: inserted, error } = await supabase
-                    .from('companies')
-                    .insert([companyData])
-                    .select()
-                    .single();
+        console.log('📦 Dados a serem enviados:', companyData);
+        console.log('🔗 URL do Supabase:', SUPABASE_URL);
 
-                if (error) throw error;
+        // Testa conexão com Supabase antes de inserir
+        const { data: testData, error: testError } = await supabase
+            .from('companies')
+            .select('count')
+            .limit(1);
+        
+        if (testError) {
+            console.error('❌ Erro de conexão:', testError);
+            throw new Error(`Erro de conexão: ${testError.message}`);
+        }
 
-                console.log('✅ Success! Company ID:', inserted?.id);
+        console.log('✅ Conexão OK, inserindo...');
 
-                // Mostra estado de sucesso
-                document.querySelector('.form-card').style.display = 'none';
-                document.getElementById('successState').classList.add('active');
-                document.getElementById('successState').style.display = 'block';
+        // Insere no Supabase
+        const { data: inserted, error } = await supabase
+            .from('companies')
+            .insert([companyData])
+            .select()
+            .single();
 
-            } catch (err) {
-                console.error('❌ Error submitting form:', err);
-                alert('Oops! Something went wrong. Please try again or contact support.');
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
-            }
-        });
+        if (error) {
+            console.error('❌ Erro ao inserir:', error);
+            throw error;
+        }
+
+        console.log('✅ Sucesso! Company ID:', inserted?.id);
+
+        // Mostra estado de sucesso
+        document.querySelector('.form-card').style.display = 'none';
+        document.getElementById('successState').classList.add('active');
+        document.getElementById('successState').style.display = 'block';
+
+    } catch (err) {
+        console.error('❌ Erro completo:', err);
+        alert(`Erro: ${err.message}\n\nVerifique o console (F12) para mais detalhes.`);
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+    }
+});
 
         // ============================================
         // INICIALIZAÇÃO
