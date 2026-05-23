@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works — Oslo Meet AI Matching</title>
+    <meta name="description" content="Learn how Oslo Meet's AI connects companies, founders and opportunities across the Nordic business ecosystem.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --success-green: #10b981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            padding: 8px 16px; display: flex; align-items: center; gap: 10px;
+        }
+        .language-selector select {
+            background: transparent; border: none; color: white;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer;
+        }
+        .language-selector select option { background: var(--dark-bg); color: white; }
+
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
+            padding: 100px 20px 80px; text-align: center; position: relative;
+        }
+        .page-header h1 {
+            font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .page-header p { color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+
+        /* Sections */
+        .section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(139,92,246,0.15); color: var(--accent-purple);
+            padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: 2.2rem; font-weight: 700; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #818cf8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .section-subtitle { color: var(--text-secondary); max-width: 650px; margin: 0 auto; }
+
+        /* Algorithm Steps */
+        .steps-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem; margin-top: 2rem;
+        }
+        .step-card {
+            background: var(--card-bg); padding: 2rem; border-radius: 20px;
+            border: 1px solid var(--border-color); position: relative; transition: all 0.3s;
+        }
+        .step-card:hover { transform: translateY(-5px); border-color: var(--accent-purple); }
+        .step-icon {
+            width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; color: white; margin-bottom: 1.5rem;
+        }
+        .step-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: white; }
+        .step-card p { color: var(--text-secondary); font-size: 0.95rem; }
+        .step-number {
+            position: absolute; top: -12px; right: 20px;
+            background: var(--dark-bg); border: 1px solid var(--border-color);
+            padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--accent-purple); font-weight: 700;
+        }
+
+        /* Use Cases */
+        .cases-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem; margin-top: 2rem;
+        }
+        .case-card {
+            background: var(--card-bg); border-radius: 20px; padding: 2rem;
+            border: 1px solid var(--border-color); transition: all 0.3s;
+        }
+        .case-card:hover { border-color: var(--accent-blue); }
+        .case-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .case-title { font-size: 1.1rem; font-weight: 700; color: white; }
+        .match-badge {
+            background: rgba(16,185,129,0.15); color: var(--success-green);
+            padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+        }
+        .case-companies { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+        .company-tag {
+            background: rgba(255,255,255,0.05); padding: 8px 14px; border-radius: 10px;
+            font-size: 0.9rem; border: 1px solid var(--border-color); flex: 1;
+        }
+        .case-arrow { color: var(--accent-purple); font-size: 1.2rem; }
+        .case-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+        .case-why { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
+        .case-why strong { color: var(--accent-purple); }
+
+        /* FAQ Accordion */
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 14px; margin-bottom: 1rem; overflow: hidden;
+        }
+        .faq-question {
+            width: 100%; padding: 1.2rem 1.5rem; background: transparent;
+            border: none; color: white; font-size: 1.05rem; font-weight: 600;
+            text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+        }
+        .faq-question i { transition: transform 0.3s; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+            padding: 0 1.5rem; color: var(--text-secondary); line-height: 1.7;
+        }
+        .faq-item.active .faq-answer { max-height: 300px; padding-bottom: 1.5rem; }
+
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--card-bg), #1e1b4b);
+            padding: 80px 20px; text-align: center; border-radius: 24px; margin: 60px 0;
+        }
+        .cta-title { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+        .cta-desc { color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
+        .cta-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white; padding: 14px 32px; border-radius: 50px; text-decoration: none;
+            font-weight: 700; transition: all 0.3s;
+        }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139,92,246,0.4); }
+
+        /* Footer */
+        .footer {
+            background: #020617; padding: 4rem 20px 2rem; border-top: 1px solid var(--border-color); margin-top: 60px;
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .footer-brand h2 { font-size: 1.8rem; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: var(--text-secondary); line-height: 1.6; }
+        .footer-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: white; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.6rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--accent-blue); }
+        .footer-bottom {
+            max-width: 1200px; margin: 3rem auto 0; padding: 2rem 0 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: space-between;
+            align-items: center; flex-wrap: wrap; gap: 1rem; color: var(--text-secondary); font-size: 0.9rem;
+        }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 1rem; }
+        .developer-credit { color: #fbbf24 !important; }
+
+        @media (max-width: 968px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .section-title { font-size: 1.8rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe" style="color:var(--accent-blue)"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- Header -->
+    <header class="page-header">
+        <h1 data-i18n="pageTitle">How Our AI Matching Works</h1>
+        <p data-i18n="pageSubtitle">No random networking. Our algorithm connects the right companies at the right time, powered by semantic analysis and real business signals.</p>
+    </header>
+
+    <!-- Algorithm Steps -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-tag"><i class="fas fa-cogs"></i> <span data-i18n="algoTag">The Engine</span></div>
+            <h2 class="section-title" data-i18n="algoTitle">From Profile to Perfect Match</h2>
+            <p class="section-subtitle" data-i18n="algoSubtitle">A transparent, 4-step process that turns your business data into high-value connections.</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card">
+                <span class="step-number" data-i18n="step1Num">Step 1</span>
+                <div class="step-icon"><i class="fas fa-user-edit"></i></div>
+                <h3 data-i18n="step1Title">Smart Onboarding</h3>
+                <p data-i18n="step1Desc">You tell us your sector, goals, tech stack, and collaboration needs. Our system structures this into semantic tags and business vectors.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-number" data-i18n="step2Num">Step 2</span>
+                <div class="step-icon"><i class="fas fa-brain"></i></div>
+                <h3 data-i18n="step2Title">AI Embedding & Analysis</h3>
+                <p data-i18n="step2Desc">Text is converted into high-dimensional embeddings. The AI maps your profile against 50+ compatibility signals in the Oslo/Nordic ecosystem.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-number" data-i18n="step3Num">Step 3</span>
+                <div class="step-icon"><i class="fas fa-calculator"></i></div>
+                <h3 data-i18n="step3Title">Match Scoring</h3>
+                <p data-i18n="step3Desc">A compatibility score (0-100%) is calculated based on strategic alignment, market overlap, tech synergy, and mutual goals.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-number" data-i18n="step4Num">Step 4</span>
+                <div class="step-icon"><i class="fas fa-paper-plane"></i></div>
+                <h3 data-i18n="step4Title">Smart Recommendations</h3>
+                <p data-i18n="step4Desc">You receive a curated feed of high-potential matches. The AI Concierge can draft personalized introductions or schedule meetings.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real Use Cases -->
+    <section class="section" style="background: var(--card-bg); border-radius: 24px; margin: 40px 20px; padding: 60px 20px;">
+        <div class="section-header">
+            <div class="section-tag"><i class="fas fa-map-marker-alt"></i> <span data-i18n="casesTag">Oslo Ecosystem</span></div>
+            <h2 class="section-title" data-i18n="casesTitle">Real Matches, Real Value</h2>
+            <p class="section-subtitle" data-i18n="casesSubtitle">How the algorithm connects complementary companies in practice.</p>
+        </div>
+        <div class="cases-grid">
+            <div class="case-card">
+                <div class="case-header">
+                    <span class="case-title" data-i18n="case1Title">Logistics + AI Optimization</span>
+                    <span class="match-badge">94%</span>
+                </div>
+                <div class="case-companies">
+                    <span class="company-tag">NordicLogix AS</span>
+                    <i class="fas fa-arrow-right case-arrow"></i>
+                    <span class="company-tag">AlgoFlow Tech</span>
+                </div>
+                <p class="case-desc" data-i18n="case1Desc">A growing logistics company needs route optimization. An AI startup offers predictive routing models for Nordic transport.</p>
+                <div class="case-why">
+                    <strong data-i18n="whyLabel">Why it matched:</strong>
+                    <span data-i18n="case1Why">Perfect capability-to-need alignment. Shared Nordic market focus and complementary tech stack.</span>
+                </div>
+            </div>
+            <div class="case-card">
+                <div class="case-header">
+                    <span class="case-title" data-i18n="case2Title">FinTech + Sustainability</span>
+                    <span class="match-badge">89%</span>
+                </div>
+                <div class="case-companies">
+                    <span class="company-tag">GreenPay Solutions</span>
+                    <i class="fas fa-arrow-right case-arrow"></i>
+                    <span class="company-tag">EcoAudit AS</span>
+                </div>
+                <p class="case-desc" data-i18n="case2Desc">A digital payment platform wants to add ESG scoring. A cleantech firm provides real-time carbon tracking APIs.</p>
+                <div class="case-why">
+                    <strong data-i18n="whyLabel">Why it matched:</strong>
+                    <span data-i18n="case2Why">Regulatory tailwinds in Norway + complementary product roadmaps = high integration potential.</span>
+                </div>
+            </div>
+            <div class="case-card">
+                <div class="case-header">
+                    <span class="case-title" data-i18n="case3Title">Retail + Local Supply</span>
+                    <span class="match-badge">86%</span>
+                </div>
+                <div class="case-companies">
+                    <span class="company-tag">UrbanStore Oslo</span>
+                    <i class="fas fa-arrow-right case-arrow"></i>
+                    <span class="company-tag">NorskFarm Collective</span>
+                </div>
+                <p class="case-desc" data-i18n="case3Desc">A boutique retail chain seeks sustainable local suppliers. A cooperative of organic farms wants direct B2B channels.</p>
+                <div class="case-why">
+                    <strong data-i18n="whyLabel">Why it matched:</strong>
+                    <span data-i18n="case3Why">Geographic proximity + aligned sustainability goals + mutual need for reliable supply chain.</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-tag"><i class="fas fa-shield-alt"></i> <span data-i18n="faqTag">Privacy & Tech</span></div>
+            <h2 class="section-title" data-i18n="faqTitle">Frequently Asked Questions</h2>
+            <p class="section-subtitle" data-i18n="faqSubtitle">Transparency around data, AI usage, and GDPR compliance.</p>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question"><span data-i18n="q1">How does the AI matching algorithm work?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a1">We use semantic embeddings (OpenAI API) combined with rule-based scoring. Your company profile is converted into vectors, then compared against 50+ business signals. The system ranks compatibility, not just keyword overlap.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span data-i18n="q2">Is my business data secure and GDPR compliant?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a2">Absolutely. All data is encrypted at rest and in transit. We comply fully with EU/EEA GDPR standards. You can request data deletion, export your profile, or disable AI processing at any time.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span data-i18n="q3">Does the AI make automatic introductions?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a3">No. The AI only suggests and prepares. You always control who you connect with. The AI Concierge drafts personalized intro emails, but you must approve or send them manually.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span data-i18n="q4">Can I control who sees my company profile?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a4">Yes. You choose visibility levels: Public (directory), Members Only, or Private (AI matching only, hidden from search). You can also block specific industries or competitors.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question"><span data-i18n="q5">How is the Match Score calculated?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a5">The score combines: industry complementarity (30%), mutual goals (25%), market overlap (20%), tech/skill synergy (15%), and collaboration history preferences (10%). It's continuously refined as you interact with matches.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2 class="cta-title" data-i18n="ctaTitle">Ready for Smarter Connections?</h2>
+        <p class="cta-desc" data-i18n="ctaDesc">Join Oslo's first AI-powered business network. Your perfect matches are waiting.</p>
+        <a href="join.html" class="cta-btn"><i class="fas fa-rocket"></i> <span data-i18n="ctaBtn">Join as Founding Member</span></a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered business connections for Oslo's innovators, founders, and growth companies.</p>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html#how-it-works" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="index.html#pricing" data-i18n="navPricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-i18n="navAbout">About</a></li>
+                    <li><a href="#" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="#" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="#" data-i18n="navCookies">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Oslo Meet AS</div>
+            <div><a href="#">post@oslomeet.org</a></div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
+    </footer>
+
+    <script>
+        // === TRANSLATIONS (EN / NO / PT / ES) ===
+        const translations = {
+            en: {
+                pageTitle: "How Our AI Matching Works", pageSubtitle: "No random networking. Our algorithm connects the right companies at the right time, powered by semantic analysis and real business signals.",
+                algoTag: "The Engine", algoTitle: "From Profile to Perfect Match", algoSubtitle: "A transparent, 4-step process that turns your business data into high-value connections.",
+                step1Num: "Step 1", step1Title: "Smart Onboarding", step1Desc: "You tell us your sector, goals, tech stack, and collaboration needs. Our system structures this into semantic tags and business vectors.",
+                step2Num: "Step 2", step2Title: "AI Embedding & Analysis", step2Desc: "Text is converted into high-dimensional embeddings. The AI maps your profile against 50+ compatibility signals in the Oslo/Nordic ecosystem.",
+                step3Num: "Step 3", step3Title: "Match Scoring", step3Desc: "A compatibility score (0-100%) is calculated based on strategic alignment, market overlap, tech synergy, and mutual goals.",
+                step4Num: "Step 4", step4Title: "Smart Recommendations", step4Desc: "You receive a curated feed of high-potential matches. The AI Concierge can draft personalized introductions or schedule meetings.",
+                casesTag: "Oslo Ecosystem", casesTitle: "Real Matches, Real Value", casesSubtitle: "How the algorithm connects complementary companies in practice.",
+                case1Title: "Logistics + AI Optimization", case1Desc: "A growing logistics company needs route optimization. An AI startup offers predictive routing models for Nordic transport.", case1Why: "Perfect capability-to-need alignment. Shared Nordic market focus and complementary tech stack.",
+                case2Title: "FinTech + Sustainability", case2Desc: "A digital payment platform wants to add ESG scoring. A cleantech firm provides real-time carbon tracking APIs.", case2Why: "Regulatory tailwinds in Norway + complementary product roadmaps = high integration potential.",
+                case3Title: "Retail + Local Supply", case3Desc: "A boutique retail chain seeks sustainable local suppliers. A cooperative of organic farms wants direct B2B channels.", case3Why: "Geographic proximity + aligned sustainability goals + mutual need for reliable supply chain.",
+                whyLabel: "Why it matched:",
+                faqTag: "Privacy & Tech", faqTitle: "Frequently Asked Questions", faqSubtitle: "Transparency around data, AI usage, and GDPR compliance.",
+                q1: "How does the AI matching algorithm work?", a1: "We use semantic embeddings (OpenAI API) combined with rule-based scoring. Your company profile is converted into vectors, then compared against 50+ business signals. The system ranks compatibility, not just keyword overlap.",
+                q2: "Is my business data secure and GDPR compliant?", a2: "Absolutely. All data is encrypted at rest and in transit. We comply fully with EU/EEA GDPR standards. You can request data deletion, export your profile, or disable AI processing at any time.",
+                q3: "Does the AI make automatic introductions?", a3: "No. The AI only suggests and prepares. You always control who you connect with. The AI Concierge drafts personalized intro emails, but you must approve or send them manually.",
+                q4: "Can I control who sees my company profile?", a4: "Yes. You choose visibility levels: Public (directory), Members Only, or Private (AI matching only, hidden from search). You can also block specific industries or competitors.",
+                q5: "How is the Match Score calculated?", a5: "The score combines: industry complementarity (30%), mutual goals (25%), market overlap (20%), tech/skill synergy (15%), and collaboration history preferences (10%). It's continuously refined as you interact with matches.",
+                ctaTitle: "Ready for Smarter Connections?", ctaDesc: "Join Oslo's first AI-powered business network. Your perfect matches are waiting.", ctaBtn: "Join as Founding Member",
+                footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
+                navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing", navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact", navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies"
+            },
+            no: {
+                pageTitle: "Slik fungerer vår AI-matching", pageSubtitle: "Ingen tilfeldig nettverking. Vår algoritme kobler riktige bedrifter til riktig tid, drevet av semantisk analyse og reelle forretningssignaler.",
+                algoTag: "Motoren", algoTitle: "Fra profil til perfekt match", algoSubtitle: "En transparent, 4-trinns prosess som gjør bedriftsdataene dine til verdifulle forbindelser.",
+                step1Num: "Trinn 1", step1Title: "Smart onboarding", step1Desc: "Du forteller oss om bransje, mål, tech-stack og samarbeidsbehov. Systemet strukturerer dette til semantiske tagger og business-vektorer.",
+                step2Num: "Trinn 2", step2Title: "AI-embedding & analyse", step2Desc: "Tekst konverteres til høy-dimensjonale embeddings. AI-en mapper profilen din mot 50+ kompatibilitetssignaler i Oslo/Nordisk økosystem.",
+                step3Num: "Trinn 3", step3Title: "Match-skåring", step3Desc: "En kompatibilitetspoeng (0-100%) beregnes basert på strategisk justering, markedsoverlapp, tech-synergi og felles mål.",
+                step4Num: "Trinn 4", step4Title: "Smart anbefaling", step4Desc: "Du mottar en kurert feed av høy-potensielle matcher. AI Concierge kan utforme personlige introduksjoner eller planlegge møter.",
+                casesTag: "Oslo-økosystem", casesTitle: "Ekte matcher, ekte verdi", casesSubtitle: "Slik algoritmen kobler komplementære bedrifter i praksis.",
+                case1Title: "Logistikk + AI-optimalisering", case1Desc: "En voksende logistikkbedrift trenger ruteoptimalisering. En AI-startup tilbyr prediktive rutingsmodeller for nordisk transport.", case1Why: "Perfekt evne-til-behov-justering. Delt nordisk markedsfokus og komplementær tech-stack.",
+                case2Title: "FinTech + Bærekraft", case2Desc: "En betalingsplattform vil legge til ESG-skåring. En cleantech-bedrift tilbyr sanntids karbonsporings-API-er.", case2Why: "Regulatoriske medvind i Norge + komplementære produktveikart = høyt integrasjonspotensial.",
+                case3Title: "Detaljhandel + Lokalt tilbud", case3Desc: "En boutique-kjede søker bærekraftige lokale leverandører. Et kooperativ av økologiske gårder vil ha direkte B2B-kanaler.", case3Why: "Geografisk nærhet + justerte bærekraftsmål + gjensidig behov for pålitelig forsyningskjede.",
+                whyLabel: "Hvorfor denne matchen:",
+                faqTag: "Personvern & Teknologi", faqTitle: "Ofte stilte spørsmål", faqSubtitle: "Åpenhet rundt data, AI-bruk og GDPR-overholdelse.",
+                q1: "Hvordan fungerer AI-matchingsalgoritmen?", a1: "Vi bruker semantiske embeddings (OpenAI API) kombinert med regelbasert skåring. Bedriftsprofilen konverteres til vektorer, sammenlignet mot 50+ forretningssignaler. Systemet rangerer kompatibilitet, ikke bare nøkkelord.",
+                q2: "Er bedriftsdataene mine sikre og GDPR-kompatible?", a2: "Absolutt. All data er kryptert. Vi overholder fullt ut EU/EØS GDPR-standarder. Du kan be om sletting, eksportere profilen eller deaktivere AI-behandling når som helst.",
+                q3: "Gjør AI-en automatiske introduksjoner?", a3: "Nei. AI-en foreslår og forbereder kun. Du kontrollerer alltid hvem du kobler deg med. AI Concierge utformer personlige intro-eposter, men du må godkjenne eller sende dem manuelt.",
+                q4: "Kan jeg kontrollere hvem som ser profilen min?", a4: "Ja. Du velger synlighetsnivåer: Offentlig, Kun medlemmer, eller Privat (kun AI-matching, skjult fra søk). Du kan også blokkere spesifikke bransjer eller konkurrenter.",
+                q5: "Hvordan beregnes Match-poengsummen?", a5: "Poengsummen kombinerer: bransjekomplementaritet (30%), felles mål (25%), markedsoverlapp (20%), tech/ferdighetssynergi (15%), og samarbeidspreferanser (10%). Den forbedres kontinuerlig ved interaksjon.",
+                ctaTitle: "Klar for smartere forbindelser?", ctaDesc: "Bli med i Oslos første AI-drevne bedriftsnettverk. Dine perfekte matcher venter.", ctaBtn: "Bli med som grunnlegger",
+                footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
+                navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser", navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt", navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies"
+            },
+            pt: {
+                pageTitle: "Como Funciona o Matching com IA", pageSubtitle: "Sem networking aleatório. Nosso algoritmo conecta as empresas certas na hora certa, com análise semântica e sinais reais de negócios.",
+                algoTag: "O Motor", algoTitle: "Do Perfil ao Match Perfeito", algoSubtitle: "Um processo transparente de 4 etapas que transforma seus dados em conexões de alto valor.",
+                step1Num: "Etapa 1", step1Title: "Onboarding Inteligente", step1Desc: "Você nos conta setor, objetivos, stack tecnológico e necessidades de colaboração. Nosso sistema estrutura isso em tags semânticas e vetores de negócio.",
+                step2Num: "Etapa 2", step2Title: "Embedding & Análise com IA", step2Desc: "O texto é convertido em embeddings multidimensionais. A IA mapeia seu perfil contra 50+ sinais de compatibilidade no ecossistema de Oslo/Nórdico.",
+                step3Num: "Etapa 3", step3Title: "Cálculo de Compatibilidade", step3Desc: "Um score (0-100%) é calculado com base em alinhamento estratégico, sobreposição de mercado, sinergia tecnológica e objetivos mútuos.",
+                step4Num: "Etapa 4", step4Title: "Recomendações Inteligentes", step4Desc: "Você recebe um feed curado de matches de alto potencial. A IA Concierge pode rascunhar introduções personalizadas ou agendar reuniões.",
+                casesTag: "Ecossistema de Oslo", casesTitle: "Matches Reais, Valor Real", casesSubtitle: "Como o algoritmo conecta empresas complementares na prática.",
+                case1Title: "Logística + Otimização com IA", case1Desc: "Uma empresa de logística precisa de otimização de rotas. Uma startup de IA oferece modelos preditivos para transporte nórdico.", case1Why: "Alinhamento perfeito entre necessidade e capacidade. Foco compartilhado no mercado nórdico e stack complementar.",
+                case2Title: "FinTech + Sustentabilidade", case2Desc: "Uma plataforma de pagamentos quer adicionar scoring ESG. Uma cleantech oferece APIs de rastreamento de carbono em tempo real.", case2Why: "Vento regulatório na Noruega + roadmaps complementares = alto potencial de integração.",
+                case3Title: "Varejo + Fornecimento Local", case3Desc: "Uma rede de varejo busca fornecedores locais sustentáveis. Um coletivo de fazendas orgânicas quer canais B2B diretos.", case3Why: "Proximidade geográfica + objetivos sustentáveis alinhados + necessidade mútua de cadeia confiável.",
+                whyLabel: "Por que este match:",
+                faqTag: "Privacidade & Tecnologia", faqTitle: "Perguntas Frequentes", faqSubtitle: "Transparência sobre dados, uso de IA e conformidade com GDPR.",
+                q1: "Como funciona o algoritmo de matching com IA?", a1: "Usamos embeddings semânticos (API OpenAI) combinados com scoring baseado em regras. Seu perfil vira vetores, comparados a 50+ sinais de negócio. O sistema ranqueia compatibilidade, não apenas palavras-chave.",
+                q2: "Meus dados empresariais são seguros e compatíveis com GDPR?", a2: "Sim. Todos os dados são criptografados. Cumprimos totalmente os padrões GDPR UE/EEE. Você pode solicitar exclusão, exportar seu perfil ou desativar processamento de IA a qualquer momento.",
+                q3: "A IA faz introduções automáticas?", a3: "Não. A IA apenas sugere e prepara. Você controla sempre com quem se conecta. A IA Concierge rascunha e-mails de introdução, mas você aprova ou envia manualmente.",
+                q4: "Posso controlar quem vê meu perfil?", a4: "Sim. Você escolhe níveis de visibilidade: Público, Apenas Membros ou Privado (apenas para matching, oculto em buscas). Também pode bloquear setores ou concorrentes específicos.",
+                q5: "Como o Score de Match é calculado?", a5: "O score combina: complementariedade setorial (30%), objetivos mútuos (25%), sobreposição de mercado (20%), sinergia tecnológica (15%) e preferências de colaboração (10%). É refinado continuamente conforme você interage.",
+                ctaTitle: "Pronto para Conexões Mais Inteligentes?", ctaDesc: "Entre na primeira rede empresarial com IA de Oslo. Seus matches perfeitos estão esperando.", ctaBtn: "Entrar como Membro Fundador",
+                footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
+                navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços", navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato", navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies"
+            },
+            es: {
+                pageTitle: "Cómo Funciona el Matching con IA", pageSubtitle: "Sin networking aleatorio. Nuestro algoritmo conecta las empresas correctas en el momento adecuado, con análisis semántico y señales reales de negocio.",
+                algoTag: "El Motor", algoTitle: "Del Perfil al Match Perfecto", algoSubtitle: "Un proceso transparente de 4 pasos que transforma tus datos en conexiones de alto valor.",
+                step1Num: "Paso 1", step1Title: "Onboarding Inteligente", step1Desc: "Nos cuentas sector, objetivos, stack tecnológico y necesidades de colaboración. Nuestro sistema estructura esto en etiquetas semánticas y vectores de negocio.",
+                step2Num: "Paso 2", step2Title: "Embedding y Análisis con IA", step2Desc: "El texto se convierte en embeddings multidimensionales. La IA mapea tu perfil contra 50+ señales de compatibilidad en el ecosistema Oslo/Nórdico.",
+                step3Num: "Paso 3", step3Title: "Cálculo de Compatibilidad", step3Desc: "Se calcula un score (0-100%) basado en alineación estratégica, superposición de mercado, sinergia tecnológica y objetivos mutuos.",
+                step4Num: "Paso 4", step4Title: "Recomendaciones Inteligentes", step4Desc: "Recibes un feed curado de matches de alto potencial. La IA Concierge puede redactar introducciones personalizadas o agendar reuniones.",
+                casesTag: "Ecosistema Oslo", casesTitle: "Matches Reales, Valor Real", casesSubtitle: "Cómo el algoritmo conecta empresas complementarias en la práctica.",
+                case1Title: "Logística + Optimización con IA", case1Desc: "Una empresa logística necesita optimización de rutas. Una startup de IA ofrece modelos predictivos para transporte nórdico.", case1Why: "Alineación perfecta entre necesidad y capacidad. Enfoque compartido en el mercado nórdico y stack complementario.",
+                case2Title: "FinTech + Sostenibilidad", case2Desc: "Una plataforma de pagos quiere añadir scoring ESG. Una cleantech ofrece APIs de rastreo de carbono en tiempo real.", case2Why: "Viento regulatorio en Noruega + roadmaps complementarios = alto potencial de integración.",
+                case3Title: "Retail + Suministro Local", case3Desc: "Una cadena de retail busca proveedores locales sostenibles. Un colectivo de granjas orgánicas quiere canales B2B directos.", case3Why: "Proximidad geográfica + objetivos sostenibles alineados + necesidad mutua de cadena confiable.",
+                whyLabel: "Por qué este match:",
+                faqTag: "Privacidad y Tecnología", faqTitle: "Preguntas Frecuentes", faqSubtitle: "Transparencia sobre datos, uso de IA y cumplimiento GDPR.",
+                q1: "¿Cómo funciona el algoritmo de matching con IA?", a1: "Usamos embeddings semánticos (API OpenAI) combinados con scoring basado en reglas. Tu perfil se convierte en vectores, comparados con 50+ señales de negocio. El sistema ranquea compatibilidad, no solo palabras clave.",
+                q2: "¿Mis datos empresariales son seguros y cumplen con GDPR?", a2: "Sí. Todos los datos están cifrados. Cumplimos plenamente con GDPR UE/EEE. Puedes solicitar eliminación, exportar tu perfil o desactivar procesamiento de IA en cualquier momento.",
+                q3: "¿La IA hace introducciones automáticas?", a3: "No. La IA solo sugiere y prepara. Tú controlas siempre con quién te conectas. La IA Concierge redacta emails de introducción, pero tú apruebas o envías manualmente.",
+                q4: "¿Puedo controlar quién ve mi perfil?", a4: "Sí. Eliges niveles de visibilidad: Público, Solo Miembros o Privado (solo para matching, oculto en búsquedas). También puedes bloquear sectores o competidores específicos.",
+                q5: "¿Cómo se calcula el Score de Match?", a5: "El score combina: complementariedad sectorial (30%), objetivos mutuos (25%), superposición de mercado (20%), sinergia tecnológica (15%) y preferencias de colaboración (10%). Se refina continuamente al interactuar.",
+                ctaTitle: "¿Listo para Conexiones Más Inteligentes?", ctaDesc: "Únete a la primera red empresarial con IA de Oslo. Tus matches perfectos están esperando.", ctaBtn: "Unirse como Miembro Fundador",
+                footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
+                navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios", navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto", navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies"
+            }
+        };
+
+        // === LANGUAGE SWITCHER ===
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // === FAQ ACCORDION ===
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        // === SCROLL ANIMATIONS ===
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = saved;
+            changeLanguage(saved);
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.style.opacity = '1';
+                        e.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.step-card, .case-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
