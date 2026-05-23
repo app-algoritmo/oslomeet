@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- FAVICON OSLO MEET -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content=“OSLO MEET” />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#c44536" />
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join Oslo Meet — Smart Business Registration</title>
@@ -28,162 +37,210 @@
             color: var(--text-primary);
             line-height: 1.6;
             min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
         }
+        /* Language Selector - Mobile Friendly */
+        .language-selector {
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .language-selector select {
+            background: transparent; border: none; color: white;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        }
+        .language-selector select option { background: var(--dark-bg); color: white; }
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
+        /* Header */
         .page-header {
             background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
-            padding: 80px 20px 60px;
-            text-align: center;
-            position: relative;
+            padding: 70px 16px 50px; text-align: center; position: relative;
         }
         .page-header::before {
-            content: '';
-            position: absolute;
-            inset: 0;
+            content: ''; position: absolute; inset: 0;
             background: radial-gradient(ellipse at center, rgba(139,92,246,0.1) 0%, transparent 70%);
         }
         .page-header h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
+            font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            position: relative; line-height: 1.2;
         }
-        .page-header p { color: var(--text-secondary); max-width: 600px; margin: 0 auto; position: relative; }
+        .page-header p { color: var(--text-secondary); max-width: 500px; margin: 0 auto; position: relative; font-size: 0.95rem; }
         .badge-ai {
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; gap: 6px;
             background: rgba(139,92,246,0.15); color: var(--accent-purple);
-            padding: 6px 16px; border-radius: 50px;
-            font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;
+            padding: 5px 14px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem;
         }
-        .form-container { max-width: 800px; margin: -40px auto 60px; padding: 0 20px; position: relative; z-index: 2; }
+        /* Form Container */
+        .form-container { max-width: 700px; margin: -30px auto 40px; padding: 0 16px; position: relative; z-index: 2; }
         .form-card {
-            background: var(--card-bg); border-radius: 24px; padding: 3rem;
+            background: var(--card-bg); border-radius: 20px; padding: 1.5rem;
             border: 1px solid var(--border-color);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
+        /* Progress Bar - Mobile Optimized */
         .form-progress {
-            display: flex; justify-content: space-between;
-            margin-bottom: 2.5rem; padding-bottom: 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2rem; padding-bottom: 1.2rem;
             border-bottom: 1px solid var(--border-color);
         }
-        .progress-step {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 8px; flex: 1; position: relative;
-        }
+        .progress-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; position: relative; }
         .progress-step::after {
-            content: ''; position: absolute; top: 12px; left: 50%; right: -50%;
+            content: ''; position: absolute; top: 14px; left: 50%; right: -50%;
             height: 2px; background: var(--border-color); z-index: 0;
         }
         .progress-step:last-child::after { display: none; }
         .progress-step.active::after { background: var(--accent-purple); }
         .step-number {
-            width: 28px; height: 28px; border-radius: 50%;
+            width: 26px; height: 26px; border-radius: 50%;
             background: var(--border-color); color: var(--text-secondary);
             display: flex; align-items: center; justify-content: center;
-            font-weight: 600; font-size: 0.9rem; z-index: 1; transition: all 0.3s;
+            font-weight: 600; font-size: 0.8rem; z-index: 1; transition: all 0.3s;
+            flex-shrink: 0;
         }
         .progress-step.active .step-number { background: var(--accent-purple); color: white; }
-        .step-label { font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+        .step-label { font-size: 0.75rem; color: var(--text-secondary); text-align: center; line-height: 1.2; }
         .progress-step.active .step-label { color: var(--accent-purple); font-weight: 600; }
+        /* Form Steps */
         .form-step { display: none; }
         .form-step.active { display: block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
-        .step-title { font-size: 1.4rem; margin-bottom: 0.5rem; color: white; }
-        .step-subtitle { color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; }
-        .form-group { margin-bottom: 1.5rem; }
-        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.95rem; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+        .step-title { font-size: 1.25rem; margin-bottom: 0.4rem; color: white; font-weight: 700; }
+        .step-subtitle { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label { display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.9rem; }
         .form-group label .required { color: #ef4444; }
         .form-control {
-            width: 100%; padding: 14px 18px; background: var(--input-bg);
-            border: 1px solid var(--border-color); border-radius: 10px;
-            color: white; font-family: inherit; font-size: 1rem; transition: all 0.3s;
+            width: 100%; padding: 12px 14px; background: var(--input-bg);
+            border: 1px solid var(--border-color); border-radius: 8px;
+            color: white; font-family: inherit; font-size: 0.95rem;
+            transition: all 0.3s; -webkit-appearance: none;
         }
-        .form-control:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .form-control:focus { outline: none; border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
         .form-control::placeholder { color: var(--text-secondary); }
         select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 18px center;
-            padding-right: 45px; cursor: pointer;
+            appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat; background-position: right 14px center;
+            padding-right: 38px; cursor: pointer;
         }
         select.form-control option { background: var(--card-bg); color: white; }
-        textarea.form-control { min-height: 120px; resize: vertical; }
+        textarea.form-control { min-height: 100px; resize: vertical; }
+        /* Tags Input - Mobile Touch Friendly */
         .tags-input {
-            display: flex; flex-wrap: wrap; gap: 8px; padding: 12px;
+            display: flex; flex-wrap: wrap; gap: 6px; padding: 10px;
             background: var(--input-bg); border: 1px solid var(--border-color);
-            border-radius: 10px; min-height: 50px;
+            border-radius: 8px; min-height: 44px;
         }
-        .tags-input:focus-within { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.1); }
+        .tags-input:focus-within { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
         .tag {
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex; align-items: center; gap: 4px;
             background: rgba(59,130,246,0.15); color: #93c5fd;
-            padding: 6px 12px; border-radius: 20px; font-size: 0.9rem;
+            padding: 4px 10px; border-radius: 16px; font-size: 0.85rem;
         }
-        .tag button { background: none; border: none; color: inherit; cursor: pointer; padding: 0; font-size: 1rem; opacity: 0.7; }
+        .tag button { background: none; border: none; color: inherit; cursor: pointer; padding: 0; font-size: 1rem; opacity: 0.7; line-height: 1; }
         .tag button:hover { opacity: 1; }
-        .tags-input input { flex: 1; min-width: 120px; background: none; border: none; color: white; font-size: 0.95rem; padding: 4px 0; }
+        .tags-input input {
+            flex: 1; min-width: 100px; background: none; border: none;
+            color: white; font-size: 0.9rem; padding: 2px 0;
+        }
         .tags-input input::placeholder { color: var(--text-secondary); }
         .tags-input input:focus { outline: none; }
-        .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        /* Checkbox Grid - Mobile Responsive */
+        .checkbox-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        @media (min-width: 480px) { .checkbox-grid { grid-template-columns: repeat(2, 1fr); } }
         .checkbox-item {
-            display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+            display: flex; align-items: center; gap: 8px; padding: 10px 12px;
             background: var(--input-bg); border: 1px solid var(--border-color);
-            border-radius: 10px; cursor: pointer; transition: all 0.2s;
+            border-radius: 8px; cursor: pointer; transition: all 0.2s;
         }
         .checkbox-item:hover, .checkbox-item:has(input:checked) { border-color: var(--accent-purple); background: rgba(139,92,246,0.05); }
-        .checkbox-item input { width: 18px; height: 18px; accent-color: var(--accent-purple); cursor: pointer; }
-        .checkbox-item label { margin: 0; cursor: pointer; font-weight: 500; font-size: 0.95rem; }
-        .pricing-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .checkbox-item input { width: 18px; height: 18px; accent-color: var(--accent-purple); cursor: pointer; flex-shrink: 0; }
+        .checkbox-item label { margin: 0; cursor: pointer; font-weight: 500; font-size: 0.9rem; }
+        /* Pricing Options - Mobile Stacked */
+        .pricing-options { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 1.5rem; }
+        @media (min-width: 600px) { .pricing-options { grid-template-columns: repeat(3, 1fr); } }
         .pricing-option {
-            padding: 1.5rem; background: var(--input-bg); border: 2px solid var(--border-color);
-            border-radius: 16px; text-align: center; cursor: pointer; transition: all 0.3s;
+            padding: 1rem; background: var(--input-bg); border: 2px solid var(--border-color);
+            border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.3s;
         }
         .pricing-option:hover, .pricing-option.selected { border-color: var(--accent-purple); background: rgba(139,92,246,0.05); }
         .pricing-option.selected { box-shadow: 0 0 0 3px rgba(139,92,246,0.2); }
-        .pricing-option h4 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .pricing-option .price { font-size: 1.5rem; font-weight: 700; color: var(--accent-purple); }
-        .pricing-option .period { font-size: 0.85rem; color: var(--text-secondary); }
-        .pricing-option .features { list-style: none; margin-top: 1rem; text-align: left; }
-        .pricing-option .features li { font-size: 0.85rem; color: var(--text-secondary); padding: 4px 0; }
-        .form-nav { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+        .pricing-option h4 { font-size: 1rem; margin-bottom: 0.3rem; }
+        .pricing-option .price { font-size: 1.3rem; font-weight: 700; color: var(--accent-purple); }
+        .pricing-option .period { font-size: 0.8rem; color: var(--text-secondary); }
+        .pricing-option .features { list-style: none; margin-top: 0.8rem; text-align: left; padding: 0; }
+        .pricing-option .features li { font-size: 0.8rem; color: var(--text-secondary); padding: 3px 0; }
+        /* Form Navigation - Mobile Friendly */
+        .form-nav { display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid var(--border-color); gap: 10px; }
         .btn {
-            padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 1rem;
-            cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; border: none;
+            padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center;
+            justify-content: center; gap: 6px; border: none; min-height: 44px;
         }
         .btn-secondary { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-color); }
         .btn-secondary:hover { background: rgba(255,255,255,0.05); color: white; }
         .btn-primary { background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue)); color: white; }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(139,92,246,0.4); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(139,92,246,0.4); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
-        .success-state { text-align: center; padding: 3rem 2rem; display: none; }
+        @media (max-width: 480px) {
+            .form-nav { flex-direction: column-reverse; }
+            .btn { width: 100%; }
+        }
+        /* Success State */
+        .success-state { text-align: center; padding: 2rem 1rem; display: none; }
         .success-state.active { display: block; }
         .success-icon {
-            width: 80px; height: 80px; background: linear-gradient(135deg, var(--success-green), #059669);
+            width: 70px; height: 70px; background: linear-gradient(135deg, var(--success-green), #059669);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem; font-size: 2rem; color: white;
+            margin: 0 auto 1.2rem; font-size: 1.8rem; color: white;
         }
-        .success-state h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        .success-state p { color: var(--text-secondary); margin-bottom: 2rem; }
-        .next-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
-        .next-step { padding: 1rem; background: var(--input-bg); border-radius: 12px; text-align: left; }
-        .next-step i { color: var(--accent-purple); margin-bottom: 0.5rem; display: block; font-size: 1.2rem; }
-        .next-step h4 { font-size: 0.95rem; margin-bottom: 0.3rem; }
-        .next-step p { font-size: 0.85rem; color: var(--text-secondary); margin: 0; }
-        @media (max-width: 768px) {
-            .form-card { padding: 2rem; }
-            .pricing-options { grid-template-columns: 1fr; }
-            .form-nav { flex-direction: column-reverse; gap: 1rem; }
-            .btn { width: 100%; justify-content: center; }
+        .success-state h3 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+        .success-state p { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem; }
+        .next-steps { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 1.5rem; }
+        @media (min-width: 480px) { .next-steps { grid-template-columns: repeat(3, 1fr); } }
+        .next-step { padding: 1rem; background: var(--input-bg); border-radius: 10px; text-align: left; }
+        .next-step i { color: var(--accent-purple); margin-bottom: 0.4rem; display: block; font-size: 1.1rem; }
+        .next-step h4 { font-size: 0.9rem; margin-bottom: 0.2rem; }
+        .next-step p { font-size: 0.8rem; color: var(--text-secondary); margin: 0; }
+        /* Footer */
+        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
+        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
+        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--accent-blue); }
+        .footer-bottom {
+            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            color: var(--text-secondary); font-size: 0.85rem; text-align: center;
+        }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
+        .footer-bottom a:hover { color: var(--accent-blue); }
+        .footer-bottom .email-link { color: var(--accent-blue); font-weight: 500; }
+        .developer-credit { color: #fbbf24 !important; }
+        /* Touch Optimization */
+        @media (hover: none) {
+            .btn:active { transform: scale(0.98); }
+            .checkbox-item:active { background: rgba(139,92,246,0.1); }
+            .pricing-option:active { background: rgba(139,92,246,0.1); }
         }
     </style>
 </head>
 <body>
     <!-- Language Selector -->
-    <div class="language-selector" style="position:fixed;top:20px;right:20px;z-index:1000;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:8px 16px;display:flex;align-items:center;gap:10px;">
-        <i class="fas fa-globe" style="color:var(--accent-blue)"></i>
-        <select id="languageSelect" onchange="changeLanguage(this.value)" style="background:transparent;border:none;color:white;font-family:'Inter',sans-serif;font-weight:600;font-size:0.9rem;cursor:pointer;outline:none;">
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
             <option value="en">English</option>
             <option value="no">Norsk</option>
             <option value="pt">Português</option>
@@ -216,7 +273,7 @@
                     <p class="step-subtitle" data-i18n="step1Subtitle">Basic information to build your AI profile</p>
                     <div class="form-group">
                         <label data-i18n="labelCompanyName">Company Name <span class="required">*</span></label>
-                        <input type="text" class="form-control" name="companyName" required placeholder="e.g., NordicLogix AS" data-i18n-placeholder="placeholderCompany">
+                        <input type="text" class="form-control" name="companyName" required placeholder="e.g., NordicLogix" data-i18n-placeholder="placeholderCompany">
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelIndustry">Industry / Sector <span class="required">*</span></label>
@@ -378,7 +435,7 @@
                         <label style="display:flex;align-items:flex-start;gap:10px">
                             <input type="checkbox" required style="width:18px;height:18px;margin-top:4px">
                             <span style="font-size:0.9rem;color:var(--text-secondary)" data-i18n="consentText">
-                                I agree to the <a href="#" style="color:var(--accent-blue)">Terms</a> and <a href="#" style="color:var(--accent-blue)">Privacy Policy</a>. 
+                                I agree to the <a href="terms-of-use.html" style="color:var(--accent-blue)">Terms</a> and <a href="privacy-policy.html" style="color:var(--accent-blue)">Privacy Policy</a>. 
                                 I consent to Oslo Meet using my profile data for AI matching purposes.
                             </span>
                         </label>
@@ -400,21 +457,60 @@
                     <div class="next-step"><i class="fas fa-user-circle"></i><h4 data-i18n="next2">Complete your profile</h4><p data-i18n="next2Desc">Add logo, website, and team details</p></div>
                     <div class="next-step"><i class="fas fa-calendar"></i><h4 data-i18n="next3">Join our kickoff event</h4><p data-i18n="next3Desc">Exclusive onboarding session for founders</p></div>
                 </div>
-                <a href="index.html" class="btn btn-secondary" style="margin-top:2rem"><i class="fas fa-home"></i> <span data-i18n="btnHome">Return to Homepage</span></a>
+                <a href="index.html" class="btn btn-secondary" style="margin-top:1.5rem"><i class="fas fa-home"></i> <span data-i18n="btnHome">Return to Homepage</span></a>
             </div>
         </div>
     </div>
 
+    <!-- Footer CORRIGIDO -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered business connections for Oslo's innovators, founders, and growth companies.</p>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-i18n="navAbout">About</a></li>
+                    <li><a href="#" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Oslo Meet</div>
+            <div><a href="mailto:post@barros.no" class="email-link">post@barros.no</a></div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
+    </footer>
+
     <script>
-        // === TRANSLATIONS (4 LANGUAGES) ===
         const translations = {
             en: {
-                aiOnboarding: "AI-Powered Onboarding",
-                joinTitle: "Join Oslo Meet",
+                aiOnboarding: "AI-Powered Onboarding", joinTitle: "Join Oslo Meet",
                 joinSubtitle: "Tell us about your business. Our AI will use this to find your perfect matches.",
                 stepCompany: "Company", stepGoals: "Goals", stepMatching: "Matching", stepPlan: "Plan",
                 step1Title: "About Your Company", step1Subtitle: "Basic information to build your AI profile",
-                labelCompanyName: "Company Name", placeholderCompany: "e.g., NordicLogix AS",
+                labelCompanyName: "Company Name", placeholderCompany: "e.g., NordicLogix",
                 labelIndustry: "Industry / Sector", selectIndustry: "Select your primary sector",
                 industryTech: "Technology / Software", industryLogistics: "Logistics / Supply Chain",
                 industryFintech: "FinTech / Financial Services", industryHealth: "HealthTech / Life Sciences",
@@ -451,20 +547,23 @@
                 foundingOffer: "Founding Member Offer", foundingDesc: "First 50 members: <strong>50% off lifetime pricing</strong> + exclusive badge + priority feature access.",
                 foundingCheckbox: "Yes, reserve my Founding Member spot",
                 labelEmail: "Contact Email", placeholderEmail: "you@company.com",
-                consentText: "I agree to the <a href='#'>Terms</a> and <a href='#'>Privacy Policy</a>. I consent to Oslo Meet using my profile data for AI matching purposes.",
+                consentText: "I agree to the <a href='terms-of-use.html'>Terms</a> and <a href='privacy-policy.html'>Privacy Policy</a>. I consent to Oslo Meet using my profile data for AI matching purposes.",
                 successTitle: "Welcome to Oslo Meet!", successDesc: "Your profile is being processed by our AI. You'll receive your first smart matches within 24 hours.",
                 next1: "Check your email", next1Desc: "Confirmation + next steps sent to your inbox",
                 next2: "Complete your profile", next2Desc: "Add logo, website, and team details",
                 next3: "Join our kickoff event", next3Desc: "Exclusive onboarding session for founders",
-                btnHome: "Return to Homepage"
+                btnHome: "Return to Homepage",
+                footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
+                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
+                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
+                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
-                aiOnboarding: "AI-drevet onboarding",
-                joinTitle: "Bli med i Oslo Meet",
+                aiOnboarding: "AI-drevet onboarding", joinTitle: "Bli med i Oslo Meet",
                 joinSubtitle: "Fortell oss om din bedrift. Vår AI vil bruke dette til å finne dine perfekte matcher.",
                 stepCompany: "Bedrift", stepGoals: "Mål", stepMatching: "Matching", stepPlan: "Plan",
                 step1Title: "Om din bedrift", step1Subtitle: "Grunnleggende informasjon for å bygge din AI-profil",
-                labelCompanyName: "Bedriftsnavn", placeholderCompany: "f.eks. NordicLogix AS",
+                labelCompanyName: "Bedriftsnavn", placeholderCompany: "f.eks. NordicLogix",
                 labelIndustry: "Bransje / Sektor", selectIndustry: "Velg din hovedbransje",
                 industryTech: "Teknologi / Programvare", industryLogistics: "Logistikk / Forsyningskjede",
                 industryFintech: "FinTech / Finansielle tjenester", industryHealth: "HealthTech / Life Sciences",
@@ -501,20 +600,23 @@
                 foundingOffer: "Tilbud for grunnleggere", foundingDesc: "Første 50 medlemmer: <strong>50% rabatt på livstidsprising</strong> + eksklusivt merke + prioritert tilgang.",
                 foundingCheckbox: "Ja, reserver min grunnleggerplass",
                 labelEmail: "Kontakt-e-post", placeholderEmail: "du@bedrift.no",
-                consentText: "Jeg godtar <a href='#'>Vilkårene</a> og <a href='#'>Personvernerklæringen</a>. Jeg samtykker til at Oslo Meet bruker min profildata for AI-matching.",
+                consentText: "Jeg godtar <a href='terms-of-use.html'>Vilkårene</a> og <a href='privacy-policy.html'>Personvernerklæringen</a>. Jeg samtykker til at Oslo Meet bruker min profildata for AI-matching.",
                 successTitle: "Velkommen til Oslo Meet!", successDesc: "Din profil behandles av vår AI. Du vil motta dine første smarte matcher innen 24 timer.",
                 next1: "Sjekk e-posten din", next1Desc: "Bekreftelse + neste steg sendt til innboksen",
                 next2: "Fullfør profilen din", next2Desc: "Legg til logo, nettsted og teamdetaljer",
                 next3: "Bli med på kickoff-arrangementet", next3Desc: "Eksklusiv onboarding-økt for grunnleggere",
-                btnHome: "Tilbake til hjemmesiden"
+                btnHome: "Tilbake til hjemmesiden",
+                footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
+                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
+                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
+                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
-                aiOnboarding: "Onboarding com IA",
-                joinTitle: "Entrar no Oslo Meet",
+                aiOnboarding: "Onboarding com IA", joinTitle: "Entrar no Oslo Meet",
                 joinSubtitle: "Conte sobre sua empresa. Nossa IA usará isso para encontrar seus matches perfeitos.",
                 stepCompany: "Empresa", stepGoals: "Objetivos", stepMatching: "Matching", stepPlan: "Plano",
                 step1Title: "Sobre Sua Empresa", step1Subtitle: "Informações básicas para construir seu perfil com IA",
-                labelCompanyName: "Nome da Empresa", placeholderCompany: "ex: NordicLogix AS",
+                labelCompanyName: "Nome da Empresa", placeholderCompany: "ex: NordicLogix",
                 labelIndustry: "Setor / Indústria", selectIndustry: "Selecione seu setor principal",
                 industryTech: "Tecnologia / Software", industryLogistics: "Logística / Cadeia de Suprimentos",
                 industryFintech: "FinTech / Serviços Financeiros", industryHealth: "HealthTech / Ciências da Vida",
@@ -551,20 +653,23 @@
                 foundingOffer: "Oferta Membros Fundadores", foundingDesc: "Primeiros 50 membros: <strong>50% de desconto no preço vitalício</strong> + badge exclusivo + acesso prioritário.",
                 foundingCheckbox: "Sim, reservar minha vaga de Fundador",
                 labelEmail: "E-mail de Contato", placeholderEmail: "voce@empresa.com",
-                consentText: "Concordo com os <a href='#'>Termos</a> e <a href='#'>Política de Privacidade</a>. Consinto que o Oslo Meet use meus dados para matching com IA.",
+                consentText: "Concordo com os <a href='terms-of-use.html'>Termos</a> e <a href='privacy-policy.html'>Política de Privacidade</a>. Consinto que o Oslo Meet use meus dados para matching com IA.",
                 successTitle: "Bem-vindo ao Oslo Meet!", successDesc: "Seu perfil está sendo processado pela nossa IA. Você receberá seus primeiros matches em até 24 horas.",
                 next1: "Verifique seu e-mail", next1Desc: "Confirmação + próximos passos enviados para sua caixa",
                 next2: "Complete seu perfil", next2Desc: "Adicione logo, site e detalhes da equipe",
                 next3: "Participe do evento de kickoff", next3Desc: "Sessão exclusiva de onboarding para fundadores",
-                btnHome: "Voltar para Homepage"
+                btnHome: "Voltar para Homepage",
+                footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
+                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
+                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
-                aiOnboarding: "Onboarding con IA",
-                joinTitle: "Unirse a Oslo Meet",
+                aiOnboarding: "Onboarding con IA", joinTitle: "Unirse a Oslo Meet",
                 joinSubtitle: "Cuéntanos sobre tu empresa. Nuestra IA usará esto para encontrar tus matches perfectos.",
                 stepCompany: "Empresa", stepGoals: "Objetivos", stepMatching: "Matching", stepPlan: "Plan",
                 step1Title: "Sobre Tu Empresa", step1Subtitle: "Información básica para construir tu perfil con IA",
-                labelCompanyName: "Nombre de la Empresa", placeholderCompany: "ej: NordicLogix AS",
+                labelCompanyName: "Nombre de la Empresa", placeholderCompany: "ej: NordicLogix",
                 labelIndustry: "Industria / Sector", selectIndustry: "Selecciona tu sector principal",
                 industryTech: "Tecnología / Software", industryLogistics: "Logística / Cadena de Suministro",
                 industryFintech: "FinTech / Servicios Financieros", industryHealth: "HealthTech / Ciencias de la Vida",
@@ -601,12 +706,16 @@
                 foundingOffer: "Oferta Miembros Fundadores", foundingDesc: "Primeros 50 miembros: <strong>50% de descuento en precio vitalicio</strong> + badge exclusivo + acceso prioritario.",
                 foundingCheckbox: "Sí, reservar mi plaza de Fundador",
                 labelEmail: "Email de Contacto", placeholderEmail: "tu@empresa.com",
-                consentText: "Acepto los <a href='#'>Términos</a> y <a href='#'>Política de Privacidad</a>. Consiento que Oslo Meet use mis datos para matching con IA.",
+                consentText: "Acepto los <a href='terms-of-use.html'>Términos</a> y <a href='privacy-policy.html'>Política de Privacidad</a>. Consiento que Oslo Meet use mis datos para matching con IA.",
                 successTitle: "¡Bienvenido a Oslo Meet!", successDesc: "Tu perfil está siendo procesado por nuestra IA. Recibirás tus primeros matches en 24 horas.",
                 next1: "Revisa tu email", next1Desc: "Confirmación + próximos pasos enviados a tu bandeja",
                 next2: "Completa tu perfil", next2Desc: "Agrega logo, sitio web y detalles del equipo",
                 next3: "Únete al evento de kickoff", next3Desc: "Sesión exclusiva de onboarding para fundadores",
-                btnHome: "Volver a Homepage"
+                btnHome: "Volver a Homepage",
+                footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
+                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
+                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
             }
         };
 
