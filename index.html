@@ -38,9 +38,7 @@
             --warning-orange: #f59e0b;
             --ai-glow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
@@ -48,641 +46,248 @@
             background: var(--dark-bg);
             overflow-x: hidden;
         }
-        
         /* Language Selector */
         .language-selector {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50px;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            padding: 8px 16px; display: flex; align-items: center; gap: 10px;
         }
-        
         .language-selector select {
-            background: transparent;
-            border: none;
-            color: white;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 0.9rem;
-            cursor: pointer;
-            outline: none;
+            background: transparent; border: none; color: white;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; outline: none;
         }
-        
-        .language-selector select option {
-            background: var(--dark-bg);
-            color: white;
-        }
-        
+        .language-selector select option { background: var(--dark-bg); color: white; }
         /* === HERO SECTION === */
         .hero {
             background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            padding-top: 80px;
-            overflow: hidden;
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; position: relative; padding-top: 80px; overflow: hidden;
         }
-        
         .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 20% 80%, rgba(139,92,246,0.15) 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.15) 0%, transparent 50%);
             pointer-events: none;
         }
-        
         .hero::after {
-            content: '';
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            border-radius: 50%;
-            animation: pulse 8s ease-in-out infinite;
-            pointer-events: none;
+            content: ''; position: absolute; width: 600px; height: 600px;
+            border: 1px solid rgba(139,92,246,0.1); border-radius: 50%;
+            animation: pulse 8s ease-in-out infinite; pointer-events: none;
         }
-        
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 0.3; }
             50% { transform: scale(1.1); opacity: 0.1; }
         }
-        
-        .hero-content {
-            max-width: 1000px;
-            padding: 0 20px;
-            z-index: 2;
-            position: relative;
-        }
-        
+        .hero-content { max-width: 1000px; padding: 0 20px; z-index: 2; position: relative; }
         .badge-ai {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(59, 130, 246, 0.2));
-            border: 1px solid rgba(139, 92, 246, 0.4);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #c7d2fe;
-            margin-bottom: 1.5rem;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(59,130,246,0.2));
+            border: 1px solid rgba(139,92,246,0.4); padding: 8px 20px; border-radius: 50px;
+            font-size: 0.85rem; font-weight: 600; color: #c7d2fe; margin-bottom: 1.5rem;
             animation: fadeIn 0.6s ease;
         }
-        
         .badge-ai i { color: var(--accent-purple); }
-        
         .logo {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -1px;
-            animation: fadeIn 0.8s ease;
+            font-size: 4rem; font-weight: 800; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; letter-spacing: -1px; animation: fadeIn 0.8s ease;
         }
-        
         .tagline {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #c7d2fe;
-            animation: fadeIn 0.8s ease 0.1s backwards;
+            font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;
+            color: #c7d2fe; animation: fadeIn 0.8s ease 0.1s backwards;
         }
-        
         .subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-            animation: fadeIn 0.8s ease 0.2s backwards;
+            font-size: 1.1rem; color: var(--text-secondary); max-width: 700px;
+            margin: 0 auto 2.5rem; animation: fadeIn 0.8s ease 0.2s backwards;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         /* CTA Buttons */
         .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-            animation: fadeIn 0.8s ease 0.3s backwards;
+            display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+            margin-bottom: 3rem; animation: fadeIn 0.8s ease 0.3s backwards;
         }
-        
         .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-            color: white;
-            padding: 16px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-            border: none;
-            cursor: pointer;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: linear-gradient(135deg, #3b82f6, #2563eb); color: white;
+            padding: 16px 32px; border-radius: 50px; text-decoration: none;
+            font-size: 1rem; font-weight: 700; transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(59,130,246,0.4); border: none; cursor: pointer;
         }
-        
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
-        }
-        
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(59,130,246,0.6); }
         .cta-button.secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: none;
+            background: transparent; color: white; border: 2px solid rgba(255,255,255,0.3); box-shadow: none;
         }
-        
-        .cta-button.secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        .cta-button.ai {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
-            box-shadow: var(--ai-glow);
-        }
-        
-        .cta-button.ai:hover {
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
-        }
-        
-        /* Value Props Grid */
+        .cta-button.secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
+        .cta-button.ai { background: linear-gradient(135deg, #8b5cf6, #6366f1); box-shadow: var(--ai-glow); }
+        .cta-button.ai:hover { box-shadow: 0 0 30px rgba(139,92,246,0.5); }
+        /* Value Props */
         .value-props {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1rem;
-            max-width: 900px;
-            margin: 0 auto;
-            animation: fadeIn 0.8s ease 0.4s backwards;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem; max-width: 900px; margin: 0 auto; animation: fadeIn 0.8s ease 0.4s backwards;
         }
-        
         .value-prop {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.95rem;
+            display: flex; align-items: center; gap: 12px; padding: 12px 20px;
+            background: rgba(255,255,255,0.05); border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1); font-size: 0.95rem;
         }
-        
-        .value-prop i {
-            color: var(--accent-purple);
-            font-size: 1.2rem;
-        }
-        
+        .value-prop i { color: var(--accent-purple); font-size: 1.2rem; }
         /* Scroll Indicator */
         .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            opacity: 0.6;
-            animation: bounce 2s infinite;
-            cursor: pointer;
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            color: var(--text-secondary); font-size: 1.5rem; opacity: 0.6;
+            animation: bounce 2s infinite; cursor: pointer;
         }
-        
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
         }
-        
-        /* === SECTIONS === */
-        .ai-section, .matching-demo, .pricing-preview, .founding-section {
-            padding: 100px 0;
-        }
-        
-        .ai-section { background: linear-gradient(180deg, var(--dark-bg) 0%, var(--card-bg) 100%); }
+        /* Sections */
+        .ai-section, .matching-demo, .pricing-preview, .founding-section { padding: 100px 0; }
+        .ai-section { background: linear-gradient(180deg, var(--dark-bg), var(--card-bg)); }
         .matching-demo { background: var(--card-bg); }
         .pricing-preview { background: var(--dark-bg); }
         .founding-section { background: linear-gradient(180deg, var(--card-bg), var(--dark-bg)); text-align: center; }
-        
-        .section-header {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto 4rem;
-        }
-        
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
         .section-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(139, 92, 246, 0.15);
-            color: var(--accent-purple);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(139,92,246,0.15); color: var(--accent-purple);
+            padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;
         }
-        
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #818cf8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-        
-        .section-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        
+        .section-subtitle { color: var(--text-secondary); font-size: 1.1rem; }
         /* AI Steps */
-        .ai-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
+        .ai-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
         .ai-step {
-            background: var(--dark-bg);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            position: relative;
-            transition: all 0.3s ease;
+            background: var(--dark-bg); padding: 2rem; border-radius: 20px;
+            border: 1px solid var(--border-color); position: relative; transition: all 0.3s ease;
         }
-        
-        .ai-step:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-purple);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        
+        .ai-step:hover { transform: translateY(-5px); border-color: var(--accent-purple); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .step-number {
-            position: absolute;
-            top: -12px;
-            left: 24px;
-            width: 32px;
-            height: 32px;
+            position: absolute; top: -12px; left: 24px; width: 32px; height: 32px;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: white;
-            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.9rem; color: white; box-shadow: 0 4px 12px rgba(139,92,246,0.4);
         }
-        
-        .ai-step i {
-            font-size: 2.5rem;
-            color: var(--accent-purple);
-            margin: 1rem 0;
-            display: block;
-        }
-        
-        .ai-step h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: white;
-        }
-        
-        .ai-step p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        
+        .ai-step i { font-size: 2.5rem; color: var(--accent-purple); margin: 1rem 0; display: block; }
+        .ai-step h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: white; }
+        .ai-step p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
         /* Matching Demo */
         .demo-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--dark-bg);
-            border-radius: 24px;
-            padding: 3rem;
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
+            max-width: 1000px; margin: 0 auto; background: var(--dark-bg);
+            border-radius: 24px; padding: 3rem; border: 1px solid var(--border-color);
+            position: relative; overflow: hidden;
         }
-        
         .demo-container::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
             background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue), var(--success-green));
         }
-        
-        .demo-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .demo-header h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .demo-header p {
-            color: var(--text-secondary);
-        }
-        
-        .match-example {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 2rem;
-            align-items: center;
-            margin: 2rem 0;
-        }
-        
-        .company-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-        }
-        
-        .company-card h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
+        .demo-header { text-align: center; margin-bottom: 2rem; }
+        .demo-header h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .demo-header p { color: var(--text-secondary); }
+        .match-example { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center; margin: 2rem 0; }
+        .company-card { background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border-color); }
+        .company-card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px; }
         .company-card h4 i { color: var(--accent-blue); }
         .company-card p { color: var(--text-secondary); font-size: 0.9rem; }
-        
-        .company-card .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 1rem;
-        }
-        
+        .company-card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
         .tag {
-            background: rgba(59, 130, 246, 0.15);
-            color: #93c5fd;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            background: rgba(59,130,246,0.15); color: #93c5fd; padding: 4px 12px;
+            border-radius: 20px; font-size: 0.8rem; font-weight: 500;
         }
-        
-        .match-arrow {
-            text-align: center;
-            color: var(--accent-purple);
-            font-size: 2rem;
-            animation: pulseArrow 2s ease-in-out infinite;
-        }
-        
-        @keyframes pulseArrow {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
-        }
-        
+        .match-arrow { text-align: center; color: var(--accent-purple); font-size: 2rem; animation: pulseArrow 2s ease-in-out infinite; }
+        @keyframes pulseArrow { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.1); } }
         .match-score {
-            text-align: center;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(139, 92, 246, 0.15));
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            text-align: center; background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(139,92,246,0.15));
+            padding: 1rem 2rem; border-radius: 12px; border: 1px solid rgba(16,185,129,0.3);
         }
-        
-        .match-score .score {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--success-green);
-        }
-        
-        .match-score .label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        
+        .match-score .score { font-size: 2rem; font-weight: 800; color: var(--success-green); }
+        .match-score .label { font-size: 0.9rem; color: var(--text-secondary); }
         /* Pricing */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; max-width: 1100px; margin: 0 auto; }
         .pricing-card {
-            background: var(--card-bg);
-            padding: 2.5rem 2rem;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
+            background: var(--card-bg); padding: 2.5rem 2rem; border-radius: 20px;
+            border: 1px solid var(--border-color); text-align: center; transition: all 0.3s ease; position: relative;
         }
-        
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-blue);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-        
-        .pricing-card.popular {
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
-        }
-        
+        .pricing-card:hover { transform: translateY(-8px); border-color: var(--accent-blue); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .pricing-card.popular { border-color: var(--accent-purple); box-shadow: 0 0 0 2px rgba(139,92,246,0.2); }
         .pricing-card.popular::before {
-            content: 'MOST POPULAR';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
+            content: 'MOST POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            color: white;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            color: white; padding: 4px 16px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;
         }
-        
-        .pricing-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-        
+        .pricing-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
         .pricing-card .price {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 1rem 0;
+            font-size: 2.5rem; font-weight: 800; margin: 1rem 0;
             background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        
-        .pricing-card .period {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        
-        .pricing-card .features {
-            list-style: none;
-            margin: 2rem 0;
-            text-align: left;
-        }
-        
+        .pricing-card .period { font-size: 0.9rem; color: var(--text-secondary); }
+        .pricing-card .features { list-style: none; margin: 2rem 0; text-align: left; }
         .pricing-card .features li {
-            padding: 0.6rem 0;
-            color: var(--text-secondary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.95rem;
+            padding: 0.6rem 0; color: var(--text-secondary); display: flex;
+            align-items: center; gap: 10px; font-size: 0.95rem;
         }
-        
         .pricing-card .features li i { color: var(--success-green); }
         .pricing-card .cta-button { width: 100%; justify-content: center; }
-        
         /* Founding */
         .founding-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(234, 179, 8, 0.15));
-            color: var(--warning-orange);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(234,179,8,0.15));
+            color: var(--warning-orange); padding: 8px 20px; border-radius: 50px;
+            font-size: 0.9rem; font-weight: 600; margin-bottom: 1.5rem;
+            border: 1px solid rgba(245,158,11,0.3);
         }
-        
-        .founding-section p {
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-        
+        .founding-section p { color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
         .founding-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--warning-orange);
-            padding: 12px 28px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: 1px solid rgba(245, 158, 11, 0.3);
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(245,158,11,0.15); color: var(--warning-orange);
+            padding: 12px 28px; border-radius: 50px; text-decoration: none;
+            font-weight: 600; transition: all 0.3s; border: 1px solid rgba(245,158,11,0.3);
         }
-        
-        .founding-cta:hover {
-            background: rgba(245, 158, 11, 0.25);
-            transform: translateY(-2px);
-        }
-        
+        .founding-cta:hover { background: rgba(245,158,11,0.25); transform: translateY(-2px); }
         /* Footer */
-        .footer {
-            background: #020617;
-            padding: 4rem 0 2rem;
-            border-top: 1px solid var(--border-color);
-        }
-        
+        .footer { background: #020617; padding: 4rem 0 2rem; border-top: 1px solid var(--border-color); }
         .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1.5fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem;
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
         }
-        
         .footer-brand h2 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem; margin-bottom: 1rem;
             background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        
         .footer-brand p { color: var(--text-secondary); line-height: 1.6; }
         .footer-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: white; }
         .footer-links { list-style: none; }
         .footer-links li { margin-bottom: 0.6rem; }
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.95rem;
-        }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.95rem; }
         .footer-links a:hover { color: var(--accent-blue); }
-        
         .footer-bottom {
-            max-width: 1200px;
-            margin: 3rem auto 0;
-            padding: 2rem 20px 0;
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            text-align: center;
+            max-width: 1200px; margin: 3rem auto 0; padding: 2rem 20px 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            color: var(--text-secondary); font-size: 0.9rem; text-align: center;
         }
-        
-        .footer-bottom a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            margin: 0 1rem;
-        }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 1rem; }
         .footer-bottom a:hover { color: var(--accent-blue); }
-        .footer-bottom .email-link {
-            color: var(--accent-blue);
-            font-weight: 500;
-        }
+        .footer-bottom .email-link { color: var(--accent-blue); font-weight: 500; }
         .developer-credit { color: #fbbf24 !important; }
-        
         /* Responsive */
         @media (max-width: 968px) {
             .footer-grid { grid-template-columns: 1fr 1fr; }
             .match-example { grid-template-columns: 1fr; text-align: center; }
             .match-arrow { transform: rotate(90deg); }
         }
-        
         @media (max-width: 768px) {
-            .logo { font-size: 3rem; }
-            .tagline { font-size: 1.3rem; }
-            .section-title { font-size: 2rem; }
-            .footer-grid { grid-template-columns: 1fr; }
+            .logo { font-size: 3rem; } .tagline { font-size: 1.3rem; }
+            .section-title { font-size: 2rem; } .footer-grid { grid-template-columns: 1fr; }
             .language-selector { top: 10px; right: 10px; }
         }
     </style>
@@ -706,14 +311,12 @@
                 <i class="fas fa-brain"></i>
                 <span data-i18n="aiBadge">Powered by Intelligent Matching</span>
             </div>
-            
             <h1 class="logo">OSLO MEET</h1>
             <p class="tagline" data-i18n="heroTagline">Connecting businesses, creators and innovators in Oslo</p>
             <p class="subtitle" data-i18n="heroSubtitle">
                 Our AI analyzes your business profile to recommend the most valuable connections, 
                 partnerships, and opportunities in the Nordic ecosystem.
             </p>
-            
             <div class="cta-buttons">
                 <a href="join.html" class="cta-button ai">
                     <i class="fas fa-rocket"></i>
@@ -724,7 +327,6 @@
                     <span data-i18n="ctaLearn">See How It Works</span>
                 </a>
             </div>
-            
             <div class="value-props">
                 <div class="value-prop"><i class="fas fa-check-circle"></i> <span data-i18n="prop1">Smart B2B Matching</span></div>
                 <div class="value-prop"><i class="fas fa-check-circle"></i> <span data-i18n="prop2">AI Opportunity Feed</span></div>
@@ -732,7 +334,6 @@
                 <div class="value-prop"><i class="fas fa-check-circle"></i> <span data-i18n="prop4">Nordic Network</span></div>
             </div>
         </div>
-        
         <div class="scroll-indicator" onclick="scrollToSection('how-it-works')">
             <i class="fas fa-chevron-down"></i>
         </div>
@@ -748,7 +349,6 @@
                     Our algorithm connects the right companies at the right time — no more random networking.
                 </p>
             </div>
-            
             <div class="ai-steps">
                 <div class="ai-step">
                     <span class="step-number">1</span>
@@ -791,16 +391,14 @@
                     Example of how our AI connects complementary businesses in Oslo's ecosystem.
                 </p>
             </div>
-            
             <div class="demo-container">
                 <div class="demo-header">
                     <h3 data-i18n="demoScenario">Scenario: Logistics + AI</h3>
                     <p data-i18n="demoScenarioDesc">Two companies with perfect strategic alignment</p>
                 </div>
-                
                 <div class="match-example">
                     <div class="company-card">
-                        <h4><i class="fas fa-truck"></i> NordicLogix AS</h4>
+                        <h4><i class="fas fa-truck"></i> NordicLogix</h4>
                         <p data-i18n="demoCompany1Desc">Logistics & Supply Chain</p>
                         <div class="tags">
                             <span class="tag" data-i18n="tagSeeking">Seeking: AI Optimization</span>
@@ -808,12 +406,10 @@
                             <span class="tag" data-i18n="tagStage">Stage: Growth</span>
                         </div>
                     </div>
-                    
                     <div class="match-arrow">
                         <i class="fas fa-arrow-right"></i>
                         <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:8px" data-i18n="aiMatch">AI Match</div>
                     </div>
-                    
                     <div class="company-card">
                         <h4><i class="fas fa-robot"></i> AlgoFlow Tech</h4>
                         <p data-i18n="demoCompany2Desc">AI & Machine Learning</p>
@@ -824,7 +420,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <div style="text-align:center">
                     <div class="match-score">
                         <div class="score">94%</div>
@@ -849,7 +444,6 @@
                     Invest in intelligent connections. Cancel anytime.
                 </p>
             </div>
-            
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3 data-i18n="planStarter">Starter</h3>
@@ -863,7 +457,6 @@
                     </ul>
                     <a href="join.html?plan=starter" class="cta-button secondary" data-i18n="btnStarter">Get Started</a>
                 </div>
-                
                 <div class="pricing-card popular">
                     <h3 data-i18n="planBusiness">Business</h3>
                     <div class="price">NOK 3.900<span class="period">/year</span></div>
@@ -877,7 +470,6 @@
                     </ul>
                     <a href="join.html?plan=business" class="cta-button ai" data-i18n="btnBusiness">Join Business</a>
                 </div>
-                
                 <div class="pricing-card">
                     <h3 data-i18n="planPartner">Partner</h3>
                     <div class="price">NOK 12.000+<span class="period">/year</span></div>
@@ -892,7 +484,6 @@
                     <a href="join.html?plan=partner" class="cta-button secondary" data-i18n="btnPartner">Contact Sales</a>
                 </div>
             </div>
-            
             <p style="text-align:center;color:var(--text-secondary);margin-top:2rem;font-size:0.9rem" data-i18n="pricingNote">
                 <strong>Founding Member Offer:</strong> First 50 members get lifetime pricing at 50% off. 
                 <a href="join.html?founding=true" style="color:var(--accent-purple);text-decoration:none">Reserve your spot →</a>
@@ -919,20 +510,27 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer CORRIGIDO -->
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
                 <h2>OSLO MEET</h2>
                 <p data-i18n="footerSlogan">AI-powered business connections for Oslo's innovators, founders, and growth companies.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/oslomeet/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/oslomeet" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/oslomeet1/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
             </div>
             <div>
                 <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
                 <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
                     <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
                     <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
                     <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
-                    <li><a href="#" data-i18n="navAPI">API Access</a></li>
                 </ul>
             </div>
             <div>
@@ -940,403 +538,191 @@
                 <ul class="footer-links">
                     <li><a href="#" data-i18n="navAbout">About</a></li>
                     <li><a href="#" data-i18n="navBlog">Insights</a></li>
-                    <li><a href="#" data-i18n="navCareers">Careers</a></li>
                     <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
                 </ul>
             </div>
             <div>
                 <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
                 <ul class="footer-links">
-                    <li><a href="terms-of-use" data-i18n="navTerms">Terms</a></li>
-                    <li><a href="privacy-policy" data-i18n="navPrivacy">Privacy</a></li>
-                    <li><a href="cookie-notice" data-i18n="navCookies">Cookies</a></li>
-                    <li><a href="#" data-i18n="navGDPR">GDPR</a></li>
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
             <div>&copy; 2026 Oslo Meet</div>
-            <div>
-                <a href="mailto:post@barros.no" class="email-link">post@barros.no</a>
-            </div>
-            <div>
-                <a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit">
-                    <i class="fas fa-code"></i> Digital Solutions
-                </a>
-            </div>
+            <div><a href="mailto:post@barros.no" class="email-link">post@barros.no</a></div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
         </div>
     </footer>
 
     <script>
-        // === TRANSLATIONS (4 LANGUAGES) ===
         const translations = {
             en: {
                 aiBadge: "Powered by Intelligent Matching",
                 heroTagline: "Connecting businesses, creators and innovators in Oslo",
                 heroSubtitle: "Our AI analyzes your business profile to recommend the most valuable connections, partnerships, and opportunities in the Nordic ecosystem.",
-                ctaJoin: "Join as Founding Member",
-                ctaLearn: "See How It Works",
-                prop1: "Smart B2B Matching",
-                prop2: "AI Opportunity Feed",
-                prop3: "Exclusive Events",
-                prop4: "Nordic Network",
-                howTitle: "How It Works",
-                aiTitle: "Intelligent Business Matching",
+                ctaJoin: "Join as Founding Member", ctaLearn: "See How It Works",
+                prop1: "Smart B2B Matching", prop2: "AI Opportunity Feed", prop3: "Exclusive Events", prop4: "Nordic Network",
+                howTitle: "How It Works", aiTitle: "Intelligent Business Matching",
                 aiSubtitle: "Our algorithm connects the right companies at the right time — no more random networking.",
-                step1Title: "Smart Onboarding",
-                step1Desc: "Tell us about your business: sector, goals, challenges, and what you're looking for. Our AI builds a rich profile using semantic analysis.",
-                step2Title: "AI Analysis",
-                step2Desc: "Our algorithm analyzes 50+ signals: industry fit, growth stage, tech stack, geographic focus, and strategic goals to find true synergies.",
-                step3Title: "Smart Recommendations",
-                step3Desc: "Get a personalized feed of high-potential matches with compatibility scores. Connect directly or let our AI Concierge facilitate introductions.",
-                demoTitle: "See It In Action",
-                demoMainTitle: "Real Matches, Real Value",
-                demoSubtitle: "Example of how our AI connects complementary businesses in Oslo's ecosystem.",
-                demoScenario: "Scenario: Logistics + AI",
-                demoScenarioDesc: "Two companies with perfect strategic alignment",
-                demoCompany1Desc: "Logistics & Supply Chain",
-                demoCompany2Desc: "AI & Machine Learning",
-                tagSeeking: "Seeking: AI Optimization",
-                tagOffering: "Offering: Logistics AI",
-                tagMarket: "Market: Sweden Expansion",
-                tagClients: "Clients: Nordic Retail",
-                tagStage: "Stage: Growth",
-                aiMatch: "AI Match",
-                matchLabel: "Strategic Compatibility",
+                step1Title: "Smart Onboarding", step1Desc: "Tell us about your business: sector, goals, challenges, and what you're looking for. Our AI builds a rich profile using semantic analysis.",
+                step2Title: "AI Analysis", step2Desc: "Our algorithm analyzes 50+ signals: industry fit, growth stage, tech stack, geographic focus, and strategic goals to find true synergies.",
+                step3Title: "Smart Recommendations", step3Desc: "Get a personalized feed of high-potential matches with compatibility scores. Connect directly or let our AI Concierge facilitate introductions.",
+                demoTitle: "See It In Action", demoMainTitle: "Real Matches, Real Value", demoSubtitle: "Example of how our AI connects complementary businesses in Oslo's ecosystem.",
+                demoScenario: "Scenario: Logistics + AI", demoScenarioDesc: "Two companies with perfect strategic alignment",
+                demoCompany1Desc: "Logistics & Supply Chain", demoCompany2Desc: "AI & Machine Learning",
+                tagSeeking: "Seeking: AI Optimization", tagOffering: "Offering: Logistics AI", tagMarket: "Market: Sweden Expansion", tagClients: "Clients: Nordic Retail", tagStage: "Stage: Growth",
+                aiMatch: "AI Match", matchLabel: "Strategic Compatibility",
                 matchReason: "<strong>Why this match:</strong> Complementary capabilities, shared Nordic market focus, and aligned growth objectives create high partnership potential.",
-                membershipTitle: "Membership",
-                pricingTitle: "Choose Your Access Level",
-                pricingSubtitle: "Invest in intelligent connections. Cancel anytime.",
-                planStarter: "Starter",
-                planStarterDesc: "For startups & small businesses",
-                feat1: "AI-powered profile",
-                feat2: "5 smart matches/month",
-                feat3: "Access to community events",
-                feat4: "Basic opportunity feed",
+                membershipTitle: "Membership", pricingTitle: "Choose Your Access Level", pricingSubtitle: "Invest in intelligent connections. Cancel anytime.",
+                planStarter: "Starter", planStarterDesc: "For startups & small businesses",
+                feat1: "AI-powered profile", feat2: "5 smart matches/month", feat3: "Access to community events", feat4: "Basic opportunity feed",
                 btnStarter: "Get Started",
-                planBusiness: "Business",
-                planBusinessDesc: "For active networkers & growing companies",
-                feat5: "Everything in Starter",
-                feat6: "Unlimited AI matches",
-                feat7: "Priority event access",
-                feat8: "AI Concierge introductions",
-                feat9: "Featured in Opportunity Feed",
+                planBusiness: "Business", planBusinessDesc: "For active networkers & growing companies",
+                feat5: "Everything in Starter", feat6: "Unlimited AI matches", feat7: "Priority event access", feat8: "AI Concierge introductions", feat9: "Featured in Opportunity Feed",
                 btnBusiness: "Join Business",
-                planPartner: "Partner",
-                planPartnerDesc: "For sponsors & ecosystem leaders",
-                feat10: "Everything in Business",
-                feat11: "Custom matching criteria",
-                feat12: "Host exclusive events",
-                feat13: "Brand visibility & speaking slots",
-                feat14: "Dedicated success manager",
+                planPartner: "Partner", planPartnerDesc: "For sponsors & ecosystem leaders",
+                feat10: "Everything in Business", feat11: "Custom matching criteria", feat12: "Host exclusive events", feat13: "Brand visibility & speaking slots", feat14: "Dedicated success manager",
                 btnPartner: "Contact Sales",
                 pricingNote: "<strong>Founding Member Offer:</strong> First 50 members get lifetime pricing at 50% off. <a href='join.html?founding=true' style='color:var(--accent-purple);text-decoration:none'>Reserve your spot →</a>",
-                foundingBadge: "Founding Members Program",
-                foundingTitle: "Be Part of Oslo's First AI Business Network",
+                foundingBadge: "Founding Members Program", foundingTitle: "Be Part of Oslo's First AI Business Network",
                 foundingDesc: "Join the first 50 companies to shape the future of business connections in Oslo. Get lifetime pricing, exclusive badge, and priority access to all features.",
                 btnFounding: "Reserve Founding Spot (NOK 990/year)",
                 footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
-                navPlatform: "Platform",
-                navHow: "How Matching Works",
-                navJoin: "Join Now",
-                navPricing: "Pricing",
-                navAPI: "API Access",
-                navCompany: "Company",
-                navAbout: "About",
-                navBlog: "Insights",
-                navCareers: "Careers",
-                navContact: "Contact",
-                navLegal: "Legal",
-                navTerms: "Terms",
-                navPrivacy: "Privacy",
-                navCookies: "Cookies",
-                navGDPR: "GDPR"
+                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing", navAPI: "API Access",
+                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
+                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
-                aiBadge: "Drevet av intelligent matching",
-                heroTagline: "Kobler bedrifter, skapere og innovatører i Oslo",
+                aiBadge: "Drevet av intelligent matching", heroTagline: "Kobler bedrifter, skapere og innovatører i Oslo",
                 heroSubtitle: "Vår AI analyserer din bedriftsprofil for å anbefale de mest verdifulle koblingene, partnerskapene og mulighetene i det nordiske økosystemet.",
-                ctaJoin: "Bli med som grunnlegger",
-                ctaLearn: "Se hvordan det virker",
-                prop1: "Smart B2B-matching",
-                prop2: "AI-drevet mulighetsfeed",
-                prop3: "Eksklusive arrangementer",
-                prop4: "Nordisk nettverk",
-                howTitle: "Hvordan det fungerer",
-                aiTitle: "Intelligent bedriftsmatching",
+                ctaJoin: "Bli med som grunnlegger", ctaLearn: "Se hvordan det virker",
+                prop1: "Smart B2B-matching", prop2: "AI-drevet mulighetsfeed", prop3: "Eksklusive arrangementer", prop4: "Nordisk nettverk",
+                howTitle: "Hvordan det fungerer", aiTitle: "Intelligent bedriftsmatching",
                 aiSubtitle: "Vår algoritme kobler riktig bedrifter til riktig tid – ingen tilfeldige nettverk mer.",
-                step1Title: "Smart onboarding",
-                step1Desc: "Fortell oss om din bedrift: bransje, mål, utfordringer og hva du søker. Vår AI bygger en rik profil ved hjelp av semantisk analyse.",
-                step2Title: "AI-analyse",
-                step2Desc: "Vår algoritme analyserer 50+ signaler: bransjetilhørighet, vekstfase, tech-stack, geografisk fokus og strategiske mål for å finne ekte synergier.",
-                step3Title: "Smart anbefalinger",
-                step3Desc: "Få en personlig feed av høy-potensielle matcher med kompatibilitetspoeng. Koble direkte eller la vår AI Concierge fasilitere introduksjoner.",
-                demoTitle: "Se det i aksjon",
-                demoMainTitle: "Ekte matcher, ekte verdi",
-                demoSubtitle: "Eksempel på hvordan vår AI kobler komplementære bedrifter i Oslos økosystem.",
-                demoScenario: "Scenario: Logistikk + AI",
-                demoScenarioDesc: "To bedrifter med perfekt strategisk tilpasning",
-                demoCompany1Desc: "Logistikk og forsyningskjede",
-                demoCompany2Desc: "AI og maskinlæring",
-                tagSeeking: "Søker: AI-optimalisering",
-                tagOffering: "Tilbyr: Logistikk-AI",
-                tagMarket: "Marked: Sverige-ekspansjon",
-                tagClients: "Kunder: Nordisk detaljhandel",
-                tagStage: "Fase: Vekst",
-                aiMatch: "AI-match",
-                matchLabel: "Strategisk kompatibilitet",
+                step1Title: "Smart onboarding", step1Desc: "Fortell oss om din bedrift: bransje, mål, utfordringer og hva du søker. Vår AI bygger en rik profil ved hjelp av semantisk analyse.",
+                step2Title: "AI-analyse", step2Desc: "Vår algoritme analyserer 50+ signaler: bransjetilhørighet, vekstfase, tech-stack, geografisk fokus og strategiske mål for å finne ekte synergier.",
+                step3Title: "Smart anbefalinger", step3Desc: "Få en personlig feed av høy-potensielle matcher med kompatibilitetspoeng. Koble direkte eller la vår AI Concierge fasilitere introduksjoner.",
+                demoTitle: "Se det i aksjon", demoMainTitle: "Ekte matcher, ekte verdi", demoSubtitle: "Eksempel på hvordan vår AI kobler komplementære bedrifter i Oslos økosystem.",
+                demoScenario: "Scenario: Logistikk + AI", demoScenarioDesc: "To bedrifter med perfekt strategisk tilpasning",
+                demoCompany1Desc: "Logistikk og forsyningskjede", demoCompany2Desc: "AI og maskinlæring",
+                tagSeeking: "Søker: AI-optimalisering", tagOffering: "Tilbyr: Logistikk-AI", tagMarket: "Marked: Sverige-ekspansjon", tagClients: "Kunder: Nordisk detaljhandel", tagStage: "Fase: Vekst",
+                aiMatch: "AI-match", matchLabel: "Strategisk kompatibilitet",
                 matchReason: "<strong>Hvorfor denne matchen:</strong> Komplementære evner, delt nordisk markedsfokus og tilpassede vekstmål skaper høyt partnerskapspotensial.",
-                membershipTitle: "Medlemskap",
-                pricingTitle: "Velg ditt tilgangsnivå",
-                pricingSubtitle: "Invester i intelligente koblinger. Avbryt når som helst.",
-                planStarter: "Starter",
-                planStarterDesc: "For startups og små bedrifter",
-                feat1: "AI-drevet profil",
-                feat2: "5 smarte matcher/måned",
-                feat3: "Tilgang til fellesskapsarrangementer",
-                feat4: "Grunnleggende mulighetsfeed",
+                membershipTitle: "Medlemskap", pricingTitle: "Velg ditt tilgangsnivå", pricingSubtitle: "Invester i intelligente koblinger. Avbryt når som helst.",
+                planStarter: "Starter", planStarterDesc: "For startups og små bedrifter",
+                feat1: "AI-drevet profil", feat2: "5 smarte matcher/måned", feat3: "Tilgang til fellesskapsarrangementer", feat4: "Grunnleggende mulighetsfeed",
                 btnStarter: "Kom i gang",
-                planBusiness: "Business",
-                planBusinessDesc: "For aktive nettverkere og voksende bedrifter",
-                feat5: "Alt i Starter",
-                feat6: "Ubegrensede AI-matcher",
-                feat7: "Prioritert tilgang til arrangementer",
-                feat8: "AI Concierge-introduksjoner",
-                feat9: "Fremhevet i mulighetsfeed",
+                planBusiness: "Business", planBusinessDesc: "For aktive nettverkere og voksende bedrifter",
+                feat5: "Alt i Starter", feat6: "Ubegrensede AI-matcher", feat7: "Prioritert tilgang til arrangementer", feat8: "AI Concierge-introduksjoner", feat9: "Fremhevet i mulighetsfeed",
                 btnBusiness: "Bli med Business",
-                planPartner: "Partner",
-                planPartnerDesc: "For sponsorer og økosystemledere",
-                feat10: "Alt i Business",
-                feat11: "Tilpassede matchingskriterier",
-                feat12: "Arranger eksklusive arrangementer",
-                feat13: "Merkevaresynlighet og taleplasser",
-                feat14: "Dedikert suksessansvarlig",
+                planPartner: "Partner", planPartnerDesc: "For sponsorer og økosystemledere",
+                feat10: "Alt i Business", feat11: "Tilpassede matchingskriterier", feat12: "Arranger eksklusive arrangementer", feat13: "Merkevaresynlighet og taleplasser", feat14: "Dedikert suksessansvarlig",
                 btnPartner: "Kontakt salg",
                 pricingNote: "<strong>Tilbud for grunnleggere:</strong> Første 50 medlemmer får livstidsprising med 50% rabatt. <a href='join.html?founding=true' style='color:var(--accent-purple);text-decoration:none'>Reserver din plass →</a>",
-                foundingBadge: "Grunnleggerprogram",
-                foundingTitle: "Vær med på Oslos første AI-bedriftsnettverk",
+                foundingBadge: "Grunnleggerprogram", foundingTitle: "Vær med på Oslos første AI-bedriftsnettverk",
                 foundingDesc: "Bli med de første 50 bedriftene for å forme fremtiden for bedriftskoblinger i Oslo. Få livstidsprising, eksklusivt merke og prioritert tilgang til alle funksjoner.",
                 btnFounding: "Reserver grunnleggerplass (NOK 990/år)",
                 footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
-                navPlatform: "Plattform",
-                navHow: "Hvordan matching virker",
-                navJoin: "Bli med nå",
-                navPricing: "Priser",
-                navAPI: "API-tilgang",
-                navCompany: "Selskap",
-                navAbout: "Om",
-                navBlog: "Innsikt",
-                navCareers: "Karrierer",
-                navContact: "Kontakt",
-                navLegal: "Juridisk",
-                navTerms: "Vilkår",
-                navPrivacy: "Personvern",
-                navCookies: "Cookies",
-                navGDPR: "GDPR"
+                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser", navAPI: "API-tilgang",
+                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
+                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
-                aiBadge: "Impulsionado por Matching Inteligente",
-                heroTagline: "Conectando empresas, criadores e inovadores em Oslo",
+                aiBadge: "Impulsionado por Matching Inteligente", heroTagline: "Conectando empresas, criadores e inovadores em Oslo",
                 heroSubtitle: "Nossa IA analisa o perfil da sua empresa para recomendar as conexões, parcerias e oportunidades mais valiosas no ecossistema nórdico.",
-                ctaJoin: "Entrar como Membro Fundador",
-                ctaLearn: "Ver Como Funciona",
-                prop1: "Matching B2B Inteligente",
-                prop2: "Feed de Oportunidades com IA",
-                prop3: "Eventos Exclusivos",
-                prop4: "Rede Nórdica",
-                howTitle: "Como Funciona",
-                aiTitle: "Matching Empresarial Inteligente",
+                ctaJoin: "Entrar como Membro Fundador", ctaLearn: "Ver Como Funciona",
+                prop1: "Matching B2B Inteligente", prop2: "Feed de Oportunidades com IA", prop3: "Eventos Exclusivos", prop4: "Rede Nórdica",
+                howTitle: "Como Funciona", aiTitle: "Matching Empresarial Inteligente",
                 aiSubtitle: "Nosso algoritmo conecta as empresas certas na hora certa — sem networking aleatório.",
-                step1Title: "Onboarding Inteligente",
-                step1Desc: "Conte sobre sua empresa: setor, objetivos, desafios e o que busca. Nossa IA cria um perfil rico usando análise semântica.",
-                step2Title: "Análise com IA",
-                step2Desc: "Nosso algoritmo analisa 50+ sinais: fit de indústria, estágio, stack tecnológico, foco geográfico e objetivos estratégicos.",
-                step3Title: "Recomendações Inteligentes",
-                step3Desc: "Receba um feed personalizado de matches de alto potencial com scores de compatibilidade. Conecte-se diretamente ou deixe nossa IA facilitar.",
-                demoTitle: "Veja em Ação",
-                demoMainTitle: "Matches Reais, Valor Real",
-                demoSubtitle: "Exemplo de como nossa IA conecta empresas complementares no ecossistema de Oslo.",
-                demoScenario: "Cenário: Logística + IA",
-                demoScenarioDesc: "Duas empresas com alinhamento estratégico perfeito",
-                demoCompany1Desc: "Logística e Cadeia de Suprimentos",
-                demoCompany2Desc: "IA e Machine Learning",
-                tagSeeking: "Busca: Otimização com IA",
-                tagOffering: "Oferece: IA para Logística",
-                tagMarket: "Mercado: Expansão Suécia",
-                tagClients: "Clientes: Varejo Nórdico",
-                tagStage: "Estágio: Crescimento",
-                aiMatch: "Match por IA",
-                matchLabel: "Compatibilidade Estratégica",
+                step1Title: "Onboarding Inteligente", step1Desc: "Conte sobre sua empresa: setor, objetivos, desafios e o que busca. Nossa IA cria um perfil rico usando análise semântica.",
+                step2Title: "Análise com IA", step2Desc: "Nosso algoritmo analisa 50+ sinais: fit de indústria, estágio, stack tecnológico, foco geográfico e objetivos estratégicos.",
+                step3Title: "Recomendações Inteligentes", step3Desc: "Receba um feed personalizado de matches de alto potencial com scores de compatibilidade. Conecte-se diretamente ou deixe nossa IA facilitar.",
+                demoTitle: "Veja em Ação", demoMainTitle: "Matches Reais, Valor Real", demoSubtitle: "Exemplo de como nossa IA conecta empresas complementares no ecossistema de Oslo.",
+                demoScenario: "Cenário: Logística + IA", demoScenarioDesc: "Duas empresas com alinhamento estratégico perfeito",
+                demoCompany1Desc: "Logística e Cadeia de Suprimentos", demoCompany2Desc: "IA e Machine Learning",
+                tagSeeking: "Busca: Otimização com IA", tagOffering: "Oferece: IA para Logística", tagMarket: "Mercado: Expansão Suécia", tagClients: "Clientes: Varejo Nórdico", tagStage: "Estágio: Crescimento",
+                aiMatch: "Match por IA", matchLabel: "Compatibilidade Estratégica",
                 matchReason: "<strong>Por que este match:</strong> Capacidades complementares, foco compartilhado no mercado nórdico e objetivos de crescimento alinhados criam alto potencial de parceria.",
-                membershipTitle: "Membro",
-                pricingTitle: "Escolha Seu Nível de Acesso",
-                pricingSubtitle: "Invista em conexões inteligentes. Cancele quando quiser.",
-                planStarter: "Starter",
-                planStarterDesc: "Para startups e pequenas empresas",
-                feat1: "Perfil com IA",
-                feat2: "5 matches inteligentes/mês",
-                feat3: "Acesso a eventos da comunidade",
-                feat4: "Feed básico de oportunidades",
+                membershipTitle: "Membro", pricingTitle: "Escolha Seu Nível de Acesso", pricingSubtitle: "Invista em conexões inteligentes. Cancele quando quiser.",
+                planStarter: "Starter", planStarterDesc: "Para startups e pequenas empresas",
+                feat1: "Perfil com IA", feat2: "5 matches inteligentes/mês", feat3: "Acesso a eventos da comunidade", feat4: "Feed básico de oportunidades",
                 btnStarter: "Começar",
-                planBusiness: "Business",
-                planBusinessDesc: "Para networkers ativos e empresas em crescimento",
-                feat5: "Tudo do Starter",
-                feat6: "Matches ilimitados com IA",
-                feat7: "Acesso prioritário a eventos",
-                feat8: "Introduções via AI Concierge",
-                feat9: "Destaque no Feed de Oportunidades",
+                planBusiness: "Business", planBusinessDesc: "Para networkers ativos e empresas em crescimento",
+                feat5: "Tudo do Starter", feat6: "Matches ilimitados com IA", feat7: "Acesso prioritário a eventos", feat8: "Introduções via AI Concierge", feat9: "Destaque no Feed de Oportunidades",
                 btnBusiness: "Entrar Business",
-                planPartner: "Partner",
-                planPartnerDesc: "Para patrocinadores e líderes do ecossistema",
-                feat10: "Tudo do Business",
-                feat11: "Critérios personalizados de matching",
-                feat12: "Organizar eventos exclusivos",
-                feat13: "Visibilidade da marca e palestras",
-                feat14: "Gerente de sucesso dedicado",
+                planPartner: "Partner", planPartnerDesc: "Para patrocinadores e líderes do ecossistema",
+                feat10: "Tudo do Business", feat11: "Critérios personalizados de matching", feat12: "Organizar eventos exclusivos", feat13: "Visibilidade da marca e palestras", feat14: "Gerente de sucesso dedicado",
                 btnPartner: "Falar com Vendas",
                 pricingNote: "<strong>Oferta Membros Fundadores:</strong> Primeiros 50 membros ganham preço vitalício com 50% de desconto. <a href='join.html?founding=true' style='color:var(--accent-purple);text-decoration:none'>Reserve sua vaga →</a>",
-                foundingBadge: "Programa Membros Fundadores",
-                foundingTitle: "Faça Parte da Primeira Rede Empresarial com IA de Oslo",
+                foundingBadge: "Programa Membros Fundadores", foundingTitle: "Faça Parte da Primeira Rede Empresarial com IA de Oslo",
                 foundingDesc: "Junte-se às primeiras 50 empresas para moldar o futuro das conexões empresariais em Oslo. Ganhe preço vitalício, badge exclusivo e acesso prioritário.",
                 btnFounding: "Reservar Vaga Fundador (NOK 990/ano)",
                 footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
-                navPlatform: "Plataforma",
-                navHow: "Como Funciona",
-                navJoin: "Entrar Agora",
-                navPricing: "Preços",
-                navAPI: "Acesso API",
-                navCompany: "Empresa",
-                navAbout: "Sobre",
-                navBlog: "Insights",
-                navCareers: "Carreiras",
-                navContact: "Contato",
-                navLegal: "Legal",
-                navTerms: "Termos",
-                navPrivacy: "Privacidade",
-                navCookies: "Cookies",
-                navGDPR: "GDPR"
+                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços", navAPI: "Acesso API",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
+                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
-                aiBadge: "Impulsado por Matching Inteligente",
-                heroTagline: "Conectando empresas, creadores e innovadores en Oslo",
+                aiBadge: "Impulsado por Matching Inteligente", heroTagline: "Conectando empresas, creadores e innovadores en Oslo",
                 heroSubtitle: "Nuestra IA analiza el perfil de tu empresa para recomendar las conexiones, asociaciones y oportunidades más valiosas en el ecosistema nórdico.",
-                ctaJoin: "Unirse como Miembro Fundador",
-                ctaLearn: "Ver Cómo Funciona",
-                prop1: "Matching B2B Inteligente",
-                prop2: "Feed de Oportunidades con IA",
-                prop3: "Eventos Exclusivos",
-                prop4: "Red Nórdica",
-                howTitle: "Cómo Funciona",
-                aiTitle: "Matching Empresarial Inteligente",
+                ctaJoin: "Unirse como Miembro Fundador", ctaLearn: "Ver Cómo Funciona",
+                prop1: "Matching B2B Inteligente", prop2: "Feed de Oportunidades con IA", prop3: "Eventos Exclusivos", prop4: "Red Nórdica",
+                howTitle: "Cómo Funciona", aiTitle: "Matching Empresarial Inteligente",
                 aiSubtitle: "Nuestro algoritmo conecta las empresas correctas en el momento correcto — sin networking aleatorio.",
-                step1Title: "Onboarding Inteligente",
-                step1Desc: "Cuéntanos sobre tu empresa: sector, objetivos, desafíos y lo que buscas. Nuestra IA crea un perfil rico usando análisis semántico.",
-                step2Title: "Análisis con IA",
-                step2Desc: "Nuestro algoritmo analiza 50+ señales: encaje de industria, etapa de crecimiento, stack tecnológico, enfoque geográfico y objetivos estratégicos.",
-                step3Title: "Recomendaciones Inteligentes",
-                step3Desc: "Recibe un feed personalizado de matches de alto potencial con scores de compatibilidad. Conéctate directamente o deja que nuestra IA facilite.",
-                demoTitle: "Míralo en Acción",
-                demoMainTitle: "Matches Reales, Valor Real",
-                demoSubtitle: "Ejemplo de cómo nuestra IA conecta empresas complementarias en el ecosistema de Oslo.",
-                demoScenario: "Escenario: Logística + IA",
-                demoScenarioDesc: "Dos empresas con alineación estratégica perfecta",
-                demoCompany1Desc: "Logística y Cadena de Suministro",
-                demoCompany2Desc: "IA y Machine Learning",
-                tagSeeking: "Busca: Optimización con IA",
-                tagOffering: "Ofrece: IA para Logística",
-                tagMarket: "Mercado: Expansión Suecia",
-                tagClients: "Clientes: Retail Nórdico",
-                tagStage: "Etapa: Crecimiento",
-                aiMatch: "Match por IA",
-                matchLabel: "Compatibilidad Estratégica",
+                step1Title: "Onboarding Inteligente", step1Desc: "Cuéntanos sobre tu empresa: sector, objetivos, desafíos y lo que buscas. Nuestra IA crea un perfil rico usando análisis semántico.",
+                step2Title: "Análisis con IA", step2Desc: "Nuestro algoritmo analiza 50+ señales: encaje de industria, etapa de crecimiento, stack tecnológico, enfoque geográfico y objetivos estratégicos.",
+                step3Title: "Recomendaciones Inteligentes", step3Desc: "Recibe un feed personalizado de matches de alto potencial con scores de compatibilidad. Conéctate directamente o deja que nuestra IA facilite.",
+                demoTitle: "Míralo en Acción", demoMainTitle: "Matches Reales, Valor Real", demoSubtitle: "Ejemplo de cómo nuestra IA conecta empresas complementarias en el ecosistema de Oslo.",
+                demoScenario: "Escenario: Logística + IA", demoScenarioDesc: "Dos empresas con alineación estratégica perfecta",
+                demoCompany1Desc: "Logística y Cadena de Suministro", demoCompany2Desc: "IA y Machine Learning",
+                tagSeeking: "Busca: Optimización con IA", tagOffering: "Ofrece: IA para Logística", tagMarket: "Mercado: Expansión Suecia", tagClients: "Clientes: Retail Nórdico", tagStage: "Etapa: Crecimiento",
+                aiMatch: "Match por IA", matchLabel: "Compatibilidad Estratégica",
                 matchReason: "<strong>Por qué este match:</strong> Capacidades complementarias, enfoque compartido en el mercado nórdico y objetivos de crecimiento alineados crean alto potencial de asociación.",
-                membershipTitle: "Membresía",
-                pricingTitle: "Elige Tu Nivel de Acceso",
-                pricingSubtitle: "Invierte en conexiones inteligentes. Cancela cuando quieras.",
-                planStarter: "Starter",
-                planStarterDesc: "Para startups y pequeñas empresas",
-                feat1: "Perfil con IA",
-                feat2: "5 matches inteligentes/mes",
-                feat3: "Acceso a eventos de la comunidad",
-                feat4: "Feed básico de oportunidades",
+                membershipTitle: "Membresía", pricingTitle: "Elige Tu Nivel de Acceso", pricingSubtitle: "Invierte en conexiones inteligentes. Cancela cuando quieras.",
+                planStarter: "Starter", planStarterDesc: "Para startups y pequeñas empresas",
+                feat1: "Perfil con IA", feat2: "5 matches inteligentes/mes", feat3: "Acceso a eventos de la comunidad", feat4: "Feed básico de oportunidades",
                 btnStarter: "Comenzar",
-                planBusiness: "Business",
-                planBusinessDesc: "Para networkers activos y empresas en crecimiento",
-                feat5: "Todo lo de Starter",
-                feat6: "Matches ilimitados con IA",
-                feat7: "Acceso prioritario a eventos",
-                feat8: "Introducciones vía AI Concierge",
-                feat9: "Destacado en Feed de Oportunidades",
+                planBusiness: "Business", planBusinessDesc: "Para networkers activos y empresas en crecimiento",
+                feat5: "Todo lo de Starter", feat6: "Matches ilimitados con IA", feat7: "Acceso prioritario a eventos", feat8: "Introducciones vía AI Concierge", feat9: "Destacado en Feed de Oportunidades",
                 btnBusiness: "Unirse Business",
-                planPartner: "Partner",
-                planPartnerDesc: "Para patrocinadores y líderes del ecosistema",
-                feat10: "Todo lo de Business",
-                feat11: "Criterios personalizados de matching",
-                feat12: "Organizar eventos exclusivos",
-                feat13: "Visibilidad de marca y espacios para hablar",
-                feat14: "Gerente de éxito dedicado",
+                planPartner: "Partner", planPartnerDesc: "Para patrocinadores y líderes del ecosistema",
+                feat10: "Todo lo de Business", feat11: "Criterios personalizados de matching", feat12: "Organizar eventos exclusivos", feat13: "Visibilidad de marca y espacios para hablar", feat14: "Gerente de éxito dedicado",
                 btnPartner: "Hablar con Ventas",
                 pricingNote: "<strong>Oferta Miembros Fundadores:</strong> Primeros 50 miembros obtienen precio vitalicio con 50% de descuento. <a href='join.html?founding=true' style='color:var(--accent-purple);text-decoration:none'>Reserva tu lugar →</a>",
-                foundingBadge: "Programa Miembros Fundadores",
-                foundingTitle: "Sé Parte de la Primera Red Empresarial con IA de Oslo",
+                foundingBadge: "Programa Miembros Fundadores", foundingTitle: "Sé Parte de la Primera Red Empresarial con IA de Oslo",
                 foundingDesc: "Únete a las primeras 50 empresas para moldear el futuro de las conexiones empresariales en Oslo. Obtén precio vitalicio, badge exclusivo y acceso prioritario.",
                 btnFounding: "Reservar Plaza Fundador (NOK 990/año)",
                 footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
-                navPlatform: "Plataforma",
-                navHow: "Cómo Funciona el Matching",
-                navJoin: "Unirse Ahora",
-                navPricing: "Precios",
-                navAPI: "Acceso API",
-                navCompany: "Empresa",
-                navAbout: "Sobre",
-                navBlog: "Insights",
-                navCareers: "Carreras",
-                navContact: "Contacto",
-                navLegal: "Legal",
-                navTerms: "Términos",
-                navPrivacy: "Privacidad",
-                navCookies: "Cookies",
-                navGDPR: "GDPR"
+                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios", navAPI: "Acceso API",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
+                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
             }
         };
 
-        // === LANGUAGE CHANGE FUNCTION ===
         function changeLanguage(lang) {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang]?.[key]) {
-                    el.innerHTML = translations[lang][key];
-                }
+                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
             });
             document.documentElement.lang = lang;
             localStorage.setItem('preferredLanguage', lang);
         }
 
-        // === SMOOTH SCROLL ===
-        function scrollToSection(id) {
-            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-        }
+        function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); }
 
-        // === INITIALIZE ===
         window.addEventListener('load', () => {
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
             changeLanguage(saved);
-            
-            // Animate elements on scroll
             const observer = new IntersectionObserver(entries => {
-                entries.forEach(e => {
-                    if (e.isIntersecting) {
-                        e.target.style.opacity = '1';
-                        e.target.style.transform = 'translateY(0)';
-                    }
-                });
+                entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
             }, { threshold: 0.1 });
-            
             document.querySelectorAll('.ai-step, .pricing-card, .company-card').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'all 0.6s ease';
+                el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'all 0.6s ease';
                 observer.observe(el);
             });
         });
