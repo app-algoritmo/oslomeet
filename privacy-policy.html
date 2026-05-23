@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#667eea" />
+    <meta name="theme-color" content="#8b5cf6" />
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,24 +42,27 @@
             color: var(--text-primary);
             background: var(--dark-bg);
             min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
         }
-        /* Language Selector */
+        /* Language Selector - Mobile Friendly */
         .language-selector {
-            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
             background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
-            padding: 8px 16px; display: flex; align-items: center; gap: 10px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
         }
         .language-selector select {
             background: transparent; border: none; color: white;
-            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; outline: none; padding: 5px;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
         }
         .language-selector select option { background: var(--dark-bg); color: white; }
-        .language-selector i { color: var(--accent-blue); }
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
         /* Header */
         .page-header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
-            padding: 120px 0 80px; text-align: center; position: relative; overflow: hidden;
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
+            padding: 70px 16px 50px; text-align: center; position: relative;
         }
         .page-header::before {
             content: ''; position: absolute; inset: 0;
@@ -67,88 +70,84 @@
             opacity: 0.3;
         }
         .page-header h1 {
-            font-size: 3rem; font-weight: 800; margin-bottom: 1rem;
+            font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #fff, #a5b4fc);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            position: relative; z-index: 1;
+            position: relative; z-index: 1; line-height: 1.2;
         }
-        .page-header p { font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+        .page-header p { color: var(--text-secondary); max-width: 500px; margin: 0 auto; position: relative; z-index: 1; font-size: 0.95rem; }
         /* Content */
-        .policy-section { padding: 80px 0; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .policy-section { padding: 40px 16px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .policy-wrapper {
-            max-width: 850px; margin: 0 auto; background: var(--card-bg);
-            padding: 3rem; border-radius: 20px; border: 1px solid var(--border-color);
+            max-width: 800px; margin: 0 auto; background: var(--card-bg);
+            padding: 1.5rem; border-radius: 20px; border: 1px solid var(--border-color);
         }
-        .policy-meta { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; }
+        @media (min-width: 768px) { .policy-wrapper { padding: 2rem; } }
+        .policy-meta { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem; }
         .policy-meta i { color: var(--accent-blue); }
         .policy-section h2 {
-            font-size: 1.5rem; margin: 2.5rem 0 1rem; color: white;
-            padding-bottom: 0.5rem; border-bottom: 2px solid var(--border-color);
-            display: flex; align-items: center; gap: 0.8rem;
+            font-size: 1.25rem; margin: 2rem 0 0.8rem; color: white;
+            padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 0.6rem;
         }
         .policy-section h2:first-of-type { margin-top: 0; }
-        .policy-section h2 i { font-size: 1.2rem; color: var(--accent-purple); }
-        .policy-section p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.2rem; }
-        .policy-section ul { list-style: none; padding-left: 1.5rem; margin-bottom: 1.5rem; }
-        .policy-section ul li { color: #cbd5e1; margin-bottom: 0.8rem; position: relative; padding-left: 1.2rem; line-height: 1.6; }
+        .policy-section h2 i { font-size: 1.1rem; color: var(--accent-purple); }
+        .policy-section p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; }
+        .policy-section ul { list-style: none; padding-left: 1.2rem; margin-bottom: 1.2rem; }
+        .policy-section ul li { color: #cbd5e1; margin-bottom: 0.6rem; position: relative; padding-left: 1rem; line-height: 1.5; font-size: 0.9rem; }
         .policy-section ul li::before { content: '•'; position: absolute; left: 0; color: var(--accent-purple); font-weight: bold; }
         .policy-section a { color: var(--accent-blue); text-decoration: none; transition: all 0.3s; }
         .policy-section a:hover { text-decoration: underline; color: #60a5fa; }
         .highlight-box {
             background: rgba(139,92,246,0.1); border-left: 4px solid var(--accent-purple);
-            padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0;
+            padding: 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0;
         }
-        .highlight-box p { margin: 0; color: #e2e8f0; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
-        .info-card { background: var(--input-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border-color); }
-        .info-card h4 { color: white; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .highlight-box p { margin: 0; color: #e2e8f0; font-size: 0.9rem; }
+        .info-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 1rem 0; }
+        @media (min-width: 600px) { .info-grid { grid-template-columns: repeat(3, 1fr); } }
+        .info-card { background: var(--input-bg); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-color); }
+        .info-card h4 { color: white; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem; font-size: 0.95rem; }
         .info-card h4 i { color: var(--accent-purple); }
-        .info-card p { margin: 0; font-size: 0.95rem; }
-        .section-divider { height: 1px; background: var(--border-color); margin: 3rem 0; }
-        .toc { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .toc h3 { font-size: 1.2rem; color: white; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .info-card p { margin: 0; font-size: 0.85rem; }
+        .info-card ul { padding-left: 1rem; margin: 0; }
+        .info-card ul li { font-size: 0.85rem; margin-bottom: 0.3rem; }
+        .section-divider { height: 1px; background: var(--border-color); margin: 2rem 0; }
+        .toc { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; }
+        .toc h3 { font-size: 1rem; color: white; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
         .toc h3 i { color: var(--accent-purple); }
-        .toc ol { padding-left: 1.5rem; }
-        .toc ol li { color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .toc ol { padding-left: 1.2rem; }
+        .toc ol li { color: var(--text-secondary); margin-bottom: 0.4rem; font-size: 0.85rem; }
         .toc ol li a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
         .toc ol li a:hover { color: var(--accent-blue); }
         /* Footer */
-        .footer { background: #020617; color: white; padding: 4rem 0 2rem; border-top: 1px solid var(--border-color); margin-top: 80px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 3rem; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .footer-brand h2 { font-size: 2rem; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .footer-brand p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
-        .footer-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; color: white; }
+        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
+        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
+        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
         .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 0.8rem; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: all 0.3s; font-size: 0.95rem; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
         .footer-links a:hover { color: var(--accent-blue); }
-        .footer-social { display: flex; gap: 1rem; margin-top: 1rem; }
-        .footer-social a {
-            width: 40px; height: 40px; background: var(--card-bg); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: white;
-            text-decoration: none; transition: all 0.3s; border: 1px solid var(--border-color);
-        }
-        .footer-social a:hover { background: var(--accent-blue); transform: translateY(-3px); border-color: var(--accent-blue); }
         .footer-bottom {
-            border-top: 1px solid var(--border-color); padding-top: 2rem;
-            display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem;
-            color: var(--text-secondary); font-size: 0.9rem; text-align: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            color: var(--text-secondary); font-size: 0.85rem; text-align: center;
         }
-        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 1rem; transition: color 0.3s; }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
         .footer-bottom a:hover { color: var(--accent-blue); }
         .footer-bottom .email-link { color: var(--accent-blue); font-weight: 500; }
         .developer-credit { color: #fbbf24 !important; }
-        /* Responsive */
-        @media (max-width: 968px) { .footer-grid { grid-template-columns: 1fr 1fr; } .policy-wrapper { padding: 2rem; } }
-        @media (max-width: 768px) {
-            .page-header h1 { font-size: 2rem; }
-            .policy-section h2 { font-size: 1.3rem; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .language-selector { top: 10px; right: 10px; }
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease; }
+        /* Touch Optimization */
+        @media (hover: none) {
+            .toc ol li a:active, .footer-links a:active { opacity: 0.8; }
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in { animation: fadeIn 0.6s ease; }
     </style>
 </head>
 <body>
@@ -194,9 +193,9 @@
                 </div>
 
                 <h2 id="intro"><i class="fas fa-shield-alt"></i> <span data-i18n="introTitle">1. Introduction</span></h2>
-                <p data-i18n="introText">This Privacy Policy explains how Oslo Meet AS ("we", "our", or "Oslo Meet") collects, processes, and protects information when you use our AI-powered business matching platform. We are committed to transparency and compliance with GDPR and Norwegian data protection laws.</p>
+                <p data-i18n="introText">This Privacy Policy explains how Oslo Meet ("we", "our", or "Oslo Meet") collects, processes, and protects information when you use our AI-powered business matching platform. We are committed to transparency and compliance with GDPR and Norwegian data protection laws.</p>
                 <div class="highlight-box">
-                    <p data-i18n="introNote"><strong>Controller:</strong> Oslo Meet AS, Norway. <strong>DPO Contact:</strong> <a href="mailto:post@barros.no">post@barros.no</a></p>
+                    <p data-i18n="introNote"><strong>Controller:</strong> Oslo Meet, Norway. <strong>DPO Contact:</strong> <a href="mailto:post@barros.no">post@barros.no</a></p>
                 </div>
 
                 <h2 id="data-collected"><i class="fas fa-database"></i> <span data-i18n="collectionTitle">2. Data We Collect</span></h2>
@@ -243,7 +242,7 @@
                 <p data-i18n="aiText">Oslo Meet uses AI to analyze business profiles and suggest potential matches. This constitutes automated processing under GDPR Article 22.</p>
                 <div class="highlight-box">
                     <p data-i18n="aiRights"><strong>Your rights regarding AI processing:</strong></p>
-                    <ul style="margin:0.5rem 0 0; padding-left:1.5rem">
+                    <ul style="margin:0.5rem 0 0; padding-left:1.2rem">
                         <li data-i18n="aiR1">Understand how matching works (see <a href="how-it-works.html">How It Works</a>)</li>
                         <li data-i18n="aiR2">Opt out of AI-powered matching; use manual browsing only</li>
                         <li data-i18n="aiR3">Request human review of automated decisions affecting you</li>
@@ -299,7 +298,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer CORRIGIDO -->
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
@@ -316,6 +315,7 @@
             <div>
                 <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
                 <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
                     <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
                     <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
                     <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
@@ -335,11 +335,12 @@
                     <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
                     <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
                     <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <div>&copy; 2026 Oslo Meet AS</div>
+            <div>&copy; 2026 Oslo Meet</div>
             <div><a href="mailto:post@barros.no" class="email-link">post@barros.no</a></div>
             <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
         </div>
@@ -356,8 +357,8 @@
                 tocAI: "AI & Automated Processing", toc4: "Data Sharing & Visibility",
                 toc5: "Your GDPR Rights", toc6: "Security & Retention", toc7: "Contact Us",
                 introTitle: "1. Introduction",
-                introText: "This Privacy Policy explains how Oslo Meet AS (\"we\", \"our\", or \"Oslo Meet\") collects, processes, and protects information when you use our AI-powered business matching platform. We are committed to transparency and compliance with GDPR and Norwegian data protection laws.",
-                introNote: "Controller: Oslo Meet AS, Norway. DPO Contact: post@barros.no",
+                introText: "This Privacy Policy explains how Oslo Meet (\"we\", \"our\", or \"Oslo Meet\") collects, processes, and protects information when you use our AI-powered business matching platform. We are committed to transparency and compliance with GDPR and Norwegian data protection laws.",
+                introNote: "Controller: Oslo Meet, Norway. DPO Contact: post@barros.no",
                 collectionTitle: "2. Data We Collect",
                 colBusiness: "Business Profile Data",
                 colB1: "Company name, industry, size, location",
@@ -414,9 +415,9 @@
                 contactText: "Questions about privacy or data processing?",
                 contactNote: "For cookie-specific information, see our Cookie Notice.",
                 footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
-                navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
+                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
                 navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
-                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies"
+                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
                 pageTitle: "Personvernerklæring",
@@ -427,8 +428,8 @@
                 tocAI: "AI & automatisert behandling", toc4: "Datadeling & synlighet",
                 toc5: "Dine GDPR-rettigheter", toc6: "Sikkerhet & lagring", toc7: "Kontakt oss",
                 introTitle: "1. Introduksjon",
-                introText: "Denne personvernerklæringen forklarer hvordan Oslo Meet AS (\"vi\", \"vår\" eller \"Oslo Meet\") samler inn, behandler og beskytter informasjon når du bruker vår AI-drevne bedriftsmatching-plattform. Vi er forpliktet til åpenhet og overholdelse av GDPR og norske personvernlover.",
-                introNote: "Behandlingsansvarlig: Oslo Meet AS, Norge. Personvernansvarlig: post@barros.no",
+                introText: "Denne personvernerklæringen forklarer hvordan Oslo Meet (\"vi\", \"vår\" eller \"Oslo Meet\") samler inn, behandler og beskytter informasjon når du bruker vår AI-drevne bedriftsmatching-plattform. Vi er forpliktet til åpenhet og overholdelse av GDPR og norske personvernlover.",
+                introNote: "Behandlingsansvarlig: Oslo Meet, Norge. Personvernansvarlig: post@barros.no",
                 collectionTitle: "2. Data vi samler inn",
                 colBusiness: "Bedriftsprofildata",
                 colB1: "Bedriftsnavn, bransje, størrelse, lokasjon",
@@ -485,9 +486,9 @@
                 contactText: "Spørsmål om personvern eller databehandling?",
                 contactNote: "For cookie-spesifikk informasjon, se vårt Cookie-varsel.",
                 footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
-                navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
+                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
                 navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
-                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies"
+                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
                 pageTitle: "Política de Privacidade",
@@ -498,8 +499,8 @@
                 tocAI: "IA & Processamento Automatizado", toc4: "Compartilhamento & Visibilidade",
                 toc5: "Seus Direitos GDPR", toc6: "Segurança & Retenção", toc7: "Entre em Contato",
                 introTitle: "1. Introdução",
-                introText: "Esta Política de Privacidade explica como o Oslo Meet AS (\"nós\", \"nosso\" ou \"Oslo Meet\") coleta, processa e protege informações quando você usa nossa plataforma de matching empresarial com IA. Estamos comprometidos com transparência e conformidade com GDPR e leis norueguesas de proteção de dados.",
-                introNote: "Controlador: Oslo Meet AS, Noruega. Encarregado de Proteção: post@barros.no",
+                introText: "Esta Política de Privacidade explica como o Oslo Meet (\"nós\", \"nosso\" ou \"Oslo Meet\") coleta, processa e protege informações quando você usa nossa plataforma de matching empresarial com IA. Estamos comprometidos com transparência e conformidade com GDPR e leis norueguesas de proteção de dados.",
+                introNote: "Controlador: Oslo Meet, Noruega. Encarregado de Proteção: post@barros.no",
                 collectionTitle: "2. Dados que Coletamos",
                 colBusiness: "Dados do Perfil Empresarial",
                 colB1: "Nome da empresa, setor, tamanho, localização",
@@ -556,9 +557,9 @@
                 contactText: "Dúvidas sobre privacidade ou processamento de dados?",
                 contactNote: "Para informações específicas sobre cookies, veja nosso Aviso de Cookies.",
                 footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
-                navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
+                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
-                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies"
+                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
                 pageTitle: "Política de Privacidad",
@@ -569,8 +570,8 @@
                 tocAI: "IA & Procesamiento Automatizado", toc4: "Compartición & Visibilidad",
                 toc5: "Tus Derechos GDPR", toc6: "Seguridad & Retención", toc7: "Contáctanos",
                 introTitle: "1. Introducción",
-                introText: "Esta Política de Privacidad explica cómo Oslo Meet AS (\"nosotros\", \"nuestro\" o \"Oslo Meet\") recopila, procesa y protege la información cuando usas nuestra plataforma de matching empresarial con IA. Estamos comprometidos con la transparencia y el cumplimiento del GDPR y las leyes noruegas de protección de datos.",
-                introNote: "Responsable: Oslo Meet AS, Noruega. Delegado de Protección: post@barros.no",
+                introText: "Esta Política de Privacidad explica cómo Oslo Meet (\"nosotros\", \"nuestro\" o \"Oslo Meet\") recopila, procesa y protege la información cuando usas nuestra plataforma de matching empresarial con IA. Estamos comprometidos con la transparencia y el cumplimiento del GDPR y las leyes noruegas de protección de datos.",
+                introNote: "Responsable: Oslo Meet, Noruega. Delegado de Protección: post@barros.no",
                 collectionTitle: "2. Datos que Recopilamos",
                 colBusiness: "Datos del Perfil Empresarial",
                 colB1: "Nombre de la empresa, sector, tamaño, ubicación",
@@ -627,9 +628,9 @@
                 contactText: "¿Preguntas sobre privacidad o procesamiento de datos?",
                 contactNote: "Para información específica sobre cookies, consulta nuestro Aviso de Cookies.",
                 footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
-                navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
+                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
-                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies"
+                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
             }
         };
 
