@@ -8,7 +8,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
     <link rel="manifest" href="/site.webmanifest" /> 
-    <meta name="theme-color" content="#8b5cf6" /> 
+    <meta name="theme-color" content="#8b5cf6" />
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,182 +20,167 @@
     
     <style>
         :root {
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --success-green: #10b981;
+            --dark-bg: #0f172a; --card-bg: #1e293b; --text-primary: #f8fafc;
+            --text-secondary: #94a3b8; --border-color: #334155;
+            --accent-blue: #3b82f6; --accent-purple: #8b5cf6; --success-green: #10b981;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-primary);
+            line-height: 1.6; overflow-x: hidden; -webkit-text-size-adjust: 100%;
         }
-
-        /* Language Selector */
+        /* Language Selector - Mobile Friendly */
         .language-selector {
-            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
             background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
-            padding: 8px 16px; display: flex; align-items: center; gap: 10px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
         }
         .language-selector select {
             background: transparent; border: none; color: white;
-            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
         }
         .language-selector select option { background: var(--dark-bg); color: white; }
-
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
         /* Header */
         .page-header {
             background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
-            padding: 100px 20px 80px; text-align: center; position: relative;
+            padding: 70px 16px 50px; text-align: center; position: relative;
         }
         .page-header h1 {
-            font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem;
+            font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #fff, #a5b4fc);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
-        .page-header p { color: var(--text-secondary); max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
-
+        .page-header p { color: var(--text-secondary); max-width: 500px; margin: 0 auto; font-size: 0.95rem; }
         /* Sections */
-        .section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
-        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section { padding: 60px 16px; max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 2.5rem; }
         .section-tag {
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; gap: 6px;
             background: rgba(139,92,246,0.15); color: var(--accent-purple);
-            padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;
+            padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem;
         }
         .section-title {
-            font-size: 2.2rem; font-weight: 700; margin-bottom: 1rem;
+            font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem;
             background: linear-gradient(135deg, #fff, #818cf8);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        .section-subtitle { color: var(--text-secondary); max-width: 650px; margin: 0 auto; }
-
-        /* Algorithm Steps */
-        .steps-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem; margin-top: 2rem;
-        }
+        .section-subtitle { color: var(--text-secondary); max-width: 600px; margin: 0 auto; font-size: 0.95rem; }
+        /* Algorithm Steps - Mobile Grid */
+        .steps-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+        @media (min-width: 600px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 900px) { .steps-grid { grid-template-columns: repeat(4, 1fr); } }
         .step-card {
-            background: var(--card-bg); padding: 2rem; border-radius: 20px;
+            background: var(--card-bg); padding: 1.5rem; border-radius: 16px;
             border: 1px solid var(--border-color); position: relative; transition: all 0.3s;
         }
-        .step-card:hover { transform: translateY(-5px); border-color: var(--accent-purple); }
+        .step-card:hover { transform: translateY(-3px); border-color: var(--accent-purple); }
         .step-icon {
-            width: 56px; height: 56px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            border-radius: 14px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem; color: white; margin-bottom: 1.5rem;
+            width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; color: white; margin-bottom: 1rem; flex-shrink: 0;
         }
-        .step-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: white; }
-        .step-card p { color: var(--text-secondary); font-size: 0.95rem; }
+        .step-card h3 { font-size: 1.1rem; margin-bottom: 0.6rem; color: white; }
+        .step-card p { color: var(--text-secondary); font-size: 0.9rem; }
         .step-number {
-            position: absolute; top: -12px; right: 20px;
+            position: absolute; top: -10px; right: 16px;
             background: var(--dark-bg); border: 1px solid var(--border-color);
-            padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; color: var(--accent-purple); font-weight: 700;
+            padding: 3px 10px; border-radius: 16px; font-size: 0.75rem; color: var(--accent-purple); font-weight: 700;
         }
-
-        /* Use Cases */
-        .cases-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem; margin-top: 2rem;
-        }
+        /* Use Cases - Mobile Stacked */
+        .cases-section { background: var(--card-bg); border-radius: 20px; margin: 2rem 0; padding: 2rem 16px; }
+        @media (min-width: 768px) { .cases-section { padding: 3rem 20px; } }
+        .cases-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-top: 1.5rem; }
+        @media (min-width: 768px) { .cases-grid { grid-template-columns: repeat(3, 1fr); } }
         .case-card {
-            background: var(--card-bg); border-radius: 20px; padding: 2rem;
+            background: var(--dark-bg); border-radius: 16px; padding: 1.5rem;
             border: 1px solid var(--border-color); transition: all 0.3s;
         }
         .case-card:hover { border-color: var(--accent-blue); }
-        .case-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-        .case-title { font-size: 1.1rem; font-weight: 700; color: white; }
+        .case-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+        .case-title { font-size: 1rem; font-weight: 700; color: white; }
         .match-badge {
             background: rgba(16,185,129,0.15); color: var(--success-green);
-            padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
+            padding: 3px 10px; border-radius: 16px; font-size: 0.8rem; font-weight: 600;
         }
-        .case-companies { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
+        .case-companies { display: flex; align-items: center; gap: 8px; margin-bottom: 0.8rem; flex-wrap: wrap; }
         .company-tag {
-            background: rgba(255,255,255,0.05); padding: 8px 14px; border-radius: 10px;
-            font-size: 0.9rem; border: 1px solid var(--border-color); flex: 1;
+            background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 8px;
+            font-size: 0.85rem; border: 1px solid var(--border-color); flex: 1; min-width: 0;
         }
-        .case-arrow { color: var(--accent-purple); font-size: 1.2rem; }
-        .case-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
-        .case-why { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
-        .case-why strong { color: var(--accent-purple); }
-
-        /* FAQ Accordion */
+        .case-arrow { color: var(--accent-purple); font-size: 1rem; flex-shrink: 0; }
+        .case-desc { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
+        .case-why { margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); }
+        .case-why strong { color: var(--accent-purple); font-size: 0.9rem; }
+        /* FAQ Accordion - Mobile Friendly */
         .faq-list { max-width: 800px; margin: 0 auto; }
         .faq-item {
             background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 14px; margin-bottom: 1rem; overflow: hidden;
+            border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden;
         }
         .faq-question {
-            width: 100%; padding: 1.2rem 1.5rem; background: transparent;
-            border: none; color: white; font-size: 1.05rem; font-weight: 600;
+            width: 100%; padding: 1rem 1.2rem; background: transparent;
+            border: none; color: white; font-size: 0.95rem; font-weight: 600;
             text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            min-height: 44px;
         }
-        .faq-question i { transition: transform 0.3s; }
+        .faq-question i { transition: transform 0.3s; font-size: 0.9rem; }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         .faq-answer {
             max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
-            padding: 0 1.5rem; color: var(--text-secondary); line-height: 1.7;
+            padding: 0 1.2rem; color: var(--text-secondary); line-height: 1.6; font-size: 0.9rem;
         }
-        .faq-item.active .faq-answer { max-height: 300px; padding-bottom: 1.5rem; }
-
+        .faq-item.active .faq-answer { max-height: 400px; padding-bottom: 1rem; }
         /* CTA */
         .cta-section {
             background: linear-gradient(135deg, var(--card-bg), #1e1b4b);
-            padding: 80px 20px; text-align: center; border-radius: 24px; margin: 60px 0;
+            padding: 3rem 16px; text-align: center; border-radius: 20px; margin: 2rem 0;
         }
-        .cta-title { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
-        .cta-desc { color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
+        .cta-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; }
+        .cta-desc { color: var(--text-secondary); max-width: 500px; margin: 0 auto 1.5rem; font-size: 0.95rem; }
         .cta-btn {
-            display: inline-flex; align-items: center; gap: 8px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            color: white; padding: 14px 32px; border-radius: 50px; text-decoration: none;
-            font-weight: 700; transition: all 0.3s;
+            color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none;
+            font-weight: 700; transition: all 0.3s; min-height: 44px; font-size: 0.95rem;
         }
-        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(139,92,246,0.4); }
-
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(139,92,246,0.4); }
         /* Footer */
-        .footer {
-            background: #020617; padding: 4rem 20px 2rem; border-top: 1px solid var(--border-color); margin-top: 60px;
-        }
-        .footer-grid {
-            display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem;
-            max-width: 1200px; margin: 0 auto;
-        }
-        .footer-brand h2 { font-size: 1.8rem; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .footer-brand p { color: var(--text-secondary); line-height: 1.6; }
-        .footer-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: white; }
+        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
+        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
+        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
         .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 0.6rem; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
         .footer-links a:hover { color: var(--accent-blue); }
         .footer-bottom {
-            max-width: 1200px; margin: 3rem auto 0; padding: 2rem 0 0;
-            border-top: 1px solid var(--border-color); display: flex; justify-content: space-between;
-            align-items: center; flex-wrap: wrap; gap: 1rem; color: var(--text-secondary); font-size: 0.9rem;
+            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            color: var(--text-secondary); font-size: 0.85rem; text-align: center;
         }
-        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 1rem; }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
+        .footer-bottom a:hover { color: var(--accent-blue); }
+        .footer-bottom .email-link { color: var(--accent-blue); font-weight: 500; }
         .developer-credit { color: #fbbf24 !important; }
-
-        @media (max-width: 968px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 768px) {
-            .page-header h1 { font-size: 2rem; }
-            .section-title { font-size: 1.8rem; }
-            .footer-grid { grid-template-columns: 1fr; }
+        /* Touch Optimization */
+        @media (hover: none) {
+            .step-card:active, .case-card:active { transform: scale(0.99); }
+            .cta-btn:active { transform: scale(0.98); }
         }
     </style>
 </head>
 <body>
     <!-- Language Selector -->
     <div class="language-selector">
-        <i class="fas fa-globe" style="color:var(--accent-blue)"></i>
+        <i class="fas fa-globe"></i>
         <select id="languageSelect" onchange="changeLanguage(this.value)">
             <option value="en">English</option>
             <option value="no">Norsk</option>
@@ -246,7 +231,7 @@
     </section>
 
     <!-- Real Use Cases -->
-    <section class="section" style="background: var(--card-bg); border-radius: 24px; margin: 40px 20px; padding: 60px 20px;">
+    <section class="section cases-section">
         <div class="section-header">
             <div class="section-tag"><i class="fas fa-map-marker-alt"></i> <span data-i18n="casesTag">Oslo Ecosystem</span></div>
             <h2 class="section-title" data-i18n="casesTitle">Real Matches, Real Value</h2>
@@ -259,7 +244,7 @@
                     <span class="match-badge">94%</span>
                 </div>
                 <div class="case-companies">
-                    <span class="company-tag">NordicLogix AS</span>
+                    <span class="company-tag">NordicLogix</span>
                     <i class="fas fa-arrow-right case-arrow"></i>
                     <span class="company-tag">AlgoFlow Tech</span>
                 </div>
@@ -277,7 +262,7 @@
                 <div class="case-companies">
                     <span class="company-tag">GreenPay Solutions</span>
                     <i class="fas fa-arrow-right case-arrow"></i>
-                    <span class="company-tag">EcoAudit AS</span>
+                    <span class="company-tag">EcoAudit</span>
                 </div>
                 <p class="case-desc" data-i18n="case2Desc">A digital payment platform wants to add ESG scoring. A cleantech firm provides real-time carbon tracking APIs.</p>
                 <div class="case-why">
@@ -342,7 +327,7 @@
         <a href="join.html" class="cta-btn"><i class="fas fa-rocket"></i> <span data-i18n="ctaBtn">Join as Founding Member</span></a>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer CORRIGIDO -->
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
@@ -352,9 +337,10 @@
             <div>
                 <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
                 <ul class="footer-links">
-                    <li><a href="index.html#how-it-works" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
                     <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
-                    <li><a href="index.html#pricing" data-i18n="navPricing">Pricing</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
                 </ul>
             </div>
             <div>
@@ -368,21 +354,21 @@
             <div>
                 <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
                 <ul class="footer-links">
-                    <li><a href="#" data-i18n="navTerms">Terms</a></li>
-                    <li><a href="#" data-i18n="navPrivacy">Privacy</a></li>
-                    <li><a href="#" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <div>&copy; 2026 Oslo Meet AS</div>
-            <div><a href="#">post@oslomeet.org</a></div>
+            <div>&copy; 2026 Oslo Meet</div>
+            <div><a href="mailto:post@barros.no" class="email-link">post@barros.no</a></div>
             <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
         </div>
     </footer>
 
     <script>
-        // === TRANSLATIONS (EN / NO / PT / ES) ===
         const translations = {
             en: {
                 pageTitle: "How Our AI Matching Works", pageSubtitle: "No random networking. Our algorithm connects the right companies at the right time, powered by semantic analysis and real business signals.",
@@ -404,7 +390,9 @@
                 q5: "How is the Match Score calculated?", a5: "The score combines: industry complementarity (30%), mutual goals (25%), market overlap (20%), tech/skill synergy (15%), and collaboration history preferences (10%). It's continuously refined as you interact with matches.",
                 ctaTitle: "Ready for Smarter Connections?", ctaDesc: "Join Oslo's first AI-powered business network. Your perfect matches are waiting.", ctaBtn: "Join as Founding Member",
                 footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
-                navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing", navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact", navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies"
+                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
+                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
+                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
                 pageTitle: "Slik fungerer vår AI-matching", pageSubtitle: "Ingen tilfeldig nettverking. Vår algoritme kobler riktige bedrifter til riktig tid, drevet av semantisk analyse og reelle forretningssignaler.",
@@ -426,7 +414,9 @@
                 q5: "Hvordan beregnes Match-poengsummen?", a5: "Poengsummen kombinerer: bransjekomplementaritet (30%), felles mål (25%), markedsoverlapp (20%), tech/ferdighetssynergi (15%), og samarbeidspreferanser (10%). Den forbedres kontinuerlig ved interaksjon.",
                 ctaTitle: "Klar for smartere forbindelser?", ctaDesc: "Bli med i Oslos første AI-drevne bedriftsnettverk. Dine perfekte matcher venter.", ctaBtn: "Bli med som grunnlegger",
                 footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
-                navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser", navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt", navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies"
+                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
+                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
+                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
                 pageTitle: "Como Funciona o Matching com IA", pageSubtitle: "Sem networking aleatório. Nosso algoritmo conecta as empresas certas na hora certa, com análise semântica e sinais reais de negócios.",
@@ -448,7 +438,9 @@
                 q5: "Como o Score de Match é calculado?", a5: "O score combina: complementariedade setorial (30%), objetivos mútuos (25%), sobreposição de mercado (20%), sinergia tecnológica (15%) e preferências de colaboração (10%). É refinado continuamente conforme você interage.",
                 ctaTitle: "Pronto para Conexões Mais Inteligentes?", ctaDesc: "Entre na primeira rede empresarial com IA de Oslo. Seus matches perfeitos estão esperando.", ctaBtn: "Entrar como Membro Fundador",
                 footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
-                navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços", navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato", navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies"
+                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
+                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
                 pageTitle: "Cómo Funciona el Matching con IA", pageSubtitle: "Sin networking aleatorio. Nuestro algoritmo conecta las empresas correctas en el momento adecuado, con análisis semántico y señales reales de negocio.",
@@ -470,11 +462,12 @@
                 q5: "¿Cómo se calcula el Score de Match?", a5: "El score combina: complementariedad sectorial (30%), objetivos mutuos (25%), superposición de mercado (20%), sinergia tecnológica (15%) y preferencias de colaboración (10%). Se refina continuamente al interactuar.",
                 ctaTitle: "¿Listo para Conexiones Más Inteligentes?", ctaDesc: "Únete a la primera red empresarial con IA de Oslo. Tus matches perfectos están esperando.", ctaBtn: "Unirse como Miembro Fundador",
                 footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
-                navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios", navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto", navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies"
+                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
+                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
             }
         };
 
-        // === LANGUAGE SWITCHER ===
         function changeLanguage(lang) {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
@@ -484,7 +477,6 @@
             localStorage.setItem('preferredLanguage', lang);
         }
 
-        // === FAQ ACCORDION ===
         document.querySelectorAll('.faq-question').forEach(btn => {
             btn.addEventListener('click', () => {
                 const item = btn.parentElement;
@@ -494,12 +486,10 @@
             });
         });
 
-        // === SCROLL ANIMATIONS ===
         window.addEventListener('load', () => {
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
             changeLanguage(saved);
-
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(e => {
                     if (e.isIntersecting) {
@@ -508,7 +498,6 @@
                     }
                 });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.step-card, .case-card').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(20px)';
