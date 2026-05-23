@@ -291,9 +291,9 @@ We welcome contributions to Oslo Meet! Whether you're:
 
 ## 📄 License
 
-Copyright © 2026 **Oslo Meet AS**. All rights reserved.
+Copyright © 2026 **Oslo Meet**. All rights reserved.
 
-This project is proprietary software. Unauthorized copying, distribution, modification, or commercial use is strictly prohibited without written permission from Oslo Meet AS.
+This project is proprietary software. Unauthorized copying, distribution, modification, or commercial use is strictly prohibited without written permission from Oslo Meet.
 
 For licensing inquiries: [post@barros.no](mailto:post@barros.no)
 
