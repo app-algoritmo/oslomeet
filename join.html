@@ -597,8 +597,8 @@ document.getElementById('smartForm').addEventListener('submit', async (e) => {
     submitBtn.disabled = true;
 
     try {
-        // Verifica se as chaves estão configuradas corretamente
-        if (SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.includes('eyJhbGciOi')) {
+        // Verifica se as chaves foram alteradas do placeholder
+            if (SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.length < 50) {
             throw new Error('⚠️ Configure suas chaves do Supabase primeiro!');
         }
 
