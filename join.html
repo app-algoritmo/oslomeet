@@ -928,6 +928,28 @@ document.getElementById('smartForm').addEventListener('submit', async (e) => {
             document.documentElement.lang = lang;
             localStorage.setItem('preferredLanguage', lang);
         }
+
+        // Após o insert da company funcionar:
+console.log('✅ Empresa cadastrada com ID:', inserted?.id);
+
+// Mapeamento dos links de pagamento do Stripe
+const stripeCheckoutLinks = {
+    'starter': 'https://buy.stripe.com/SEU_LINK_STARTER',
+    'business': 'https://buy.stripe.com/SEU_LINK_BUSINESS', 
+    'partner': 'https://buy.stripe.com/SEU_LINK_PARTNER'
+};
+
+// Pega o plano selecionado (já vem do formulário ou da URL)
+const selectedPlan = data.plan || new URLSearchParams(window.location.search).get('plan') || 'starter';
+
+// Redireciona para o Stripe
+if (stripeCheckoutLinks[selectedPlan]) {
+    window.location.href = stripeCheckoutLinks[selectedPlan];
+} else {
+    // Se não tiver link configurado, mostra a tela de sucesso mesmo assim
+    document.querySelector('.form-card').style.display = 'none';
+    document.getElementById('successState').classList.add('active');
+}
     </script>
 </body>
 </html>
