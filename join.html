@@ -503,6 +503,180 @@
         </div>
     </footer>
 
+    <!-- SUPABASE INTEGRATION SCRIPT -->
+    <script type="module">
+        // 1. Importar cliente Supabase via CDN
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        // ============================================
+        // ⚠️ COLE SUAS CHAVES DO SUPABASE AQUI ⚠️
+        // ============================================
+        const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+        // ============================================
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ============================================
+        // LÓGICA DO FORMULÁRIO
+        // ============================================
+        let currentStep = 1;
+
+        function nextStep(step) {
+            // Validação simples antes de avançar
+            if (step === 2) {
+                const name = document.querySelector('[name="companyName"]').value;
+                const industry = document.querySelector('[name="industry"]').value;
+                if (!name || !industry) {
+                    alert('Please fill in company name and industry.');
+                    return;
+                }
+            }
+            
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            // Atualiza indicadores de progresso
+            document.querySelectorAll('.progress-step').forEach((el, index) => {
+                if (index < step) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+            
+            currentStep = step;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevStep(step) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${step}`).classList.add('active');
+            document.querySelectorAll('.progress-step').forEach((el, index) => {
+                if (index < step) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+            currentStep = step;
+        }
+
+        function selectPlan(plan, element) {
+            document.querySelectorAll('.pricing-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            element.querySelector('input').checked = true;
+        }
+
+        // Função para Tags Input (tecnologias e mercados)
+        function setupTagsInput(containerId) {
+            const container = document.getElementById(containerId);
+            const input = container.querySelector('input');
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && input.value.trim()) {
+                    e.preventDefault();
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.innerHTML = `${input.value.trim()} <button type="button">×</button>`;
+                    container.insertBefore(tag, input);
+                    input.value = '';
+                    tag.querySelector('button').onclick = () => tag.remove();
+                }
+            });
+            container.querySelectorAll('.tag button').forEach(btn => {
+                btn.onclick = () => btn.closest('.tag').remove();
+            });
+        }
+        setupTagsInput('techTags');
+        setupTagsInput('marketTags');
+
+        // ============================================
+        // ENVIO PARA SUPABASE
+        // ============================================
+        document.getElementById('smartForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Processing...';
+            submitBtn.disabled = true;
+
+            try {
+                // Coleta dados do formulário
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData.entries());
+                
+                // Coleta checkboxes e tags
+                data.goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
+                data.connectWith = Array.from(document.querySelectorAll('input[name="connectWith"]:checked')).map(cb => cb.value);
+                data.collabTypes = Array.from(document.querySelectorAll('input[name="collabTypes"]:checked')).map(cb => cb.value);
+                data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
+                data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
+
+                // Mapeia para estrutura do banco
+                const companyData = {
+                    name: data.companyName,
+                    industry: data.industry,
+                    size: data.companySize || null,
+                    contact_email: data.email,
+                    website: data.website || null,
+                    description: data.challenges || data.additional || null,
+                    goals: data.goals || [],
+                    tech_stack: data.technologies || [],
+                    target_markets: data.markets || [],
+                    visibility: 'public', // Default inicial
+                    created_at: new Date().toISOString()
+                };
+
+                console.log('📦 Sending to Supabase:', companyData);
+
+                // Insere no Supabase
+                const { data: inserted, error } = await supabase
+                    .from('companies')
+                    .insert([companyData])
+                    .select()
+                    .single();
+
+                if (error) throw error;
+
+                console.log('✅ Success! Company ID:', inserted?.id);
+
+                // Mostra estado de sucesso
+                document.querySelector('.form-card').style.display = 'none';
+                document.getElementById('successState').classList.add('active');
+                document.getElementById('successState').style.display = 'block';
+
+            } catch (err) {
+                console.error('❌ Error submitting form:', err);
+                alert('Oops! Something went wrong. Please try again or contact support.');
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        window.addEventListener('load', () => {
+            // Carrega idioma salvo
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = saved;
+            changeLanguage(saved);
+
+            // Suporte a parâmetros na URL (?plan=business&founding=true)
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('plan')) {
+                const plan = params.get('plan');
+                const option = document.querySelector(`.pricing-option input[value="${plan}"]`);
+                if (option) option.closest('.pricing-option').click();
+            }
+            if (params.get('founding') === 'true') {
+                document.getElementById('founding').checked = true;
+                document.querySelector('.pricing-option input[value="business"]')?.closest('.pricing-option')?.click();
+            }
+        });
+
+        // Expor funções para o HTML (onclick handlers)
+        window.nextStep = nextStep;
+        window.prevStep = prevStep;
+        window.selectPlan = selectPlan;
+    </script>
+
+    <!-- TRADUÇÕES (i18n) -->
     <script>
         const translations = {
             en: {
@@ -731,82 +905,6 @@
             document.documentElement.lang = lang;
             localStorage.setItem('preferredLanguage', lang);
         }
-
-        let currentStep = 1;
-        function nextStep(step) {
-            if (step === 2) {
-                const name = document.querySelector('[name="companyName"]').value;
-                const industry = document.querySelector('[name="industry"]').value;
-                if (!name || !industry) { alert('Please fill in company name and industry.'); return; }
-            }
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${step}`).classList.add('active');
-            document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('active'));
-            for (let i = 1; i <= step; i++) document.querySelector(`.progress-step[data-step="${i}"]`).classList.add('active');
-            currentStep = step;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-        function prevStep(step) {
-            document.getElementById(`step${currentStep}`).classList.remove('active');
-            document.getElementById(`step${step}`).classList.add('active');
-            document.querySelectorAll('.progress-step').forEach(el => el.classList.remove('active'));
-            for (let i = 1; i <= step; i++) document.querySelector(`.progress-step[data-step="${i}"]`).classList.add('active');
-            currentStep = step;
-        }
-        function selectPlan(plan, element) {
-            document.querySelectorAll('.pricing-option').forEach(el => el.classList.remove('selected'));
-            element.classList.add('selected');
-            element.querySelector('input').checked = true;
-        }
-        function setupTagsInput(containerId) {
-            const container = document.getElementById(containerId);
-            const input = container.querySelector('input');
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && input.value.trim()) {
-                    e.preventDefault();
-                    const tag = document.createElement('span');
-                    tag.className = 'tag';
-                    tag.innerHTML = `${input.value.trim()} <button type="button">×</button>`;
-                    container.insertBefore(tag, input);
-                    input.value = '';
-                    tag.querySelector('button').onclick = () => tag.remove();
-                }
-            });
-            container.querySelectorAll('.tag button').forEach(btn => { btn.onclick = () => btn.closest('.tag').remove(); });
-        }
-        setupTagsInput('techTags');
-        setupTagsInput('marketTags');
-
-        document.getElementById('smartForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const data = Object.fromEntries(formData.entries());
-            data.goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
-            data.connectWith = Array.from(document.querySelectorAll('input[name="connectWith"]:checked')).map(cb => cb.value);
-            data.collabTypes = Array.from(document.querySelectorAll('input[name="collabTypes"]:checked')).map(cb => cb.value);
-            data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0].textContent.trim()).filter(t => t);
-            data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0].textContent.trim()).filter(t => t);
-            data.submittedAt = new Date().toISOString();
-            console.log('📦 Form Data:', data);
-            document.querySelector('.form-card').style.display = 'none';
-            document.getElementById('successState').classList.add('active');
-        });
-
-        window.addEventListener('load', () => {
-            const saved = localStorage.getItem('preferredLanguage') || 'en';
-            document.getElementById('languageSelect').value = saved;
-            changeLanguage(saved);
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('plan')) {
-                const plan = params.get('plan');
-                const option = document.querySelector(`.pricing-option input[value="${plan}"]`);
-                if (option) option.closest('.pricing-option').click();
-            }
-            if (params.get('founding') === 'true') {
-                document.getElementById('founding').checked = true;
-                document.querySelector('.pricing-option input[value="business"]').closest('.pricing-option').click();
-            }
-        });
     </script>
 </body>
 </html>
