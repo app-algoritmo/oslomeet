@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- FAVICON OSLO MEET -->
-  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <meta name="apple-mobile-web-app-title" content=“OSLO MEET” />
-  <link rel="manifest" href="/site.webmanifest" />
-  <meta name="theme-color" content="#c44536" />
+    <!-- FAVICON Oslo Meet -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" />
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -651,12 +650,13 @@
             padding: 2rem 20px 0;
             border-top: 1px solid var(--border-color);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
             color: var(--text-secondary);
             font-size: 0.9rem;
+            text-align: center;
         }
         
         .footer-bottom a {
@@ -665,6 +665,10 @@
             margin: 0 1rem;
         }
         .footer-bottom a:hover { color: var(--accent-blue); }
+        .footer-bottom .email-link {
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
         .developer-credit { color: #fbbf24 !important; }
         
         /* Responsive */
@@ -715,7 +719,7 @@
                     <i class="fas fa-rocket"></i>
                     <span data-i18n="ctaJoin">Join as Founding Member</span>
                 </a>
-                <a href="#how-it-works" class="cta-button secondary">
+                <a href="how-it-works.html" class="cta-button secondary">
                     <i class="fas fa-play-circle"></i>
                     <span data-i18n="ctaLearn">See How It Works</span>
                 </a>
@@ -925,9 +929,9 @@
             <div>
                 <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
                 <ul class="footer-links">
-                    <li><a href="#how-it-works" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
                     <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
-                    <li><a href="#pricing" data-i18n="navPricing">Pricing</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
                     <li><a href="#" data-i18n="navAPI">API Access</a></li>
                 </ul>
             </div>
@@ -953,8 +957,7 @@
         <div class="footer-bottom">
             <div>&copy; 2026 Oslo Meet AS</div>
             <div>
-                <a href="#">post@oslomeet.org</a>
-                <a href="#">+47 22 00 00 00</a>
+                <a href="mailto:post@barros.no" class="email-link">post@barros.no</a>
             </div>
             <div>
                 <a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit">
