@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- FAVICON OSLO MEET -->
+  <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content=“OSLO MEET” />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#c44536" />
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing — Oslo Meet</title>
+    <meta name="description" content="Choose your membership level. Invest in intelligent business connections powered by AI.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
+            padding: 100px 20px 80px;
+            text-align: center;
+            position: relative;
+        }
+        .page-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .page-header p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        .pricing-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .pricing-card {
+            background: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .pricing-card.popular {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+            transform: scale(1.05);
+        }
+        .pricing-card.popular:hover { transform: scale(1.05) translateY(-8px); }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            padding: 6px 20px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .pricing-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .pricing-card .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 1rem 0;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .pricing-card .period { font-size: 0.9rem; color: var(--text-secondary); }
+        .pricing-card .desc { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem; }
+        .pricing-card .features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        .pricing-card .features li {
+            padding: 0.6rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .pricing-card .features li i { color: var(--success-green); }
+        .pricing-card .cta-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .pricing-card .cta-btn.primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+        }
+        .pricing-card .cta-btn.secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .pricing-card .cta-btn:hover { transform: translateY(-2px); }
+        .founding-banner {
+            background: linear-gradient(135deg, rgba(245,158,11,0.1), rgba(234,179,8,0.05));
+            border: 1px solid rgba(245,158,11,0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        .founding-banner h3 {
+            color: var(--warning-orange);
+            margin-bottom: 0.5rem;
+        }
+        .founding-banner p { color: var(--text-secondary); }
+        .founding-banner a {
+            color: var(--accent-purple);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .faq-section {
+            padding: 80px 20px;
+            background: var(--card-bg);
+        }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            background: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .faq-question {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-question i { transition: transform 0.3s; }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s;
+            padding: 0 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .faq-item.active .faq-answer { max-height: 200px; padding-bottom: 1.5rem; }
+        .cta-section {
+            background: linear-gradient(135deg, var(--card-bg), #1e1b4b);
+            padding: 80px 20px;
+            text-align: center;
+            border-radius: 24px;
+            margin: 60px 20px;
+        }
+        .cta-title { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; }
+        .cta-desc { color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+        @media (max-width: 768px) {
+            .page-header h1 { font-size: 2rem; }
+            .pricing-card.popular { transform: scale(1); }
+            .pricing-card.popular:hover { transform: translateY(-8px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe" style="color:var(--accent-blue)"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- Header -->
+    <header class="page-header">
+        <h1 data-i18n="pageTitle">Choose Your Membership</h1>
+        <p data-i18n="pageSubtitle">Invest in intelligent connections. Cancel anytime.</p>
+    </header>
+
+    <!-- Pricing -->
+    <section class="pricing-section">
+        <div class="founding-banner">
+            <h3 data-i18n="foundingTitle"><i class="fas fa-crown"></i> Founding Members Program</h3>
+            <p data-i18n="foundingDesc">
+                First 50 members get <strong>50% off lifetime pricing</strong> + exclusive badge + priority feature access.
+                <a href="join.html?founding=true" data-i18n="foundingLink">Reserve your spot →</a>
+            </p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Starter -->
+            <div class="pricing-card">
+                <h3 data-i18n="planStarter">Starter</h3>
+                <div class="price">NOK 1.490<span class="period">/year</span></div>
+                <p class="desc" data-i18n="planStarterDesc">For startups & small businesses</p>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat1">AI-powered profile</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat2">5 smart matches/month</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat3">Access to community events</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat4">Basic opportunity feed</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat5">Email support</span></li>
+                </ul>
+                <a href="join.html?plan=starter" class="cta-btn secondary" data-i18n="btnStarter">Get Started</a>
+            </div>
+
+            <!-- Business -->
+            <div class="pricing-card popular">
+                <span class="popular-badge" data-i18n="popularBadge">MOST POPULAR</span>
+                <h3 data-i18n="planBusiness">Business</h3>
+                <div class="price">NOK 3.900<span class="period">/year</span></div>
+                <p class="desc" data-i18n="planBusinessDesc">For active networkers & growing companies</p>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat6">Everything in Starter</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat7">Unlimited AI matches</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat8">Priority event access</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat9">AI Concierge introductions</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat10">Featured in Opportunity Feed</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat11">Priority support</span></li>
+                </ul>
+                <a href="join.html?plan=business" class="cta-btn primary" data-i18n="btnBusiness">Join Business</a>
+            </div>
+
+            <!-- Partner -->
+            <div class="pricing-card">
+                <h3 data-i18n="planPartner">Partner</h3>
+                <div class="price">NOK 12.000+<span class="period">/year</span></div>
+                <p class="desc" data-i18n="planPartnerDesc">For sponsors & ecosystem leaders</p>
+                <ul class="features">
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat12">Everything in Business</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat13">Custom matching criteria</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat14">Host exclusive events</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat15">Brand visibility & speaking slots</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat16">Dedicated success manager</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="feat17">API access</span></li>
+                </ul>
+                <a href="join.html?plan=partner" class="cta-btn secondary" data-i18n="btnPartner">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="section-header">
+                <div class="section-tag"><i class="fas fa-question-circle"></i> <span data-i18n="faqTag">FAQ</span></div>
+                <h2 class="section-title" data-i18n="faqTitle">Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question"><span data-i18n="q1">Can I cancel anytime?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer" data-i18n="a1">Yes. All plans are annual but you can cancel at renewal. No long-term contracts.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question"><span data-i18n="q2">What is the Founding Members offer?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer" data-i18n="a2">The first 50 members get 50% off their chosen plan for life, plus an exclusive badge and priority access to new features.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question"><span data-i18n="q3">Do you offer refunds?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer" data-i18n="a3">We offer a 14-day money-back guarantee. If you're not satisfied, we'll refund your full payment.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question"><span data-i18n="q4">Can I upgrade or downgrade my plan?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-answer" data-i18n="a4">Yes. You can switch plans at any time. Upgrades take effect immediately; downgrades apply at renewal.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2 class="cta-title" data-i18n="ctaTitle">Ready for Smarter Connections?</h2>
+        <p class="cta-desc" data-i18n="ctaDesc">Join Oslo's first AI-powered business network. Your perfect matches are waiting.</p>
+        <a href="join.html" class="cta-btn"><i class="fas fa-rocket"></i> <span data-i18n="ctaBtn">Join as Founding Member</span></a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered business connections for Oslo's innovators, founders, and growth companies.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/oslomeet/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/oslomeet" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.instagram.com/oslomeet1/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html#how-it-works" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-i18n="navAbout">About</a></li>
+                    <li><a href="#" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="#" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="#" data-i18n="navCookies">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Oslo Meet AS</div>
+            <div><a href="#">post@oslomeet.org</a></div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
+    </footer>
+
+    <script src="assets/js/i18n.js"></script>
+    <script>
+        const pricingTranslations = {
+            en: {
+                pageTitle: "Choose Your Membership", pageSubtitle: "Invest in intelligent connections. Cancel anytime.",
+                foundingTitle: "Founding Members Program", foundingDesc: "First 50 members get <strong>50% off lifetime pricing</strong> + exclusive badge + priority feature access.", foundingLink: "Reserve your spot →",
+                planStarter: "Starter", planStarterDesc: "For startups & small businesses",
+                feat1: "AI-powered profile", feat2: "5 smart matches/month", feat3: "Access to community events", feat4: "Basic opportunity feed", feat5: "Email support",
+                btnStarter: "Get Started",
+                popularBadge: "MOST POPULAR",
+                planBusiness: "Business", planBusinessDesc: "For active networkers & growing companies",
+                feat6: "Everything in Starter", feat7: "Unlimited AI matches", feat8: "Priority event access", feat9: "AI Concierge introductions", feat10: "Featured in Opportunity Feed", feat11: "Priority support",
+                btnBusiness: "Join Business",
+                planPartner: "Partner", planPartnerDesc: "For sponsors & ecosystem leaders",
+                feat12: "Everything in Business", feat13: "Custom matching criteria", feat14: "Host exclusive events", feat15: "Brand visibility & speaking slots", feat16: "Dedicated success manager", feat17: "API access",
+                btnPartner: "Contact Sales",
+                faqTag: "FAQ", faqTitle: "Frequently Asked Questions",
+                q1: "Can I cancel anytime?", a1: "Yes. All plans are annual but you can cancel at renewal. No long-term contracts.",
+                q2: "What is the Founding Members offer?", a2: "The first 50 members get 50% off their chosen plan for life, plus an exclusive badge and priority access to new features.",
+                q3: "Do you offer refunds?", a3: "We offer a 14-day money-back guarantee. If you're not satisfied, we'll refund your full payment.",
+                q4: "Can I upgrade or downgrade my plan?", a4: "Yes. You can switch plans at any time. Upgrades take effect immediately; downgrades apply at renewal.",
+                ctaTitle: "Ready for Smarter Connections?", ctaDesc: "Join Oslo's first AI-powered business network. Your perfect matches are waiting.", ctaBtn: "Join as Founding Member",
+                footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
+                navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing", navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact", navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies"
+            },
+            no: {
+                pageTitle: "Velg ditt medlemskap", pageSubtitle: "Invester i intelligente koblinger. Avbryt når som helst.",
+                foundingTitle: "Grunnleggerprogram", foundingDesc: "Første 50 medlemmer får <strong>50% rabatt på livstidsprising</strong> + eksklusivt merke + prioritert tilgang.", foundingLink: "Reserver din plass →",
+                planStarter: "Starter", planStarterDesc: "For startups og små bedrifter",
+                feat1: "AI-drevet profil", feat2: "5 smarte matcher/måned", feat3: "Tilgang til fellesskapsarrangementer", feat4: "Grunnleggende mulighetsfeed", feat5: "E-poststøtte",
+                btnStarter: "Kom i gang",
+                popularBadge: "MEST POPULÆR",
+                planBusiness: "Business", planBusinessDesc: "For aktive nettverkere og voksende bedrifter",
+                feat6: "Alt i Starter", feat7: "Ubegrensede AI-matcher", feat8: "Prioritert tilgang til arrangementer", feat9: "AI Concierge-introduksjoner", feat10: "Fremhevet i mulighetsfeed", feat11: "Prioritert støtte",
+                btnBusiness: "Bli med Business",
+                planPartner: "Partner", planPartnerDesc: "For sponsorer og økosystemledere",
+                feat12: "Alt i Business", feat13: "Tilpassede matchingskriterier", feat14: "Arranger eksklusive arrangementer", feat15: "Merkevaresynlighet og taleplasser", feat16: "Dedikert suksessansvarlig", feat17: "API-tilgang",
+                btnPartner: "Kontakt salg",
+                faqTag: "FAQ", faqTitle: "Ofte stilte spørsmål",
+                q1: "Kan jeg avbryte når som helst?", a1: "Ja. Alle planer er årlige, men du kan avbryte ved fornyelse. Ingen langsiktige kontrakter.",
+                q2: "Hva er tilbudet for grunnleggere?", a2: "Første 50 medlemmer får 50% rabatt på livstidsprising, pluss eksklusivt merke og prioritert tilgang til nye funksjoner.",
+                q3: "Tilbyr dere refusjon?", a3: "Vi tilbyr 14 dagers pengene-tilbake-garanti. Hvis du ikke er fornøyd, refunderer vi hele betalingen.",
+                q4: "Kan jeg oppgradere eller nedgradere?", a4: "Ja. Du kan bytte plan når som helst. Oppgraderinger gjelder umiddelbart; nedgraderinger ved fornyelse.",
+                ctaTitle: "Klar for smartere forbindelser?", ctaDesc: "Bli med i Oslos første AI-drevne bedriftsnettverk. Dine perfekte matcher venter.", ctaBtn: "Bli med som grunnlegger",
+                footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
+                navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser", navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt", navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies"
+            },
+            pt: {
+                pageTitle: "Escolha Seu Membro", pageSubtitle: "Invista em conexões inteligentes. Cancele quando quiser.",
+                foundingTitle: "Programa Membros Fundadores", foundingDesc: "Primeiros 50 membros ganham <strong>50% de desconto no preço vitalício</strong> + badge exclusivo + acesso prioritário.", foundingLink: "Reserve sua vaga →",
+                planStarter: "Starter", planStarterDesc: "Para startups e pequenas empresas",
+                feat1: "Perfil com IA", feat2: "5 matches inteligentes/mês", feat3: "Acesso a eventos da comunidade", feat4: "Feed básico de oportunidades", feat5: "Suporte por email",
+                btnStarter: "Começar",
+                popularBadge: "MAIS POPULAR",
+                planBusiness: "Business", planBusinessDesc: "Para networkers ativos e empresas em crescimento",
+                feat6: "Tudo do Starter", feat7: "Matches ilimitados com IA", feat8: "Acesso prioritário a eventos", feat9: "Introduções via AI Concierge", feat10: "Destaque no Feed de Oportunidades", feat11: "Suporte prioritário",
+                btnBusiness: "Entrar Business",
+                planPartner: "Partner", planPartnerDesc: "Para patrocinadores e líderes do ecossistema",
+                feat12: "Tudo do Business", feat13: "Critérios personalizados de matching", feat14: "Organizar eventos exclusivos", feat15: "Visibilidade da marca e palestras", feat16: "Gerente de sucesso dedicado", feat17: "Acesso à API",
+                btnPartner: "Falar com Vendas",
+                faqTag: "FAQ", faqTitle: "Perguntas Frequentes",
+                q1: "Posso cancelar quando quiser?", a1: "Sim. Todos os planos são anuais, mas você pode cancelar na renovação. Sem contratos de longo prazo.",
+                q2: "Qual é a oferta para Membros Fundadores?", a2: "Os primeiros 50 membros ganham 50% de desconto no preço vitalício, plus badge exclusivo e acesso prioritário a novos recursos.",
+                q3: "Vocês oferecem reembolso?", a3: "Oferecemos garantia de 14 dias. Se não estiver satisfeito, devolvemos seu pagamento integral.",
+                q4: "Posso fazer upgrade ou downgrade?", a4: "Sim. Você pode mudar de plano a qualquer momento. Upgrades valem imediatamente; downgrades na renovação.",
+                ctaTitle: "Pronto para Conexões Mais Inteligentes?", ctaDesc: "Entre na primeira rede empresarial com IA de Oslo. Seus matches perfeitos estão esperando.", ctaBtn: "Entrar como Membro Fundador",
+                footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
+                navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços", navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato", navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies"
+            },
+            es: {
+                pageTitle: "Elige Tu Membresía", pageSubtitle: "Invierte en conexiones inteligentes. Cancela cuando quieras.",
+                foundingTitle: "Programa Miembros Fundadores", foundingDesc: "Primeros 50 miembros obtienen <strong>50% de descuento en precio vitalicio</strong> + badge exclusivo + acceso prioritario.", foundingLink: "Reserva tu lugar →",
+                planStarter: "Starter", planStarterDesc: "Para startups y pequeñas empresas",
+                feat1: "Perfil con IA", feat2: "5 matches inteligentes/mes", feat3: "Acceso a eventos de la comunidad", feat4: "Feed básico de oportunidades", feat5: "Soporte por email",
+                btnStarter: "Comenzar",
+                popularBadge: "MÁS POPULAR",
+                planBusiness: "Business", planBusinessDesc: "Para networkers activos y empresas en crecimiento",
+                feat6: "Todo lo de Starter", feat7: "Matches ilimitados con IA", feat8: "Acceso prioritario a eventos", feat9: "Introducciones vía AI Concierge", feat10: "Destacado en Feed de Oportunidades", feat11: "Soporte prioritario",
+                btnBusiness: "Unirse Business",
+                planPartner: "Partner", planPartnerDesc: "Para patrocinadores y líderes del ecosistema",
+                feat12: "Todo lo de Business", feat13: "Criterios personalizados de matching", feat14: "Organizar eventos exclusivos", feat15: "Visibilidad de marca y espacios para hablar", feat16: "Gerente de éxito dedicado", feat17: "Acceso a API",
+                btnPartner: "Hablar con Ventas",
+                faqTag: "FAQ", faqTitle: "Preguntas Frecuentes",
+                q1: "¿Puedo cancelar cuando quiera?", a1: "Sí. Todos los planes son anuales, pero puedes cancelar al renovar. Sin contratos a largo plazo.",
+                q2: "¿Cuál es la oferta para Miembros Fundadores?", a2: "Los primeros 50 miembros obtienen 50% de descuento en precio vitalicio, plus badge exclusivo y acceso prioritario a nuevas funciones.",
+                q3: "¿Ofrecen reembolso?", a3: "Ofrecemos garantía de 14 días. Si no estás satisfecho, devolvemos tu pago completo.",
+                q4: "¿Puedo hacer upgrade o downgrade?", a4: "Sí. Puedes cambiar de plan en cualquier momento. Los upgrades valen inmediatamente; los downgrades al renovar.",
+                ctaTitle: "¿Listo para Conexiones Más Inteligentes?", ctaDesc: "Únete a la primera red empresarial con IA de Oslo. Tus matches perfectos están esperando.", ctaBtn: "Unirse como Miembro Fundador",
+                footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
+                navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios", navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto", navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies"
+            }
+        };
+
+        // Merge with global i18n
+        Object.keys(pricingTranslations).forEach(lang => {
+            if (translations[lang]) Object.assign(translations[lang], pricingTranslations[lang]);
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = saved;
+            changeLanguage(saved);
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) item.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
