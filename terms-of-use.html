@@ -6,9 +6,9 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="OSLO MEET" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#667eea" />
+    <meta name="theme-color" content="#8b5cf6" />
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,24 +42,27 @@
             color: var(--text-primary);
             background: var(--dark-bg);
             min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
         }
-        /* Language Selector */
+        /* Language Selector - Mobile Friendly */
         .language-selector {
-            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
             background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
             border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
-            padding: 8px 16px; display: flex; align-items: center; gap: 10px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
         }
         .language-selector select {
             background: transparent; border: none; color: white;
-            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.9rem; cursor: pointer; outline: none; padding: 5px;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
         }
         .language-selector select option { background: var(--dark-bg); color: white; }
-        .language-selector i { color: var(--accent-blue); }
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
         /* Header */
         .page-header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
-            padding: 120px 0 80px; text-align: center; position: relative; overflow: hidden;
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
+            padding: 70px 16px 50px; text-align: center; position: relative;
         }
         .page-header::before {
             content: ''; position: absolute; inset: 0;
@@ -67,90 +70,83 @@
             opacity: 0.3;
         }
         .page-header h1 {
-            font-size: 3rem; font-weight: 800; margin-bottom: 1rem;
+            font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #fff, #a5b4fc);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            position: relative; z-index: 1;
+            position: relative; z-index: 1; line-height: 1.2;
         }
-        .page-header p { font-size: 1.2rem; color: #94a3b8; max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
+        .page-header p { color: var(--text-secondary); max-width: 500px; margin: 0 auto; position: relative; z-index: 1; font-size: 0.95rem; }
         /* Content */
-        .terms-section { padding: 80px 0; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .terms-section { padding: 40px 16px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0; }
         .terms-wrapper {
-            max-width: 850px; margin: 0 auto; background: var(--card-bg);
-            padding: 3rem; border-radius: 20px; border: 1px solid var(--border-color);
+            max-width: 800px; margin: 0 auto; background: var(--card-bg);
+            padding: 1.5rem; border-radius: 20px; border: 1px solid var(--border-color);
         }
-        .terms-meta { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; }
+        @media (min-width: 768px) { .terms-wrapper { padding: 2rem; } }
+        .terms-meta { display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem; }
         .terms-meta i { color: var(--accent-blue); }
         .terms-section h2 {
-            font-size: 1.5rem; margin: 2.5rem 0 1rem; color: white;
-            padding-bottom: 0.5rem; border-bottom: 2px solid var(--border-color);
-            display: flex; align-items: center; gap: 0.8rem;
+            font-size: 1.25rem; margin: 2rem 0 0.8rem; color: white;
+            padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center; gap: 0.6rem;
         }
         .terms-section h2:first-of-type { margin-top: 0; }
-        .terms-section h2 i { font-size: 1.2rem; color: var(--accent-purple); }
-        .terms-section p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.2rem; }
-        .terms-section ul { list-style: none; padding-left: 1.5rem; margin-bottom: 1.5rem; }
-        .terms-section ul li { color: #cbd5e1; margin-bottom: 0.8rem; position: relative; padding-left: 1.2rem; line-height: 1.6; }
+        .terms-section h2 i { font-size: 1.1rem; color: var(--accent-purple); }
+        .terms-section p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; }
+        .terms-section ul { list-style: none; padding-left: 1.2rem; margin-bottom: 1.2rem; }
+        .terms-section ul li { color: #cbd5e1; margin-bottom: 0.6rem; position: relative; padding-left: 1rem; line-height: 1.5; font-size: 0.9rem; }
         .terms-section ul li::before { content: '•'; position: absolute; left: 0; color: var(--accent-purple); font-weight: bold; }
-        .terms-section ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
-        .terms-section ol li { color: #cbd5e1; margin-bottom: 0.8rem; line-height: 1.6; }
+        .terms-section ol { padding-left: 1.2rem; margin-bottom: 1.2rem; }
+        .terms-section ol li { color: #cbd5e1; margin-bottom: 0.6rem; line-height: 1.5; font-size: 0.9rem; }
         .terms-section a { color: var(--accent-blue); text-decoration: none; transition: all 0.3s; }
         .terms-section a:hover { text-decoration: underline; color: #60a5fa; }
         .highlight-box {
             background: rgba(139,92,246,0.1); border-left: 4px solid var(--accent-purple);
-            padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0;
+            padding: 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0;
         }
-        .highlight-box p { margin: 0; color: #e2e8f0; }
+        .highlight-box p { margin: 0; color: #e2e8f0; font-size: 0.9rem; }
         .warning-box {
             background: rgba(239,68,68,0.1); border-left: 4px solid #ef4444;
-            padding: 1.5rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0;
+            padding: 1rem; border-radius: 0 8px 8px 0; margin: 1rem 0;
         }
-        .warning-box p { margin: 0; color: #e2e8f0; }
-        .section-divider { height: 1px; background: var(--border-color); margin: 3rem 0; }
-        .toc { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-        .toc h3 { font-size: 1.2rem; color: white; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .warning-box p { margin: 0; color: #e2e8f0; font-size: 0.9rem; }
+        .section-divider { height: 1px; background: var(--border-color); margin: 2rem 0; }
+        .toc { background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem; }
+        .toc h3 { font-size: 1rem; color: white; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
         .toc h3 i { color: var(--accent-purple); }
-        .toc ol { padding-left: 1.5rem; }
-        .toc ol li { color: var(--text-secondary); margin-bottom: 0.5rem; }
+        .toc ol { padding-left: 1.2rem; }
+        .toc ol li { color: var(--text-secondary); margin-bottom: 0.4rem; font-size: 0.85rem; }
         .toc ol li a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
         .toc ol li a:hover { color: var(--accent-blue); }
         /* Footer */
-        .footer { background: #020617; color: white; padding: 4rem 0 2rem; border-top: 1px solid var(--border-color); margin-top: 80px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 3rem; margin-bottom: 3rem; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .footer-brand h2 { font-size: 2rem; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .footer-brand p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; }
-        .footer-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.5rem; color: white; }
+        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
+        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
+        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
         .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 0.8rem; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: all 0.3s; font-size: 0.95rem; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
         .footer-links a:hover { color: var(--accent-blue); }
-        .footer-social { display: flex; gap: 1rem; margin-top: 1rem; }
-        .footer-social a {
-            width: 40px; height: 40px; background: var(--card-bg); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; color: white;
-            text-decoration: none; transition: all 0.3s; border: 1px solid var(--border-color);
-        }
-        .footer-social a:hover { background: var(--accent-blue); transform: translateY(-3px); border-color: var(--accent-blue); }
         .footer-bottom {
-            border-top: 1px solid var(--border-color); padding-top: 2rem;
-            display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem;
-            color: var(--text-secondary); font-size: 0.9rem; text-align: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            color: var(--text-secondary); font-size: 0.85rem; text-align: center;
         }
-        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 1rem; transition: color 0.3s; }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
         .footer-bottom a:hover { color: var(--accent-blue); }
         .footer-bottom .email-link { color: var(--accent-blue); font-weight: 500; }
         .developer-credit { color: #fbbf24 !important; }
-        /* Responsive */
-        @media (max-width: 968px) { .footer-grid { grid-template-columns: 1fr 1fr; } .terms-wrapper { padding: 2rem; } }
-        @media (max-width: 768px) {
-            .page-header h1 { font-size: 2rem; }
-            .terms-section h2 { font-size: 1.3rem; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .language-selector { top: 10px; right: 10px; }
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease; }
+        /* Touch Optimization */
+        @media (hover: none) {
+            .toc ol li a:active, .footer-links a:active { opacity: 0.8; }
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-in { animation: fadeIn 0.6s ease; }
     </style>
 </head>
 <body>
@@ -313,7 +309,7 @@
 
                 <h2 id="governing"><i class="fas fa-gavel"></i> <span data-i18n="governingTitle">12. Governing Law</span></h2>
                 <p data-i18n="governingText">These Terms are governed by the laws of Norway, without regard to conflict of law principles. Any disputes shall be subject to the exclusive jurisdiction of the courts of Oslo, Norway.</p>
-                <p data-i18n="gdprNote"><strong>GDPR Compliance:</strong> Oslo Meet AS is the data controller for personal data processed via the Platform. For details on data processing, see our <a href="privacy-policy.html">Privacy Policy</a>.</p>
+                <p data-i18n="gdprNote"><strong>GDPR Compliance:</strong> Oslo Meet is the data controller for personal data processed via the Platform. For details on data processing, see our <a href="privacy-policy.html">Privacy Policy</a>.</p>
 
                 <h2 id="changes"><i class="fas fa-sync-alt"></i> <span data-i18n="changesTitle">13. Changes to Terms</span></h2>
                 <p data-i18n="changesText">We may update these Terms periodically. Material changes will be communicated via email or prominent Platform notice at least 14 days before taking effect. Continued use after changes constitutes acceptance.</p>
@@ -334,7 +330,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer CORRIGIDO -->
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
@@ -351,6 +347,7 @@
             <div>
                 <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
                 <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
                     <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
                     <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
                     <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
@@ -370,11 +367,12 @@
                     <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
                     <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
                     <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <div>&copy; 2026 Oslo Meet AS</div>
+            <div>&copy; 2026 Oslo Meet</div>
             <div><a href="mailto:post@barros.no" class="email-link">post@barros.no</a></div>
             <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
         </div>
@@ -464,16 +462,16 @@
                 liabilityNote: "Our total aggregate liability shall not exceed the amount you paid to us in the 12 months preceding the claim, or NOK 1.000, whichever is greater.",
                 governingTitle: "12. Governing Law",
                 governingText: "These Terms are governed by the laws of Norway, without regard to conflict of law principles. Any disputes shall be subject to the exclusive jurisdiction of the courts of Oslo, Norway.",
-                gdprNote: "GDPR Compliance: Oslo Meet AS is the data controller for personal data processed via the Platform. For details on data processing, see our Privacy Policy.",
+                gdprNote: "GDPR Compliance: Oslo Meet is the data controller for personal data processed via the Platform. For details on data processing, see our Privacy Policy.",
                 changesTitle: "13. Changes to Terms",
                 changesText: "We may update these Terms periodically. Material changes will be communicated via email or prominent Platform notice at least 14 days before taking effect. Continued use after changes constitutes acceptance.",
                 contactTitle: "14. Contact Us",
                 contactText: "Questions about these Terms or the Platform?",
                 contactNote: "For cookie-specific information, see our Cookie Notice. For data processing details, see our Privacy Policy.",
                 footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
-                navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
+                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
                 navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
-                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies"
+                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
                 pageTitle: "Bruksvilkår",
@@ -557,16 +555,16 @@
                 liabilityNote: "Vår totale aggregerte ansvar skal ikke overstige beløpet du har betalt til oss i de 12 månedene forut for kravet, eller NOK 1.000, det som er større.",
                 governingTitle: "12. Gjeldende lov",
                 governingText: "Disse vilkårene er underlagt norsk lov, uten hensyn til konflikter av lovprinsipper. Eventuelle tvister skal være underlagt eksklusiv jurisdiksjon til domstolene i Oslo, Norge.",
-                gdprNote: "GDPR-overholdelse: Oslo Meet AS er databehandlingsansvarlig for personopplysninger behandlet via plattformen. For detaljer om databehandling, se vår Personvernerklæring.",
+                gdprNote: "GDPR-overholdelse: Oslo Meet er databehandlingsansvarlig for personopplysninger behandlet via plattformen. For detaljer om databehandling, se vår Personvernerklæring.",
                 changesTitle: "13. Endringer i vilkår",
                 changesText: "Vi kan oppdatere disse vilkårene periodisk. Vesentlige endringer vil kommuniseres via e-post eller fremtredende plattformvarsel minst 14 dager før ikrafttredelse. Fortsatt bruk etter endringer utgjør aksept.",
                 contactTitle: "14. Kontakt oss",
                 contactText: "Spørsmål om disse vilkårene eller plattformen?",
                 contactNote: "For cookie-spesifikk informasjon, se vårt Cookie-varsel. For detaljer om databehandling, se vår Personvernerklæring.",
                 footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
-                navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
+                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
                 navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
-                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies"
+                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
                 pageTitle: "Termos de Uso",
@@ -650,16 +648,16 @@
                 liabilityNote: "Nossa responsabilidade total agregada não excederá o valor que você nos pagou nos 12 meses anteriores à reclamação, ou NOK 1.000, o que for maior.",
                 governingTitle: "12. Lei Aplicável",
                 governingText: "Estes Termos são regidos pelas leis da Noruega, sem considerar princípios de conflito de leis. Quaisquer disputas serão submetidas à jurisdição exclusiva dos tribunais de Oslo, Noruega.",
-                gdprNote: "Conformidade com GDPR: Oslo Meet AS é o controlador de dados para dados pessoais processados via Plataforma. Para detalhes sobre processamento de dados, veja nossa Política de Privacidade.",
+                gdprNote: "Conformidade com GDPR: Oslo Meet é o controlador de dados para dados pessoais processados via Plataforma. Para detalhes sobre processamento de dados, veja nossa Política de Privacidade.",
                 changesTitle: "13. Alterações nos Termos",
                 changesText: "Podemos atualizar estes Termos periodicamente. Alterações materiais serão comunicadas via e-mail ou aviso proeminente na Plataforma pelo menos 14 dias antes de entrarem em vigor. Uso continuado após alterações constitui aceitação.",
                 contactTitle: "14. Entre em Contato",
                 contactText: "Dúvidas sobre estes Termos ou a Plataforma?",
                 contactNote: "Para informações específicas sobre cookies, veja nosso Aviso de Cookies. Para detalhes sobre processamento de dados, veja nossa Política de Privacidade.",
                 footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
-                navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
+                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
-                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies"
+                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
                 pageTitle: "Términos de Uso",
@@ -743,16 +741,16 @@
                 liabilityNote: "Nuestra responsabilidad total agregada no excederá el monto que nos hayas pagado en los 12 meses previos a la reclamación, o NOK 1.000, lo que sea mayor.",
                 governingTitle: "12. Ley Aplicable",
                 governingText: "Estos Términos se rigen por las leyes de Noruega, sin considerar principios de conflicto de leyes. Cualquier disputa estará sujeta a la jurisdicción exclusiva de los tribunales de Oslo, Noruega.",
-                gdprNote: "Cumplimiento GDPR: Oslo Meet AS es el controlador de datos para datos personales procesados vía Plataforma. Para detalles sobre procesamiento de datos, consulta nuestra Política de Privacidad.",
+                gdprNote: "Cumplimiento GDPR: Oslo Meet es el controlador de datos para datos personales procesados vía Plataforma. Para detalles sobre procesamiento de datos, consulta nuestra Política de Privacidad.",
                 changesTitle: "13. Cambios en Términos",
                 changesText: "Podemos actualizar estos Términos periódicamente. Cambios materiales serán comunicados vía email o aviso prominente en la Plataforma al menos 14 días antes de entrar en vigor. Uso continuado después de cambios constituye aceptación.",
                 contactTitle: "14. Contáctanos",
                 contactText: "¿Preguntas sobre estos Términos o la Plataforma?",
                 contactNote: "Para información específica sobre cookies, consulta nuestro Aviso de Cookies. Para detalles sobre procesamiento de datos, consulta nuestra Política de Privacidad.",
                 footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
-                navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
+                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
-                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies"
+                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
             }
         };
 
