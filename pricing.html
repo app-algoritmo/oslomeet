@@ -71,6 +71,17 @@
             display: inline-block; background: rgba(245,158,11,0.2); 
             padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; margin-left: 8px;
         }
+        /* Coupon Instructions Box */
+        .coupon-box {
+            background: rgba(139,92,246,0.1); border: 1px dashed var(--accent-purple);
+            border-radius: 12px; padding: 1rem; margin: 1rem 0; text-align: left;
+        }
+        .coupon-box h4 { color: var(--accent-purple); font-size: 0.95rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 6px; }
+        .coupon-box ol { padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; }
+        .coupon-box code { 
+            background: var(--dark-bg); padding: 2px 6px; border-radius: 4px; 
+            color: var(--accent-purple); font-weight: 600; font-family: monospace;
+        }
         /* Pricing Section */
         .pricing-section { padding: 40px 16px; max-width: 1200px; margin: 0 auto; }
         .pricing-grid {
@@ -155,6 +166,16 @@
         }
         .founding-cta:hover {
             background: rgba(245,158,11,0.25); transform: translateY(-2px);
+        }
+        .coupon-instructions {
+            margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);
+            text-align: left; max-width: 500px; margin-left: auto; margin-right: auto;
+        }
+        .coupon-instructions h4 { color: var(--accent-purple); font-size: 1rem; margin-bottom: 0.8rem; }
+        .coupon-instructions ol { padding-left: 1.5rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; }
+        .coupon-instructions code { 
+            background: var(--dark-bg); padding: 2px 8px; border-radius: 4px; 
+            color: var(--accent-purple); font-weight: 600; font-family: monospace;
         }
         /* FAQ */
         .faq-section { padding: 40px 16px; max-width: 800px; margin: 0 auto; }
@@ -285,6 +306,19 @@
                 <a href="https://buy.stripe.com/3cI14odnA7ZB2V0eG50Ny02" class="cta-button secondary" data-i18n="btnPartner">Contact Sales</a>
             </div>
         </div>
+
+        <!-- Coupon Instructions Box -->
+        <div class="coupon-box" style="max-width: 800px; margin: 2rem auto 0;">
+            <h4><i class="fas fa-gift"></i> <span data-i18n="couponTitle">Founding Member Discount</span></h4>
+            <ol data-i18n="couponSteps">
+                <li>Click any plan above to start checkout</li>
+                <li>Enter code <code>FOUNDING50</code> at checkout</li>
+                <li>Get 50% off lifetime pricing + exclusive badge</li>
+            </ol>
+            <p style="font-size:0.8rem;color:var(--text-secondary);margin:0.5rem 0 0" data-i18n="couponNote">
+                <i class="fas fa-info-circle"></i> Limited to first 50 companies. VAT-exempt for registered businesses with org. no.
+            </p>
+        </div>
     </section>
 
     <!-- Founding Members CTA -->
@@ -297,11 +331,21 @@
         </p>
         <a href="https://buy.stripe.com/eVq8wQfvIdjV8fkdC10Ny00?founding=true" class="founding-cta">
             <i class="fas fa-star"></i>
-            <span data-i18n="btnFounding">Reserve Founding Spot (NOK 1.290/year)</span>
+            <span data-i18n="btnFounding">Reserve Founding Spot (50% off with code FOUNDING50)</span>
         </a>
-        <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:1rem" data-i18n="foundingNote">
-            <i class="fas fa-info-circle"></i> Founding price includes 25% MVA. VAT-exempt for registered businesses.
-        </p>
+        
+        <!-- Coupon Instructions in Founding Section -->
+        <div class="coupon-instructions">
+            <h4 data-i18n="howToUse">How to claim your Founding discount:</h4>
+            <ol>
+                <li data-i18n="step1">Click the button above to start checkout</li>
+                <li data-i18n="step2">Enter coupon code <code>FOUNDING50</code> when prompted</li>
+                <li data-i18n="step3">Your 50% discount applies automatically — lifetime pricing locked!</li>
+            </ol>
+            <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.8rem" data-i18n="foundingNote">
+                <i class="fas fa-info-circle"></i> Founding price includes 25% MVA. VAT-exempt for registered businesses with org. no.
+            </p>
+        </div>
     </section>
 
     <!-- FAQ -->
@@ -315,16 +359,16 @@
                 <div class="faq-answer" data-i18n="a1">Yes, all displayed prices include 25% Norwegian VAT (MVA). However, VAT-registered businesses with a valid org. number are exempt and will only be charged the base price at checkout via Stripe Tax.</div>
             </div>
             <div class="faq-item">
-                <button class="faq-question"><span data-i18n="q2">Can I cancel anytime?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-answer" data-i18n="a2">Yes. All memberships are annual, but you can cancel anytime. Cancellation stops auto-renewal; no refunds for elapsed periods. Founding Members have lifetime pricing locked in.</div>
+                <button class="faq-question"><span data-i18n="q2">How do I use the Founding Member discount?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a2">During Stripe checkout, enter the coupon code <strong>FOUNDING50</strong>. This applies 50% off the base price, locked for life. Limited to the first 50 companies.</div>
             </div>
             <div class="faq-item">
-                <button class="faq-question"><span data-i18n="q3">What if I'm not in Norway?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-answer" data-i18n="a3">Oslo Meet is open to companies worldwide. International businesses are not charged Norwegian VAT. Stripe automatically applies the correct tax rules based on your location and VAT ID.</div>
+                <button class="faq-question"><span data-i18n="q3">Can I cancel anytime?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a3">Yes. All memberships are annual, but you can cancel anytime. Cancellation stops auto-renewal; no refunds for elapsed periods. Founding Members have lifetime pricing locked in.</div>
             </div>
             <div class="faq-item">
-                <button class="faq-question"><span data-i18n="q4">How does the Founding Member discount work?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-answer" data-i18n="a4">The first 50 companies to join receive 50% off the base price, locked for life. This discount applies before VAT calculation. Use the Founding CTA button above to claim your spot.</div>
+                <button class="faq-question"><span data-i18n="q4">What if I'm not in Norway?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a4">Oslo Meet is open to companies worldwide. International businesses are not charged Norwegian VAT. Stripe automatically applies the correct tax rules based on your location and VAT ID.</div>
             </div>
         </div>
     </section>
@@ -389,14 +433,22 @@
                 feat12: "Everything in Business", feat13: "Custom matching criteria", feat14: "Host exclusive events",
                 feat15: "Brand visibility & speaking slots", feat16: "Dedicated success manager", feat17: "API access & analytics",
                 btnPartner: "Contact Sales",
+                couponTitle: "Founding Member Discount",
+                couponSteps: "<li>Click any plan above to start checkout</li><li>Enter code <code>FOUNDING50</code> at checkout</li><li>Get 50% off lifetime pricing + exclusive badge</li>",
+                couponNote: "<i class='fas fa-info-circle'></i> Limited to first 50 companies. VAT-exempt for registered businesses with org. no.",
                 foundingBadge: "Founding Members Program", foundingTitle: "Be Among the First 50",
                 foundingDesc: "Join Oslo's first AI business network as a Founding Member and lock in lifetime pricing, get an exclusive badge, and receive priority access to all new features.",
-                btnFounding: "Reserve Founding Spot (NOK 1.290/year)", foundingNote: "Founding price includes 25% MVA. VAT-exempt for registered businesses.",
+                btnFounding: "Reserve Founding Spot (50% off with code FOUNDING50)",
+                howToUse: "How to claim your Founding discount:",
+                step1: "Click the button above to start checkout",
+                step2: "Enter coupon code <code>FOUNDING50</code> when prompted",
+                step3: "Your 50% discount applies automatically — lifetime pricing locked!",
+                foundingNote: "<i class='fas fa-info-circle'></i> Founding price includes 25% MVA. VAT-exempt for registered businesses with org. no.",
                 faqTitle: "Frequently Asked Questions",
                 q1: "Is VAT (MVA) included in the price?", a1: "Yes, all displayed prices include 25% Norwegian VAT (MVA). However, VAT-registered businesses with a valid org. number are exempt and will only be charged the base price at checkout via Stripe Tax.",
-                q2: "Can I cancel anytime?", a2: "Yes. All memberships are annual, but you can cancel anytime. Cancellation stops auto-renewal; no refunds for elapsed periods. Founding Members have lifetime pricing locked in.",
-                q3: "What if I'm not in Norway?", a3: "Oslo Meet is open to companies worldwide. International businesses are not charged Norwegian VAT. Stripe automatically applies the correct tax rules based on your location and VAT ID.",
-                q4: "How does the Founding Member discount work?", a4: "The first 50 companies to join receive 50% off the base price, locked for life. This discount applies before VAT calculation. Use the Founding CTA button above to claim your spot.",
+                q2: "How do I use the Founding Member discount?", a2: "During Stripe checkout, enter the coupon code <strong>FOUNDING50</strong>. This applies 50% off the base price, locked for life. Limited to the first 50 companies.",
+                q3: "Can I cancel anytime?", a3: "Yes. All memberships are annual, but you can cancel anytime. Cancellation stops auto-renewal; no refunds for elapsed periods. Founding Members have lifetime pricing locked in.",
+                q4: "What if I'm not in Norway?", a4: "Oslo Meet is open to companies worldwide. International businesses are not charged Norwegian VAT. Stripe automatically applies the correct tax rules based on your location and VAT ID.",
                 footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
                 navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
                 navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
@@ -419,14 +471,22 @@
                 feat12: "Alt i Business", feat13: "Tilpassede matchingskriterier", feat14: "Arranger eksklusive arrangementer",
                 feat15: "Merkevaresynlighet og taleplasser", feat16: "Dedikert suksessansvarlig", feat17: "API-tilgang og analyser",
                 btnPartner: "Kontakt salg",
+                couponTitle: "Grunnleggerrabatt",
+                couponSteps: "<li>Klikk på en plan over for å starte checkout</li><li>Skriv inn kode <code>FOUNDING50</code> ved checkout</li><li>Få 50% rabatt på livstidsprising + eksklusivt merke</li>",
+                couponNote: "<i class='fas fa-info-circle'></i> Begrenset til første 50 bedrifter. MVA-fritak for registrerte bedrifter med org.nr.",
                 foundingBadge: "Grunnleggerprogram", foundingTitle: "Vær blant de første 50",
                 foundingDesc: "Bli med i Oslos første AI-bedriftsnettverk som grunnlegger og lås livstidsprising, få et eksklusivt merke, og motta prioritert tilgang til alle nye funksjoner.",
-                btnFounding: "Reserver grunnleggerplass (NOK 1.290/år)", foundingNote: "Grunnleggerpris inkluderer 25% MVA. MVA-fritak for registrerte bedrifter.",
+                btnFounding: "Reserver grunnleggerplass (50% rabatt med kode FOUNDING50)",
+                howToUse: "Slik bruker du grunnleggerrabatten:",
+                step1: "Klikk knappen over for å starte checkout",
+                step2: "Skriv inn kupongkode <code>FOUNDING50</code> når du blir bedt om det",
+                step3: "Din 50% rabatt gjelder automatisk — livstidsprising låst!",
+                foundingNote: "<i class='fas fa-info-circle'></i> Grunnleggerpris inkluderer 25% MVA. MVA-fritak for registrerte bedrifter med org.nr.",
                 faqTitle: "Ofte stilte spørsmål",
                 q1: "Er MVA inkludert i prisen?", a1: "Ja, alle viste priser inkluderer 25% norsk MVA. Imidlertid er MVA-registrerte bedrifter med gyldig org.nr. fritatt og vil kun bli belastet grunnprisen ved checkout via Stripe Tax.",
-                q2: "Kan jeg avbryte når som helst?", a2: "Ja. Alle medlemskap er årlige, men du kan avbryte når som helst. Oppsigelse stopper automatisk fornyelse; ingen refusjon for allerede forløpte perioder. Grunnleggere har livstidsprising låst.",
-                q3: "Hva hvis jeg ikke er i Norge?", a3: "Oslo Meet er åpent for bedrifter verden over. Internasjonale bedrifter belastes ikke norsk MVA. Stripe bruker automatisk korrekte skatteregler basert på din lokasjon og MVA-ID.",
-                q4: "Hvordan fungerer grunnleggerrabatten?", a4: "De første 50 bedriftene som blir med får 50% rabatt på grunnprisen, låst for livet. Denne rabatten gjelder før MVA-beregning. Bruk grunnlegger-CTA-knappen over for å sikre din plass.",
+                q2: "Hvordan bruker jeg grunnleggerrabatten?", a2: "Under Stripe checkout, skriv inn kupongkoden <strong>FOUNDING50</strong>. Dette gir 50% rabatt på grunnprisen, låst for livet. Begrenset til de første 50 bedriftene.",
+                q3: "Kan jeg avbryte når som helst?", a3: "Ja. Alle medlemskap er årlige, men du kan avbryte når som helst. Oppsigelse stopper automatisk fornyelse; ingen refusjon for allerede forløpte perioder. Grunnleggere har livstidsprising låst.",
+                q4: "Hva hvis jeg ikke er i Norge?", a4: "Oslo Meet er åpent for bedrifter verden over. Internasjonale bedrifter belastes ikke norsk MVA. Stripe bruker automatisk korrekte skatteregler basert på din lokasjon og MVA-ID.",
                 footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
                 navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
                 navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
@@ -449,14 +509,22 @@
                 feat12: "Tudo do Business", feat13: "Critérios personalizados de matching", feat14: "Organizar eventos exclusivos",
                 feat15: "Visibilidade da marca e palestras", feat16: "Gerente de sucesso dedicado", feat17: "Acesso à API e análises",
                 btnPartner: "Falar com Vendas",
+                couponTitle: "Desconto Membro Fundador",
+                couponSteps: "<li>Clique em qualquer plano acima para iniciar o checkout</li><li>Insira o código <code>FOUNDING50</code> no checkout</li><li>Receba 50% de desconto no preço vitalício + badge exclusivo</li>",
+                couponNote: "<i class='fas fa-info-circle'></i> Limitado às primeiras 50 empresas. Isento de IVA para empresas registradas com número fiscal.",
                 foundingBadge: "Programa Membros Fundadores", foundingTitle: "Seja Entre os Primeiros 50",
                 foundingDesc: "Entre na primeira rede empresarial com IA de Oslo como Membro Fundador e garanta preço vitalício, receba um badge exclusivo e tenha acesso prioritário a todos os novos recursos.",
-                btnFounding: "Reservar Vaga Fundador (NOK 1.290/ano)", foundingNote: "Preço fundador inclui 25% IVA. Isento para empresas registradas.",
+                btnFounding: "Reservar Vaga Fundador (50% off com código FOUNDING50)",
+                howToUse: "Como resgatar seu desconto de Fundador:",
+                step1: "Clique no botão acima para iniciar o checkout",
+                step2: "Insira o código de cupom <code>FOUNDING50</code> quando solicitado",
+                step3: "Seu desconto de 50% é aplicado automaticamente — preço vitalício garantido!",
+                foundingNote: "<i class='fas fa-info-circle'></i> Preço fundador inclui 25% IVA. Isento para empresas registradas com número fiscal.",
                 faqTitle: "Perguntas Frequentes",
                 q1: "O IVA está incluído no preço?", a1: "Sim, todos os preços exibidos incluem 25% de IVA norueguês. No entanto, empresas registradas com número fiscal válido estão isentas e serão cobradas apenas pelo preço base no checkout via Stripe Tax.",
-                q2: "Posso cancelar quando quiser?", a2: "Sim. Todos os memberships são anuais, mas você pode cancelar a qualquer momento. O cancelamento interrompe a renovação automática; sem reembolso para períodos já decorridos. Membros Fundadores têm preço vitalício garantido.",
-                q3: "E se eu não estiver na Noruega?", a3: "O Oslo Meet está aberto a empresas do mundo todo. Empresas internacionais não são cobradas com IVA norueguês. O Stripe aplica automaticamente as regras fiscais corretas com base na sua localização e ID fiscal.",
-                q4: "Como funciona o desconto de Membro Fundador?", a4: "As primeiras 50 empresas a entrar recebem 50% de desconto no preço base, garantido vitaliciamente. Este desconto aplica-se antes do cálculo do IVA. Use o botão Founding acima para garantir sua vaga.",
+                q2: "Como uso o desconto de Membro Fundador?", a2: "Durante o checkout do Stripe, insira o código de cupom <strong>FOUNDING50</strong>. Isso aplica 50% de desconto no preço base, garantido vitaliciamente. Limitado às primeiras 50 empresas.",
+                q3: "Posso cancelar quando quiser?", a3: "Sim. Todos os memberships são anuais, mas você pode cancelar a qualquer momento. O cancelamento interrompe a renovação automática; sem reembolso para períodos já decorridos. Membros Fundadores têm preço vitalício garantido.",
+                q4: "E se eu não estiver na Noruega?", a4: "O Oslo Meet está aberto a empresas do mundo todo. Empresas internacionais não são cobradas com IVA norueguês. O Stripe aplica automaticamente as regras fiscais corretas com base na sua localização e ID fiscal.",
                 footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
                 navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
@@ -479,14 +547,22 @@
                 feat12: "Todo lo de Business", feat13: "Criterios personalizados de matching", feat14: "Organizar eventos exclusivos",
                 feat15: "Visibilidad de marca y espacios para hablar", feat16: "Gerente de éxito dedicado", feat17: "Acceso a API y análisis",
                 btnPartner: "Hablar con Ventas",
+                couponTitle: "Descuento Miembro Fundador",
+                couponSteps: "<li>Haz clic en cualquier plan arriba para iniciar el checkout</li><li>Ingresa el código <code>FOUNDING50</code> en el checkout</li><li>Obtén 50% de descuento en precio vitalicio + badge exclusivo</li>",
+                couponNote: "<i class='fas fa-info-circle'></i> Limitado a las primeras 50 empresas. Exento de IVA para empresas registradas con número fiscal.",
                 foundingBadge: "Programa Miembros Fundadores", foundingTitle: "Sé Entre los Primeros 50",
                 foundingDesc: "Únete a la primera red empresarial con IA de Oslo como Miembro Fundador y asegura precio vitalicio, recibe un badge exclusivo y obtén acceso prioritario a todos los nuevos recursos.",
-                btnFounding: "Reservar Plaza Fundador (NOK 1.290/año)", foundingNote: "Precio fundador incluye 25% IVA. Exento para empresas registradas.",
+                btnFounding: "Reservar Plaza Fundador (50% off con código FOUNDING50)",
+                howToUse: "Cómo reclamar tu descuento de Fundador:",
+                step1: "Haz clic en el botón arriba para iniciar el checkout",
+                step2: "Ingresa el código de cupón <code>FOUNDING50</code> cuando se solicite",
+                step3: "¡Tu descuento del 50% se aplica automáticamente — precio vitalicio asegurado!",
+                foundingNote: "<i class='fas fa-info-circle'></i> Precio fundador incluye 25% IVA. Exento para empresas registradas con número fiscal.",
                 faqTitle: "Preguntas Frecuentes",
                 q1: "¿El IVA está incluido en el precio?", a1: "Sí, todos los precios mostrados incluyen 25% de IVA noruego. Sin embargo, las empresas registradas con número fiscal válido están exentas y solo se les cobrará el precio base en el checkout vía Stripe Tax.",
-                q2: "¿Puedo cancelar cuando quiera?", a2: "Sí. Todos los memberships son anuales, pero puedes cancelar en cualquier momento. La cancelación detiene la renovación automática; sin reembolso para períodos ya transcurridos. Los Miembros Fundadores tienen precio vitalicio garantizado.",
-                q3: "¿Y si no estoy en Noruega?", a3: "Oslo Meet está abierto a empresas de todo el mundo. Las empresas internacionales no son cobradas con IVA noruego. Stripe aplica automáticamente las reglas fiscales correctas según tu ubicación e ID fiscal.",
-                q4: "¿Cómo funciona el descuento de Miembro Fundador?", a4: "Las primeras 50 empresas en unirse reciben 50% de descuento en el precio base, garantizado de por vida. Este descuento se aplica antes del cálculo del IVA. Usa el botón Founding arriba para asegurar tu plaza.",
+                q2: "¿Cómo uso el descuento de Miembro Fundador?", a2: "Durante el checkout de Stripe, ingresa el código de cupón <strong>FOUNDING50</strong>. Esto aplica 50% de descuento en el precio base, garantizado de por vida. Limitado a las primeras 50 empresas.",
+                q3: "¿Puedo cancelar cuando quiera?", a3: "Sí. Todos los memberships son anuales, pero puedes cancelar en cualquier momento. La cancelación detiene la renovación automática; sin reembolso para períodos ya transcurridos. Los Miembros Fundadores tienen precio vitalicio garantizado.",
+                q4: "¿Y si no estoy en Noruega?", a4: "Oslo Meet está abierto a empresas de todo el mundo. Las empresas internacionales no son cobradas con IVA noruego. Stripe aplica automáticamente las reglas fiscales correctas según tu ubicación e ID fiscal.",
                 footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
                 navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
