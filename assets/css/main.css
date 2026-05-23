@@ -1,0 +1,140 @@
+/* ============================================
+   OSLO MEET - MAIN STYLESHEET
+   Shared styles across all pages
+   ============================================ */
+
+:root {
+    --dark-bg: #0f172a;
+    --card-bg: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --border-color: #334155;
+    --accent-blue: #3b82f6;
+    --accent-purple: #8b5cf6;
+    --success-green: #10b981;
+    --warning-orange: #f59e0b;
+    --input-bg: #0f172a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Language Selector */
+.language-selector {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.language-selector select {
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.language-selector select option {
+    background: var(--dark-bg);
+    color: white;
+}
+
+/* Footer */
+.footer {
+    background: #020617;
+    padding: 4rem 20px 2rem;
+    border-top: 1px solid var(--border-color);
+    margin-top: 60px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-brand h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff, #a5b4fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.footer-brand p { color: var(--text-secondary); line-height: 1.6; }
+.footer-title { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: white; }
+.footer-links { list-style: none; }
+.footer-links li { margin-bottom: 0.6rem; }
+.footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+.footer-links a:hover { color: var(--accent-blue); }
+
+.footer-social {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.footer-social a {
+    width: 40px;
+    height: 40px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+    border: 1px solid var(--border-color);
+}
+
+.footer-social a:hover {
+    background: var(--accent-blue);
+    transform: translateY(-3px);
+    border-color: var(--accent-blue);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    padding: 2rem 0 0;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 1rem; }
+.developer-credit { color: #fbbf24 !important; }
+
+/* Responsive */
+@media (max-width: 968px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .language-selector { top: 10px; right: 10px; }
+}
