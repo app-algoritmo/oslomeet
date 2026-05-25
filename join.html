@@ -248,7 +248,7 @@
         </select>
     </div>
 
-    <!-- Header - TÍTULO ATUALIZADO -->
+    <!-- Header -->
     <header class="page-header">
         <div class="badge-ai"><i class="fas fa-brain"></i> <span data-i18n="aiOnboarding">AI-Powered Onboarding</span></div>
         <h1 data-i18n="joinTitle">Cadastre sua Empresa</h1>
@@ -271,13 +271,43 @@
                 <div class="form-step active" id="step1">
                     <h3 class="step-title" data-i18n="step1Title">About Your Company</h3>
                     <p class="step-subtitle" data-i18n="step1Subtitle">Basic information to build your AI profile</p>
+                    
+                    <!-- 🇳🇴 BRØNNØYSUND INTEGRATION - NOVO CAMPO -->
+                    <div class="form-group" style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px;">
+                        <label style="display:block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">
+                            <i class="fas fa-building" style="color: var(--accent-blue); margin-right: 6px;"></i>
+                            Organisasjonsnummer <span style="color: var(--text-secondary); font-weight: 400; font-size: 0.9rem;">(Norwegian companies - optional)</span>
+                        </label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <input 
+                                type="text" 
+                                id="orgNumberInput" 
+                                placeholder="999 999 999" 
+                                maxlength="9"
+                                pattern="[0-9]{9}"
+                                style="flex: 1; min-width: 150px; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--input-bg); color: white; font-family: monospace;"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                            >
+                            <button 
+                                type="button" 
+                                id="enrichBtn"
+                                onclick="enrichCompany()"
+                                style="padding: 12px 20px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; white-space: nowrap;"
+                            >
+                                <i class="fas fa-search"></i> <span data-i18n="btnSearch">Search</span>
+                            </button>
+                        </div>
+                        <p id="orgStatus" style="font-size: 0.85rem; margin-top: 8px; color: var(--text-secondary); min-height: 1.2em;"></p>
+                    </div>
+                    <!-- FIM DA INTEGRAÇÃO BRØNNØYSUND -->
+
                     <div class="form-group">
                         <label data-i18n="labelCompanyName">Company Name <span class="required">*</span></label>
-                        <input type="text" class="form-control" name="companyName" required placeholder="e.g., NordicLogix" data-i18n-placeholder="placeholderCompany">
+                        <input type="text" class="form-control" name="companyName" id="companyName" required placeholder="e.g., NordicLogix" data-i18n-placeholder="placeholderCompany">
                     </div>
                     <div class="form-group">
                         <label data-i18n="labelIndustry">Industry / Sector <span class="required">*</span></label>
-                        <select class="form-control" name="industry" required>
+                        <select class="form-control" name="industry" id="industry" required>
                             <option value="" data-i18n="selectIndustry">Select your primary sector</option>
                             <option value="tech" data-i18n="industryTech">Technology / Software</option>
                             <option value="logistics" data-i18n="industryLogistics">Logistics / Supply Chain</option>
@@ -447,7 +477,7 @@
                 </div>
             </form>
 
-            <!-- Success State - MELHORADO -->
+            <!-- Success State -->
             <div class="success-state" id="successState">
                 <div class="success-icon"><i class="fas fa-check"></i></div>
                 <h3 data-i18n="successTitle">✅ Cadastro Concluído!</h3>
@@ -525,12 +555,101 @@
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ============================================
-        // LÓGICA DO FORMULÁRIO
+        // 🇳🇴 FUNÇÃO DE ENRIQUECIMENTO VIA BRØNNØYSUND
+        // ============================================
+        async function enrichCompany() {
+            const orgNumber = document.getElementById('orgNumberInput').value.replace(/\s/g, '');
+            const statusEl = document.getElementById('orgStatus');
+            const btn = document.getElementById('enrichBtn');
+            
+            // Validação básica
+            if (!orgNumber || orgNumber.length !== 9) {
+                statusEl.textContent = "⚠️ Please enter a valid 9-digit Organisasjonsnummer";
+                statusEl.style.color = "#f59e0b";
+                return;
+            }
+
+            // UI loading state
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+            btn.disabled = true;
+            statusEl.textContent = "🔍 Querying Brønnøysundregistrene...";
+            statusEl.style.color = "var(--accent-blue)";
+
+            try {
+                // Chama a Edge Function no Supabase
+                const response = await fetch(`${SUPABASE_URL}/functions/v1/enrich-company`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY
+                    },
+                    body: JSON.stringify({ orgNumber })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    // ✅ Sucesso - Preenche os campos automaticamente
+                    statusEl.textContent = "✅ Company found! Form auto-filled.";
+                    statusEl.style.color = "var(--success-green)";
+                    
+                    // Preenche os campos com IDs específicos
+                    const fields = {
+                        'companyName': result.data.name,
+                        'industry': mapIndustry(result.data.industry),
+                        'address': result.data.address
+                    };
+                    
+                    Object.entries(fields).forEach(([id, value]) => {
+                        const el = document.getElementById(id);
+                        if (el && value) {
+                            el.value = value;
+                            // Efeito visual de destaque
+                            el.style.borderColor = "var(--success-green)";
+                            setTimeout(() => el.style.borderColor = "var(--border-color)", 2000);
+                        }
+                    });
+                    
+                } else {
+                    // ❌ Erro - Mostra mensagem amigável
+                    const errorMsg = result.error || "Company not found in registry";
+                    statusEl.textContent = `❌ ${errorMsg}`;
+                    statusEl.style.color = "#ef4444";
+                }
+
+            } catch (error) {
+                console.error('Brønnøysund enrichment error:', error);
+                statusEl.textContent = "❌ Connection error. Please try again.";
+                statusEl.style.color = "#ef4444";
+            } finally {
+                // Restaura botão
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+            }
+        }
+
+        // Mapeia descrição do setor para valores do formulário
+        function mapIndustry(brregIndustry) {
+            if (!brregIndustry) return '';
+            const lower = brregIndustry.toLowerCase();
+            if (lower.includes('teknologi') || lower.includes('software') || lower.includes('it')) return 'tech';
+            if (lower.includes('logistikk') || lower.includes('transport') || lower.includes('supply')) return 'logistics';
+            if (lower.includes('finans') || lower.includes('bank') || lower.includes('insurance')) return 'fintech';
+            if (lower.includes('helse') || lower.includes('medisin') || lower.includes('pharma')) return 'health';
+            if (lower.includes('energi') || lower.includes('renewable') || lower.includes('clean')) return 'energy';
+            if (lower.includes('handel') || lower.includes('retail') || lower.includes('e-handel')) return 'retail';
+            if (lower.includes('konsulent') || lower.includes('consulting') || lower.includes('advisor')) return 'consulting';
+            if (lower.includes('design') || lower.includes('media') || lower.includes('creative')) return 'creative';
+            return 'other';
+        }
+
+        // ============================================
+        // LÓGICA DO FORMULÁRIO (EXISTENTE - NÃO ALTERADO)
         // ============================================
         let currentStep = 1;
 
         function nextStep(step) {
-            // Validação simples antes de avançar
             if (step === 2) {
                 const name = document.querySelector('[name="companyName"]').value;
                 const industry = document.querySelector('[name="industry"]').value;
@@ -543,7 +662,6 @@
             document.getElementById(`step${currentStep}`).classList.remove('active');
             document.getElementById(`step${step}`).classList.add('active');
             
-            // Atualiza indicadores de progresso
             document.querySelectorAll('.progress-step').forEach((el, index) => {
                 if (index < step) el.classList.add('active');
                 else el.classList.remove('active');
@@ -569,7 +687,7 @@
             element.querySelector('input').checked = true;
         }
 
-        // Função para Tags Input (tecnologias e mercados)
+        // Tags Input functionality
         function setupTagsInput(containerId) {
             const container = document.getElementById(containerId);
             const input = container.querySelector('input');
@@ -592,7 +710,7 @@
         setupTagsInput('marketTags');
 
         // ============================================
-        // ENVIO PARA SUPABASE + REDIRECIONAMENTO STRIPE
+        // ENVIO PARA SUPABASE + REDIRECIONAMENTO STRIPE (EXISTENTE)
         // ============================================
         document.getElementById('smartForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -605,23 +723,19 @@
             submitBtn.disabled = true;
 
             try {
-                // Verifica se as chaves foram alteradas do placeholder
                 if (SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.length < 50) {
                     throw new Error('⚠️ Configure suas chaves do Supabase primeiro!');
                 }
 
-                // Coleta dados do formulário
                 const formData = new FormData(e.target);
                 const data = Object.fromEntries(formData.entries());
                 
-                // Coleta checkboxes e tags
                 data.goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
                 data.connectWith = Array.from(document.querySelectorAll('input[name="connectWith"]:checked')).map(cb => cb.value);
                 data.collabTypes = Array.from(document.querySelectorAll('input[name="collabTypes"]:checked')).map(cb => cb.value);
                 data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
                 data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
 
-                // Mapeia para estrutura do banco
                 const companyData = {
                     name: data.companyName,
                     industry: data.industry,
@@ -639,7 +753,6 @@
                 console.log('📦 Dados a serem enviados:', companyData);
                 console.log('🔗 URL do Supabase:', SUPABASE_URL);
 
-                // Testa conexão com Supabase antes de inserir
                 const { data: testData, error: testError } = await supabase
                     .from('companies')
                     .select('count')
@@ -652,7 +765,6 @@
 
                 console.log('✅ Conexão OK, inserindo...');
 
-                // Insere no Supabase
                 const { data: inserted, error } = await supabase
                     .from('companies')
                     .insert([companyData])
@@ -666,22 +778,14 @@
 
                 console.log('✅ Sucesso! Company ID:', inserted?.id);
 
-                // ============================================
                 // MOSTRAR ESTADO DE SUCESSO + REDIRECIONAR PARA STRIPE
-                // ============================================
-                
-                // Mostra email no estado de sucesso
                 document.getElementById('userEmail').textContent = data.email;
-
-                // Esconde formulário, mostra sucesso
                 document.querySelector('.form-card').style.display = 'none';
                 document.getElementById('successState').classList.add('active');
                 document.getElementById('successState').style.display = 'block';
 
-                // Prepara link do Stripe baseado no plano
                 const plan = data.plan || new URLSearchParams(window.location.search).get('plan') || 'starter';
                 
-                // 🔴 SUBSTITUA PELAS SUAS URLS DO STRIPE 🔴
                 const stripeCheckoutLinks = {
                     'starter': 'https://buy.stripe.com/eVq8wQfvIdjV8fkdC10Ny00',
                     'business': 'https://buy.stripe.com/aFa5kE4R40x9anseG50Ny01',
@@ -691,7 +795,6 @@
                 const checkoutUrl = stripeCheckoutLinks[plan] || stripeCheckoutLinks['starter'];
                 document.getElementById('payNowBtn').href = checkoutUrl;
 
-                // Countdown + Redirect automático
                 let seconds = 3;
                 const counter = setInterval(() => {
                     seconds--;
@@ -711,15 +814,13 @@
         });
 
         // ============================================
-        // INICIALIZAÇÃO
+        // INICIALIZAÇÃO (EXISTENTE)
         // ============================================
         window.addEventListener('load', () => {
-            // Carrega idioma salvo
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
             changeLanguage(saved);
 
-            // Suporte a parâmetros na URL (?plan=business&founding=true)
             const params = new URLSearchParams(window.location.search);
             if (params.get('plan')) {
                 const plan = params.get('plan');
@@ -736,9 +837,10 @@
         window.nextStep = nextStep;
         window.prevStep = prevStep;
         window.selectPlan = selectPlan;
+        window.enrichCompany = enrichCompany; // 🇳🇴 NOVA FUNÇÃO EXPOSTA
     </script>
 
-    <!-- TRADUÇÕES (i18n) -->
+    <!-- TRADUÇÕES (i18n) - ATUALIZADO COM NOVAS CHAVES -->
     <script>
         const translations = {
             en: {
@@ -758,6 +860,7 @@
                 sizeLarge: "51-200 employees", sizeEnterprise: "200+ employees",
                 labelTech: "Key Technologies / Expertise", placeholderAdd: "Add...",
                 btnContinue: "Continue", btnBack: "Back", btnReview: "Review & Join", btnJoin: "Join Oslo Meet",
+                btnSearch: "Search", // 🇳🇴 NOVA TRADUÇÃO
                 step2Title: "What Are You Looking For?", step2Subtitle: "Help our AI understand your strategic priorities",
                 labelGoals: "Primary Goals (select all that apply)",
                 goalPartners: "Find Business Partners", goalClients: "Find New Clients",
@@ -812,6 +915,7 @@
                 sizeLarge: "51-200 ansatte", sizeEnterprise: "200+ ansatte",
                 labelTech: "Viktige teknologier / Kompetanse", placeholderAdd: "Legg til...",
                 btnContinue: "Fortsett", btnBack: "Tilbake", btnReview: "Se gjennom og bli med", btnJoin: "Bli med i Oslo Meet",
+                btnSearch: "Søk", // 🇳🇴 NOVA TRADUÇÃO
                 step2Title: "Hva søker du?", step2Subtitle: "Hjelp vår AI forstå dine strategiske prioriteter",
                 labelGoals: "Hovedmål (velg alle som passer)",
                 goalPartners: "Finn forretningspartnere", goalClients: "Finn nye kunder",
@@ -866,6 +970,7 @@
                 sizeLarge: "51-200 funcionários", sizeEnterprise: "200+ funcionários",
                 labelTech: "Tecnologias / Expertise Principal", placeholderAdd: "Adicionar...",
                 btnContinue: "Continuar", btnBack: "Voltar", btnReview: "Revisar e Entrar", btnJoin: "Entrar no Oslo Meet",
+                btnSearch: "Buscar", // 🇳🇴 NOVA TRADUÇÃO
                 step2Title: "O Que Você Busca?", step2Subtitle: "Ajude nossa IA a entender suas prioridades estratégicas",
                 labelGoals: "Objetivos Principais (selecione todos)",
                 goalPartners: "Encontrar Parceiros", goalClients: "Encontrar Novos Clientes",
@@ -920,6 +1025,7 @@
                 sizeLarge: "51-200 empleados", sizeEnterprise: "200+ empleados",
                 labelTech: "Tecnologías / Expertise Principal", placeholderAdd: "Agregar...",
                 btnContinue: "Continuar", btnBack: "Atrás", btnReview: "Revisar y Unirse", btnJoin: "Unirse a Oslo Meet",
+                btnSearch: "Buscar", // 🇳🇴 NOVA TRADUÇÃO
                 step2Title: "¿Qué Buscas?", step2Subtitle: "Ayuda a nuestra IA a entender tus prioridades estratégicas",
                 labelGoals: "Objetivos Principales (selecciona todos)",
                 goalPartners: "Encontrar Socios", goalClients: "Encontrar Nuevos Clientes",
