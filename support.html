@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- FAVICON Oslo Meet -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" /> 
+    <meta name="theme-color" content="#8b5cf6" />
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support — Oslo Meet</title>
+    <meta name="description" content="Get help with Oslo Meet. FAQ, contact support, and troubleshooting guides.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --success-green: #10b981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
+        }
+        /* Language Selector */
+        .language-selector {
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .language-selector select {
+            background: transparent; border: none; color: white;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        }
+        .language-selector select option { background: var(--dark-bg); color: white; }
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
+        /* Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
+            padding: 70px 16px 50px; text-align: center; position: relative;
+        }
+        .page-header h1 {
+            font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        .page-header p { color: var(--text-secondary); max-width: 500px; margin: 0 auto; font-size: 0.95rem; }
+        /* Sections */
+        .section { padding: 60px 16px; max-width: 800px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 2.5rem; }
+        .section-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(139,92,246,0.15); color: var(--accent-purple);
+            padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #fff, #818cf8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .section-subtitle { color: var(--text-secondary); font-size: 0.95rem; }
+        /* FAQ Accordion - Mobile Friendly */
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        .faq-item {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden;
+        }
+        .faq-question {
+            width: 100%; padding: 1rem 1.2rem; background: transparent;
+            border: none; color: white; font-size: 0.95rem; font-weight: 600;
+            text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            min-height: 44px;
+        }
+        .faq-question i { transition: transform 0.3s; font-size: 0.9rem; color: var(--accent-purple); }
+        .faq-item.active .faq-question i { transform: rotate(180deg); }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
+            padding: 0 1.2rem; color: var(--text-secondary); line-height: 1.6; font-size: 0.9rem;
+        }
+        .faq-item.active .faq-answer { max-height: 500px; padding: 1rem 1.2rem; }
+        /* Contact Card */
+        .contact-card {
+            background: var(--card-bg); border-radius: 16px; padding: 1.5rem;
+            border: 1px solid var(--border-color); margin-top: 2rem;
+        }
+        .contact-card h3 { font-size: 1.1rem; margin-bottom: 0.8rem; color: white; }
+        .contact-card p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem; }
+        .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+        .contact-link {
+            display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+            background: rgba(255,255,255,0.05); border-radius: 10px;
+            color: var(--text-primary); text-decoration: none; transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        .contact-link:hover { background: rgba(139,92,246,0.1); border-color: var(--accent-purple); }
+        .contact-link i { color: var(--accent-purple); font-size: 1.1rem; width: 20px; }
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, var(--card-bg), #1e1b4b);
+            padding: 3rem 16px; text-align: center; border-radius: 20px; margin: 2rem 0;
+        }
+        .cta-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; }
+        .cta-desc { color: var(--text-secondary); max-width: 500px; margin: 0 auto 1.5rem; font-size: 0.95rem; }
+        .cta-btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none;
+            font-weight: 700; transition: all 0.3s; min-height: 44px; font-size: 0.95rem;
+        }
+        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(139,92,246,0.4); }
+        /* Footer */
+        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
+        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
+        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--accent-blue); }
+        .footer-bottom {
+            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            color: var(--text-secondary); font-size: 0.85rem; text-align: center;
+        }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
+        .footer-bottom a:hover { color: var(--accent-blue); }
+        .footer-bottom .email-link { color: var(--accent-blue); font-weight: 500; }
+        .developer-credit { color: #fbbf24 !important; }
+        /* Touch Optimization */
+        @media (hover: none) {
+            .faq-question:active { background: rgba(255,255,255,0.05); }
+            .contact-link:active { transform: scale(0.99); }
+            .cta-btn:active { transform: scale(0.98); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- Header -->
+    <header class="page-header">
+        <h1 data-i18n="pageTitle">Support Center</h1>
+        <p data-i18n="pageSubtitle">Find answers to common questions or contact our support team for personalized help.</p>
+    </header>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-tag"><i class="fas fa-question-circle"></i> <span data-i18n="faqTag">FAQ</span></div>
+            <h2 class="section-title" data-i18n="faqTitle">Frequently Asked Questions</h2>
+            <p class="section-subtitle" data-i18n="faqSubtitle">Everything you need to know about Oslo Meet.</p>
+        </div>
+        <div class="faq-list">
+            <!-- Q1 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="q1">How does the AI matching work?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" data-i18n="a1">
+                    Our AI converts your company profile into semantic vectors and compares them against 50+ business signals. Matches are ranked by compatibility score (0-100%), based on industry fit, goals, tech stack, and geographic focus.
+                </div>
+            </div>
+            <!-- Q2 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="q2">Is my data secure and GDPR compliant?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" data-i18n="a2">
+                    Yes. All data is encrypted at rest and in transit. We comply fully with EU/EEA GDPR standards. You can request data deletion, export your profile, or disable AI processing at any time from your dashboard.
+                </div>
+            </div>
+            <!-- Q3 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="q3">Can I change my membership plan later?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" data-i18n="a3">
+                    Absolutely. You can upgrade, downgrade, or cancel your plan anytime from your dashboard. Changes take effect at the start of your next billing cycle. Founding Member pricing is locked for life.
+                </div>
+            </div>
+            <!-- Q4 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="q4">How do I control who sees my profile?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" data-i18n="a4">
+                    In your dashboard, go to Settings → Privacy. Choose visibility: Public (directory), Members Only, or Private (AI matching only). You can also block specific industries or competitors.
+                </div>
+            </div>
+            <!-- Q5 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="q5">What if I don't get good matches?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" data-i18n="a5">
+                    Our AI learns from your interactions. If matches aren't relevant, update your profile with more details, adjust your preferences, or contact support. We'll help refine your matching criteria.
+                </div>
+            </div>
+            <!-- Q6 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="q6">How does the AI Concierge work?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" data-i18n="a6">
+                    The AI Concierge drafts personalized introduction emails based on both companies' profiles. You review and approve before sending. It saves time while keeping you in control of every connection.
+                </div>
+            </div>
+            <!-- Q7 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="q7">Can I use Oslo Meet for recruitment?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" data-i18n="a7">
+                    Oslo Meet focuses on B2B partnerships, not recruitment. However, if you're looking for talent partnerships or co-hiring initiatives, you can mention that in your profile goals.
+                </div>
+            </div>
+            <!-- Q8 -->
+            <div class="faq-item">
+                <button class="faq-question">
+                    <span data-i18n="q8">What payment methods do you accept?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer" data-i18n="a8">
+                    We accept all major credit cards, Apple Pay, Google Pay, and Alipay via Stripe. All transactions are secure and encrypted. Invoices are available for Business and Partner plans.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section">
+        <div class="section-header">
+            <div class="section-tag"><i class="fas fa-headset"></i> <span data-i18n="contactTag">Need More Help?</span></div>
+            <h2 class="section-title" data-i18n="contactTitle">Contact Support</h2>
+            <p class="section-subtitle" data-i18n="contactSubtitle">Our team is here to help you succeed.</p>
+        </div>
+        <div class="contact-card">
+            <h3 data-i18n="contactWays">Ways to Reach Us</h3>
+            <p data-i18n="contactDesc">Choose the channel that works best for you. We typically respond within 24 hours.</p>
+            <div class="contact-links">
+                <a href="mailto:post@barros.no" class="contact-link">
+                    <i class="fas fa-envelope"></i>
+                    <span data-i18n="contactEmail">Email: post@barros.no</span>
+                </a>
+                <a href="contact.html" class="contact-link">
+                    <i class="fas fa-comment-dots"></i>
+                    <span data-i18n="contactForm">Contact Form</span>
+                </a>
+                <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank" class="contact-link">
+                    <i class="fab fa-linkedin"></i>
+                    <span data-i18n="contactLinkedIn">LinkedIn Message</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2 class="cta-title" data-i18n="ctaTitle">Still Have Questions?</h2>
+        <p class="cta-desc" data-i18n="ctaDesc">Join Oslo Meet and experience AI-powered matching firsthand. Our team is ready to welcome you.</p>
+        <a href="join.html" class="cta-btn"><i class="fas fa-rocket"></i> <span data-i18n="ctaBtn">Join as Founding Member</span></a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-i18n="navAbout">About</a></li>
+                    <li><a href="#" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Oslo Meet</div>
+            <div><a href="mailto:post@barros.no" class="email-link">post@barros.no</a></div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                pageTitle: "Support Center",
+                pageSubtitle: "Find answers to common questions or contact our support team for personalized help.",
+                faqTag: "FAQ", faqTitle: "Frequently Asked Questions", faqSubtitle: "Everything you need to know about Oslo Meet.",
+                q1: "How does the AI matching work?",
+                a1: "Our AI converts your company profile into semantic vectors and compares them against 50+ business signals. Matches are ranked by compatibility score (0-100%), based on industry fit, goals, tech stack, and geographic focus.",
+                q2: "Is my data secure and GDPR compliant?",
+                a2: "Yes. All data is encrypted at rest and in transit. We comply fully with EU/EEA GDPR standards. You can request data deletion, export your profile, or disable AI processing at any time from your dashboard.",
+                q3: "Can I change my membership plan later?",
+                a3: "Absolutely. You can upgrade, downgrade, or cancel your plan anytime from your dashboard. Changes take effect at the start of your next billing cycle. Founding Member pricing is locked for life.",
+                q4: "How do I control who sees my profile?",
+                a4: "In your dashboard, go to Settings → Privacy. Choose visibility: Public (directory), Members Only, or Private (AI matching only). You can also block specific industries or competitors.",
+                q5: "What if I don't get good matches?",
+                a5: "Our AI learns from your interactions. If matches aren't relevant, update your profile with more details, adjust your preferences, or contact support. We'll help refine your matching criteria.",
+                q6: "How does the AI Concierge work?",
+                a6: "The AI Concierge drafts personalized introduction emails based on both companies' profiles. You review and approve before sending. It saves time while keeping you in control of every connection.",
+                q7: "Can I use Oslo Meet for recruitment?",
+                a7: "Oslo Meet focuses on B2B partnerships, not recruitment. However, if you're looking for talent partnerships or co-hiring initiatives, you can mention that in your profile goals.",
+                q8: "What payment methods do you accept?",
+                a8: "We accept all major credit cards, Apple Pay, Google Pay, and Alipay via Stripe. All transactions are secure and encrypted. Invoices are available for Business and Partner plans.",
+                contactTag: "Need More Help?", contactTitle: "Contact Support", contactSubtitle: "Our team is here to help you succeed.",
+                contactWays: "Ways to Reach Us", contactDesc: "Choose the channel that works best for you. We typically respond within 24 hours.",
+                contactEmail: "Email: post@barros.no", contactForm: "Contact Form", contactLinkedIn: "LinkedIn Message",
+                ctaTitle: "Still Have Questions?", ctaDesc: "Join Oslo Meet and experience AI-powered matching firsthand. Our team is ready to welcome you.", ctaBtn: "Join as Founding Member",
+                footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
+                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
+                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
+                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
+            },
+            no: {
+                pageTitle: "Støttesenter",
+                pageSubtitle: "Finn svar på vanlige spørsmål eller kontakt vårt supportteam for personlig hjelp.",
+                faqTag: "FAQ", faqTitle: "Ofte stilte spørsmål", faqSubtitle: "Alt du trenger å vite om Oslo Meet.",
+                q1: "Hvordan fungerer AI-matching?",
+                a1: "Vår AI konverterer din bedriftsprofil til semantiske vektorer og sammenligner dem mot 50+ forretningssignaler. Matcher rangeres etter kompatibilitetspoeng (0-100%), basert på bransjetilhørighet, mål, tech-stack og geografisk fokus.",
+                q2: "Er dataene mine sikre og GDPR-kompatible?",
+                a2: "Ja. All data er kryptert. Vi overholder fullt ut EU/EØS GDPR-standarder. Du kan be om sletting, eksportere profilen eller deaktivere AI-behandling når som helst fra dashbordet ditt.",
+                q3: "Kan jeg endre medlemskapsplanen senere?",
+                a3: "Absolutt. Du kan oppgradere, nedgradere eller kansellere planen din når som helst fra dashbordet. Endringer trer i kraft ved starten av neste faktureringssyklus. Grunnlegger-prising er låst for livet.",
+                q4: "Hvordan kontrollerer jeg hvem som ser profilen min?",
+                a4: "I dashbordet, gå til Innstillinger → Personvern. Velg synlighet: Offentlig, Kun medlemmer, eller Privat (kun AI-matching). Du kan også blokkere spesifikke bransjer eller konkurrenter.",
+                q5: "Hva hvis jeg ikke får gode matcher?",
+                a5: "Vår AI lærer av dine interaksjoner. Hvis matcher ikke er relevante, oppdater profilen med flere detaljer, juster preferansene dine, eller kontakt support. Vi hjelper deg med å finjustere matchingskriteriene.",
+                q6: "Hvordan fungerer AI Concierge?",
+                a6: "AI Concierge utformer personlige introduksjons-eposter basert på begge bedriftenes profiler. Du gjennomgår og godkjenner før sending. Det sparer tid mens du beholder kontrollen over hver forbindelse.",
+                q7: "Kan jeg bruke Oslo Meet til rekruttering?",
+                a7: "Oslo Meet fokuserer på B2B-partnerskap, ikke rekruttering. Men hvis du ser etter talentpartnerskap eller felles ansettelsesinitiativer, kan du nevne det i dine profil-mål.",
+                q8: "Hvilke betalingsmetoder aksepterer dere?",
+                a8: "Vi aksepterer alle store kredittkort, Apple Pay, Google Pay og Alipay via Stripe. Alle transaksjoner er sikre og krypterte. Fakturaer er tilgjengelige for Business- og Partner-planer.",
+                contactTag: "Trenger du mer hjelp?", contactTitle: "Kontakt support", contactSubtitle: "Vårt team er her for å hjelpe deg til suksess.",
+                contactWays: "Måter å nå oss på", contactDesc: "Velg kanalen som passer deg best. Vi svarer vanligvis innen 24 timer.",
+                contactEmail: "E-post: post@barros.no", contactForm: "Kontaktskjema", contactLinkedIn: "LinkedIn-melding",
+                ctaTitle: "Har du fortsatt spørsmål?", ctaDesc: "Bli med i Oslo Meet og opplev AI-drevet matching firsthand. Vårt team er klart til å ønske deg velkommen.", ctaBtn: "Bli med som grunnlegger",
+                footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
+                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
+                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
+                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
+            },
+            pt: {
+                pageTitle: "Central de Suporte",
+                pageSubtitle: "Encontre respostas para perguntas frequentes ou entre em contato com nossa equipe de suporte para ajuda personalizada.",
+                faqTag: "FAQ", faqTitle: "Perguntas Frequentes", faqSubtitle: "Tudo o que você precisa saber sobre o Oslo Meet.",
+                q1: "Como funciona o matching com IA?",
+                a1: "Nossa IA converte o perfil da sua empresa em vetores semânticos e os compara contra 50+ sinais de negócio. Os matches são classificados por score de compatibilidade (0-100%), com base em fit de indústria, objetivos, stack tecnológico e foco geográfico.",
+                q2: "Meus dados são seguros e compatíveis com GDPR?",
+                a2: "Sim. Todos os dados são criptografados em repouso e em trânsito. Cumprimos totalmente os padrões GDPR UE/EEE. Você pode solicitar exclusão, exportar seu perfil ou desativar processamento de IA a qualquer momento pelo dashboard.",
+                q3: "Posso mudar meu plano de membro depois?",
+                a3: "Absolutamente. Você pode fazer upgrade, downgrade ou cancelar seu plano a qualquer momento pelo dashboard. Mudanças entram em vigor no início do próximo ciclo de faturamento. Preço de Membro Fundador é vitalício.",
+                q4: "Como controlo quem vê meu perfil?",
+                a4: "No dashboard, vá em Configurações → Privacidade. Escolha visibilidade: Público (diretório), Apenas Membros ou Privado (apenas matching com IA). Você também pode bloquear setores ou concorrentes específicos.",
+                q5: "E se eu não receber bons matches?",
+                a5: "Nossa IA aprende com suas interações. Se os matches não forem relevantes, atualize seu perfil com mais detalhes, ajuste suas preferências ou contate o suporte. Ajudaremos a refinar seus critérios de matching.",
+                q6: "Como funciona a IA Concierge?",
+                a6: "A IA Concierge rascunha e-mails de introdução personalizados com base nos perfis de ambas as empresas. Você revisa e aprova antes de enviar. Economiza tempo mantendo você no controle de cada conexão.",
+                q7: "Posso usar o Oslo Meet para recrutamento?",
+                a7: "O Oslo Meet foca em parcerias B2B, não recrutamento. Porém, se você busca parcerias de talentos ou iniciativas de co-contratação, pode mencionar isso nos objetivos do seu perfil.",
+                q8: "Quais métodos de pagamento vocês aceitam?",
+                a8: "Aceitamos todos os principais cartões de crédito, Apple Pay, Google Pay e Alipay via Stripe. Todas as transações são seguras e criptografadas. Faturas estão disponíveis para planos Business e Partner.",
+                contactTag: "Precisa de Mais Ajuda?", contactTitle: "Contatar Suporte", contactSubtitle: "Nossa equipe está aqui para ajudar você a ter sucesso.",
+                contactWays: "Formas de Nos Contatar", contactDesc: "Escolha o canal que melhor funciona para você. Geralmente respondemos em até 24 horas.",
+                contactEmail: "Email: post@barros.no", contactForm: "Formulário de Contato", contactLinkedIn: "Mensagem no LinkedIn",
+                ctaTitle: "Ainda Tem Perguntas?", ctaDesc: "Entre no Oslo Meet e experimente o matching com IA na prática. Nossa equipe está pronta para recebê-lo.", ctaBtn: "Entrar como Membro Fundador",
+                footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
+                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
+                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
+            },
+            es: {
+                pageTitle: "Centro de Soporte",
+                pageSubtitle: "Encuentra respuestas a preguntas frecuentes o contacta a nuestro equipo de soporte para ayuda personalizada.",
+                faqTag: "FAQ", faqTitle: "Preguntas Frecuentes", faqSubtitle: "Todo lo que necesitas saber sobre Oslo Meet.",
+                q1: "¿Cómo funciona el matching con IA?",
+                a1: "Nuestra IA convierte el perfil de tu empresa en vectores semánticos y los compara contra 50+ señales de negocio. Los matches se clasifican por score de compatibilidad (0-100%), basado en encaje de industria, objetivos, stack tecnológico y enfoque geográfico.",
+                q2: "¿Mis datos son seguros y cumplen con GDPR?",
+                a2: "Sí. Todos los datos están cifrados en reposo y en tránsito. Cumplimos plenamente con GDPR UE/EEE. Puedes solicitar eliminación, exportar tu perfil o desactivar procesamiento de IA en cualquier momento desde tu dashboard.",
+                q3: "¿Puedo cambiar mi plan de membresía después?",
+                a3: "Absolutamente. Puedes hacer upgrade, downgrade o cancelar tu plan en cualquier momento desde tu dashboard. Los cambios entran en vigor al inicio del próximo ciclo de facturación. El precio de Miembro Fundador es vitalicio.",
+                q4: "¿Cómo controlo quién ve mi perfil?",
+                a4: "En el dashboard, ve a Configuración → Privacidad. Elige visibilidad: Público (directorio), Solo Miembros o Privado (solo matching con IA). También puedes bloquear sectores o competidores específicos.",
+                q5: "¿Y si no recibo buenos matches?",
+                a5: "Nuestra IA aprende de tus interacciones. Si los matches no son relevantes, actualiza tu perfil con más detalles, ajusta tus preferencias o contacta soporte. Te ayudaremos a refinar tus criterios de matching.",
+                q6: "¿Cómo funciona la IA Concierge?",
+                a6: "La IA Concierge redacta emails de introducción personalizados basados en los perfiles de ambas empresas. Tú revisas y apruebas antes de enviar. Ahorra tiempo manteniéndote en control de cada conexión.",
+                q7: "¿Puedo usar Oslo Meet para reclutamiento?",
+                a7: "Oslo Meet se enfoca en asociaciones B2B, no reclutamiento. Sin embargo, si buscas asociaciones de talento o iniciativas de co-contratación, puedes mencionarlo en los objetivos de tu perfil.",
+                q8: "¿Qué métodos de pago aceptan?",
+                a8: "Aceptamos todas las principales tarjetas de crédito, Apple Pay, Google Pay y Alipay vía Stripe. Todas las transacciones son seguras y cifradas. Facturas disponibles para planes Business y Partner.",
+                contactTag: "¿Necesitas Más Ayuda?", contactTitle: "Contactar Soporte", contactSubtitle: "Nuestro equipo está aquí para ayudarte a tener éxito.",
+                contactWays: "Formas de Contactarnos", contactDesc: "Elige el canal que mejor funcione para ti. Generalmente respondemos en 24 horas.",
+                contactEmail: "Email: post@barros.no", contactForm: "Formulario de Contacto", contactLinkedIn: "Mensaje en LinkedIn",
+                ctaTitle: "¿Aún Tienes Preguntas?", ctaDesc: "Únete a Oslo Meet y experimenta el matching con IA en primera persona. Nuestro equipo está listo para darte la bienvenida.", ctaBtn: "Unirse como Miembro Fundador",
+                footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
+                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
+                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const isActive = item.classList.contains('active');
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                // Open clicked if it wasn't active
+                if (!isActive) item.classList.add('active');
+            });
+        });
+
+        // Initialize language
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = saved;
+            changeLanguage(saved);
+        });
+    </script>
+</body>
+</html>
