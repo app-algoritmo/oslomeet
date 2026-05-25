@@ -272,37 +272,21 @@
                     <h3 class="step-title" data-i18n="step1Title">About Your Company</h3>
                     <p class="step-subtitle" data-i18n="step1Subtitle">Basic information to build your AI profile</p>
                     
-                    <!-- 🌍 COUNTRY SELECTOR + FISCAL ID - NOVO -->
-                    <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <label data-i18n="labelCountry">Country of Registration <span class="required">*</span></label>
-                        <select class="form-control" id="countrySelect" name="country" onchange="updateIdField()" required>
-                            <option value="" data-i18n="selectCountry">Select country</option>
-                            <option value="NO">🇳🇴 Norway</option>
-                            <option value="BR">🇧🇷 Brazil</option>
-                            <option value="GB">🇬🇧 United Kingdom</option>
-                            <option value="DK">🇩🇰 Denmark</option>
-                            <option value="SE">🇸🇪 Sweden</option>
-                            <option value="DE">🇩🇪 Germany</option>
-                            <option value="FR">🇫🇷 France</option>
-                            <option value="CN">🇨🇳 China</option>
-                            <option value="OTHER">🌍 Other / Manual Entry</option>
-                        </select>
-                    </div>
-
-                    <!-- Dynamic Fiscal ID Field -->
-                    <div class="form-group" id="idFieldContainer" style="display: none; margin-bottom: 1.5rem; padding: 1rem; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px;">
-                        <label id="idFieldLabel" style="display:block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">
-                            <i class="fas fa-id-card" style="color: var(--accent-blue); margin-right: 6px;"></i>
-                            <span id="idFieldName">Organisasjonsnummer</span> 
-                            <span style="color: var(--text-secondary); font-weight: 400; font-size: 0.9rem;" id="idFieldHint">(optional)</span>
+                    <!-- 🇳🇴 BRØNNØYSUND INTEGRATION - NOVO CAMPO -->
+                    <div class="form-group" style="margin-bottom: 1.5rem; padding: 1rem; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.2); border-radius: 12px;">
+                        <label style="display:block; margin-bottom: 0.5rem; color: var(--text-primary); font-weight: 600;">
+                            <i class="fas fa-building" style="color: var(--accent-blue); margin-right: 6px;"></i>
+                            Organisasjonsnummer <span style="color: var(--text-secondary); font-weight: 400; font-size: 0.9rem;">(Norwegian companies - optional)</span>
                         </label>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                             <input 
                                 type="text" 
-                                id="fiscalIdInput" 
-                                placeholder="" 
-                                maxlength="20"
+                                id="orgNumberInput" 
+                                placeholder="999 999 999" 
+                                maxlength="9"
+                                pattern="[0-9]{9}"
                                 style="flex: 1; min-width: 150px; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--input-bg); color: white; font-family: monospace;"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             >
                             <button 
                                 type="button" 
@@ -315,7 +299,7 @@
                         </div>
                         <p id="orgStatus" style="font-size: 0.85rem; margin-top: 8px; color: var(--text-secondary); min-height: 1.2em;"></p>
                     </div>
-                    <!-- FIM DO CAMPO DINÂMICO -->
+                    <!-- FIM DA INTEGRAÇÃO BRØNNØYSUND -->
 
                     <div class="form-group">
                         <label data-i18n="labelCompanyName">Company Name <span class="required">*</span></label>
@@ -360,230 +344,738 @@
                     </div>
                 </div>
 
-                <!-- STEP 2, 3, 4 (unchanged - omitted for brevity, keep your existing code here) -->
-                <!-- ... [mantenha seu código existente dos steps 2, 3 e 4 aqui] ... -->
+                <!-- STEP 2 -->
+                <div class="form-step" id="step2">
+                    <h3 class="step-title" data-i18n="step2Title">What Are You Looking For?</h3>
+                    <p class="step-subtitle" data-i18n="step2Subtitle">Help our AI understand your strategic priorities</p>
+                    <div class="form-group">
+                        <label data-i18n="labelGoals">Primary Goals (select all that apply)</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="find_partners"><span data-i18n="goalPartners">Find Business Partners</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="find_clients"><span data-i18n="goalClients">Find New Clients</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="raise_funding"><span data-i18n="goalFunding">Raise Funding</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="expand_market"><span data-i18n="goalExpand">Expand to New Markets</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="find_talent"><span data-i18n="goalTalent">Hire Talent</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="goals" value="learn"><span data-i18n="goalLearn">Learn & Network</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="labelChallenges">What challenges are you trying to solve?</label>
+                        <textarea class="form-control" name="challenges" data-i18n-placeholder="placeholderChallenges"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="labelMarkets">Target Markets / Geographies</label>
+                        <div class="tags-input" id="marketTags">
+                            <span class="tag">Norway <button type="button">×</button></span>
+                            <input type="text" data-i18n-placeholder="placeholderAdd">
+                        </div>
+                    </div>
+                    <div class="form-nav">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(1)" data-i18n="btnBack"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(3)" data-i18n="btnContinue">Continue <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
 
-                <!-- STEP 4 (último) - apenas mostrando o fechamento do form -->
-                <!-- ... seu código existente do step 4 ... -->
+                <!-- STEP 3 -->
+                <div class="form-step" id="step3">
+                    <h3 class="step-title" data-i18n="step3Title">Smart Matching Preferences</h3>
+                    <p class="step-subtitle" data-i18n="step3Subtitle">Fine-tune how our AI finds connections for you</p>
+                    <div class="form-group">
+                        <label data-i18n="labelConnectWith">I'm most interested in connecting with:</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="connectWith" value="startups"><span data-i18n="connectStartups">Early-stage Startups</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="connectWith" value="scaleups"><span data-i18n="connectScaleups">Growth-stage Companies</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="connectWith" value="enterprises"><span data-i18n="connectEnterprises">Large Enterprises</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="connectWith" value="investors"><span data-i18n="connectInvestors">Investors / VCs</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="connectWith" value="research"><span data-i18n="connectResearch">Research / Academia</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="connectWith" value="public"><span data-i18n="connectPublic">Public Sector</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="labelCollab">Preferred collaboration types</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="collabTypes" value="partnership"><span data-i18n="collabPartnership">Strategic Partnership</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="collabTypes" value="supplier"><span data-i18n="collabSupplier">Supplier / Vendor</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="collabTypes" value="integration"><span data-i18n="collabIntegration">Product Integration</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="collabTypes" value="pilot"><span data-i18n="collabPilot">Pilot Project</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="collabTypes" value="mentorship"><span data-i18n="collabMentorship">Mentorship / Advisory</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="labelAdditional">Anything else our AI should know?</label>
+                        <textarea class="form-control" name="additional" data-i18n-placeholder="placeholderAdditional"></textarea>
+                    </div>
+                    <div class="form-nav">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(2)" data-i18n="btnBack"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(4)" data-i18n="btnReview">Review & Join <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <!-- STEP 4 -->
+                <div class="form-step" id="step4">
+                    <h3 class="step-title" data-i18n="step4Title">Choose Your Membership</h3>
+                    <p class="step-subtitle" data-i18n="step4Subtitle">All plans include AI matching. Founding members get lifetime pricing.</p>
+                    <div class="pricing-options">
+                        <label class="pricing-option" onclick="selectPlan('starter', this)">
+                            <input type="radio" name="plan" value="starter" hidden>
+                            <h4 data-i18n="planStarter">Starter</h4>
+                            <div class="price">NOK 1.490</div><div class="period">/year</div>
+                            <ul class="features">
+                                <li>✓ <span data-i18n="feat1">AI-powered profile</span></li>
+                                <li>✓ <span data-i18n="feat2">5 smart matches/month</span></li>
+                                <li>✓ <span data-i18n="feat3">Community events</span></li>
+                            </ul>
+                        </label>
+                        <label class="pricing-option selected" onclick="selectPlan('business', this)">
+                            <input type="radio" name="plan" value="business" hidden checked>
+                            <h4 data-i18n="planBusiness">Business</h4>
+                            <div class="price">NOK 3.900</div><div class="period">/year</div>
+                            <ul class="features">
+                                <li>✓ <span data-i18n="feat5">Unlimited AI matches</span></li>
+                                <li>✓ <span data-i18n="feat7">Priority events</span></li>
+                                <li>✓ <span data-i18n="feat8">AI Concierge intros</span></li>
+                            </ul>
+                        </label>
+                        <label class="pricing-option" onclick="selectPlan('partner', this)">
+                            <input type="radio" name="plan" value="partner" hidden>
+                            <h4 data-i18n="planPartner">Partner</h4>
+                            <div class="price">NOK 12k+</div><div class="period">/year</div>
+                            <ul class="features">
+                                <li>✓ <span data-i18n="feat11">Custom matching</span></li>
+                                <li>✓ <span data-i18n="feat12">Host events</span></li>
+                                <li>✓ <span data-i18n="feat14">Dedicated manager</span></li>
+                            </ul>
+                        </label>
+                    </div>
+                    <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:1rem;margin:1.5rem 0">
+                        <strong style="color:var(--warning-orange)"><i class="fas fa-crown"></i> <span data-i18n="foundingOffer">Founding Member Offer</span></strong>
+                        <p style="color:var(--text-secondary);font-size:0.9rem;margin:0.5rem 0 0" data-i18n="foundingDesc">
+                            First 50 members: <strong>50% off lifetime pricing</strong> + exclusive badge + priority feature access.
+                            <label style="display:flex;align-items:center;gap:8px;margin-top:0.5rem;cursor:pointer">
+                                <input type="checkbox" id="founding" name="founding" style="width:18px;height:18px">
+                                <span style="font-size:0.9rem" data-i18n="foundingCheckbox">Yes, reserve my Founding Member spot</span>
+                            </label>
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label data-i18n="labelEmail">Contact Email <span class="required">*</span></label>
+                        <input type="email" class="form-control" name="email" required placeholder="you@company.com" data-i18n-placeholder="placeholderEmail">
+                    </div>
+                    <div class="form-group">
+                        <label style="display:flex;align-items:flex-start;gap:10px">
+                            <input type="checkbox" required style="width:18px;height:18px;margin-top:4px">
+                            <span style="font-size:0.9rem;color:var(--text-secondary)" data-i18n="consentText">
+                                I agree to the <a href="terms-of-use.html" style="color:var(--accent-blue)">Terms</a> and <a href="privacy-policy.html" style="color:var(--accent-blue)">Privacy Policy</a>. 
+                                I consent to Oslo Meet using my profile data for AI matching purposes.
+                            </span>
+                        </label>
+                    </div>
+                    <div class="form-nav">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep(3)" data-i18n="btnBack"><i class="fas fa-arrow-left"></i> Back</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-rocket"></i> <span data-i18n="btnJoin">Join Oslo Meet</span></button>
+                    </div>
+                </div>
             </form>
 
-            <!-- Success State (mantenha seu código existente) -->
+            <!-- Success State -->
             <div class="success-state" id="successState">
-                <!-- ... seu código existente ... -->
+                <div class="success-icon"><i class="fas fa-check"></i></div>
+                <h3 data-i18n="successTitle">✅ Cadastro Concluído!</h3>
+                <p data-i18n="successDesc">
+                    Sua empresa foi registrada com sucesso. 
+                    Para ativar sua conta e receber seus primeiros matches, finalize a assinatura do plano escolhido.
+                </p>
+                <div style="margin: 1.5rem 0; padding: 1rem; background: rgba(139,92,246,0.1); border-radius: 10px; text-align: left;">
+                    <strong style="color: var(--accent-purple);">🔄 Próximo passo:</strong><br>
+                    <span style="font-size: 0.9rem; color: var(--text-secondary);">Você será redirecionado para o pagamento seguro em <span id="countdown">3</span> segundos...</span>
+                </div>
+                <a href="#" id="payNowBtn" class="btn btn-primary" style="margin-top: 1rem;">
+                    <i class="fas fa-lock"></i> <span data-i18n="btnPayNow">Ir para Pagamento Agora</span>
+                </a>
+                <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary);">
+                    <i class="fas fa-envelope"></i> Um e-mail de confirmação foi enviado para <strong id="userEmail">seu email</strong>.
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- Footer (mantenha seu código existente) -->
+    <!-- Footer -->
     <footer class="footer">
-        <!-- ... seu código existente ... -->
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered business connections for Oslo's innovators, founders, and growth companies.</p>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-i18n="navAbout">About</a></li>
+                    <li><a href="#" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Oslo Meet</div>
+            <div><a href="mailto:post@barros.no" class="email-link">post@barros.no</a></div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
     </footer>
 
     <!-- SUPABASE INTEGRATION SCRIPT -->
     <script type="module">
+        // 1. Importar cliente Supabase via CDN
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
+        // ============================================
+        // ⚠️ COLE SUAS CHAVES DO SUPABASE AQUI ⚠️
+        // ============================================
         const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+        // ============================================
 
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ============================================
-        // 🌍 MULTI-COUNTRY ENRICHMENT SYSTEM
+        // 🇳🇴 FUNÇÃO DE ENRIQUECIMENTO VIA BRØNNØYSUND
         // ============================================
-        
-        const COUNTRY_CONFIG = {
-            NO: { name: 'Organisasjonsnummer', placeholder: '999 999 999', maxlength: 9, pattern: '[0-9]{9}', hint: 'Norwegian companies' },
-            BR: { name: 'CNPJ', placeholder: '00.000.000/0001-91', maxlength: 18, pattern: '[0-9./-]+', hint: 'Brazilian companies' },
-            GB: { name: 'Company Number', placeholder: '00000001', maxlength: 8, pattern: '[0-9]{8}', hint: 'UK companies' },
-            DK: { name: 'CVR Number', placeholder: '12345678', maxlength: 8, pattern: '[0-9]{8}', hint: 'Danish companies' },
-            SE: { name: 'Organisationsnummer', placeholder: '556000-0000', maxlength: 10, pattern: '[0-9-]+', hint: 'Swedish companies' },
-            CN: { name: 'Unified Social Code', placeholder: '91110000MA0000001X', maxlength: 18, pattern: '[A-Z0-9]+', hint: 'Chinese companies' },
-            OTHER: { name: 'Registration ID', placeholder: 'Enter registration number', maxlength: 30, pattern: '.*', hint: 'Optional' }
-        };
-
-        function updateIdField() {
-            const country = document.getElementById('countrySelect').value;
-            const container = document.getElementById('idFieldContainer');
-            const label = document.getElementById('idFieldName');
-            const hint = document.getElementById('idFieldHint');
-            const input = document.getElementById('fiscalIdInput');
-            
-            if (!country || country === 'OTHER') {
-                container.style.display = 'none';
-                return;
-            }
-            
-            const config = COUNTRY_CONFIG[country] || COUNTRY_CONFIG.OTHER;
-            
-            container.style.display = 'block';
-            label.textContent = config.name;
-            hint.textContent = config.hint;
-            input.placeholder = config.placeholder;
-            input.maxLength = config.maxlength;
-            input.pattern = config.pattern;
-            input.value = '';
-            document.getElementById('orgStatus').textContent = '';
-        }
-
-        // CNPJ masking for Brazil
-        document.getElementById('fiscalIdInput')?.addEventListener('input', function(e) {
-            const country = document.getElementById('countrySelect').value;
-            if (country === 'BR') {
-                let value = this.value.replace(/\D/g, '');
-                if (value.length > 2) value = value.replace(/^(\d{2})(\d)/, '$1.$2');
-                if (value.length > 5) value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                if (value.length > 8) value = value.replace(/(\d{3})(\d)/, '$1/$2');
-                if (value.length > 12) value = value.replace(/(\d{4})(\d)/, '$1-$2');
-                this.value = value;
-            }
-        });
-
-        // Main enrichment function
         async function enrichCompany() {
-            const country = document.getElementById('countrySelect').value;
-            const fiscalId = document.getElementById('fiscalIdInput').value.trim();
+            const orgNumber = document.getElementById('orgNumberInput').value.replace(/\s/g, '');
             const statusEl = document.getElementById('orgStatus');
             const btn = document.getElementById('enrichBtn');
             
-            if (!country) {
-                statusEl.textContent = "⚠️ Please select a country first";
-                statusEl.style.color = "#f59e0b";
-                return;
-            }
-            
-            if (!fiscalId) {
-                statusEl.textContent = "⚠️ Please enter a registration number";
+            // Validação básica
+            if (!orgNumber || orgNumber.length !== 9) {
+                statusEl.textContent = "⚠️ Please enter a valid 9-digit Organisasjonsnummer";
                 statusEl.style.color = "#f59e0b";
                 return;
             }
 
-            const config = COUNTRY_CONFIG[country] || COUNTRY_CONFIG.OTHER;
-            
             // UI loading state
             const originalBtnText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
             btn.disabled = true;
-            statusEl.textContent = `🔍 Querying ${config.name}...`;
+            statusEl.textContent = "🔍 Querying Brønnøysundregistrene...";
             statusEl.style.color = "var(--accent-blue)";
 
             try {
+                // Chama a Edge Function no Supabase
                 const response = await fetch(`${SUPABASE_URL}/functions/v1/enrich-company`, {
                     method: 'POST',
                     headers: { 
                         'Content-Type': 'application/json',
                         'apikey': SUPABASE_ANON_KEY
                     },
-                    body: JSON.stringify({ fiscalId, country })
+                    body: JSON.stringify({ orgNumber })
                 });
 
                 const result = await response.json();
 
                 if (result.success && result.data) {
-                    statusEl.textContent = `✅ Found via ${result.source}! Form auto-filled.`;
+                    // ✅ Sucesso - Preenche os campos automaticamente
+                    statusEl.textContent = "✅ Company found! Form auto-filled.";
                     statusEl.style.color = "var(--success-green)";
                     
-                    // Auto-fill fields
+                    // Preenche os campos com IDs específicos
                     const fields = {
                         'companyName': result.data.name,
-                        'industry': mapIndustry(result.data.industry, result.data.country),
+                        'industry': mapIndustry(result.data.industry),
+                        'address': result.data.address
                     };
                     
                     Object.entries(fields).forEach(([id, value]) => {
                         const el = document.getElementById(id);
                         if (el && value) {
                             el.value = value;
+                            // Efeito visual de destaque
                             el.style.borderColor = "var(--success-green)";
                             setTimeout(() => el.style.borderColor = "var(--border-color)", 2000);
                         }
                     });
                     
                 } else {
-                    const errorMsg = result.error || `Company not found in ${config.name}`;
+                    // ❌ Erro - Mostra mensagem amigável
+                    const errorMsg = result.error || "Company not found in registry";
                     statusEl.textContent = `❌ ${errorMsg}`;
                     statusEl.style.color = "#ef4444";
                 }
 
             } catch (error) {
-                console.error('Enrichment error:', error);
+                console.error('Brønnøysund enrichment error:', error);
                 statusEl.textContent = "❌ Connection error. Please try again.";
                 statusEl.style.color = "#ef4444";
             } finally {
+                // Restaura botão
                 btn.innerHTML = originalBtnText;
                 btn.disabled = false;
             }
         }
 
-        // Map industry descriptions to form values
-        function mapIndustry(industryDesc, country) {
-            if (!industryDesc) return '';
-            const lower = industryDesc.toLowerCase();
-            
-            // Common mappings across countries
-            if (lower.includes('tech') || lower.includes('software') || lower.includes('it') || lower.includes('teknologi')) return 'tech';
-            if (lower.includes('logist') || lower.includes('transport') || lower.includes('supply')) return 'logistics';
-            if (lower.includes('finans') || lower.includes('bank') || lower.includes('insurance') || lower.includes('financ')) return 'fintech';
-            if (lower.includes('health') || lower.includes('medicin') || lower.includes('pharma') || lower.includes('saude')) return 'health';
-            if (lower.includes('energi') || lower.includes('renewable') || lower.includes('clean') || lower.includes('energia')) return 'energy';
-            if (lower.includes('handel') || lower.includes('retail') || lower.includes('varejo') || lower.includes('comerc')) return 'retail';
-            if (lower.includes('konsulent') || lower.includes('consult') || lower.includes('advisor')) return 'consulting';
-            if (lower.includes('design') || lower.includes('media') || lower.includes('creative') || lower.includes('arte')) return 'creative';
-            
+        // Mapeia descrição do setor para valores do formulário
+        function mapIndustry(brregIndustry) {
+            if (!brregIndustry) return '';
+            const lower = brregIndustry.toLowerCase();
+            if (lower.includes('teknologi') || lower.includes('software') || lower.includes('it')) return 'tech';
+            if (lower.includes('logistikk') || lower.includes('transport') || lower.includes('supply')) return 'logistics';
+            if (lower.includes('finans') || lower.includes('bank') || lower.includes('insurance')) return 'fintech';
+            if (lower.includes('helse') || lower.includes('medisin') || lower.includes('pharma')) return 'health';
+            if (lower.includes('energi') || lower.includes('renewable') || lower.includes('clean')) return 'energy';
+            if (lower.includes('handel') || lower.includes('retail') || lower.includes('e-handel')) return 'retail';
+            if (lower.includes('konsulent') || lower.includes('consulting') || lower.includes('advisor')) return 'consulting';
+            if (lower.includes('design') || lower.includes('media') || lower.includes('creative')) return 'creative';
             return 'other';
         }
 
-        // Expose to global scope
-        window.updateIdField = updateIdField;
-        window.enrichCompany = enrichCompany;
+        // ============================================
+        // LÓGICA DO FORMULÁRIO (EXISTENTE - NÃO ALTERADO)
+        // ============================================
+        let currentStep = 1;
+
+        function nextStep(step) {
+            if (step === 2) {
+                const name = document.querySelector('[name="companyName"]').value;
+                const industry = document.querySelector('[name="industry"]').value;
+                if (!name || !industry) {
+                    alert('Please fill in company name and industry.');
+                    return;
+                }
+            }
+            
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            document.querySelectorAll('.progress-step').forEach((el, index) => {
+                if (index < step) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+            
+            currentStep = step;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function prevStep(step) {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.getElementById(`step${step}`).classList.add('active');
+            document.querySelectorAll('.progress-step').forEach((el, index) => {
+                if (index < step) el.classList.add('active');
+                else el.classList.remove('active');
+            });
+            currentStep = step;
+        }
+
+        function selectPlan(plan, element) {
+            document.querySelectorAll('.pricing-option').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            element.querySelector('input').checked = true;
+        }
+
+        // Tags Input functionality
+        function setupTagsInput(containerId) {
+            const container = document.getElementById(containerId);
+            const input = container.querySelector('input');
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && input.value.trim()) {
+                    e.preventDefault();
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.innerHTML = `${input.value.trim()} <button type="button">×</button>`;
+                    container.insertBefore(tag, input);
+                    input.value = '';
+                    tag.querySelector('button').onclick = () => tag.remove();
+                }
+            });
+            container.querySelectorAll('.tag button').forEach(btn => {
+                btn.onclick = () => btn.closest('.tag').remove();
+            });
+        }
+        setupTagsInput('techTags');
+        setupTagsInput('marketTags');
 
         // ============================================
-        // REST OF YOUR EXISTING FORM LOGIC (unchanged)
+        // ENVIO PARA SUPABASE + REDIRECIONAMENTO STRIPE (EXISTENTE)
         // ============================================
-        // ... [mantenha todo o seu código existente de nextStep, prevStep, selectPlan, form submit, etc.] ...
-        
-        // Expor funções existentes
-        window.nextStep = typeof nextStep !== 'undefined' ? nextStep : function(){};
-        window.prevStep = typeof prevStep !== 'undefined' ? prevStep : function(){};
-        window.selectPlan = typeof selectPlan !== 'undefined' ? selectPlan : function(){};
+        document.getElementById('smartForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            console.log('🔍 DEBUG: Form submit triggered');
+            
+            const submitBtn = document.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Processing...';
+            submitBtn.disabled = true;
 
+            try {
+                if (SUPABASE_URL.includes('SEU-PROJETO') || SUPABASE_ANON_KEY.length < 50) {
+                    throw new Error('⚠️ Configure suas chaves do Supabase primeiro!');
+                }
+
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData.entries());
+                
+                data.goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
+                data.connectWith = Array.from(document.querySelectorAll('input[name="connectWith"]:checked')).map(cb => cb.value);
+                data.collabTypes = Array.from(document.querySelectorAll('input[name="collabTypes"]:checked')).map(cb => cb.value);
+                data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
+                data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
+
+                const companyData = {
+                    name: data.companyName,
+                    industry: data.industry,
+                    size: data.companySize || null,
+                    contact_email: data.email,
+                    website: data.website || null,
+                    description: data.challenges || data.additional || null,
+                    goals: data.goals || [],
+                    tech_stack: data.technologies || [],
+                    target_markets: data.markets || [],
+                    visibility: 'public',
+                    created_at: new Date().toISOString()
+                };
+
+                console.log('📦 Dados a serem enviados:', companyData);
+                console.log('🔗 URL do Supabase:', SUPABASE_URL);
+
+                const { data: testData, error: testError } = await supabase
+                    .from('companies')
+                    .select('count')
+                    .limit(1);
+                
+                if (testError) {
+                    console.error('❌ Erro de conexão:', testError);
+                    throw new Error(`Erro de conexão: ${testError.message}`);
+                }
+
+                console.log('✅ Conexão OK, inserindo...');
+
+                const { data: inserted, error } = await supabase
+                    .from('companies')
+                    .insert([companyData])
+                    .select()
+                    .single();
+
+                if (error) {
+                    console.error('❌ Erro ao inserir:', error);
+                    throw error;
+                }
+
+                console.log('✅ Sucesso! Company ID:', inserted?.id);
+
+                // MOSTRAR ESTADO DE SUCESSO + REDIRECIONAR PARA STRIPE
+                document.getElementById('userEmail').textContent = data.email;
+                document.querySelector('.form-card').style.display = 'none';
+                document.getElementById('successState').classList.add('active');
+                document.getElementById('successState').style.display = 'block';
+
+                const plan = data.plan || new URLSearchParams(window.location.search).get('plan') || 'starter';
+                
+                const stripeCheckoutLinks = {
+                    'starter': 'https://buy.stripe.com/eVq8wQfvIdjV8fkdC10Ny00',
+                    'business': 'https://buy.stripe.com/aFa5kE4R40x9anseG50Ny01',
+                    'partner': 'https://buy.stripe.com/3cI14odnA7ZB2V0eG50Ny02'
+                };
+                
+                const checkoutUrl = stripeCheckoutLinks[plan] || stripeCheckoutLinks['starter'];
+                document.getElementById('payNowBtn').href = checkoutUrl;
+
+                let seconds = 3;
+                const counter = setInterval(() => {
+                    seconds--;
+                    document.getElementById('countdown').textContent = seconds;
+                    if (seconds <= 0) {
+                        clearInterval(counter);
+                        window.location.href = checkoutUrl;
+                    }
+                }, 1000);
+
+            } catch (err) {
+                console.error('❌ Erro completo:', err);
+                alert(`Erro: ${err.message}\n\nVerifique o console (F12) para mais detalhes.`);
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // ============================================
+        // INICIALIZAÇÃO (EXISTENTE)
+        // ============================================
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = saved;
+            changeLanguage(saved);
+
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('plan')) {
+                const plan = params.get('plan');
+                const option = document.querySelector(`.pricing-option input[value="${plan}"]`);
+                if (option) option.closest('.pricing-option').click();
+            }
+            if (params.get('founding') === 'true') {
+                document.getElementById('founding').checked = true;
+                document.querySelector('.pricing-option input[value="business"]')?.closest('.pricing-option')?.click();
+            }
+        });
+
+        // Expor funções para o HTML (onclick handlers)
+        window.nextStep = nextStep;
+        window.prevStep = prevStep;
+        window.selectPlan = selectPlan;
+        window.enrichCompany = enrichCompany; // 🇳🇴 NOVA FUNÇÃO EXPOSTA
     </script>
 
-    <!-- TRADUÇÕES ATUALIZADAS -->
+    <!-- TRADUÇÕES (i18n) - ATUALIZADO COM NOVAS CHAVES -->
     <script>
         const translations = {
             en: {
-                // ... [suas traduções existentes] ...
-                // NOVAS TRADUÇÕES:
-                labelCountry: "Country of Registration",
-                selectCountry: "Select country",
-                btnSearch: "Search",
-                // ...
+                aiOnboarding: "AI-Powered Onboarding", joinTitle: "Register Your Company",
+                joinSubtitle: "Takes 2 minutes. Our AI will use this to find your perfect matches.",
+                stepCompany: "Company", stepGoals: "Goals", stepMatching: "Matching", stepPlan: "Plan",
+                step1Title: "About Your Company", step1Subtitle: "Basic information to build your AI profile",
+                labelCompanyName: "Company Name", placeholderCompany: "e.g., NordicLogix",
+                labelIndustry: "Industry / Sector", selectIndustry: "Select your primary sector",
+                industryTech: "Technology / Software", industryLogistics: "Logistics / Supply Chain",
+                industryFintech: "FinTech / Financial Services", industryHealth: "HealthTech / Life Sciences",
+                industryEnergy: "Energy / Cleantech", industryRetail: "Retail / E-commerce",
+                industryConsulting: "Consulting / Professional Services", industryCreative: "Creative / Media / Design",
+                industryOther: "Other",
+                labelSize: "Company Size", selectSize: "Select size",
+                sizeSolo: "Solo Founder", sizeSmall: "2-10 employees", sizeMedium: "11-50 employees",
+                sizeLarge: "51-200 employees", sizeEnterprise: "200+ employees",
+                labelTech: "Key Technologies / Expertise", placeholderAdd: "Add...",
+                btnContinue: "Continue", btnBack: "Back", btnReview: "Review & Join", btnJoin: "Join Oslo Meet",
+                btnSearch: "Search", // 🇳🇴 NOVA TRADUÇÃO
+                step2Title: "What Are You Looking For?", step2Subtitle: "Help our AI understand your strategic priorities",
+                labelGoals: "Primary Goals (select all that apply)",
+                goalPartners: "Find Business Partners", goalClients: "Find New Clients",
+                goalFunding: "Raise Funding", goalExpand: "Expand to New Markets",
+                goalTalent: "Hire Talent", goalLearn: "Learn & Network",
+                labelChallenges: "What challenges are you trying to solve?", placeholderChallenges: "e.g., 'We need AI to optimize our delivery routes'...",
+                labelMarkets: "Target Markets / Geographies",
+                step3Title: "Smart Matching Preferences", step3Subtitle: "Fine-tune how our AI finds connections for you",
+                labelConnectWith: "I'm most interested in connecting with:",
+                connectStartups: "Early-stage Startups", connectScaleups: "Growth-stage Companies",
+                connectEnterprises: "Large Enterprises", connectInvestors: "Investors / VCs",
+                connectResearch: "Research / Academia", connectPublic: "Public Sector",
+                labelCollab: "Preferred collaboration types",
+                collabPartnership: "Strategic Partnership", collabSupplier: "Supplier / Vendor",
+                collabIntegration: "Product Integration", collabPilot: "Pilot Project",
+                collabMentorship: "Mentorship / Advisory",
+                labelAdditional: "Anything else our AI should know?", placeholderAdditional: "Special requirements, deal-breakers, or unique value props...",
+                step4Title: "Choose Your Membership", step4Subtitle: "All plans include AI matching. Founding members get lifetime pricing.",
+                planStarter: "Starter", planBusiness: "Business", planPartner: "Partner",
+                feat1: "AI-powered profile", feat2: "5 smart matches/month", feat3: "Community events",
+                feat5: "Unlimited AI matches", feat7: "Priority events", feat8: "AI Concierge intros",
+                feat11: "Custom matching", feat12: "Host events", feat14: "Dedicated manager",
+                foundingOffer: "Founding Member Offer", foundingDesc: "First 50 members: <strong>50% off lifetime pricing</strong> + exclusive badge + priority feature access.",
+                foundingCheckbox: "Yes, reserve my Founding Member spot",
+                labelEmail: "Contact Email", placeholderEmail: "you@company.com",
+                consentText: "I agree to the <a href='terms-of-use.html'>Terms</a> and <a href='privacy-policy.html'>Privacy Policy</a>. I consent to Oslo Meet using my profile data for AI matching purposes.",
+                successTitle: "✅ Registration Complete!", successDesc: "Your company has been registered. To activate your account and receive your first matches, complete the subscription for your chosen plan.",
+                btnPayNow: "Go to Payment Now",
+                next1: "Check your email", next1Desc: "Confirmation + next steps sent to your inbox",
+                next2: "Complete your profile", next2Desc: "Add logo, website, and team details",
+                next3: "Join our kickoff event", next3Desc: "Exclusive onboarding session for founders",
+                btnHome: "Return to Homepage",
+                footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies.",
+                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
+                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
+                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
-                // ... [suas traduções existentes] ...
-                labelCountry: "Registreringsland",
-                selectCountry: "Velg land",
-                btnSearch: "Søk",
-                // ...
+                aiOnboarding: "AI-drevet onboarding", joinTitle: "Registrer din bedrift",
+                joinSubtitle: "Tar 2 minutter. Vår AI vil bruke dette til å finne dine perfekte matcher.",
+                stepCompany: "Bedrift", stepGoals: "Mål", stepMatching: "Matching", stepPlan: "Plan",
+                step1Title: "Om din bedrift", step1Subtitle: "Grunnleggende informasjon for å bygge din AI-profil",
+                labelCompanyName: "Bedriftsnavn", placeholderCompany: "f.eks. NordicLogix",
+                labelIndustry: "Bransje / Sektor", selectIndustry: "Velg din hovedbransje",
+                industryTech: "Teknologi / Programvare", industryLogistics: "Logistikk / Forsyningskjede",
+                industryFintech: "FinTech / Finansielle tjenester", industryHealth: "HealthTech / Life Sciences",
+                industryEnergy: "Energi / Cleantech", industryRetail: "Detaljhandel / E-handel",
+                industryConsulting: "Konsulent / Profesjonelle tjenester", industryCreative: "Kreativ / Media / Design",
+                industryOther: "Annet",
+                labelSize: "Bedriftsstørrelse", selectSize: "Velg størrelse",
+                sizeSolo: "Solo-gründer", sizeSmall: "2-10 ansatte", sizeMedium: "11-50 ansatte",
+                sizeLarge: "51-200 ansatte", sizeEnterprise: "200+ ansatte",
+                labelTech: "Viktige teknologier / Kompetanse", placeholderAdd: "Legg til...",
+                btnContinue: "Fortsett", btnBack: "Tilbake", btnReview: "Se gjennom og bli med", btnJoin: "Bli med i Oslo Meet",
+                btnSearch: "Søk", // 🇳🇴 NOVA TRADUÇÃO
+                step2Title: "Hva søker du?", step2Subtitle: "Hjelp vår AI forstå dine strategiske prioriteter",
+                labelGoals: "Hovedmål (velg alle som passer)",
+                goalPartners: "Finn forretningspartnere", goalClients: "Finn nye kunder",
+                goalFunding: "Skaff finansiering", goalExpand: "Utvid til nye markeder",
+                goalTalent: "Ansett talenter", goalLearn: "Lær og nettverk",
+                labelChallenges: "Hvilke utfordringer prøver du å løse?", placeholderChallenges: "f.eks. 'Vi trenger AI for å optimalisere leveranser'...",
+                labelMarkets: "Målmarkeder / Geografier",
+                step3Title: "Smart Matching-preferanser", step3Subtitle: "Finjuster hvordan vår AI finner forbindelser for deg",
+                labelConnectWith: "Jeg er mest interessert i å koble meg med:",
+                connectStartups: "Tidlige startups", connectScaleups: "Vekstbedrifter",
+                connectEnterprises: "Store bedrifter", connectInvestors: "Investorer / VC",
+                connectResearch: "Forskning / Akademia", connectPublic: "Offentlig sektor",
+                labelCollab: "Foretrukne samarbeidstyper",
+                collabPartnership: "Strategisk partnerskap", collabSupplier: "Leverandør / Vendor",
+                collabIntegration: "Produktintegrasjon", collabPilot: "Pilotprosjekt",
+                collabMentorship: "Mentorskap / Rådgivning",
+                labelAdditional: "Noe annet vår AI bør vite?", placeholderAdditional: "Spesialkrav, deal-breakers, eller unike verdier...",
+                step4Title: "Velg ditt medlemskap", step4Subtitle: "Alle planer inkluderer AI-matching. Grunnleggere får livstidsprising.",
+                planStarter: "Starter", planBusiness: "Business", planPartner: "Partner",
+                feat1: "AI-drevet profil", feat2: "5 smarte matcher/måned", feat3: "Fellesskapsarrangementer",
+                feat5: "Ubegrensede AI-matcher", feat7: "Prioriterte arrangementer", feat8: "AI Concierge-introduksjoner",
+                feat11: "Tilpasset matching", feat12: "Arranger arrangementer", feat14: "Dedikert manager",
+                foundingOffer: "Tilbud for grunnleggere", foundingDesc: "Første 50 medlemmer: <strong>50% rabatt på livstidsprising</strong> + eksklusivt merke + prioritert tilgang.",
+                foundingCheckbox: "Ja, reserver min grunnleggerplass",
+                labelEmail: "Kontakt-e-post", placeholderEmail: "du@bedrift.no",
+                consentText: "Jeg godtar <a href='terms-of-use.html'>Vilkårene</a> og <a href='privacy-policy.html'>Personvernerklæringen</a>. Jeg samtykker til at Oslo Meet bruker min profildata for AI-matching.",
+                successTitle: "✅ Registrering Fullført!", successDesc: "Din bedrift er registrert. For å aktivere kontoen og motta dine første matcher, fullfør abonnementet for valgt plan.",
+                btnPayNow: "Gå til Betaling Nå",
+                next1: "Sjekk e-posten din", next1Desc: "Bekreftelse + neste steg sendt til innboksen",
+                next2: "Fullfør profilen din", next2Desc: "Legg til logo, nettsted og teamdetaljer",
+                next3: "Bli med på kickoff-arrangementet", next3Desc: "Eksklusiv onboarding-økt for grunnleggere",
+                btnHome: "Tilbake til hjemmesiden",
+                footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter.",
+                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
+                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
+                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
-                // ... [suas traduções existentes] ...
-                labelCountry: "País de Registro",
-                selectCountry: "Selecione o país",
-                btnSearch: "Buscar",
-                // ...
+                aiOnboarding: "Onboarding com IA", joinTitle: "Cadastre sua Empresa",
+                joinSubtitle: "Leva 2 minutos. Nossa IA usará esses dados para encontrar seus matches perfeitos.",
+                stepCompany: "Empresa", stepGoals: "Objetivos", stepMatching: "Matching", stepPlan: "Plano",
+                step1Title: "Sobre Sua Empresa", step1Subtitle: "Informações básicas para construir seu perfil com IA",
+                labelCompanyName: "Nome da Empresa", placeholderCompany: "ex: NordicLogix",
+                labelIndustry: "Setor / Indústria", selectIndustry: "Selecione seu setor principal",
+                industryTech: "Tecnologia / Software", industryLogistics: "Logística / Cadeia de Suprimentos",
+                industryFintech: "FinTech / Serviços Financeiros", industryHealth: "HealthTech / Ciências da Vida",
+                industryEnergy: "Energia / Cleantech", industryRetail: "Varejo / E-commerce",
+                industryConsulting: "Consultoria / Serviços Profissionais", industryCreative: "Criativo / Mídia / Design",
+                industryOther: "Outro",
+                labelSize: "Tamanho da Empresa", selectSize: "Selecione o tamanho",
+                sizeSolo: "Fundador Solo", sizeSmall: "2-10 funcionários", sizeMedium: "11-50 funcionários",
+                sizeLarge: "51-200 funcionários", sizeEnterprise: "200+ funcionários",
+                labelTech: "Tecnologias / Expertise Principal", placeholderAdd: "Adicionar...",
+                btnContinue: "Continuar", btnBack: "Voltar", btnReview: "Revisar e Entrar", btnJoin: "Entrar no Oslo Meet",
+                btnSearch: "Buscar", // 🇳🇴 NOVA TRADUÇÃO
+                step2Title: "O Que Você Busca?", step2Subtitle: "Ajude nossa IA a entender suas prioridades estratégicas",
+                labelGoals: "Objetivos Principais (selecione todos)",
+                goalPartners: "Encontrar Parceiros", goalClients: "Encontrar Novos Clientes",
+                goalFunding: "Captar Investimento", goalExpand: "Expandir para Novos Mercados",
+                goalTalent: "Contratar Talentos", goalLearn: "Aprender e Fazer Networking",
+                labelChallenges: "Quais desafios você quer resolver?", placeholderChallenges: "ex: 'Precisamos de IA para otimizar entregas'...",
+                labelMarkets: "Mercados-Alvo / Geografias",
+                step3Title: "Preferências de Matching", step3Subtitle: "Ajuste como nossa IA encontra conexões para você",
+                labelConnectWith: "Estou mais interessado em conectar com:",
+                connectStartups: "Startups em Estágio Inicial", connectScaleups: "Empresas em Crescimento",
+                connectEnterprises: "Grandes Empresas", connectInvestors: "Investidores / VCs",
+                connectResearch: "Pesquisa / Academia", connectPublic: "Setor Público",
+                labelCollab: "Tipos de colaboração preferidos",
+                collabPartnership: "Parceria Estratégica", collabSupplier: "Fornecedor / Vendor",
+                collabIntegration: "Integração de Produto", collabPilot: "Projeto Piloto",
+                collabMentorship: "Mentoria / Consultoria",
+                labelAdditional: "Mais algo que nossa IA deve saber?", placeholderAdditional: "Requisitos especiais, deal-breakers ou propostas de valor únicas...",
+                step4Title: "Escolha Seu Membro", step4Subtitle: "Todos os planos incluem matching com IA. Membros fundadores ganham preço vitalício.",
+                planStarter: "Starter", planBusiness: "Business", planPartner: "Partner",
+                feat1: "Perfil com IA", feat2: "5 matches inteligentes/mês", feat3: "Eventos da comunidade",
+                feat5: "Matches ilimitados com IA", feat7: "Eventos prioritários", feat8: "Introduções via AI Concierge",
+                feat11: "Matching personalizado", feat12: "Organizar eventos", feat14: "Gerente dedicado",
+                foundingOffer: "Oferta Membros Fundadores", foundingDesc: "Primeiros 50 membros: <strong>50% de desconto no preço vitalício</strong> + badge exclusivo + acesso prioritário.",
+                foundingCheckbox: "Sim, reservar minha vaga de Fundador",
+                labelEmail: "E-mail de Contato", placeholderEmail: "voce@empresa.com",
+                consentText: "Concordo com os <a href='terms-of-use.html'>Termos</a> e <a href='privacy-policy.html'>Política de Privacidade</a>. Consinto que o Oslo Meet use meus dados para matching com IA.",
+                successTitle: "✅ Cadastro Concluído!", successDesc: "Sua empresa foi registrada. Para ativar sua conta e receber seus primeiros matches, finalize a assinatura do plano escolhido.",
+                btnPayNow: "Ir para Pagamento Agora",
+                next1: "Verifique seu e-mail", next1Desc: "Confirmação + próximos passos enviados para sua caixa",
+                next2: "Complete seu perfil", next2Desc: "Adicione logo, site e detalhes da equipe",
+                next3: "Participe do evento de kickoff", next3Desc: "Sessão exclusiva de onboarding para fundadores",
+                btnHome: "Voltar para Homepage",
+                footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo.",
+                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
+                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
-                // ... [suas traduções existentes] ...
-                labelCountry: "País de Registro",
-                selectCountry: "Selecciona país",
-                btnSearch: "Buscar",
-                // ...
+                aiOnboarding: "Onboarding con IA", joinTitle: "Registra tu Empresa",
+                joinSubtitle: "Toma 2 minutos. Nuestra IA usará estos datos para encontrar tus matches perfectos.",
+                stepCompany: "Empresa", stepGoals: "Objetivos", stepMatching: "Matching", stepPlan: "Plan",
+                step1Title: "Sobre Tu Empresa", step1Subtitle: "Información básica para construir tu perfil con IA",
+                labelCompanyName: "Nombre de la Empresa", placeholderCompany: "ej: NordicLogix",
+                labelIndustry: "Industria / Sector", selectIndustry: "Selecciona tu sector principal",
+                industryTech: "Tecnología / Software", industryLogistics: "Logística / Cadena de Suministro",
+                industryFintech: "FinTech / Servicios Financieros", industryHealth: "HealthTech / Ciencias de la Vida",
+                industryEnergy: "Energía / Cleantech", industryRetail: "Retail / E-commerce",
+                industryConsulting: "Consultoría / Servicios Profesionales", industryCreative: "Creativo / Medios / Diseño",
+                industryOther: "Otro",
+                labelSize: "Tamaño de la Empresa", selectSize: "Selecciona el tamaño",
+                sizeSolo: "Fundador Solo", sizeSmall: "2-10 empleados", sizeMedium: "11-50 empleados",
+                sizeLarge: "51-200 empleados", sizeEnterprise: "200+ empleados",
+                labelTech: "Tecnologías / Expertise Principal", placeholderAdd: "Agregar...",
+                btnContinue: "Continuar", btnBack: "Atrás", btnReview: "Revisar y Unirse", btnJoin: "Unirse a Oslo Meet",
+                btnSearch: "Buscar", // 🇳🇴 NOVA TRADUÇÃO
+                step2Title: "¿Qué Buscas?", step2Subtitle: "Ayuda a nuestra IA a entender tus prioridades estratégicas",
+                labelGoals: "Objetivos Principales (selecciona todos)",
+                goalPartners: "Encontrar Socios", goalClients: "Encontrar Nuevos Clientes",
+                goalFunding: "Obtener Financiación", goalExpand: "Expandir a Nuevos Mercados",
+                goalTalent: "Contratar Talento", goalLearn: "Aprender y Hacer Networking",
+                labelChallenges: "¿Qué desafíos intentas resolver?", placeholderChallenges: "ej: 'Necesitamos IA para optimizar entregas'...",
+                labelMarkets: "Mercados Objetivo / Geografías",
+                step3Title: "Preferencias de Matching", step3Subtitle: "Ajusta cómo nuestra IA encuentra conexiones para ti",
+                labelConnectWith: "Estoy más interesado en conectar con:",
+                connectStartups: "Startups en Etapa Temprana", connectScaleups: "Empresas en Crecimiento",
+                connectEnterprises: "Grandes Empresas", connectInvestors: "Inversores / VCs",
+                connectResearch: "Investigación / Academia", connectPublic: "Sector Público",
+                labelCollab: "Tipos de colaboración preferidos",
+                collabPartnership: "Asociación Estratégica", collabSupplier: "Proveedor / Vendor",
+                collabIntegration: "Integración de Producto", collabPilot: "Proyecto Piloto",
+                collabMentorship: "Mentoría / Asesoría",
+                labelAdditional: "¿Algo más que nuestra IA deba saber?", placeholderAdditional: "Requisitos especiales, deal-breakers o propuestas de valor únicas...",
+                step4Title: "Elige Tu Membresía", step4Subtitle: "Todos los planes incluyen matching con IA. Miembros fundadores obtienen precio vitalicio.",
+                planStarter: "Starter", planBusiness: "Business", planPartner: "Partner",
+                feat1: "Perfil con IA", feat2: "5 matches inteligentes/mes", feat3: "Eventos de comunidad",
+                feat5: "Matches ilimitados con IA", feat7: "Eventos prioritarios", feat8: "Introducciones vía AI Concierge",
+                feat11: "Matching personalizado", feat12: "Organizar eventos", feat14: "Gerente dedicado",
+                foundingOffer: "Oferta Miembros Fundadores", foundingDesc: "Primeros 50 miembros: <strong>50% de descuento en precio vitalicio</strong> + badge exclusivo + acceso prioritario.",
+                foundingCheckbox: "Sí, reservar mi plaza de Fundador",
+                labelEmail: "Email de Contacto", placeholderEmail: "tu@empresa.com",
+                consentText: "Acepto los <a href='terms-of-use.html'>Términos</a> y <a href='privacy-policy.html'>Política de Privacidad</a>. Consiento que Oslo Meet use mis datos para matching con IA.",
+                successTitle: "✅ Registro Completado!", successDesc: "Tu empresa ha sido registrada. Para activar tu cuenta y recibir tus primeros matches, completa la suscripción del plan elegido.",
+                btnPayNow: "Ir a Pago Ahora",
+                next1: "Revisa tu email", next1Desc: "Confirmación + próximos pasos enviados a tu bandeja",
+                next2: "Completa tu perfil", next2Desc: "Agrega logo, sitio web y detalles del equipo",
+                next3: "Únete al evento de kickoff", next3Desc: "Sesión exclusiva de onboarding para fundadores",
+                btnHome: "Volver a Homepage",
+                footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo.",
+                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
+                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
             }
         };
 
         function changeLanguage(lang) {
-            // ... [sua função existente] ...
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang]?.[key]) el.placeholder = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
         }
     </script>
 </body>
