@@ -30,7 +30,7 @@
         .dashboard-header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 20px 0; border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px;
+            margin-bottom: 40px; flex-wrap: wrap; gap: 15px;
         }
         .dashboard-header h1 { font-size: 1.8rem; }
         .user-info { display: flex; align-items: center; gap: 15px; }
@@ -66,7 +66,7 @@
         .match-card:hover { border-color: var(--accent-purple); transform: translateY(-2px); }
         .match-header {
             display: flex; justify-content: space-between; align-items: flex-start;
-            margin-bottom: 12px;
+            margin-bottom: 12px; flex-wrap: wrap; gap: 10px;
         }
         .match-header h4 { font-size: 1.1rem; }
         .match-score {
@@ -96,6 +96,12 @@
             text-align: center; padding: 60px 20px; color: var(--text-secondary);
         }
         .empty-state i { font-size: 3rem; margin-bottom: 20px; opacity: 0.5; }
+        
+        /* Footer */
+        .dashboard-footer {
+            margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border-color);
+            text-align: center; color: var(--text-secondary); font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -104,7 +110,7 @@
         <header class="dashboard-header">
             <h1>👋 Welcome to Oslo Meet</h1>
             <div class="user-info">
-                <span id="userEmail">user@company.com</span>
+                <span id="userEmail">Loading...</span>
                 <button class="btn-logout" onclick="logout()">Logout</button>
             </div>
         </header>
@@ -133,6 +139,10 @@
                 <p>Finding your best matches...</p>
             </div>
         </div>
+
+        <div class="dashboard-footer">
+            <p>© 2026 Oslo Meet — AI-Powered Global Business Network</p>
+        </div>
     </div>
 
     <!-- SUPABASE INTEGRATION -->
@@ -146,43 +156,45 @@
 
         // Load Dashboard Data
         async function loadDashboard() {
-            // Simulação: Em produção, pegar do usuário logado
-            // Por enquanto, pegamos a primeira empresa do banco
-            const { data: companies } = await supabase
+            // Em produção: pegar do usuário logado via supabase.auth.getUser()
+            // Por enquanto, pegamos a primeira empresa do banco para teste
+            const { data: companies, error } = await supabase
                 .from('companies')
                 .select('id, name, contact_email')
                 .limit(1)
                 .single();
 
-            if (!companies) {
+            if (error || !companies) {
                 document.getElementById('matchesContainer').innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-inbox"></i>
                         <h3>No company found</h3>
                         <p>Register your company first to see matches.</p>
-                        <a href="join.html" style="color: var(--accent-purple);">Go to Registration →</a>
+                        <a href="join.html" style="color: var(--accent-purple); display: inline-block; margin-top: 15px;">Go to Registration →</a>
                     </div>
                 `;
+                document.getElementById('userEmail').textContent = 'Not registered';
                 return;
             }
 
             document.getElementById('companyName').textContent = companies.name;
             document.getElementById('userEmail').textContent = companies.contact_email;
 
-            // Buscar matches
-            const { data: matches, error } = await supabase
+            // Buscar matches usando a função SQL
+            const { data: matches, error: matchesError } = await supabase
                 .rpc('get_company_matches', {
                     target_company_id: companies.id,
                     match_limit: 10,
                     min_score: 0.3
                 });
 
-            if (error || !matches || matches.length === 0) {
+            if (matchesError || !matches || matches.length === 0) {
                 document.getElementById('matchesContainer').innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-search"></i>
                         <h3>No matches yet</h3>
                         <p>As more companies join, you'll see compatible matches here.</p>
+                        <p style="margin-top: 10px; font-size: 0.9rem;">Current companies in database: 1 (you)</p>
                     </div>
                 `;
                 document.getElementById('matchCount').textContent = '0';
@@ -206,7 +218,7 @@
                         <span class="tag"><i class="fas fa-handshake"></i> Partnership</span>
                         <span class="tag"><i class="fas fa-globe"></i> Cross-border</span>
                     </div>
-                    <button class="btn-connect" onclick="alert('Connect feature coming soon!')">
+                    <button class="btn-connect" onclick="alert('Messaging feature coming soon!')">
                         <i class="fas fa-envelope"></i> Connect
                     </button>
                 </div>
@@ -215,7 +227,7 @@
 
         // Logout
         window.logout = () => {
-            // Em produção: supabase.auth.signOut()
+            // Em produção: await supabase.auth.signOut()
             window.location.href = 'index.html';
         };
 
