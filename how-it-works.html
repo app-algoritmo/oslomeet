@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How It Works — Oslo Meet AI Matching</title>
-    <meta name="description" content="Learn how Oslo Meet's AI connects companies, founders and opportunities across the Nordic business ecosystem.">
+    <meta name="description" content="Learn how Oslo Meet's AI connects companies, founders and opportunities across Europe, Brazil, China and Nordic countries.">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -116,7 +116,7 @@
         .case-desc { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
         .case-why { margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid var(--border-color); }
         .case-why strong { color: var(--accent-purple); font-size: 0.9rem; }
-        /* FAQ Accordion - Mobile Friendly */
+        /* FAQ Accordion - CORRIGIDO */
         .faq-list { max-width: 800px; margin: 0 auto; }
         .faq-item {
             background: var(--card-bg); border: 1px solid var(--border-color);
@@ -128,13 +128,22 @@
             text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
             min-height: 44px;
         }
-        .faq-question i { transition: transform 0.3s; font-size: 0.9rem; }
+        .faq-question i { transition: transform 0.3s; font-size: 0.9rem; color: var(--accent-purple); }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         .faq-answer {
-            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
-            padding: 0 1.2rem; color: var(--text-secondary); line-height: 1.6; font-size: 0.9rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+            padding: 0 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            font-size: 0.9rem;
         }
-        .faq-item.active .faq-answer { max-height: 400px; padding-bottom: 1rem; }
+        /* ✅ CORRIGIDO: padding completo + max-height maior para textos longos */
+        .faq-item.active .faq-answer {
+            max-height: 600px;
+            padding: 1rem 1.2rem;
+        }
         /* CTA */
         .cta-section {
             background: linear-gradient(135deg, var(--card-bg), #1e1b4b);
@@ -174,6 +183,7 @@
         @media (hover: none) {
             .step-card:active, .case-card:active { transform: scale(0.99); }
             .cta-btn:active { transform: scale(0.98); }
+            .faq-question:active { background: rgba(255,255,255,0.05); }
         }
     </style>
 </head>
@@ -477,19 +487,24 @@
             localStorage.setItem('preferredLanguage', lang);
         }
 
+        // Accordion FAQ - CORRIGIDO
         document.querySelectorAll('.faq-question').forEach(btn => {
             btn.addEventListener('click', () => {
                 const item = btn.parentElement;
                 const isActive = item.classList.contains('active');
+                // Fecha todos
                 document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                // Abre o clicado se não estava ativo
                 if (!isActive) item.classList.add('active');
             });
         });
 
+        // Initialize
         window.addEventListener('load', () => {
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
             changeLanguage(saved);
+            // Animation observer
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(e => {
                     if (e.isIntersecting) {
