@@ -14,7 +14,7 @@
     <meta name="description" content="View your AI-powered business matches and connections.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Supabase via CDN clássico (sem module/import) -->
+    <!-- Supabase via CDN clássico -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <style>
         :root {
@@ -58,7 +58,41 @@
             border-bottom: 1px solid var(--border-color);
         }
         .dashboard-header h1 { font-size: 1.5rem; font-weight: 700; }
-        .user-info { display: flex; align-items: center; gap: 15px; position: relative; z-index: 1; }
+        .user-info { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+        
+        /* Ícone de Mensagens */
+        .btn-icon {
+            padding: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: color 0.3s;
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-icon:hover { color: var(--accent-purple); background: rgba(139,92,246,0.1); }
+        .msg-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #ef4444;
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 5px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
+            line-height: 1;
+            display: none;
+        }
+        .msg-badge.show { display: block; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
+        
         .btn-logout {
             padding: 8px 16px; background: transparent;
             border: 1px solid var(--border-color); color: var(--text-secondary);
@@ -131,6 +165,7 @@
     </style>
 </head>
 <body>
+    <!-- Language Selector -->
     <div class="language-selector">
         <i class="fas fa-globe"></i>
         <select id="languageSelect" onchange="changeLanguage(this.value)">
@@ -141,15 +176,23 @@
         </select>
     </div>
 
+    <!-- Header -->
     <header class="dashboard-header">
         <h1 data-i18n="dashTitle">👋 Welcome to Oslo Meet</h1>
         <div class="user-info">
+            <!-- Ícone de Mensagens com Badge -->
+            <button onclick="openMessages()" class="btn-icon" title="Mensagens">
+                <i class="fas fa-envelope" style="font-size:1.1rem;"></i>
+                <span id="msgBadge" class="msg-badge">0</span>
+            </button>
             <span id="userEmail">Loading...</span>
             <button onclick="doLogout()" class="btn-logout" data-i18n="btnLogout">Logout</button>
         </div>
     </header>
 
+    <!-- Container Principal -->
     <div class="container">
+        <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
                 <h3 data-i18n="statCompany">Your Company</h3>
@@ -164,6 +207,8 @@
                 <div class="value" id="topScore">0%</div>
             </div>
         </div>
+
+        <!-- Matches Section -->
         <h2 class="section-title" data-i18n="sectionMatches">🎯 Recommended Matches</h2>
         <div id="matchesContainer" class="matches-grid">
             <div class="loading">
@@ -173,6 +218,7 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
@@ -212,30 +258,137 @@
         </div>
     </footer>
 
+    <!-- SCRIPT PRINCIPAL -->
     <script>
-        const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
+        const SUPABASE_URL = 'https://mrparduxlvvflasgefpt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
-
-        // Supabase carregado via CDN — disponível como window.supabase
         const { createClient } = window.supabase;
         const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Estado global
+        let currentCompany = null;
+        let messagesSubscription = null;
 
         // LOGOUT
         async function doLogout() {
             if (!confirm('Deseja realmente sair?')) return;
             try {
                 await db.auth.signOut({ scope: 'global' });
-            } catch(e) {
-                console.warn('signOut error:', e);
-            }
+                if (messagesSubscription) db.removeChannel(messagesSubscription);
+            } catch(e) { console.warn('signOut error:', e); }
             Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
             localStorage.clear();
             sessionStorage.clear();
             window.location.replace('login.html');
         }
 
-        // GUARD + DASHBOARD
+        // ABRIR PÁGINA DE MENSAGENS
+        function openMessages() {
+            window.location.href = 'messages.html';
+        }
+
+        // INICIAR CONVERSA COM MATCH
+        async function startConversation(matchedCompanyId, matchedCompanyName) {
+            if (!currentCompany) {
+                alert('Carregando dados da empresa...');
+                return;
+            }
+            
+            try {
+                // Criar ou obter ID da conversa (ordem consistente: menor ID primeiro)
+                const idA = currentCompany.id < matchedCompanyId ? currentCompany.id : matchedCompanyId;
+                const idB = currentCompany.id > matchedCompanyId ? currentCompany.id : matchedCompanyId;
+                
+                // Tenta encontrar conversa existente
+                const { data: existing } = await db
+                    .from('conversations')
+                    .select('id')
+                    .eq('company_a_id', idA)
+                    .eq('company_b_id', idB)
+                    .maybeSingle();
+                
+                let convId;
+                if (existing) {
+                    convId = existing.id;
+                } else {
+                    // Cria nova conversa
+                    const { data: newConv, error: convError } = await db
+                        .from('conversations')
+                        .insert({ company_a_id: idA, company_b_id: idB })
+                        .select('id')
+                        .single();
+                    
+                    if (convError) throw convError;
+                    convId = newConv.id;
+                }
+                
+                // Redireciona para página de mensagens
+                window.location.href = `messages.html?conv=${convId}`;
+                
+            } catch (err) {
+                console.error('Erro ao iniciar conversa:', err);
+                alert('Erro ao conectar. Tente novamente.');
+            }
+        }
+
+        // ATUALIZAR BADGE DE MENSAGENS
+        async function updateMessageBadge() {
+            if (!currentCompany) return;
+            
+            const badge = document.getElementById('msgBadge');
+            
+            try {
+                // Contar mensagens não lidas enviadas POR OUTROS para conversas do usuário
+                const { count, error } = await db
+                    .from('messages')
+                    .select('*', { count: 'exact', head: true })
+                    .in('conversation_id', 
+                        db.from('conversations')
+                          .select('id')
+                          .or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`)
+                    )
+                    .eq('is_read', false)
+                    .neq('sender_company_id', currentCompany.id);
+                
+                if (error) throw error;
+                
+                if (count > 0) {
+                    badge.textContent = count > 99 ? '99+' : count;
+                    badge.classList.add('show');
+                } else {
+                    badge.classList.remove('show');
+                }
+            } catch (err) {
+                console.warn('Erro ao atualizar badge:', err);
+            }
+        }
+
+        // CONFIGURAR REAL-TIME PARA BADGE
+        function setupMessagesRealtime() {
+            messagesSubscription = db
+                .channel('dashboard_messages')
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `sender_company_id.neq.${currentCompany?.id || ''}`
+                }, () => {
+                    updateMessageBadge();
+                })
+                .on('postgres_changes', {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `is_read=eq.true`
+                }, () => {
+                    updateMessageBadge();
+                })
+                .subscribe();
+        }
+
+        // CARREGAR DASHBOARD
         async function loadDashboard() {
+            // Auth Guard
             const { data: { session } } = await db.auth.getSession();
             if (!session) {
                 window.location.replace('login.html');
@@ -244,21 +397,11 @@
 
             document.getElementById('userEmail').textContent = session.user.email;
 
-            const { data: byId } = await db
-                .from('companies')
-                .select('id, name, contact_email')
-                .eq('user_id', session.user.id)
-                .maybeSingle();
-
-            let company = byId;
-
+            // Buscar empresa do usuário
+            let company = await db.from('companies').select('id, name, contact_email').eq('user_id', session.user.id).maybeSingle().then(r => r.data);
+            
             if (!company) {
-                const { data: byEmail } = await db
-                    .from('companies')
-                    .select('id, name, contact_email')
-                    .eq('contact_email', session.user.email)
-                    .maybeSingle();
-                company = byEmail;
+                company = await db.from('companies').select('id, name, contact_email').eq('contact_email', session.user.email).maybeSingle().then(r => r.data);
             }
 
             if (!company) {
@@ -272,8 +415,10 @@
                 return;
             }
 
+            currentCompany = company;
             document.getElementById('companyName').textContent = company.name;
 
+            // Carregar matches
             const { data: matches } = await db.rpc('get_company_matches', {
                 target_company_id: company.id,
                 match_limit: 10,
@@ -288,78 +433,89 @@
                         <p data-i18n="noMatchesDesc">As more companies join, you'll see compatible matches here.</p>
                     </div>`;
                 document.getElementById('matchCount').textContent = '0';
-                return;
+            } else {
+                document.getElementById('matchCount').textContent = matches.length;
+                document.getElementById('topScore').textContent = Math.round(matches[0].compatibility_score * 100) + '%';
+                
+                document.getElementById('matchesContainer').innerHTML = matches.map(match => `
+                    <div class="match-card">
+                        <div class="match-header">
+                            <h4>${match.matched_name}</h4>
+                            <span class="match-score">${Math.round(match.compatibility_score * 100)}% Match</span>
+                        </div>
+                        <div class="match-industry">${match.matched_industry || 'Industry not specified'}</div>
+                        <div class="match-tags">
+                            <span class="tag"><i class="fas fa-handshake"></i> Partnership</span>
+                            <span class="tag"><i class="fas fa-globe"></i> Cross-border</span>
+                        </div>
+                        <button class="btn-connect" onclick="startConversation('${match.matched_id}', '${match.matched_name.replace(/'/g, "\\'")}')">
+                            <i class="fas fa-envelope"></i> <span data-i18n="btnConnect">Connect</span>
+                        </button>
+                    </div>`).join('');
             }
 
-            document.getElementById('matchCount').textContent = matches.length;
-            document.getElementById('topScore').textContent = Math.round(matches[0].compatibility_score * 100) + '%';
-            document.getElementById('matchesContainer').innerHTML = matches.map(match => `
-                <div class="match-card">
-                    <div class="match-header">
-                        <h4>${match.matched_name}</h4>
-                        <span class="match-score">${Math.round(match.compatibility_score * 100)}% Match</span>
-                    </div>
-                    <div class="match-industry">${match.matched_industry || 'Industry not specified'}</div>
-                    <div class="match-tags">
-                        <span class="tag"><i class="fas fa-handshake"></i> Partnership</span>
-                        <span class="tag"><i class="fas fa-globe"></i> Cross-border</span>
-                    </div>
-                    <button class="btn-connect" onclick="alert('Messaging feature coming soon!')">
-                        <i class="fas fa-envelope"></i> <span data-i18n="btnConnect">Connect</span>
-                    </button>
-                </div>`).join('');
+            // Atualizar badge de mensagens
+            await updateMessageBadge();
+            setupMessagesRealtime();
         }
 
+        // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
             changeLanguage(saved);
             loadDashboard();
         });
+
+        // Cleanup ao sair da página
+        window.addEventListener('beforeunload', () => {
+            if (messagesSubscription) db.removeChannel(messagesSubscription);
+        });
     </script>
 
+    <!-- TRADUÇÕES -->
     <script>
         const translations = {
             en: {
-                dashTitle: "👋 Welcome to Oslo Meet", btnLogout: "Logout",
+                dashTitle: "👋 Welcome to Oslo Meet", btnLogout: "Logout", btnConnect: "Connect",
                 statCompany: "Your Company", statMatches: "Matches Found", statTopScore: "Top Match Score",
                 sectionMatches: "🎯 Recommended Matches", loadingText: "Finding your best matches...",
                 emptyTitle: "No company found", emptyDesc: "Register your company first to see matches.", btnGoRegister: "Go to Registration →",
                 noMatchesTitle: "No matches yet", noMatchesDesc: "As more companies join, you'll see compatible matches here.",
-                btnConnect: "Connect", footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
+                footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
                 navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
                 navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
                 navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
-                dashTitle: "👋 Velkommen til Oslo Meet", btnLogout: "Logg ut",
+                dashTitle: "👋 Velkommen til Oslo Meet", btnLogout: "Logg ut", btnConnect: "Koble til",
                 statCompany: "Din bedrift", statMatches: "Matcher funnet", statTopScore: "Topp match-score",
                 sectionMatches: "🎯 Anbefalte matcher", loadingText: "Finner dine beste matcher...",
                 emptyTitle: "Ingen bedrift funnet", emptyDesc: "Registrer din bedrift først for å se matcher.", btnGoRegister: "Gå til registrering →",
                 noMatchesTitle: "Ingen matcher ennå", noMatchesDesc: "Etter hvert som flere bedrifter blir med, vil du se kompatible matcher her.",
-                btnConnect: "Koble til", footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
+                footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
                 navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
                 navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
                 navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
-                dashTitle: "👋 Bem-vindo ao Oslo Meet", btnLogout: "Sair",
+                dashTitle: "👋 Bem-vindo ao Oslo Meet", btnLogout: "Sair", btnConnect: "Conectar",
                 statCompany: "Sua Empresa", statMatches: "Matches Encontrados", statTopScore: "Melhor Score",
                 sectionMatches: "🎯 Matches Recomendados", loadingText: "Encontrando seus melhores matches...",
                 emptyTitle: "Nenhuma empresa encontrada", emptyDesc: "Cadastre sua empresa primeiro para ver matches.", btnGoRegister: "Ir para Cadastro →",
                 noMatchesTitle: "Nenhum match ainda", noMatchesDesc: "À medida que mais empresas entram, você verá matches compatíveis aqui.",
-                btnConnect: "Conectar", footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
+                footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
                 navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
                 navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
-                dashTitle: "👋 Bienvenido a Oslo Meet", btnLogout: "Salir",
+                dashTitle: "👋 Bienvenido a Oslo Meet", btnLogout: "Salir", btnConnect: "Conectar",
                 statCompany: "Tu Empresa", statMatches: "Matches Encontrados", statTopScore: "Mejor Puntuación",
                 sectionMatches: "🎯 Matches Recomendados", loadingText: "Encontrando tus mejores matches...",
                 emptyTitle: "Ninguna empresa encontrada", emptyDesc: "Registra tu empresa primero para ver matches.", btnGoRegister: "Ir a Registro →",
                 noMatchesTitle: "Sin matches aún", noMatchesDesc: "A medida que más empresas se unan, verás matches compatibles aquí.",
-                btnConnect: "Conectar", footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
+                footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
                 navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
                 navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
