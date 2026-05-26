@@ -699,14 +699,15 @@
                 api: 'opencorporates',
                 hasAPI: false
             },
+            
             GB: { 
                 name: 'Company Number', 
                 placeholder: '00000001', 
                 maxlength: 8, 
                 pattern: '[0-9]{8}',
-                hint: 'UK companies (manual entry)', 
+                hint: 'UK companies', 
                 api: 'companieshouse',
-                hasAPI: false
+                hasAPI: true  // ✅ Mudou para true
             },
             
             // ❌ Ásia (entrada manual)
