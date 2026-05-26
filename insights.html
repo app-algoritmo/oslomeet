@@ -269,6 +269,167 @@
             opacity: 0.9;
         }
         
+        /* Modal A4 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .modal-content {
+            background: white;
+            color: #1e293b;
+            width: 100%;
+            max-width: 210mm;
+            min-height: 297mm;
+            margin: 20px auto;
+            padding: 20mm;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-purple);
+        }
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            flex: 1;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .modal-btn-primary {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+        }
+        .modal-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139,92,246,0.4);
+        }
+        .modal-btn-secondary {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .modal-btn-secondary:hover {
+            background: var(--border-color);
+        }
+        .modal-body {
+            font-size: 11pt;
+            line-height: 1.8;
+            color: #334155;
+        }
+        .modal-body h2 {
+            font-size: 16pt;
+            margin: 30px 0 15px;
+            color: #1e293b;
+            font-weight: 700;
+        }
+        .modal-body h3 {
+            font-size: 13pt;
+            margin: 25px 0 10px;
+            color: #334155;
+            font-weight: 600;
+        }
+        .modal-body p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        .modal-body ul, .modal-body ol {
+            margin: 15px 0 15px 30px;
+        }
+        .modal-body li {
+            margin-bottom: 10px;
+        }
+        .modal-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            font-size: 9pt;
+            color: #64748b;
+            text-align: center;
+        }
+        .article-meta-modal {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            color: #64748b;
+            font-size: 10pt;
+        }
+        .article-tags-modal {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .tag-modal {
+            padding: 5px 15px;
+            background: rgba(139,92,246,0.15);
+            color: var(--accent-purple);
+            border-radius: 20px;
+            font-size: 9pt;
+            font-weight: 600;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .modal-overlay, .modal-overlay * {
+                visibility: visible;
+            }
+            .modal-overlay {
+                position: absolute;
+                left: 0;
+                top: 0;
+                padding: 0;
+                background: white;
+            }
+            .modal-content {
+                box-shadow: none;
+                margin: 0;
+                padding: 15mm;
+                max-width: 100%;
+            }
+            .modal-actions {
+                display: none !important;
+            }
+            .modal-header {
+                border-bottom: 1px solid #000;
+            }
+        }
+        
         /* Footer */
         .footer {
             background: #020617;
@@ -363,6 +524,10 @@
             .hero h1 { font-size: 2rem; }
             .newsletter-form { flex-direction: column; }
             .section-title { font-size: 1.5rem; }
+            .modal-content {
+                padding: 15mm;
+                min-height: auto;
+            }
         }
     </style>
 </head>
@@ -382,7 +547,7 @@
         <h1 data-i18n="heroTitle">Insights & Resources</h1>
         <p data-i18n="heroSubtitle">Expert knowledge on international business, AI-powered matching, and cross-border growth strategies</p>
         <div class="search-box">
-            <input type="text" data-i18n-placeholder="searchPlaceholder" placeholder="Search articles...">
+            <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Search articles...">
             <i class="fas fa-search"></i>
         </div>
     </section>
@@ -390,12 +555,12 @@
     <!-- Categories -->
     <section class="categories">
         <div class="category-tags">
-            <div class="category-tag active" data-i18n="catAll">All</div>
-            <div class="category-tag" data-i18n="catCrossBorder">Cross-Border Trade</div>
-            <div class="category-tag" data-i18n="catNordic">Nordic Market</div>
-            <div class="category-tag" data-i18n="catBrazil">Brazil-Europe</div>
-            <div class="category-tag" data-i18n="catAI">AI & Technology</div>
-            <div class="category-tag" data-i18n="catSuccess">Success Stories</div>
+            <div class="category-tag active" data-i18n="catAll" onclick="filterCategory('all')">All</div>
+            <div class="category-tag" data-i18n="catCrossBorder" onclick="filterCategory('crossborder')">Cross-Border Trade</div>
+            <div class="category-tag" data-i18n="catNordic" onclick="filterCategory('nordic')">Nordic Market</div>
+            <div class="category-tag" data-i18n="catBrazil" onclick="filterCategory('brazil')">Brazil-Europe</div>
+            <div class="category-tag" data-i18n="catAI" onclick="filterCategory('ai')">AI & Technology</div>
+            <div class="category-tag" data-i18n="catSuccess" onclick="filterCategory('success')">Success Stories</div>
         </div>
     </section>
 
@@ -403,7 +568,7 @@
     <section class="featured">
         <h2 class="section-title" data-i18n="featuredTitle">Featured Articles</h2>
         <div class="featured-grid">
-            <article class="article-card" onclick="openArticle('brazil-norway')">
+            <article class="article-card" onclick="openModal('article1')">
                 <div class="article-image">🇧🇷→🇳🇴</div>
                 <div class="article-content">
                     <div class="article-tags">
@@ -419,7 +584,7 @@
                 </div>
             </article>
 
-            <article class="article-card" onclick="openArticle('ai-matching')">
+            <article class="article-card" onclick="openModal('article2')">
                 <div class="article-image">🤖</div>
                 <div class="article-content">
                     <div class="article-tags">
@@ -435,7 +600,7 @@
                 </div>
             </article>
 
-            <article class="article-card" onclick="openArticle('gdpr-guide')">
+            <article class="article-card" onclick="openModal('article3')">
                 <div class="article-image">🔐</div>
                 <div class="article-content">
                     <div class="article-tags">
@@ -457,8 +622,8 @@
     <section class="articles">
         <h2 class="section-title" data-i18n="latestTitle">Latest Articles</h2>
         <div class="articles-grid">
-            <article class="article-card" onclick="openArticle('uk-brexit')">
-                <div class="article-image" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">🇬🇪🇺</div>
+            <article class="article-card" onclick="openModal('article4')">
+                <div class="article-image" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">🇬🇧🇪🇺</div>
                 <div class="article-content">
                     <div class="article-tags">
                         <span class="tag">UK</span>
@@ -473,7 +638,7 @@
                 </div>
             </article>
 
-            <article class="article-card" onclick="openArticle('sustainability')">
+            <article class="article-card" onclick="openModal('article5')">
                 <div class="article-image" style="background: linear-gradient(135deg, #10b981, #3b82f6);">🌱</div>
                 <div class="article-content">
                     <div class="article-tags">
@@ -489,7 +654,7 @@
                 </div>
             </article>
 
-            <article class="article-card" onclick="openArticle('payment-methods')">
+            <article class="article-card" onclick="openModal('article6')">
                 <div class="article-image" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">💳</div>
                 <div class="article-content">
                     <div class="article-tags">
@@ -516,6 +681,324 @@
             <button type="submit" data-i18n="btnSubscribe">Subscribe</button>
         </form>
     </section>
+
+    <!-- Modals A4 -->
+    <div id="modalOverlay" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+        <!-- Article 1 Modal -->
+        <div id="modal-article1" class="modal-content" style="display:none;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h1 class="modal-title" data-i18n="article1Title">5 Steps to Expand Your Brazilian Business to Norway in 2026</h1>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-secondary" onclick="closeModal()" data-i18n="btnClose">Close</button>
+                    <button class="modal-btn modal-btn-primary" onclick="printArticle()" data-i18n="btnPrint">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="article-meta-modal">
+                <span><i class="far fa-calendar"></i> May 15, 2026</span>
+                <span><i class="far fa-clock"></i> <span data-i18n="readTime8">8 min read</span></span>
+                <span><i class="far fa-user"></i> Oslo Meet Team</span>
+            </div>
+            <div class="article-tags-modal">
+                <span class="tag-modal" data-i18n="tagBrazil">Brazil</span>
+                <span class="tag-modal" data-i18n="tagNordic">Nordic</span>
+                <span class="tag-modal" data-i18n="tagCrossBorder">Cross-Border</span>
+            </div>
+            <div class="modal-body" data-i18n-content="article1Content">
+                <h2>Introduction</h2>
+                <p>Expanding your Brazilian business to the Norwegian market represents a significant opportunity for growth in 2026. Norway's robust economy, high purchasing power, and strong demand for innovative products and services make it an attractive destination for Brazilian companies looking to internationalize.</p>
+                
+                <h2>Step 1: Market Research and Validation</h2>
+                <p>Before entering the Norwegian market, conduct thorough research to validate your product or service fit. Norway has unique consumer preferences and regulatory requirements that differ significantly from Brazil.</p>
+                <ul>
+                    <li>Analyze market size and growth potential in your sector</li>
+                    <li>Study Norwegian consumer behavior and cultural nuances</li>
+                    <li>Identify key competitors and market gaps</li>
+                    <li>Understand seasonal variations and business cycles</li>
+                </ul>
+
+                <h2>Step 2: Legal Structure and Registration</h2>
+                <p>Norway offers several business structures for foreign companies. The most common options include establishing a subsidiary (AS - Aksjeselskap) or registering a branch office (NUF - Norskregistrert Utenlandsk Foretak).</p>
+                <ul>
+                    <li>Register with the Brønnøysund Register Centre</li>
+                    <li>Obtain necessary licenses and permits</li>
+                    <li>Understand tax obligations (VAT, corporate tax)</li>
+                    <li>Comply with GDPR and data protection requirements</li>
+                </ul>
+
+                <h2>Step 3: Cultural Adaptation</h2>
+                <p>Norwegian business culture emphasizes equality, transparency, and work-life balance. Understanding these values is crucial for successful business relationships.</p>
+                <ul>
+                    <li>Adapt communication style to be direct yet diplomatic</li>
+                    <li>Respect flat organizational hierarchies</li>
+                    <li>Emphasize sustainability and corporate responsibility</li>
+                    <li>Build relationships through trust and consistency</li>
+                </ul>
+
+                <h2>Step 4: Partnership Strategy</h2>
+                <p>Finding the right local partners can accelerate your market entry. Consider distributors, agents, or strategic alliances with Norwegian companies.</p>
+                <ul>
+                    <li>Attend industry trade fairs and networking events</li>
+                    <li>Leverage platforms like Oslo Meet for B2B matching</li>
+                    <li>Connect with Innovation Norway and Brazilian trade offices</li>
+                    <li>Join Brazilian-Norwegian Chamber of Commerce</li>
+                </ul>
+
+                <h2>Step 5: Financial Planning and Funding</h2>
+                <p>Secure adequate funding for your expansion and understand the financial landscape in Norway.</p>
+                <ul>
+                    <li>Explore export financing options from BNDES or Norwegian institutions</li>
+                    <li>Understand currency exchange risks (NOK/BRL)</li>
+                    <li>Plan for higher operational costs (salaries, rent, taxes)</li>
+                    <li>Set realistic timelines for ROI (typically 18-24 months)</li>
+                </ul>
+
+                <h2>Conclusion</h2>
+                <p>Expanding to Norway requires careful planning, cultural sensitivity, and strategic partnerships. By following these five steps and leveraging available resources, Brazilian companies can successfully establish a strong presence in the Norwegian market and build sustainable long-term growth.</p>
+                
+                <div class="modal-footer">
+                    <p><strong>Oslo Meet</strong> - AI-powered business connections across Europe, Brazil, China and Nordics.</p>
+                    <p>© 2026 Oslo Meet | <a href="https://oslomeet.org" style="color: var(--accent-purple);">www.oslomeet.org</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Article 2 Modal -->
+        <div id="modal-article2" class="modal-content" style="display:none;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h1 class="modal-title" data-i18n="article2Title">How AI Finds Your Perfect B2B Match: A Deep Dive</h1>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-secondary" onclick="closeModal()" data-i18n="btnClose">Close</button>
+                    <button class="modal-btn modal-btn-primary" onclick="printArticle()" data-i18n="btnPrint">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="article-meta-modal">
+                <span><i class="far fa-calendar"></i> April 22, 2026</span>
+                <span><i class="far fa-clock"></i> <span data-i18n="readTime6">6 min read</span></span>
+                <span><i class="far fa-user"></i> Oslo Meet Team</span>
+            </div>
+            <div class="article-tags-modal">
+                <span class="tag-modal" data-i18n="tagAI">AI</span>
+                <span class="tag-modal" data-i18n="tagTechnology">Technology</span>
+            </div>
+            <div class="modal-body" data-i18n-content="article2Content">
+                <h2>Introduction</h2>
+                <p>Artificial Intelligence has revolutionized how businesses connect with potential partners. At Oslo Meet, our proprietary matching algorithm analyzes hundreds of data points to identify compatibility scores above 90%, transforming the traditional approach to B2B networking.</p>
+                
+                <h2>The Science Behind AI Matching</h2>
+                <p>Our algorithm goes beyond simple keyword matching. It employs advanced machine learning techniques to understand the nuanced relationships between companies, industries, and business objectives.</p>
+                
+                <h2>Key Matching Factors</h2>
+                <ul>
+                    <li><strong>Industry Alignment:</strong> Analyzing SIC codes, NAICS classifications, and sector-specific synergies</li>
+                    <li><strong>Company Size Compatibility:</strong> Matching revenue ranges, employee counts, and operational scale</li>
+                    <li><strong>Geographic Complementarity:</strong> Identifying cross-border opportunities and market expansion potential</li>
+                    <li><strong>Business Goals:</strong> Understanding strategic objectives like partnerships, distribution, or joint ventures</li>
+                    <li><strong>Cultural Fit:</strong> Assessing company values, work culture, and communication styles</li>
+                    <li><strong>Technology Stack:</strong> Evaluating digital maturity and tech compatibility</li>
+                </ul>
+
+                <h2>Machine Learning in Action</h2>
+                <p>Our system continuously learns from successful matches and user feedback. Each interaction improves the algorithm's accuracy, creating a self-reinforcing cycle of better recommendations.</p>
+                
+                <h2>Data Privacy and Security</h2>
+                <p>All matching occurs within strict GDPR compliance frameworks. Company data is encrypted, anonymized during analysis, and never shared without explicit consent.</p>
+
+                <h2>The Future of B2B Matching</h2>
+                <p>As AI technology evolves, we're exploring predictive analytics to anticipate market trends and emerging partnership opportunities before they become obvious to human observers.</p>
+                
+                <div class="modal-footer">
+                    <p><strong>Oslo Meet</strong> - AI-powered business connections across Europe, Brazil, China and Nordics.</p>
+                    <p>© 2026 Oslo Meet | <a href="https://oslomeet.org" style="color: var(--accent-purple);">www.oslomeet.org</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Article 3 Modal -->
+        <div id="modal-article3" class="modal-content" style="display:none;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h1 class="modal-title" data-i18n="article3Title">GDPR for Brazilian Startups: Essential Compliance Guide</h1>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-secondary" onclick="closeModal()" data-i18n="btnClose">Close</button>
+                    <button class="modal-btn modal-btn-primary" onclick="printArticle()" data-i18n="btnPrint">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="article-meta-modal">
+                <span><i class="far fa-calendar"></i> March 10, 2026</span>
+                <span><i class="far fa-clock"></i> <span data-i18n="readTime10">10 min read</span></span>
+                <span><i class="far fa-user"></i> Oslo Meet Team</span>
+            </div>
+            <div class="article-tags-modal">
+                <span class="tag-modal" data-i18n="tagLegal">Legal</span>
+                <span class="tag-modal" data-i18n="tagGDPR">GDPR</span>
+                <span class="tag-modal" data-i18n="tagBrazil">Brazil</span>
+            </div>
+            <div class="modal-body" data-i18n-content="article3Content">
+                <h2>Introduction</h2>
+                <p>Brazilian startups expanding to European markets must navigate the complex landscape of GDPR (General Data Protection Regulation). Non-compliance can result in fines up to €20 million or 4% of global annual turnover.</p>
+                
+                <h2>What is GDPR?</h2>
+                <p>GDPR is the EU's comprehensive data protection law that applies to any organization processing personal data of EU residents, regardless of where the company is based.</p>
+                
+                <h2>Key Requirements for Brazilian Companies</h2>
+                <ul>
+                    <li><strong>Legal Basis for Processing:</strong> Establish valid grounds (consent, contract, legitimate interest)</li>
+                    <li><strong>Data Subject Rights:</strong> Enable rights to access, rectification, erasure, and portability</li>
+                    <li><strong>Data Protection Officer:</strong> Appoint a DPO if processing sensitive data at scale</li>
+                    <li><strong>Privacy by Design:</strong> Integrate data protection into product development</li>
+                    <li><strong>Breach Notification:</strong> Report data breaches within 72 hours</li>
+                    <li><strong>Cross-Border Transfers:</strong> Ensure adequate safeguards for data leaving the EU</li>
+                </ul>
+
+                <h2>LGPD vs GDPR</h2>
+                <p>Brazil's LGPD (Lei Geral de Proteção de Dados) shares similarities with GDPR but has distinct requirements. Companies must comply with both when operating in both jurisdictions.</p>
+                
+                <h2>Practical Steps to Compliance</h2>
+                <ol>
+                    <li>Conduct a data mapping audit</li>
+                    <li>Update privacy policies and consent mechanisms</li>
+                    <li>Implement technical security measures (encryption, access controls)</li>
+                    <li>Train staff on data protection principles</li>
+                    <li>Establish procedures for data subject requests</li>
+                    <li>Review vendor contracts for GDPR compliance</li>
+                </ol>
+
+                <h2>Conclusion</h2>
+                <p>GDPR compliance is not just a legal requirement—it's a competitive advantage that builds trust with European partners and customers.</p>
+                
+                <div class="modal-footer">
+                    <p><strong>Oslo Meet</strong> - AI-powered business connections across Europe, Brazil, China and Nordics.</p>
+                    <p>© 2026 Oslo Meet | <a href="https://oslomeet.org" style="color: var(--accent-purple);">www.oslomeet.org</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Article 4 Modal -->
+        <div id="modal-article4" class="modal-content" style="display:none;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h1 class="modal-title" data-i18n="article4Title">Post-Brexit Trade: UK-Brazil Opportunities in 2026</h1>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-secondary" onclick="closeModal()" data-i18n="btnClose">Close</button>
+                    <button class="modal-btn modal-btn-primary" onclick="printArticle()" data-i18n="btnPrint">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="article-meta-modal">
+                <span><i class="far fa-calendar"></i> May 5, 2026</span>
+                <span><i class="far fa-clock"></i> 7 min read</span>
+                <span><i class="far fa-user"></i> Oslo Meet Team</span>
+            </div>
+            <div class="article-tags-modal">
+                <span class="tag-modal">UK</span>
+                <span class="tag-modal" data-i18n="tagTrade">Trade</span>
+                <span class="tag-modal" data-i18n="tagCrossBorder">Cross-Border</span>
+            </div>
+            <div class="modal-body" data-i18n-content="article4Content">
+                <h2>Introduction</h2>
+                <p>Post-Brexit trade dynamics have created new opportunities for UK-Brazil business relationships. With the UK seeking new trade agreements outside the EU, Brazilian companies are well-positioned to benefit.</p>
+                
+                <h2>Key Sectors for Growth</h2>
+                <ul>
+                    <li><strong>Agribusiness:</strong> UK demand for Brazilian agricultural products</li>
+                    <li><strong>Technology:</strong> Fintech and healthtech collaborations</li>
+                    <li><strong>Renewable Energy:</strong> Offshore wind and solar partnerships</li>
+                    <li><strong>Creative Industries:</strong> Gaming, media, and design services</li>
+                </ul>
+
+                <h2>Trade Agreement Developments</h2>
+                <p>The UK-Brazil trade relationship continues to evolve with discussions on reducing tariffs and simplifying customs procedures.</p>
+                
+                <div class="modal-footer">
+                    <p><strong>Oslo Meet</strong> - AI-powered business connections across Europe, Brazil, China and Nordics.</p>
+                    <p>© 2026 Oslo Meet | <a href="https://oslomeet.org" style="color: var(--accent-purple);">www.oslomeet.org</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Article 5 Modal -->
+        <div id="modal-article5" class="modal-content" style="display:none;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h1 class="modal-title" data-i18n="article5Title">Nordic Sustainability Standards: What Exporters Need to Know</h1>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-secondary" onclick="closeModal()" data-i18n="btnClose">Close</button>
+                    <button class="modal-btn modal-btn-primary" onclick="printArticle()" data-i18n="btnPrint">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="article-meta-modal">
+                <span><i class="far fa-calendar"></i> April 18, 2026</span>
+                <span><i class="far fa-clock"></i> 9 min read</span>
+                <span><i class="far fa-user"></i> Oslo Meet Team</span>
+            </div>
+            <div class="article-tags-modal">
+                <span class="tag-modal" data-i18n="tagSustainability">Sustainability</span>
+                <span class="tag-modal" data-i18n="tagNordic">Nordic</span>
+            </div>
+            <div class="modal-body" data-i18n-content="article5Content">
+                <h2>Introduction</h2>
+                <p>Nordic countries lead global sustainability standards. Exporters to Norway, Sweden, Denmark, and Finland must meet stringent environmental and social responsibility requirements.</p>
+                
+                <h2>Key Requirements</h2>
+                <ul>
+                    <li>Carbon footprint disclosure and reduction targets</li>
+                    <li>Sustainable supply chain verification</li>
+                    <li>Circular economy principles</li>
+                    <li>Green certifications (Nordic Swan, EU Ecolabel)</li>
+                </ul>
+
+                <div class="modal-footer">
+                    <p><strong>Oslo Meet</strong> - AI-powered business connections across Europe, Brazil, China and Nordics.</p>
+                    <p>© 2026 Oslo Meet | <a href="https://oslomeet.org" style="color: var(--accent-purple);">www.oslomeet.org</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Article 6 Modal -->
+        <div id="modal-article6" class="modal-content" style="display:none;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h1 class="modal-title" data-i18n="article6Title">International Payment Methods: Brazil-Europe Guide</h1>
+                <div class="modal-actions">
+                    <button class="modal-btn modal-btn-secondary" onclick="closeModal()" data-i18n="btnClose">Close</button>
+                    <button class="modal-btn modal-btn-primary" onclick="printArticle()" data-i18n="btnPrint">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+            <div class="article-meta-modal">
+                <span><i class="far fa-calendar"></i> March 25, 2026</span>
+                <span><i class="far fa-clock"></i> 6 min read</span>
+                <span><i class="far fa-user"></i> Oslo Meet Team</span>
+            </div>
+            <div class="article-tags-modal">
+                <span class="tag-modal" data-i18n="tagFinance">Finance</span>
+                <span class="tag-modal" data-i18n="tagCrossBorder">Cross-Border</span>
+            </div>
+            <div class="modal-body" data-i18n-content="article6Content">
+                <h2>Introduction</h2>
+                <p>Cross-border payments between Brazil and Europe involve complex currency exchanges, regulations, and security considerations. This guide covers best practices for international transactions.</p>
+                
+                <h2>Payment Methods</h2>
+                <ul>
+                    <li>SWIFT wire transfers</li>
+                    <li>SEPA transfers (Europe)</li>
+                    <li>International fintech solutions (Wise, Revolut)</li>
+                    <li>Letters of credit for large transactions</li>
+                </ul>
+
+                <div class="modal-footer">
+                    <p><strong>Oslo Meet</strong> - AI-powered business connections across Europe, Brazil, China and Nordics.</p>
+                    <p>© 2026 Oslo Meet | <a href="https://oslomeet.org" style="color: var(--accent-purple);">www.oslomeet.org</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -606,6 +1089,8 @@
                 newsletterSubtitle: "Get monthly insights on international business trends, AI matching tips, and success stories delivered to your inbox",
                 emailPlaceholder: "your@email.com",
                 btnSubscribe: "Subscribe",
+                btnClose: "Close",
+                btnPrint: "Print",
                 footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
                 navPlatform: "Platform",
                 navHome: "Home",
@@ -665,6 +1150,8 @@
                 newsletterSubtitle: "Receba insights mensais sobre tendências de negócios internacionais, dicas de matching com IA e casos de sucesso no seu email",
                 emailPlaceholder: "seu@email.com",
                 btnSubscribe: "Assinar",
+                btnClose: "Fechar",
+                btnPrint: "Imprimir",
                 footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
                 navPlatform: "Plataforma",
                 navHome: "Início",
@@ -682,42 +1169,210 @@
                 navPrivacy: "Privacidade",
                 navCookies: "Cookies",
                 navGDPR: "Direitos GDPR"
+            },
+            no: {
+                heroTitle: "Innsikt og ressurser",
+                heroSubtitle: "Ekspertkunnskap om internasjonal forretning, AI-drevet matching og grenseoverskridende vekststrategier",
+                searchPlaceholder: "Søk artikler...",
+                catAll: "Alle",
+                catCrossBorder: "Grenseoverskridende handel",
+                catNordic: "Nordisk marked",
+                catBrazil: "Brasil-Europa",
+                catAI: "AI og teknologi",
+                catSuccess: "Suksesshistorier",
+                featuredTitle: "Utvalgte artikler",
+                tagBrazil: "Brasil",
+                tagNordic: "Nordisk",
+                tagAI: "AI",
+                tagTechnology: "Teknologi",
+                tagLegal: "Juridisk",
+                tagGDPR: "GDPR",
+                article1Title: "5 trinn for å utvide din brasilianske bedrift til Norge i 2026",
+                article1Excerpt: "Komplett guide som dekker markedsundersøkelser, juridiske krav, kulturell tilpasning og partnerskapsstrategier for vellykket nordisk ekspansjon.",
+                readTime8: "8 min lesning",
+                article2Title: "Hvordan AI finner din perfekte B2B-match: En dypdykk",
+                article2Excerpt: "Forstå algoritmen bak Oslo Meet's 90%+ kompatibilitetsscore og hvordan maskinlæring transformerer forretningsnettverk.",
+                readTime6: "6 min lesning",
+                article3Title: "GDPR for brasilianske startups: Essensiell compliance-guide",
+                article3Excerpt: "Hva brasilianske selskaper trenger å vite om europeiske databeskyttelseslover ved ekspansjon til EU- og nordiske markeder.",
+                readTime10: "10 min lesning",
+                latestTitle: "Siste artikler",
+                tagTrade: "Handel",
+                article4Title: "Post-Brexit handel: UK-Brasil muligheter i 2026",
+                article4Excerpt: "Nye handelsavtaler og forretningsmuligheter som oppstår mellom Storbritannia og Latin-Amerika.",
+                tagSustainability: "Bærekraft",
+                article5Title: "Nordiske bærekraftstandarder: Hva eksportører trenger å vite",
+                article5Excerpt: "Forstå miljøkrav og grønne forretningspraksiser i skandinaviske markeder.",
+                tagFinance: "Finans",
+                tagCrossBorder: "Grenseoverskridende",
+                article6Title: "Internasjonale betalingsmetoder: Brasil-Europa guide",
+                article6Excerpt: "Beste praksis for grenseoverskridende transaksjoner, valutautveksling og betalingssikkerhet.",
+                newsletterTitle: "Hold deg oppdatert",
+                newsletterSubtitle: "Få månedlige innsikter om internasjonale forretningstrender, AI-matching tips og suksesshistorier levert til din innboks",
+                emailPlaceholder: "din@email.com",
+                btnSubscribe: "Abonner",
+                btnClose: "Lukk",
+                btnPrint: "Skriv ut",
+                footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
+                navPlatform: "Plattform",
+                navHome: "Hjem",
+                navHow: "Hvordan matching virker",
+                navJoin: "Bli med nå",
+                navPricing: "Priser",
+                navDashboard: "Dashbord",
+                navCompany: "Selskap",
+                navAbout: "Om",
+                navBlog: "Innsikt",
+                navContact: "Kontakt",
+                navSupport: "Støtte",
+                navLegal: "Juridisk",
+                navTerms: "Vilkår",
+                navPrivacy: "Personvern",
+                navCookies: "Cookies",
+                navGDPR: "GDPR-rettigheter"
+            },
+            es: {
+                heroTitle: "Insights y Recursos",
+                heroSubtitle: "Conocimiento experto en negocios internacionales, matching con IA y estrategias de crecimiento transfronterizo",
+                searchPlaceholder: "Buscar artículos...",
+                catAll: "Todos",
+                catCrossBorder: "Comercio Transfronterizo",
+                catNordic: "Mercado Nórdico",
+                catBrazil: "Brasil-Europa",
+                catAI: "IA y Tecnología",
+                catSuccess: "Historias de Éxito",
+                featuredTitle: "Artículos Destacados",
+                tagBrazil: "Brasil",
+                tagNordic: "Nórdico",
+                tagAI: "IA",
+                tagTechnology: "Tecnología",
+                tagLegal: "Legal",
+                tagGDPR: "GDPR",
+                article1Title: "5 Pasos para Expandir Tu Empresa Brasileña a Noruega en 2026",
+                article1Excerpt: "Guía completa que cubre investigación de mercado, requisitos legales, adaptación cultural y estrategias de asociación para una expansión nórdica exitosa.",
+                readTime8: "8 min de lectura",
+                article2Title: "Cómo la IA Encuentra Tu Match B2B Perfecto: Un Análisis Profundo",
+                article2Excerpt: "Comprendiendo el algoritmo detrás de las puntuaciones de compatibilidad del 90%+ de Oslo Meet y cómo el machine learning transforma el networking empresarial.",
+                readTime6: "6 min de lectura",
+                article3Title: "GDPR para Startups Brasileñas: Guía Esencial de Cumplimiento",
+                article3Excerpt: "Lo que las empresas brasileñas necesitan saber sobre las leyes europeas de protección de datos al expandirse a mercados de la UE y nórdicos.",
+                readTime10: "10 min de lectura",
+                latestTitle: "Últimos Artículos",
+                tagTrade: "Comercio",
+                article4Title: "Comercio Post-Brexit: Oportunidades UK-Brasil en 2026",
+                article4Excerpt: "Nuevos acuerdos comerciales y oportunidades de negocio emergentes entre Reino Unido y América Latina.",
+                tagSustainability: "Sostenibilidad",
+                article5Title: "Estándares de Sostenibilidad Nórdicos: Lo Que los Exportadores Necesitan Saber",
+                article5Excerpt: "Comprendiendo los requisitos ambientales y las prácticas comerciales verdes en los mercados escandinavos.",
+                tagFinance: "Finanzas",
+                tagCrossBorder: "Transfronterizo",
+                article6Title: "Métodos de Pago Internacionales: Guía Brasil-Europa",
+                article6Excerpt: "Mejores prácticas para transacciones transfronterizas, cambio de divisas y seguridad de pagos.",
+                newsletterTitle: "Mantente Actualizado",
+                newsletterSubtitle: "Recibe insights mensuales sobre tendencias de negocios internacionales, consejos de matching con IA y historias de éxito entregadas a tu bandeja de entrada",
+                emailPlaceholder: "tu@email.com",
+                btnSubscribe: "Suscribirse",
+                btnClose: "Cerrar",
+                btnPrint: "Imprimir",
+                footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
+                navPlatform: "Plataforma",
+                navHome: "Inicio",
+                navHow: "Cómo Funciona el Matching",
+                navJoin: "Unirse Ahora",
+                navPricing: "Precios",
+                navDashboard: "Dashboard",
+                navCompany: "Empresa",
+                navAbout: "Sobre",
+                navBlog: "Insights",
+                navContact: "Contacto",
+                navSupport: "Soporte",
+                navLegal: "Legal",
+                navTerms: "Términos",
+                navPrivacy: "Privacidad",
+                navCookies: "Cookies",
+                navGDPR: "Derechos GDPR"
             }
         };
 
         function changeLanguage(lang) {
+            // Translate elements with data-i18n attribute
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
             });
+            
+            // Translate placeholders
             document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
                 const key = el.getAttribute('data-i18n-placeholder');
-                if (translations[lang]?.[key]) el.placeholder = translations[lang][key];
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
             });
+            
+            // Set language attribute
             document.documentElement.lang = lang;
+            
+            // Save preference
             localStorage.setItem('preferredLanguage', lang);
         }
 
-        function openArticle(slug) {
-            // Placeholder - em produção, redirecionaria para página do artigo
-            alert('Artigo: ' + slug + '\n\nEm breve: página completa do artigo!');
+        function openModal(articleId) {
+            const overlay = document.getElementById('modalOverlay');
+            const modal = document.getElementById('modal-' + articleId);
+            
+            // Hide all modals
+            document.querySelectorAll('.modal-content').forEach(m => m.style.display = 'none');
+            
+            // Show selected modal
+            modal.style.display = 'block';
+            overlay.classList.add('active');
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modalOverlay');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target === event.currentTarget) {
+                closeModal();
+            }
+        }
+
+        function printArticle() {
+            window.print();
         }
 
         function handleSubscribe(e) {
             e.preventDefault();
             const email = e.target.querySelector('input').value;
-            alert('Obrigado por assinar! Enviamos um email de confirmação para: ' + email);
+            alert('Thank you for subscribing! We\'ve sent a confirmation email to: ' + email);
             e.target.reset();
         }
 
-        // Category filter (visual only for now)
-        document.querySelectorAll('.category-tag').forEach(tag => {
-            tag.addEventListener('click', function() {
-                document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
+        function filterCategory(category) {
+            // Update active state
+            document.querySelectorAll('.category-tag').forEach(tag => tag.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter logic would go here
+            console.log('Filtering by:', category);
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
         });
 
+        // Initialize language on page load
         document.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
