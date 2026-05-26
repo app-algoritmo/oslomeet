@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens — Oslo Meet</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    
+    <style>
+        :root {
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --success-green: #10b981;
+            --msg-sent: rgba(59,130,246,0.2);
+            --msg-received: rgba(148,163,184,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .header h1 { font-size: 1.2rem; font-weight: 700; flex: 1; }
+        .btn-back {
+            background: none; border: none; color: var(--text-secondary);
+            font-size: 1.2rem; cursor: pointer; padding: 8px;
+        }
+        .btn-back:hover { color: white; }
+        
+        /* Layout */
+        .messages-layout {
+            display: flex;
+            flex: 1;
+            max-height: calc(100vh - 70px);
+            overflow: hidden;
+        }
+        
+        /* Sidebar - Lista de Conversas */
+        .conversations-sidebar {
+            width: 320px;
+            border-right: 1px solid var(--border-color);
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .conversations-sidebar {
+                width: 100%;
+                position: absolute;
+                z-index: 10;
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+            .conversations-sidebar.active { transform: translateX(0); }
+            .chat-main.active { display: none; }
+        }
+        
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sidebar-header h2 { font-size: 1.1rem; }
+        
+        .conversations-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        .conversation-item {
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .conversation-item:hover, .conversation-item.active {
+            background: rgba(139,92,246,0.1);
+        }
+        .conversation-item.active { border-left: 3px solid var(--accent-purple); }
+        
+        .avatar {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .conversation-info { flex: 1; min-width: 0; }
+        .conversation-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+        .conversation-preview {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .conversation-meta {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+        .conversation-time { font-size: 0.75rem; color: var(--text-secondary); }
+        .unread-badge {
+            background: var(--accent-purple);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        /* Chat Main */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--dark-bg);
+        }
+        
+        .chat-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        @media (max-width: 768px) {
+            .chat-header { padding: 12px 16px; }
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            line-height: 1.4;
+            font-size: 0.95rem;
+        }
+        .message.sent {
+            align-self: flex-end;
+            background: var(--msg-sent);
+            border-bottom-right-radius: 4px;
+        }
+        .message.received {
+            align-self: flex-start;
+            background: var(--msg-received);
+            border-bottom-left-radius: 4px;
+        }
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            text-align: right;
+        }
+        
+        .chat-input {
+            padding: 16px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .chat-input input:focus { border-color: var(--accent-purple); }
+        .chat-input button {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            border: none;
+            border-radius: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .chat-input button:hover { opacity: 0.9; }
+        .chat-input button:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        /* Empty State */
+        .empty-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 40px;
+        }
+        .empty-chat i { font-size: 3rem; margin-bottom: 16px; opacity: 0.5; }
+        .empty-chat h3 { margin-bottom: 8px; color: var(--text-primary); }
+        
+        /* Mobile Toggle */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(139,92,246,0.4);
+            z-index: 20;
+        }
+        @media (max-width: 768px) {
+            .mobile-toggle { display: flex; align-items: center; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="btn-back" onclick="window.location.href='dashboard.html'">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h1 data-i18n="messagesTitle">💬 Mensagens</h1>
+        <span id="currentUser" style="font-size:0.85rem;color:var(--text-secondary);"></span>
+    </header>
+
+    <!-- Layout Principal -->
+    <div class="messages-layout">
+        <!-- Sidebar: Lista de Conversas -->
+        <aside class="conversations-sidebar" id="conversationsSidebar">
+            <div class="sidebar-header">
+                <h2 data-i18n="conversationsTitle">Conversas</h2>
+                <button onclick="toggleSidebar()" class="btn-back" style="display:none;" id="closeSidebarBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="conversations-list" id="conversationsList">
+                <div style="padding:20px;text-align:center;color:var(--text-secondary);">
+                    <i class="fas fa-spinner fa-spin"></i> Carregando...
+                </div>
+            </div>
+        </aside>
+
+        <!-- Área Principal do Chat -->
+        <main class="chat-main" id="chatMain">
+            <!-- Estado Vazio -->
+            <div class="empty-chat" id="emptyState">
+                <i class="fas fa-comments"></i>
+                <h3 data-i18n="selectConversation">Selecione uma conversa</h3>
+                <p data-i18n="selectConversationDesc">Escolha uma conversa na lista para começar a conversar.</p>
+            </div>
+
+            <!-- Header do Chat (oculto até selecionar) -->
+            <div class="chat-header" id="chatHeader" style="display:none;">
+                <div class="avatar" id="chatAvatar">?</div>
+                <div>
+                    <div id="chatName" style="font-weight:600;"></div>
+                    <div id="chatStatus" style="font-size:0.8rem;color:var(--text-secondary);"></div>
+                </div>
+            </div>
+
+            <!-- Mensagens -->
+            <div class="chat-messages" id="chatMessages"></div>
+
+            <!-- Input -->
+            <div class="chat-input" id="chatInput" style="display:none;">
+                <input type="text" id="messageInput" placeholder="Digite sua mensagem..." data-i18n-placeholder="messagePlaceholder" onkeypress="if(event.key==='Enter')sendMessage()">
+                <button onclick="sendMessage()" id="sendBtn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Botão Mobile para alternar sidebar -->
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <script>
+        // Configuração Supabase
+        const SUPABASE_URL = 'https://mrparduxlvvflasgefpt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Estado global
+        let currentUser = null;
+        let currentCompany = null;
+        let currentConversation = null;
+        let messagesSubscription = null;
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', async () => {
+            await initAuth();
+            if (currentUser) {
+                await loadUserData();
+                await loadConversations();
+                setupRealtime();
+            }
+            loadTranslations();
+            
+            // Mostrar botão de fechar sidebar no mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('closeSidebarBtn').style.display = 'block';
+            }
+        });
+
+        // Auth Guard
+        async function initAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                window.location.replace('login.html');
+                return;
+            }
+            currentUser = session.user;
+            document.getElementById('currentUser').textContent = currentUser.email.split('@')[0];
+        }
+
+        // Carregar dados do usuário/empresa
+        async function loadUserData() {
+            const { data: company } = await supabase
+                .from('companies')
+                .select('id, name')
+                .eq('user_id', currentUser.id)
+                .single();
+            
+            if (!company) {
+                alert('Empresa não encontrada. Cadastre-se primeiro.');
+                window.location.href = 'join.html';
+                return;
+            }
+            currentCompany = company;
+        }
+
+        // Carregar lista de conversas
+        async function loadConversations() {
+            const list = document.getElementById('conversationsList');
+            
+            // Buscar conversas onde a empresa é participante
+            const { data: conversations, error } = await supabase
+                .from('conversations')
+                .select(`
+                    id, company_a_id, company_b_id, last_message, last_message_at,
+                    company_a:companies!conversations_company_a_id_fkey(id, name),
+                    company_b:companies!conversations_company_b_id_fkey(id, name),
+                    messages_count:messages(count).filter(is_read,eq,false).filter(sender_company_id,neq,${currentCompany.id})
+                `)
+                .or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`)
+                .order('last_message_at', { ascending: false, nullsFirst: false });
+
+            if (error) {
+                console.error('Erro ao carregar conversas:', error);
+                list.innerHTML = `<div style="padding:20px;color:#ef4444;">Erro ao carregar</div>`;
+                return;
+            }
+
+            if (!conversations || conversations.length === 0) {
+                list.innerHTML = `<div style="padding:20px;text-align:center;color:var(--text-secondary);">Nenhuma conversa ainda</div>`;
+                return;
+            }
+
+            list.innerHTML = conversations.map(conv => {
+                const other = conv.company_a_id === currentCompany.id ? conv.company_b : conv.company_a;
+                const unread = conv.messages_count?.[0]?.count || 0;
+                const time = conv.last_message_at ? formatTime(conv.last_message_at) : '';
+                
+                return `
+                    <div class="conversation-item ${currentConversation?.id === conv.id ? 'active' : ''}" 
+                         onclick="openConversation('${conv.id}', '${other.name.replace(/'/g, "\\'")}', ${other.id})">
+                        <div class="avatar">${other.name.charAt(0).toUpperCase()}</div>
+                        <div class="conversation-info">
+                            <div class="conversation-name">${other.name}</div>
+                            <div class="conversation-preview">${conv.last_message || 'Nova conversa'}</div>
+                        </div>
+                        <div class="conversation-meta">
+                            ${time ? `<span class="conversation-time">${time}</span>` : ''}
+                            ${unread > 0 ? `<span class="unread-badge">${unread}</span>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Abrir conversa
+        async function openConversation(convId, otherName, otherCompanyId) {
+            currentConversation = { id: convId, otherName, otherCompanyId };
+            
+            // UI: mostrar chat, esconder empty state
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('chatHeader').style.display = 'flex';
+            document.getElementById('chatInput').style.display = 'flex';
+            
+            // Atualizar header
+            document.getElementById('chatName').textContent = otherName;
+            document.getElementById('chatAvatar').textContent = otherName.charAt(0).toUpperCase();
+            
+            // Carregar mensagens
+            await loadMessages(convId);
+            
+            // Marcar mensagens como lidas
+            await markAsRead(convId);
+            
+            // Atualizar UI da lista
+            document.querySelectorAll('.conversation-item').forEach(el => el.classList.remove('active'));
+            event?.closest('.conversation-item')?.classList.add('active');
+            
+            // Mobile: esconder sidebar, mostrar chat
+            if (window.innerWidth <= 768) {
+                document.getElementById('conversationsSidebar').classList.remove('active');
+                document.getElementById('chatMain').classList.add('active');
+            }
+        }
+
+        // Carregar mensagens de uma conversa
+        async function loadMessages(convId) {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-secondary);"><i class="fas fa-spinner fa-spin"></i></div>';
+            
+            const { data: messages, error } = await supabase
+                .from('messages')
+                .select('id, content, sender_company_id, created_at')
+                .eq('conversation_id', convId)
+                .order('created_at', { ascending: true });
+
+            if (error) {
+                container.innerHTML = `<div style="color:#ef4444;">Erro ao carregar mensagens</div>`;
+                return;
+            }
+
+            if (!messages || messages.length === 0) {
+                container.innerHTML = `<div style="text-align:center;color:var(--text-secondary);padding:20px;">Comece a conversa!</div>`;
+                return;
+            }
+
+            container.innerHTML = messages.map(msg => {
+                const isSent = msg.sender_company_id === currentCompany.id;
+                const time = formatTime(msg.created_at);
+                return `
+                    <div class="message ${isSent ? 'sent' : 'received'}">
+                        ${escapeHtml(msg.content)}
+                        <div class="message-time">${time}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Scroll para o final
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Enviar mensagem
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const content = input.value.trim();
+            const sendBtn = document.getElementById('sendBtn');
+            
+            if (!content || !currentConversation) return;
+            
+            sendBtn.disabled = true;
+            
+            try {
+                const { error } = await supabase
+                    .from('messages')
+                    .insert({
+                        conversation_id: currentConversation.id,
+                        sender_company_id: currentCompany.id,
+                        content: content
+                    });
+                
+                if (error) throw error;
+                
+                input.value = '';
+                
+                // Atualizar last_message na conversation
+                await supabase
+                    .from('conversations')
+                    .update({
+                        last_message: content,
+                        last_message_at: new Date().toISOString()
+                    })
+                    .eq('id', currentConversation.id);
+                
+            } catch (err) {
+                console.error('Erro ao enviar:', err);
+                alert('Erro ao enviar mensagem');
+            } finally {
+                sendBtn.disabled = false;
+                input.focus();
+            }
+        }
+
+        // Marcar mensagens como lidas
+        async function markAsRead(convId) {
+            await supabase
+                .from('messages')
+                .update({ is_read: true })
+                .eq('conversation_id', convId)
+                .eq('is_read', false)
+                .neq('sender_company_id', currentCompany.id);
+            
+            // Recarregar lista para atualizar badges
+            loadConversations();
+        }
+
+        // Real-time: ouvir novas mensagens
+        function setupRealtime() {
+            messagesSubscription = supabase
+                .channel('messages')
+                .on('postgres_changes', {
+                    event: 'INSERT',
+                    schema: 'public',
+                    table: 'messages',
+                    filter: `conversation_id=eq.${currentConversation?.id || '*'}`
+                }, payload => {
+                    // Nova mensagem recebida
+                    if (currentConversation && payload.new.conversation_id === currentConversation.id) {
+                        appendMessage(payload.new);
+                        loadConversations(); // Atualizar badge
+                    }
+                })
+                .on('postgres_changes', {
+                    event: 'UPDATE',
+                    schema: 'public',
+                    table: 'conversations'
+                }, () => {
+                    // Conversa atualizada (nova última mensagem)
+                    loadConversations();
+                })
+                .subscribe();
+        }
+
+        // Adicionar mensagem ao chat em tempo real
+        function appendMessage(msg) {
+            const container = document.getElementById('chatMessages');
+            const isSent = msg.sender_company_id === currentCompany.id;
+            const time = formatTime(msg.created_at);
+            
+            const el = document.createElement('div');
+            el.className = `message ${isSent ? 'sent' : 'received'}`;
+            el.innerHTML = `${escapeHtml(msg.content)}<div class="message-time">${time}</div>`;
+            
+            container.appendChild(el);
+            container.scrollTop = container.scrollHeight;
+            
+            // Se mensagem recebida e conversa aberta, marcar como lida
+            if (!isSent && currentConversation) {
+                markAsRead(currentConversation.id);
+            }
+        }
+
+        // Utilitários
+        function formatTime(isoString) {
+            if (!isoString) return '';
+            const date = new Date(isoString);
+            const now = new Date();
+            const diff = now - date;
+            
+            if (diff < 60000) return 'Agora';
+            if (diff < 3600000) return `${Math.floor(diff/60000)}m`;
+            if (diff < 86400000) return date.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+            return date.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit'});
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('conversationsSidebar');
+            const main = document.getElementById('chatMain');
+            sidebar.classList.toggle('active');
+            if (window.innerWidth <= 768) {
+                main.classList.toggle('active');
+            }
+        }
+
+        // Traduções
+        function loadTranslations() {
+            const lang = localStorage.getItem('preferredLanguage') || 'pt';
+            const texts = {
+                pt: { messagesTitle: '💬 Mensagens', conversationsTitle: 'Conversas', selectConversation: 'Selecione uma conversa', selectConversationDesc: 'Escolha uma conversa na lista para começar a conversar.', messagePlaceholder: 'Digite sua mensagem...' },
+                en: { messagesTitle: '💬 Messages', conversationsTitle: 'Conversations', selectConversation: 'Select a conversation', selectConversationDesc: 'Choose a conversation to start chatting.', messagePlaceholder: 'Type your message...' },
+                no: { messagesTitle: '💬 Meldinger', conversationsTitle: 'Samtaler', selectConversation: 'Velg en samtale', selectConversationDesc: 'Velg en samtale for å begynne å chatte.', messagePlaceholder: 'Skriv meldingen din...' },
+                es: { messagesTitle: '💬 Mensajes', conversationsTitle: 'Conversaciones', selectConversation: 'Selecciona una conversación', selectConversationDesc: 'Elige una conversación para empezar a chatear.', messagePlaceholder: 'Escribe tu mensaje...' }
+            };
+            const t = texts[lang] || texts.pt;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (t[key]) el.placeholder = t[key];
+            });
+        }
+
+        // Cleanup
+        window.addEventListener('beforeunload', () => {
+            if (messagesSubscription) supabase.removeChannel(messagesSubscription);
+        });
+    </script>
+</body>
+</html>
