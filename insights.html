@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#8b5cf6" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insights — Oslo Meet</title>
+    <meta name="description" content="Expert insights on international business, AI matching, and cross-border partnerships.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --success-green: #10b981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .language-selector {
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .language-selector select {
+            background: transparent; border: none; color: white;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        }
+        .language-selector select option { background: var(--dark-bg); color: white; }
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 100px 20px 60px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            outline: none;
+        }
+        .search-box input:focus {
+            border-color: var(--accent-purple);
+        }
+        .search-box i {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        
+        /* Categories */
+        .categories {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .category-tags {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .category-tag {
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .category-tag:hover, .category-tag.active {
+            background: var(--accent-purple);
+            border-color: var(--accent-purple);
+            color: white;
+        }
+        
+        /* Featured Articles */
+        .featured {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .article-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .article-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139,92,246,0.2);
+        }
+        .article-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .article-content {
+            padding: 25px;
+        }
+        .article-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .tag {
+            padding: 4px 12px;
+            background: rgba(139,92,246,0.15);
+            color: var(--accent-purple);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .article-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .article-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        .read-time {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        /* All Articles */
+        .articles {
+            padding: 40px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        @media (max-width: 768px) {
+            .articles-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: var(--card-bg);
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .newsletter h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        .newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .newsletter-form {
+            max-width: 450px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+        }
+        .newsletter-form input {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            outline: none;
+        }
+        .newsletter-form input:focus {
+            border-color: var(--accent-purple);
+        }
+        .newsletter-form button {
+            padding: 14px 30px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .newsletter-form button:hover {
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        .footer {
+            background: #020617;
+            padding: 60px 20px 30px;
+            border-top: 1px solid var(--border-color);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; }
+        }
+        .footer-brand h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .footer-social a:hover {
+            background: var(--accent-purple);
+            color: white;
+            transform: translateY(-3px);
+        }
+        .footer-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--accent-blue);
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 20px 0 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .developer-credit {
+            color: #fbbf24 !important;
+            text-decoration: none;
+        }
+        .developer-credit:hover {
+            color: #f59e0b !important;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .newsletter-form { flex-direction: column; }
+            .section-title { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 data-i18n="heroTitle">Insights & Resources</h1>
+        <p data-i18n="heroSubtitle">Expert knowledge on international business, AI-powered matching, and cross-border growth strategies</p>
+        <div class="search-box">
+            <input type="text" data-i18n-placeholder="searchPlaceholder" placeholder="Search articles...">
+            <i class="fas fa-search"></i>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="category-tags">
+            <div class="category-tag active" data-i18n="catAll">All</div>
+            <div class="category-tag" data-i18n="catCrossBorder">Cross-Border Trade</div>
+            <div class="category-tag" data-i18n="catNordic">Nordic Market</div>
+            <div class="category-tag" data-i18n="catBrazil">Brazil-Europe</div>
+            <div class="category-tag" data-i18n="catAI">AI & Technology</div>
+            <div class="category-tag" data-i18n="catSuccess">Success Stories</div>
+        </div>
+    </section>
+
+    <!-- Featured Articles -->
+    <section class="featured">
+        <h2 class="section-title" data-i18n="featuredTitle">Featured Articles</h2>
+        <div class="featured-grid">
+            <article class="article-card" onclick="openArticle('brazil-norway')">
+                <div class="article-image">🇧🇷→🇳🇴</div>
+                <div class="article-content">
+                    <div class="article-tags">
+                        <span class="tag" data-i18n="tagBrazil">Brazil</span>
+                        <span class="tag" data-i18n="tagNordic">Nordic</span>
+                    </div>
+                    <h3 class="article-title" data-i18n="article1Title">5 Steps to Expand Your Brazilian Business to Norway in 2026</h3>
+                    <p class="article-excerpt" data-i18n="article1Excerpt">Complete guide covering market research, legal requirements, cultural adaptation, and partnership strategies for successful Nordic expansion.</p>
+                    <div class="article-meta">
+                        <span>May 2026</span>
+                        <span class="read-time"><i class="far fa-clock"></i> <span data-i18n="readTime8">8 min read</span></span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openArticle('ai-matching')">
+                <div class="article-image">🤖</div>
+                <div class="article-content">
+                    <div class="article-tags">
+                        <span class="tag" data-i18n="tagAI">AI</span>
+                        <span class="tag" data-i18n="tagTechnology">Technology</span>
+                    </div>
+                    <h3 class="article-title" data-i18n="article2Title">How AI Finds Your Perfect B2B Match: A Deep Dive</h3>
+                    <p class="article-excerpt" data-i18n="article2Excerpt">Understanding the algorithm behind Oslo Meet's 90%+ compatibility scores and how machine learning transforms business networking.</p>
+                    <div class="article-meta">
+                        <span>April 2026</span>
+                        <span class="read-time"><i class="far fa-clock"></i> <span data-i18n="readTime6">6 min read</span></span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openArticle('gdpr-guide')">
+                <div class="article-image">🔐</div>
+                <div class="article-content">
+                    <div class="article-tags">
+                        <span class="tag" data-i18n="tagLegal">Legal</span>
+                        <span class="tag" data-i18n="tagGDPR">GDPR</span>
+                    </div>
+                    <h3 class="article-title" data-i18n="article3Title">GDPR for Brazilian Startups: Essential Compliance Guide</h3>
+                    <p class="article-excerpt" data-i18n="article3Excerpt">What Brazilian companies need to know about European data protection laws when expanding to EU and Nordic markets.</p>
+                    <div class="article-meta">
+                        <span>March 2026</span>
+                        <span class="read-time"><i class="far fa-clock"></i> <span data-i18n="readTime10">10 min read</span></span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- All Articles -->
+    <section class="articles">
+        <h2 class="section-title" data-i18n="latestTitle">Latest Articles</h2>
+        <div class="articles-grid">
+            <article class="article-card" onclick="openArticle('uk-brexit')">
+                <div class="article-image" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">🇬🇪🇺</div>
+                <div class="article-content">
+                    <div class="article-tags">
+                        <span class="tag">UK</span>
+                        <span class="tag" data-i18n="tagTrade">Trade</span>
+                    </div>
+                    <h3 class="article-title" data-i18n="article4Title">Post-Brexit Trade: UK-Brazil Opportunities in 2026</h3>
+                    <p class="article-excerpt" data-i18n="article4Excerpt">New trade agreements and business opportunities emerging between United Kingdom and Latin America.</p>
+                    <div class="article-meta">
+                        <span>May 2026</span>
+                        <span class="read-time"><i class="far fa-clock"></i> 7 min</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openArticle('sustainability')">
+                <div class="article-image" style="background: linear-gradient(135deg, #10b981, #3b82f6);">🌱</div>
+                <div class="article-content">
+                    <div class="article-tags">
+                        <span class="tag" data-i18n="tagSustainability">Sustainability</span>
+                        <span class="tag" data-i18n="tagNordic">Nordic</span>
+                    </div>
+                    <h3 class="article-title" data-i18n="article5Title">Nordic Sustainability Standards: What Exporters Need to Know</h3>
+                    <p class="article-excerpt" data-i18n="article5Excerpt">Understanding environmental requirements and green business practices in Scandinavian markets.</p>
+                    <div class="article-meta">
+                        <span>April 2026</span>
+                        <span class="read-time"><i class="far fa-clock"></i> 9 min</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="article-card" onclick="openArticle('payment-methods')">
+                <div class="article-image" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">💳</div>
+                <div class="article-content">
+                    <div class="article-tags">
+                        <span class="tag" data-i18n="tagFinance">Finance</span>
+                        <span class="tag" data-i18n="tagCrossBorder">Cross-Border</span>
+                    </div>
+                    <h3 class="article-title" data-i18n="article6Title">International Payment Methods: Brazil-Europe Guide</h3>
+                    <p class="article-excerpt" data-i18n="article6Excerpt">Best practices for cross-border transactions, currency exchange, and payment security.</p>
+                    <div class="article-meta">
+                        <span>March 2026</span>
+                        <span class="read-time"><i class="far fa-clock"></i> 6 min</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <h2 data-i18n="newsletterTitle">Stay Updated</h2>
+        <p data-i18n="newsletterSubtitle">Get monthly insights on international business trends, AI matching tips, and success stories delivered to your inbox</p>
+        <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+            <input type="email" data-i18n-placeholder="emailPlaceholder" placeholder="your@email.com" required>
+            <button type="submit" data-i18n="btnSubscribe">Subscribe</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
+                <div class="footer-social">
+                    <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+                    <li><a href="dashboard.html" data-i18n="navDashboard">Dashboard</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html" data-i18n="navAbout">About</a></li>
+                    <li><a href="insights.html" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                    <li><a href="support.html" data-i18n="navSupport">Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Oslo Meet</div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                heroTitle: "Insights & Resources",
+                heroSubtitle: "Expert knowledge on international business, AI-powered matching, and cross-border growth strategies",
+                searchPlaceholder: "Search articles...",
+                catAll: "All",
+                catCrossBorder: "Cross-Border Trade",
+                catNordic: "Nordic Market",
+                catBrazil: "Brazil-Europe",
+                catAI: "AI & Technology",
+                catSuccess: "Success Stories",
+                featuredTitle: "Featured Articles",
+                tagBrazil: "Brazil",
+                tagNordic: "Nordic",
+                tagAI: "AI",
+                tagTechnology: "Technology",
+                tagLegal: "Legal",
+                tagGDPR: "GDPR",
+                article1Title: "5 Steps to Expand Your Brazilian Business to Norway in 2026",
+                article1Excerpt: "Complete guide covering market research, legal requirements, cultural adaptation, and partnership strategies for successful Nordic expansion.",
+                readTime8: "8 min read",
+                article2Title: "How AI Finds Your Perfect B2B Match: A Deep Dive",
+                article2Excerpt: "Understanding the algorithm behind Oslo Meet's 90%+ compatibility scores and how machine learning transforms business networking.",
+                readTime6: "6 min read",
+                article3Title: "GDPR for Brazilian Startups: Essential Compliance Guide",
+                article3Excerpt: "What Brazilian companies need to know about European data protection laws when expanding to EU and Nordic markets.",
+                readTime10: "10 min read",
+                latestTitle: "Latest Articles",
+                tagTrade: "Trade",
+                article4Title: "Post-Brexit Trade: UK-Brazil Opportunities in 2026",
+                article4Excerpt: "New trade agreements and business opportunities emerging between United Kingdom and Latin America.",
+                tagSustainability: "Sustainability",
+                article5Title: "Nordic Sustainability Standards: What Exporters Need to Know",
+                article5Excerpt: "Understanding environmental requirements and green business practices in Scandinavian markets.",
+                tagFinance: "Finance",
+                tagCrossBorder: "Cross-Border",
+                article6Title: "International Payment Methods: Brazil-Europe Guide",
+                article6Excerpt: "Best practices for cross-border transactions, currency exchange, and payment security.",
+                newsletterTitle: "Stay Updated",
+                newsletterSubtitle: "Get monthly insights on international business trends, AI matching tips, and success stories delivered to your inbox",
+                emailPlaceholder: "your@email.com",
+                btnSubscribe: "Subscribe",
+                footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
+                navPlatform: "Platform",
+                navHome: "Home",
+                navHow: "How Matching Works",
+                navJoin: "Join Now",
+                navPricing: "Pricing",
+                navDashboard: "Dashboard",
+                navCompany: "Company",
+                navAbout: "About",
+                navBlog: "Insights",
+                navContact: "Contact",
+                navSupport: "Support",
+                navLegal: "Legal",
+                navTerms: "Terms",
+                navPrivacy: "Privacy",
+                navCookies: "Cookies",
+                navGDPR: "GDPR Rights"
+            },
+            pt: {
+                heroTitle: "Insights e Recursos",
+                heroSubtitle: "Conhecimento especializado em negócios internacionais, matching com IA e estratégias de crescimento cross-border",
+                searchPlaceholder: "Buscar artigos...",
+                catAll: "Todos",
+                catCrossBorder: "Comércio Cross-Border",
+                catNordic: "Mercado Nórdico",
+                catBrazil: "Brasil-Europa",
+                catAI: "IA e Tecnologia",
+                catSuccess: "Casos de Sucesso",
+                featuredTitle: "Artigos em Destaque",
+                tagBrazil: "Brasil",
+                tagNordic: "Nórdico",
+                tagAI: "IA",
+                tagTechnology: "Tecnologia",
+                tagLegal: "Legal",
+                tagGDPR: "GDPR",
+                article1Title: "5 Passos para Expandir Sua Empresa Brasileira para a Noruega em 2026",
+                article1Excerpt: "Guia completo cobrindo pesquisa de mercado, requisitos legais, adaptação cultural e estratégias de parceria para expansão nórdica bem-sucedida.",
+                readTime8: "8 min de leitura",
+                article2Title: "Como a IA Encontra Seu Match B2B Perfeito: Um Mergulho Profundo",
+                article2Excerpt: "Entendendo o algoritmo por trás dos scores de compatibilidade de 90%+ da Oslo Meet e como o machine learning transforma o networking empresarial.",
+                readTime6: "6 min de leitura",
+                article3Title: "GDPR para Startups Brasileiras: Guia Essencial de Conformidade",
+                article3Excerpt: "O que empresas brasileiras precisam saber sobre leis europeias de proteção de dados ao expandir para mercados da UE e Nórdicos.",
+                readTime10: "10 min de leitura",
+                latestTitle: "Últimos Artigos",
+                tagTrade: "Comércio",
+                article4Title: "Comércio Pós-Brexit: Oportunidades UK-Brasil em 2026",
+                article4Excerpt: "Novos acordos comerciais e oportunidades de negócios emergentes entre Reino Unido e América Latina.",
+                tagSustainability: "Sustentabilidade",
+                article5Title: "Padrões de Sustentabilidade Nórdicos: O Que Exportadores Precisam Saber",
+                article5Excerpt: "Entendendo requisitos ambientais e práticas de negócios verdes em mercados escandinavos.",
+                tagFinance: "Finanças",
+                tagCrossBorder: "Cross-Border",
+                article6Title: "Métodos de Pagamento Internacional: Guia Brasil-Europa",
+                article6Excerpt: "Melhores práticas para transações cross-border, câmbio de moeda e segurança de pagamentos.",
+                newsletterTitle: "Mantenha-se Atualizado",
+                newsletterSubtitle: "Receba insights mensais sobre tendências de negócios internacionais, dicas de matching com IA e casos de sucesso no seu email",
+                emailPlaceholder: "seu@email.com",
+                btnSubscribe: "Assinar",
+                footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
+                navPlatform: "Plataforma",
+                navHome: "Início",
+                navHow: "Como Funciona",
+                navJoin: "Entrar Agora",
+                navPricing: "Preços",
+                navDashboard: "Dashboard",
+                navCompany: "Empresa",
+                navAbout: "Sobre",
+                navBlog: "Insights",
+                navContact: "Contato",
+                navSupport: "Suporte",
+                navLegal: "Legal",
+                navTerms: "Termos",
+                navPrivacy: "Privacidade",
+                navCookies: "Cookies",
+                navGDPR: "Direitos GDPR"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (translations[lang]?.[key]) el.placeholder = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        function openArticle(slug) {
+            // Placeholder - em produção, redirecionaria para página do artigo
+            alert('Artigo: ' + slug + '\n\nEm breve: página completa do artigo!');
+        }
+
+        function handleSubscribe(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input').value;
+            alert('Obrigado por assinar! Enviamos um email de confirmação para: ' + email);
+            e.target.reset();
+        }
+
+        // Category filter (visual only for now)
+        document.querySelectorAll('.category-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = saved;
+            changeLanguage(saved);
+        });
+    </script>
+</body>
+</html>
