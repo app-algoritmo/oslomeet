@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Oslo Meet</title>
-    <!-- Seu CSS existente ou Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold mb-6 text-center text-blue-900">Oslo Meet Login</h1>
         
-        <!-- Tabs para alternar entre Login e Cadastro -->
+        <!-- Logo / Título -->
+        <h1 class="text-2xl font-bold mb-6 text-center text-blue-900">Oslo Meet Login</h1>
+
+        <!-- Tabs -->
         <div class="flex mb-4 border-b">
             <button id="tabLogin" class="flex-1 py-2 text-blue-600 border-b-2 border-blue-600 font-medium">Entrar</button>
             <button id="tabSignup" class="flex-1 py-2 text-gray-500 hover:text-blue-600">Cadastrar</button>
@@ -41,10 +42,18 @@
                 Entrar na Plataforma
             </button>
         </form>
+
+        <!-- Botão Voltar para Home -->
+        <div class="mt-4 text-center">
+            <a href="index.html" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-700 transition">
+                ← Back to Home
+            </a>
+        </div>
+
     </div>
 
     <script type="module">
-        import { signIn, signUp } from './auth.js' // Importa do arquivo criado no passo 2
+        import { signIn, signUp } from './auth.js'
 
         const form = document.getElementById('authForm')
         const tabLogin = document.getElementById('tabLogin')
@@ -55,7 +64,6 @@
         
         let isLoginMode = true
 
-        // Alternar abas
         tabLogin.addEventListener('click', () => {
             isLoginMode = true
             tabLogin.className = "flex-1 py-2 text-blue-600 border-b-2 border-blue-600 font-medium"
@@ -72,7 +80,6 @@
             submitBtn.textContent = "Criar Conta Grátis"
         })
 
-        // Lógica de Submit
         form.addEventListener('submit', async (e) => {
             e.preventDefault()
             errorMsg.classList.add('hidden')
@@ -96,10 +103,8 @@
                 submitBtn.disabled = false
                 submitBtn.textContent = isLoginMode ? "Entrar na Plataforma" : "Criar Conta Grátis"
             } else {
-                // Sucesso!
                 if (!isLoginMode) {
                     alert("Conta criada! Verifique seu email (ou faça login se a confirmação estiver desativada).")
-                    // Opcional: Redirecionar para login ou dashboard direto
                 }
                 window.location.href = 'dashboard.html'
             }
