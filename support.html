@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- FAVICON Oslo Meet -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -9,319 +8,31 @@
     <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
     <link rel="manifest" href="/site.webmanifest" /> 
     <meta name="theme-color" content="#8b5cf6" />
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Support — Oslo Meet</title>
     <meta name="description" content="Get help with Oslo Meet. FAQ, contact support, and troubleshooting guides.">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        :root {
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --success-green: #10b981;
-        }
+        :root { --dark-bg: #0f172a; --card-bg: #1e293b; --text-primary: #f8fafc; --text-secondary: #94a3b8; --border-color: #334155; --accent-blue: #3b82f6; --accent-purple: #8b5cf6; --success-green: #10b981; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            -webkit-text-size-adjust: 100%;
-        }
-        /* Language Selector */
-        .language-selector {
-            position: fixed; top: 12px; right: 12px; z-index: 1000;
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
-            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
-        }
-        .language-selector select {
-            background: transparent; border: none; color: white;
-            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
-            cursor: pointer; outline: none; padding: 4px;
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
-        }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: var(--text-primary); line-height: 1.6; min-height: 100vh; -webkit-text-size-adjust: 100%; }
+        .language-selector { position: fixed; top: 12px; right: 12px; z-index: 1000; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; padding: 6px 12px; display: flex; align-items: center; gap: 8px; }
+        .language-selector select { background: transparent; border: none; color: white; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem; cursor: pointer; outline: none; padding: 4px; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
         .language-selector select option { background: var(--dark-bg); color: white; }
         .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
-        /* Header */
-        .page-header {
-            background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95);
-            padding: 70px 16px 50px; text-align: center; position: relative;
-        }
-        .page-header h1 {
-            font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
+        .page-header { background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95); padding: 70px 16px 50px; text-align: center; position: relative; }
+        .page-header h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.2; }
         .page-header p { color: var(--text-secondary); max-width: 500px; margin: 0 auto; font-size: 0.95rem; }
-        /* Sections */
         .section { padding: 60px 16px; max-width: 800px; margin: 0 auto; }
         .section-header { text-align: center; margin-bottom: 2.5rem; }
-        .section-tag {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: rgba(139,92,246,0.15); color: var(--accent-purple);
-            padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem;
-        }
-        .section-title {
-            font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, #fff, #818cf8);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+        .section-tag { display: inline-flex; align-items: center; gap: 6px; background: rgba(139,92,246,0.15); color: var(--accent-purple); padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .section-subtitle { color: var(--text-secondary); font-size: 0.95rem; }
-        /* FAQ Accordion - Mobile Friendly */
         .faq-list { max-width: 800px; margin: 0 auto; }
-        .faq-item {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden;
-        }
-        .faq-question {
-            width: 100%; padding: 1rem 1.2rem; background: transparent;
-            border: none; color: white; font-size: 0.95rem; font-weight: 600;
-            text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-            min-height: 44px;
-        }
+        .faq-item { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden; }
+        .faq-question { width: 100%; padding: 1rem 1.2rem; background: transparent; border: none; color: white; font-size: 0.95rem; font-weight: 600; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
         .faq-question i { transition: transform 0.3s; font-size: 0.9rem; color: var(--accent-purple); }
         .faq-item.active .faq-question i { transform: rotate(180deg); }
         .faq-answer {
-            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s;
-            padding: 0 1.2rem; color: var(--text-secondary); line-height: 1.6; font-size: 0.9rem;
-        }
-        .faq-item.active .faq-answer { max-height: 800px; padding: 1rem 1.2rem; }
-        /* Contact Card */
-        .contact-card {
-            background: var(--card-bg); border-radius: 16px; padding: 1.5rem;
-            border: 1px solid var(--border-color); margin-top: 2rem;
-        }
-        .contact-card h3 { font-size: 1.1rem; margin-bottom: 0.8rem; color: white; }
-        .contact-card p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem; }
-        .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
-        .contact-link {
-            display: flex; align-items: center; gap: 10px; padding: 12px 16px;
-            background: rgba(255,255,255,0.05); border-radius: 10px;
-            color: var(--text-primary); text-decoration: none; transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-        .contact-link:hover { background: rgba(139,92,246,0.1); border-color: var(--accent-purple); }
-        .contact-link i { color: var(--accent-purple); font-size: 1.1rem; width: 20px; }
-        /* CTA */
-        .cta-section {
-            background: linear-gradient(135deg, var(--card-bg), #1e1b4b);
-            padding: 3rem 16px; text-align: center; border-radius: 20px; margin: 2rem 0;
-        }
-        .cta-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.8rem; }
-        .cta-desc { color: var(--text-secondary); max-width: 500px; margin: 0 auto 1.5rem; font-size: 0.95rem; }
-        .cta-btn {
-            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none;
-            font-weight: 700; transition: all 0.3s; min-height: 44px; font-size: 0.95rem;
-        }
-        .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(139,92,246,0.4); }
-        /* Footer */
-        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
-        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
-        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
-        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
-        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 0.5rem; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
-        .footer-links a:hover { color: var(--accent-blue); }
-        .footer-bottom {
-            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
-            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
-            align-items: center; flex-wrap: wrap; gap: 1rem;
-            color: var(--text-secondary); font-size: 0.85rem; text-align: center;
-        }
-        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
-        .footer-bottom a:hover { color: var(--accent-blue); }
-        .footer-bottom .email-link { color: var(--accent-blue); font-weight: 500; }
-        .developer-credit { color: #fbbf24 !important; }
-        /* Touch Optimization */
-        @media (hover: none) {
-            .faq-question:active { background: rgba(255,255,255,0.05); }
-            .contact-link:active { transform: scale(0.99); }
-            .cta-btn:active { transform: scale(0.98); }
-        }
-    </style>
-</head>
-<body>
-    <!-- Language Selector -->
-    <div class="language-selector">
-        <i class="fas fa-globe"></i>
-        <select id="languageSelect" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="no">Norsk</option>
-            <option value="pt">Português</option>
-            <option value="es">Español</option>
-        </select>
-    </div>
-
-    <!-- Header -->
-    <header class="page-header">
-        <h1 data-i18n="pageTitle">Support Center</h1>
-        <p data-i18n="pageSubtitle">Find answers to common questions or contact our support team for personalized help.</p>
-    </header>
-
-    <!-- FAQ Section -->
-    <section class="section">
-        <div class="section-header">
-            <div class="section-tag"><i class="fas fa-question-circle"></i> <span data-i18n="faqTag">FAQ</span></div>
-            <h2 class="section-title" data-i18n="faqTitle">Frequently Asked Questions</h2>
-            <p class="section-subtitle" data-i18n="faqSubtitle">Everything you need to know about Oslo Meet.</p>
-        </div>
-        <div class="faq-list">
-            <!-- ========== ACCOUNT & AUTHENTICATION ========== -->
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q1">How do I create an account?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a1">
-                    Click "Join Now" on the homepage, fill in your email and password, then verify your email address. After that, register your company profile to start receiving AI-powered matches.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q2">I can't log in. What should I do?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a2">
-                    First, check your internet connection and ensure you're using the correct email/password. If you forgot your password, use the "Forgot password?" link. If issues persist, clear your browser cache or try a different browser. Contact support if needed.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q3">How do I reset my password?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a3">
-                    On the login page, click "Forgot password?" and enter your email. You'll receive a secure link to create a new password. The link expires in 1 hour for security.
-                </div>
-            </div>
-
-            <!-- ========== COMPANY REGISTRATION ========== -->
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q4">How does company auto-fill work?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a4">
-                    For Norway (Org.nr), Brazil (CNPJ), and UK (Company No.), enter your registration number and click "Search". We fetch public data from official registries to pre-fill your profile. For other countries, fill details manually.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q5">Auto-fill isn't working for my company. What now?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a5">
-                    Some registries have temporary downtime or rate limits. Try again in a few minutes, or fill your company details manually. All fields are editable later in your dashboard.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q6">Can I edit my company profile later?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a6">
-                    Yes! Go to Dashboard → Settings → Company Profile. You can update name, industry, description, goals, tech stack, and visibility preferences anytime. Changes reflect in matching within 24 hours.
-                </div>
-            </div>
-
-            <!-- ========== AI MATCHING ========== -->
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q7">How does the AI matching work?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a7">
-                    Our AI converts your company profile into semantic vectors and compares them against 50+ business signals. Matches are ranked by compatibility score (0-100%), based on industry fit, goals, tech stack, and geographic focus.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q8">Why am I seeing certain matches?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a8">
-                    Matches appear based on profile compatibility. If you see unexpected results, review your profile goals and preferences. You can also provide feedback on matches to help our AI learn your preferences better.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q9">What if I don't get good matches?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a9">
-                    Our AI learns from your interactions. If matches aren't relevant: (1) Add more details to your profile, (2) Adjust your matching preferences, (3) Update your goals/tech stack, or (4) Contact support for personalized help.
-                </div>
-            </div>
-
-            <!-- ========== MESSAGING SYSTEM ========== -->
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q10">How do I start a conversation with a match?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a10">
-                    On your Dashboard, find a match and click the "Connect" button (envelope icon). This creates a private conversation. You'll be redirected to the Messages page where you can start chatting immediately.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q11">Are messages real-time?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a11">
-                    Yes! Messages appear instantly using Supabase Realtime. You'll see new messages without refreshing. A red badge on the envelope icon shows unread message count.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q12">Can I attach files or images to messages?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a12">
-                    Currently, messaging supports text only. File/image attachments are on our roadmap. For now, share links to documents or use external tools for file exchange.
-                </div>
-            </div>
-
-            <!-- ========== PRIVACY & SECURITY ========== -->
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q13">Is my data secure and GDPR compliant?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a13">
-                    Yes. All data is encrypted at rest and in transit. We comply fully with EU/EEA GDPR standards. You can request data deletion, export your profile, or disable AI processing at any time from your dashboard.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q14">How do I control who sees my profile?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a14">
-                    In your dashboard, go to Settings → Privacy. Choose visibility: Public (directory), Members Only, or Private (AI matching only). You can also block specific industries or competitors.
-                </div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-question">
-                    <span data-i18n="q15">Can I delete my account and data?</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="faq-answer" data-i18n="a15">
-                    Yes. Go to Settings → Account → Delete Account. This permanently removes your profile, conversations, and personal
