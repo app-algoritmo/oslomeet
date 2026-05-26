@@ -970,25 +970,34 @@
                 data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
                 data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
 
+                // ✅ OBTER USUÁRIO LOGADO
+                const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+                if (userError || !user) {
+                throw new Error('Você precisa estar logado para cadastrar uma empresa.');
+                }
+
+                // ✅ INCLUIR user_id NO CADASTRO
                 const companyData = {
-                    name: data.companyName,
-                    industry: data.industry,
-                    size: data.companySize || null,
-                    contact_email: data.email,
-                    website: data.website || null,
-                    description: data.challenges || data.additional || null,
-                    goals: data.goals || [],
-                    tech_stack: data.technologies || [],
-                    target_markets: data.markets || [],
-                    visibility: 'public',
-                    created_at: new Date().toISOString()
+                user_id: user.id,  // ← ESSENCIAL!
+                name: data.companyName,
+                industry: data.industry,
+                size: data.companySize || null,
+                contact_email: data.email,
+                website: data.website || null,
+                description: data.challenges || data.additional || null,
+                goals: data.goals || [],
+                tech_stack: data.technologies || [],
+                target_markets: data.markets || [],
+                visibility: 'public',
+                created_at: new Date().toISOString()
                 };
 
                 const { data: inserted, error } = await supabase
-                    .from('companies')
-                    .insert([companyData])
-                    .select()
-                    .single();
+                .from('companies')
+                .insert([companyData])
+                .select()
+                .single();
 
                 if (error) throw error;
 
