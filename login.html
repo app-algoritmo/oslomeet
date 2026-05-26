@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: #f1f5f9;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -19,23 +19,31 @@
         }
         .login-card {
             background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
         }
         .login-card h1 {
             text-align: center;
             color: #1e3a8a;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.75rem;
+        }
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
         }
         .tabs {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             margin-bottom: 1.5rem;
-            border-bottom: 2px solid #e2e8f0;
+            background: #f1f5f9;
+            padding: 0.25rem;
+            border-radius: 8px;
         }
         .tab {
             flex: 1;
@@ -43,32 +51,34 @@
             text-align: center;
             background: none;
             border: none;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
             color: #64748b;
             transition: all 0.2s;
         }
         .tab.active {
+            background: white;
             color: #3b82f6;
-            border-bottom: 2px solid #3b82f6;
-            margin-bottom: -2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.25rem;
         }
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
             color: #334155;
             font-size: 0.9rem;
         }
         .form-group input {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
+            padding: 0.875rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
             font-size: 1rem;
+            transition: all 0.2s;
         }
         .form-group input:focus {
             outline: none;
@@ -77,25 +87,31 @@
         }
         .btn-submit {
             width: 100%;
-            padding: 0.875rem;
-            background: #2563eb;
+            padding: 1rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
+            transition: transform 0.2s;
         }
-        .btn-submit:hover { background: #1d4ed8; }
+        .btn-submit:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59,130,246,0.4);
+        }
         .btn-submit:disabled { 
             background: #94a3b8; 
-            cursor: not-allowed; 
+            cursor: not-allowed;
+            transform: none;
         }
         .error {
             background: #fef2f2;
+            border: 1px solid #fecaca;
             color: #dc2626;
-            padding: 0.75rem;
-            border-radius: 6px;
+            padding: 0.875rem;
+            border-radius: 8px;
             margin-bottom: 1rem;
             font-size: 0.9rem;
             display: none;
@@ -103,58 +119,62 @@
         .back-link {
             display: block;
             text-align: center;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             color: #64748b;
             text-decoration: none;
+            font-size: 0.9rem;
         }
         .back-link:hover { color: #3b82f6; }
     </style>
 </head>
 <body>
     <div class="login-card">
-        <h1>Oslo Meet Login</h1>
+        <h1>Oslo Meet</h1>
+        <p class="subtitle">AI-powered business connections</p>
         
         <div class="tabs">
-            <button type="button" class="tab active" onclick="showLogin()">Entrar</button>
-            <button type="button" class="tab" onclick="showRegister()">Cadastrar</button>
+            <button type="button" class="tab active" onclick="showLogin()">Sign In</button>
+            <button type="button" class="tab" onclick="showRegister()">Sign Up</button>
         </div>
 
         <div id="errorMsg" class="error"></div>
 
+        <!-- LOGIN FORM -->
         <form id="loginForm" onsubmit="handleLogin(event)">
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" id="loginEmail" required placeholder="exemplo@email.com">
+                <input type="email" id="loginEmail" required placeholder="you@company.com">
             </div>
             <div class="form-group">
-                <label>Senha</label>
-                <input type="password" id="loginPassword" required placeholder="Sua senha">
+                <label>Password</label>
+                <input type="password" id="loginPassword" required placeholder="Your password">
             </div>
-            <button type="submit" class="btn-submit" id="loginBtn">Entrar</button>
+            <button type="submit" class="btn-submit" id="loginBtn">Sign In</button>
         </form>
 
+        <!-- REGISTER FORM -->
         <form id="registerForm" style="display:none;" onsubmit="handleRegister(event)">
             <div class="form-group">
-                <label>Nome</label>
-                <input type="text" id="regName" required placeholder="Seu nome completo">
+                <label>Full Name</label>
+                <input type="text" id="regName" required placeholder="John Doe">
             </div>
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" id="regEmail" required placeholder="exemplo@email.com">
+                <input type="email" id="regEmail" required placeholder="you@company.com">
             </div>
             <div class="form-group">
-                <label>Senha</label>
-                <input type="password" id="regPassword" required placeholder="Mínimo 6 caracteres" minlength="6">
+                <label>Password</label>
+                <input type="password" id="regPassword" required placeholder="Min. 6 characters" minlength="6">
             </div>
-            <button type="submit" class="btn-submit" id="regBtn">Cadastrar</button>
+            <button type="submit" class="btn-submit" id="regBtn">Create Account</button>
         </form>
 
-        <a href="index.html" class="back-link">← Voltar para Home</a>
+        <a href="index.html" class="back-link">← Back to Home</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // Inicializar Supabase
+        // Initialize Supabase
         const supabaseUrl = 'https://mrparduxlvvflasgefpt.supabase.co';
         const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
         const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -194,7 +214,7 @@
             const password = document.getElementById('loginPassword').value;
             
             btn.disabled = true;
-            btn.textContent = 'Entrando...';
+            btn.textContent = 'Signing in...';
 
             try {
                 const { data, error } = await supabase.auth.signInWithPassword({
@@ -204,13 +224,12 @@
 
                 if (error) throw error;
 
-                // Login sucesso → vai para dashboard
                 window.location.href = 'dashboard.html';
 
             } catch (err) {
-                showError('Erro: ' + err.message);
+                showError('Login failed: ' + err.message);
                 btn.disabled = false;
-                btn.textContent = 'Entrar';
+                btn.textContent = 'Sign In';
             }
         }
 
@@ -224,7 +243,7 @@
             const password = document.getElementById('regPassword').value;
             
             btn.disabled = true;
-            btn.textContent = 'Cadastrando...';
+            btn.textContent = 'Creating account...';
 
             try {
                 const { data, error } = await supabase.auth.signUp({
@@ -237,14 +256,14 @@
 
                 if (error) throw error;
 
-                alert('Cadastro realizado! Faça login.');
+                alert('Account created! Please check your email.');
                 showLogin();
                 document.getElementById('loginEmail').value = email;
 
             } catch (err) {
-                showError('Erro: ' + err.message);
+                showError('Registration failed: ' + err.message);
                 btn.disabled = false;
-                btn.textContent = 'Cadastrar';
+                btn.textContent = 'Create Account';
             }
         }
     </script>
