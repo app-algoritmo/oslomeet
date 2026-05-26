@@ -588,19 +588,7 @@
             document.documentElement.lang = lang;
             localStorage.setItem('preferredLanguage', lang);
         }
-    </script>
-    <!-- No final do dashboard.html -->
-<script type="module">
-    import { requireAuth } from './auth.js'
-
-    // Executa a verificação assim que a página carrega
-    const session = await requireAuth()
     
-    // Se chegou aqui, o usuário está logado!
-    console.log("Usuário autenticado:", session.user.email)
-    
-    // Aqui você pode carregar os dados do dashboard usando o ID do usuário
-    // Exemplo: carregarMatches(session.user.id)
 </script>
     
 </body>
