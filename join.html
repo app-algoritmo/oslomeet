@@ -618,78 +618,79 @@
 
         // Main enrichment function
         async function enrichCompany() {
-            const country = document.getElementById('countrySelect').value;
-            const fiscalId = document.getElementById('fiscalIdInput').value.trim();
-            const statusEl = document.getElementById('orgStatus');
-            const btn = document.getElementById('enrichBtn');
+    const country = document.getElementById('countrySelect').value;
+    const fiscalId = document.getElementById('fiscalIdInput').value.trim();
+    const statusEl = document.getElementById('orgStatus');
+    const btn = document.getElementById('enrichBtn');
+    
+    if (!country) {
+        statusEl.textContent = "⚠️ Please select a country first";
+        statusEl.style.color = "#f59e0b";
+        return;
+    }
+    
+    if (!fiscalId) {
+        statusEl.textContent = "⚠️ Please enter a registration number";
+        statusEl.style.color = "#f59e0b";
+        return;
+    }
+
+    const config = COUNTRY_CONFIG[country] || COUNTRY_CONFIG.OTHER;
+    
+    // UI loading state
+    const originalBtnText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+    btn.disabled = true;
+    statusEl.textContent = `🔍 Querying ${config.name}...`;
+    statusEl.style.color = "var(--accent-blue)";
+
+    try {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/enrich-company`, {
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json',
+                'apikey': SUPABASE_ANON_KEY,  // ✅ Header correto
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`  // ✅ Adicionado
+            },
+            body: JSON.stringify({ fiscalId, country })
+        });
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+            statusEl.textContent = `✅ Found via ${result.source}! Form auto-filled.`;
+            statusEl.style.color = "var(--success-green)";
             
-            if (!country) {
-                statusEl.textContent = "⚠️ Please select a country first";
-                statusEl.style.color = "#f59e0b";
-                return;
-            }
+            // Auto-fill fields
+            const fields = {
+                'companyName': result.data.name,
+                'industry': mapIndustry(result.data.industry, result.data.country),
+            };
             
-            if (!fiscalId) {
-                statusEl.textContent = "⚠️ Please enter a registration number";
-                statusEl.style.color = "#f59e0b";
-                return;
-            }
-
-            const config = COUNTRY_CONFIG[country] || COUNTRY_CONFIG.OTHER;
-            
-            // UI loading state
-            const originalBtnText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-            btn.disabled = true;
-            statusEl.textContent = `🔍 Querying ${config.name}...`;
-            statusEl.style.color = "var(--accent-blue)";
-
-            try {
-                const response = await fetch(`${SUPABASE_URL}/functions/v1/enrich-company`, {
-                    method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'apikey': SUPABASE_ANON_KEY
-                    },
-                    body: JSON.stringify({ fiscalId, country })
-                });
-
-                const result = await response.json();
-
-                if (result.success && result.data) {
-                    statusEl.textContent = `✅ Found via ${result.source}! Form auto-filled.`;
-                    statusEl.style.color = "var(--success-green)";
-                    
-                    // Auto-fill fields
-                    const fields = {
-                        'companyName': result.data.name,
-                        'industry': mapIndustry(result.data.industry, result.data.country),
-                    };
-                    
-                    Object.entries(fields).forEach(([id, value]) => {
-                        const el = document.getElementById(id);
-                        if (el && value) {
-                            el.value = value;
-                            el.style.borderColor = "var(--success-green)";
-                            setTimeout(() => el.style.borderColor = "var(--border-color)", 2000);
-                        }
-                    });
-                    
-                } else {
-                    const errorMsg = result.error || `Company not found in ${config.name}`;
-                    statusEl.textContent = `❌ ${errorMsg}`;
-                    statusEl.style.color = "#ef4444";
+            Object.entries(fields).forEach(([id, value]) => {
+                const el = document.getElementById(id);
+                if (el && value) {
+                    el.value = value;
+                    el.style.borderColor = "var(--success-green)";
+                    setTimeout(() => el.style.borderColor = "var(--border-color)", 2000);
                 }
-
-            } catch (error) {
-                console.error('Enrichment error:', error);
-                statusEl.textContent = "❌ Connection error. Please try again.";
-                statusEl.style.color = "#ef4444";
-            } finally {
-                btn.innerHTML = originalBtnText;
-                btn.disabled = false;
-            }
+            });
+            
+        } else {
+            const errorMsg = result.error || `Company not found in ${config.name}`;
+            statusEl.textContent = `❌ ${errorMsg}`;
+            statusEl.style.color = "#ef4444";
         }
+
+    } catch (error) {
+        console.error('Enrichment error:', error);
+        statusEl.textContent = "❌ Connection error. Please try again.";
+        statusEl.style.color = "#ef4444";
+    } finally {
+        btn.innerHTML = originalBtnText;
+        btn.disabled = false;
+    }
+}
 
         // Map industry descriptions to form values
         function mapIndustry(industryDesc, country) {
