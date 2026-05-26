@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- FAVICON Oslo Meet -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" /> 
+    <meta name="theme-color" content="#8b5cf6" />
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard — Oslo Meet</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="View your AI-powered business matches and connections.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
             --dark-bg: #0f172a;
@@ -13,8 +25,8 @@
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
             --border-color: #334155;
-            --accent-purple: #8b5cf6;
             --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
             --success-green: #10b981;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,24 +34,45 @@
             font-family: 'Inter', sans-serif;
             background: var(--dark-bg);
             color: var(--text-primary);
+            line-height: 1.6;
             min-height: 100vh;
+            -webkit-text-size-adjust: 100%;
         }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        /* Language Selector */
+        .language-selector {
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .language-selector select {
+            background: transparent; border: none; color: white;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        }
+        .language-selector select option { background: var(--dark-bg); color: white; }
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
         
         /* Header */
         .dashboard-header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 20px 16px;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 0; border-bottom: 1px solid var(--border-color);
-            margin-bottom: 40px; flex-wrap: wrap; gap: 15px;
+            border-bottom: 1px solid var(--border-color);
         }
-        .dashboard-header h1 { font-size: 1.8rem; }
+        .dashboard-header h1 { font-size: 1.5rem; font-weight: 700; }
         .user-info { display: flex; align-items: center; gap: 15px; }
         .btn-logout {
             padding: 8px 16px; background: transparent; border: 1px solid var(--border-color);
-            color: var(--text-secondary); border-radius: 8px; cursor: pointer;
+            color: var(--text-secondary); border-radius: 8px; cursor: pointer; text-decoration: none;
+            font-size: 0.9rem; transition: all 0.3s;
         }
         .btn-logout:hover { border-color: var(--accent-purple); color: white; }
-        
+
+        /* Container */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
+
         /* Stats Cards */
         .stats-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -51,9 +84,9 @@
         }
         .stat-card h3 { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; }
         .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--accent-purple); }
-        
+
         /* Matches Section */
-        .section-title { font-size: 1.5rem; margin-bottom: 20px; }
+        .section-title { font-size: 1.5rem; margin-bottom: 20px; font-weight: 700; }
         .matches-grid {
             display: grid; grid-template-columns: 1fr; gap: 15px;
         }
@@ -68,7 +101,7 @@
             display: flex; justify-content: space-between; align-items: flex-start;
             margin-bottom: 12px; flex-wrap: wrap; gap: 10px;
         }
-        .match-header h4 { font-size: 1.1rem; }
+        .match-header h4 { font-size: 1.1rem; font-weight: 600; }
         .match-score {
             background: linear-gradient(135deg, var(--success-green), #059669);
             color: white; padding: 4px 12px; border-radius: 20px;
@@ -86,73 +119,131 @@
             width: 100%; margin-top: 15px; padding: 10px;
             background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
             color: white; border: none; border-radius: 8px;
-            font-weight: 600; cursor: pointer;
+            font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; text-align: center;
         }
         .btn-connect:hover { opacity: 0.9; }
-        
-        /* Loading State */
+
+        /* Loading & Empty State */
         .loading { text-align: center; padding: 40px; color: var(--text-secondary); }
         .empty-state {
             text-align: center; padding: 60px 20px; color: var(--text-secondary);
+            background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);
         }
-        .empty-state i { font-size: 3rem; margin-bottom: 20px; opacity: 0.5; }
+        .empty-state i { font-size: 3rem; margin-bottom: 20px; opacity: 0.5; color: var(--accent-purple); }
         
         /* Footer */
-        .dashboard-footer {
-            margin-top: 60px; padding-top: 20px; border-top: 1px solid var(--border-color);
-            text-align: center; color: var(--text-secondary); font-size: 0.9rem;
+        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
+        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
+        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--accent-blue); }
+        .footer-bottom {
+            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            color: var(--text-secondary); font-size: 0.85rem; text-align: center;
         }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
+        .footer-bottom a:hover { color: var(--accent-blue); }
+        .footer-bottom .email-link { color: var(--accent-blue); font-weight: 500; }
+        .developer-credit { color: #fbbf24 !important; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="dashboard-header">
-            <h1>👋 Welcome to Oslo Meet</h1>
-            <div class="user-info">
-                <span id="userEmail">Loading...</span>
-                <button class="btn-logout" onclick="logout()">Logout</button>
-            </div>
-        </header>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
 
+    <!-- Header -->
+    <header class="dashboard-header">
+        <h1 data-i18n="dashTitle">👋 Welcome to Oslo Meet</h1>
+        <div class="user-info">
+            <span id="userEmail">Loading...</span>
+            <a href="index.html" class="btn-logout" data-i18n="btnLogout">Logout</a>
+        </div>
+    </header>
+
+    <div class="container">
         <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
-                <h3>Your Company</h3>
+                <h3 data-i18n="statCompany">Your Company</h3>
                 <div class="value" id="companyName">-</div>
             </div>
             <div class="stat-card">
-                <h3>Matches Found</h3>
+                <h3 data-i18n="statMatches">Matches Found</h3>
                 <div class="value" id="matchCount">0</div>
             </div>
             <div class="stat-card">
-                <h3>Top Match Score</h3>
+                <h3 data-i18n="statTopScore">Top Match Score</h3>
                 <div class="value" id="topScore">0%</div>
             </div>
         </div>
 
         <!-- Matches Section -->
-        <h2 class="section-title">🎯 Recommended Matches</h2>
+        <h2 class="section-title" data-i18n="sectionMatches">🎯 Recommended Matches</h2>
         <div id="matchesContainer" class="matches-grid">
             <div class="loading">
                 <i class="fas fa-spinner fa-spin"></i>
-                <p>Finding your best matches...</p>
+                <p data-i18n="loadingText">Finding your best matches...</p>
             </div>
         </div>
+    </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="#" data-i18n="navAbout">About</a></li>
+                    <li><a href="#" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="footer-bottom">
-    <div class="footer-copyright">
-        &copy; 2026 Oslo Meet
-    </div>
-    <div class="developer-credit">
-        <a href="https://app-algoritmo.github.io/digital-solutions" target="_blank" rel="noopener">
-            <i class="fas fa-code"></i> Digital Solutions
-        </a>
-    </div>
-</div>
-    </div>
+            <div>&copy; 2026 Oslo Meet</div>
+            <div><a href="mailto:post@barros.no" class="email-link">post@barros.no</a></div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
+    </footer>
 
-    <!-- SUPABASE INTEGRATION -->
+    <!-- SUPABASE INTEGRATION SCRIPT -->
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
@@ -164,10 +255,11 @@
         // Load Dashboard Data
         async function loadDashboard() {
             // Em produção: pegar do usuário logado via supabase.auth.getUser()
-            // Por enquanto, pegamos a primeira empresa do banco para teste
+            // Por enquanto, pegamos a primeira empresa do banco para teste (ou a última inserida)
             const { data: companies, error } = await supabase
                 .from('companies')
                 .select('id, name, contact_email')
+                .order('created_at', { ascending: false })
                 .limit(1)
                 .single();
 
@@ -175,9 +267,9 @@
                 document.getElementById('matchesContainer').innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-inbox"></i>
-                        <h3>No company found</h3>
-                        <p>Register your company first to see matches.</p>
-                        <a href="join.html" style="color: var(--accent-purple); display: inline-block; margin-top: 15px;">Go to Registration →</a>
+                        <h3 data-i18n="emptyTitle">No company found</h3>
+                        <p data-i18n="emptyDesc">Register your company first to see matches.</p>
+                        <a href="join.html" style="color: var(--accent-purple); display: inline-block; margin-top: 15px;" data-i18n="btnGoRegister">Go to Registration →</a>
                     </div>
                 `;
                 document.getElementById('userEmail').textContent = 'Not registered';
@@ -187,7 +279,8 @@
             document.getElementById('companyName').textContent = companies.name;
             document.getElementById('userEmail').textContent = companies.contact_email;
 
-            // Buscar matches usando a função SQL
+            // Buscar matches usando a função SQL get_company_matches
+            // Nota: Esta função precisa existir no seu banco de dados Supabase
             const { data: matches, error: matchesError } = await supabase
                 .rpc('get_company_matches', {
                     target_company_id: companies.id,
@@ -199,9 +292,8 @@
                 document.getElementById('matchesContainer').innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-search"></i>
-                        <h3>No matches yet</h3>
-                        <p>As more companies join, you'll see compatible matches here.</p>
-                        <p style="margin-top: 10px; font-size: 0.9rem;">Current companies in database: 1 (you)</p>
+                        <h3 data-i18n="noMatchesTitle">No matches yet</h3>
+                        <p data-i18n="noMatchesDesc">As more companies join, you'll see compatible matches here.</p>
                     </div>
                 `;
                 document.getElementById('matchCount').textContent = '0';
@@ -226,20 +318,85 @@
                         <span class="tag"><i class="fas fa-globe"></i> Cross-border</span>
                     </div>
                     <button class="btn-connect" onclick="alert('Messaging feature coming soon!')">
-                        <i class="fas fa-envelope"></i> Connect
+                        <i class="fas fa-envelope"></i> <span data-i18n="btnConnect">Connect</span>
                     </button>
                 </div>
             `).join('');
         }
 
-        // Logout
-        window.logout = () => {
-            // Em produção: await supabase.auth.signOut()
-            window.location.href = 'index.html';
+        // Initialize
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = saved;
+            changeLanguage(saved);
+            loadDashboard();
+        });
+
+        // Expose functions
+        window.changeLanguage = changeLanguage;
+    </script>
+
+    <!-- TRADUÇÕES (i18n) -->
+    <script>
+        const translations = {
+            en: {
+                dashTitle: "👋 Welcome to Oslo Meet", btnLogout: "Logout",
+                statCompany: "Your Company", statMatches: "Matches Found", statTopScore: "Top Match Score",
+                sectionMatches: "🎯 Recommended Matches", loadingText: "Finding your best matches...",
+                emptyTitle: "No company found", emptyDesc: "Register your company first to see matches.", btnGoRegister: "Go to Registration →",
+                noMatchesTitle: "No matches yet", noMatchesDesc: "As more companies join, you'll see compatible matches here.",
+                btnConnect: "Connect",
+                footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
+                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
+                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
+                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
+            },
+            no: {
+                dashTitle: "👋 Velkommen til Oslo Meet", btnLogout: "Logg ut",
+                statCompany: "Din bedrift", statMatches: "Matcher funnet", statTopScore: "Topp match-score",
+                sectionMatches: "🎯 Anbefalte matcher", loadingText: "Finner dine beste matcher...",
+                emptyTitle: "Ingen bedrift funnet", emptyDesc: "Registrer din bedrift først for å se matcher.", btnGoRegister: "Gå til registrering →",
+                noMatchesTitle: "Ingen matcher ennå", noMatchesDesc: "Etter hvert som flere bedrifter blir med, vil du se kompatible matcher her.",
+                btnConnect: "Koble til",
+                footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
+                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
+                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
+                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
+            },
+            pt: {
+                dashTitle: "👋 Bem-vindo ao Oslo Meet", btnLogout: "Sair",
+                statCompany: "Sua Empresa", statMatches: "Matches Encontrados", statTopScore: "Melhor Score",
+                sectionMatches: "🎯 Matches Recomendados", loadingText: "Encontrando seus melhores matches...",
+                emptyTitle: "Nenhuma empresa encontrada", emptyDesc: "Cadastre sua empresa primeiro para ver matches.", btnGoRegister: "Ir para Cadastro →",
+                noMatchesTitle: "Nenhum match ainda", noMatchesDesc: "À medida que mais empresas entram, você verá matches compatíveis aqui.",
+                btnConnect: "Conectar",
+                footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
+                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
+                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
+            },
+            es: {
+                dashTitle: "👋 Bienvenido a Oslo Meet", btnLogout: "Salir",
+                statCompany: "Tu Empresa", statMatches: "Matches Encontrados", statTopScore: "Mejor Puntuación",
+                sectionMatches: "🎯 Matches Recomendados", loadingText: "Encontrando tus mejores matches...",
+                emptyTitle: "Ninguna empresa encontrada", emptyDesc: "Registra tu empresa primero para ver matches.", btnGoRegister: "Ir a Registro →",
+                noMatchesTitle: "Sin matches aún", noMatchesDesc: "A medida que más empresas se unan, verás matches compatibles aquí.",
+                btnConnect: "Conectar",
+                footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
+                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
+                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
+            }
         };
 
-        // Initialize
-        loadDashboard();
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
     </script>
 </body>
 </html>
