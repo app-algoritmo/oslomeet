@@ -41,15 +41,19 @@
             background: var(--card-bg);
             border-radius: 24px;
             padding: 2.5rem 2rem;
-            max-width: 500px;
+            max-width: 520px;
             width: 100%;
             text-align: center;
             border: 1px solid var(--border-color);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
+            animation: slideUp 0.6s ease-out;
         }
-        /* Confetti Effect (Optional background glow) */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .success-card::before {
             content: '';
             position: absolute;
@@ -57,23 +61,28 @@
             background: linear-gradient(90deg, var(--success-green), #3b82f6, var(--accent-purple));
         }
         .icon-circle {
-            width: 80px; height: 80px;
+            width: 90px; height: 90px;
             background: rgba(16,185,129,0.15);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 1.5rem;
-            font-size: 2.5rem; color: var(--success-green);
+            font-size: 2.8rem; color: var(--success-green);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(16,185,129,0); }
         }
         h1 {
-            font-size: 1.75rem;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #fff, #a5b4fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .subtitle { color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6; }
+        .subtitle { color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6; font-size: 1rem; }
         
-        /* Features List */
+        /* Benefits List */
         .benefits {
             text-align: left;
             background: rgba(255,255,255,0.03);
@@ -106,15 +115,36 @@
             box-shadow: 0 8px 20px rgba(139,92,246,0.4);
         }
         
-        /* Auto-redirect counter */
-        .auto-redirect {
+        /* Progress Bar & Timer */
+        .progress-container {
             margin-top: 1.5rem;
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-green), var(--accent-purple));
+            width: 100%;
+            transition: width 1s linear;
+            border-radius: 3px;
+        }
+        .auto-redirect {
+            margin-top: 0.8rem;
             font-size: 0.85rem;
             color: var(--text-secondary);
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .countdown { color: var(--accent-purple); font-weight: 700; }
+        .countdown { 
+            color: var(--accent-purple); 
+            font-weight: 700; 
+            font-size: 1rem;
+        }
 
-        /* Language Selector (Floating) */
+        /* Language Selector */
         .language-selector {
             position: fixed; top: 12px; right: 12px; z-index: 1000;
             background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
@@ -132,7 +162,6 @@
     </style>
 </head>
 <body>
-    <!-- Language Selector -->
     <div class="language-selector">
         <i class="fas fa-globe"></i>
         <select id="languageSelect" onchange="changeLanguage(this.value)">
@@ -149,7 +178,7 @@
         </div>
         <h1 data-i18n="title">Payment Successful!</h1>
         <p class="subtitle" data-i18n="subtitle">
-            You're officially a Founding Member of Oslo Meet. Your AI-powered dashboard is ready.
+            Welcome to the Founding Members circle. Your AI dashboard is ready to find your perfect business matches.
         </p>
 
         <div class="benefits">
@@ -171,17 +200,20 @@
             <i class="fas fa-rocket"></i> <span data-i18n="btnText">Go to Dashboard</span>
         </a>
 
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
         <div class="auto-redirect">
-            <span data-i18n="redirectText">Redirecting in</span> <span class="countdown" id="countdown">3</span>s
+            <span data-i18n="redirectText">Redirecting in</span>
+            <span class="countdown" id="countdown">10</span>s
         </div>
     </div>
 
     <script>
-        // Translations
         const translations = {
             en: {
                 title: "Payment Successful!",
-                subtitle: "You're officially a Founding Member of Oslo Meet. Your AI-powered dashboard is ready.",
+                subtitle: "Welcome to the Founding Members circle. Your AI dashboard is ready to find your perfect business matches.",
                 benefit1: "Unlimited AI matches unlocked",
                 benefit2: "Direct messaging active",
                 benefit3: "Priority support enabled",
@@ -190,7 +222,7 @@
             },
             no: {
                 title: "Betaling vellykket!",
-                subtitle: "Du er nå et grunnleggermedlem av Oslo Meet. Ditt AI-drevne dashbord er klart.",
+                subtitle: "Velkommen til grunnleggernes sirkel. Ditt AI-dashbord er klart til å finne dine perfekte bedriftsmatcher.",
                 benefit1: "Ubegrensede AI-matcher låst opp",
                 benefit2: "Direktemeldinger aktivert",
                 benefit3: "Prioritert support tilgjengelig",
@@ -199,7 +231,7 @@
             },
             pt: {
                 title: "Pagamento Concluído!",
-                subtitle: "Você é oficialmente um Membro Fundador do Oslo Meet. Seu dashboard com IA está pronto.",
+                subtitle: "Bem-vindo ao círculo dos Membros Fundadores. Seu dashboard com IA está pronto para encontrar seus matches perfeitos.",
                 benefit1: "Matches com IA ilimitados desbloqueados",
                 benefit2: "Mensagens diretas ativas",
                 benefit3: "Suporte prioritário habilitado",
@@ -208,7 +240,7 @@
             },
             es: {
                 title: "¡Pago Exitoso!",
-                subtitle: "Eres oficialmente un Miembro Fundador de Oslo Meet. Tu dashboard con IA está listo.",
+                subtitle: "Bienvenido al círculo de Miembros Fundadores. Tu dashboard con IA está listo para encontrar tus matches perfectos.",
                 benefit1: "Matches con IA ilimitados desbloqueados",
                 benefit2: "Mensajería directa activa",
                 benefit3: "Soporte prioritario habilitado",
@@ -226,13 +258,19 @@
             localStorage.setItem('preferredLanguage', lang);
         }
 
-        // Auto-redirect logic
-        let seconds = 3;
+        // Auto-redirect logic com barra de progresso
+        let seconds = 10;
         const countdownEl = document.getElementById('countdown');
-        
+        const progressBar = document.getElementById('progressBar');
+        const totalSeconds = 10;
+
         const timer = setInterval(() => {
             seconds--;
             countdownEl.textContent = seconds;
+            
+            // Atualizar barra de progresso
+            const progress = (seconds / totalSeconds) * 100;
+            progressBar.style.width = progress + '%';
             
             if (seconds <= 0) {
                 clearInterval(timer);
