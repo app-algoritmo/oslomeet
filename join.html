@@ -272,19 +272,35 @@
                     <h3 class="step-title" data-i18n="step1Title">About Your Company</h3>
                     <p class="step-subtitle" data-i18n="step1Subtitle">Basic information to build your AI profile</p>
                     
-                    <!-- 🌍 COUNTRY SELECTOR + FISCAL ID - NOVO -->
+                    <!-- 🌍 COUNTRY SELECTOR + FISCAL ID - ATUALIZADO COM NOVOS PAÍSES -->
                     <div class="form-group" style="margin-bottom: 1.5rem;">
                         <label data-i18n="labelCountry">Country of Registration <span class="required">*</span></label>
                         <select class="form-control" id="countrySelect" name="country" onchange="updateIdField()" required>
                             <option value="" data-i18n="selectCountry">Select country</option>
+                            
+                            <!-- Países com API funcional (auto-preenchimento) -->
                             <option value="NO">🇳🇴 Norway</option>
                             <option value="BR">🇧🇷 Brazil</option>
-                            <option value="GB">🇬🇧 United Kingdom</option>
+                            
+                            <!-- Países da UE (entrada manual) -->
+                            <option value="ES">🇪🇸 Spain</option>
+                            <option value="PT">🇵🇹 Portugal</option>
+                            <option value="IT">🇮🇹 Italy</option>
+                            <option value="FR">🇫🇷 France</option>
+                            <option value="DE">🇩🇪 Germany</option>
+                            <option value="NL">🇳🇱 Netherlands</option>
+                            <option value="BE">🇧🇪 Belgium</option>
+                            
+                            <!-- Outros países nórdicos/europeus -->
                             <option value="DK">🇩🇰 Denmark</option>
                             <option value="SE">🇸🇪 Sweden</option>
-                            <option value="DE">🇩🇪 Germany</option>
-                            <option value="FR">🇫🇷 France</option>
+                            <option value="FI">🇫🇮 Finland</option>
+                            <option value="GB">🇬🇧 United Kingdom</option>
+                            
+                            <!-- Ásia -->
                             <option value="CN">🇨🇳 China</option>
+                            
+                            <!-- Outros -->
                             <option value="OTHER">🌍 Other / Manual Entry</option>
                         </select>
                     </div>
@@ -566,10 +582,11 @@
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ============================================
-        // 🌍 MULTI-COUNTRY ENRICHMENT SYSTEM (HÍBRIDO)
+        // 🌍 MULTI-COUNTRY ENRICHMENT SYSTEM (HÍBRIDO) - ATUALIZADO
         // ============================================
         
         const COUNTRY_CONFIG = {
+            // ✅ Países com API funcional (auto-preenchimento)
             NO: { 
                 name: 'Organisasjonsnummer', 
                 placeholder: '999 999 999', 
@@ -577,7 +594,7 @@
                 pattern: '[0-9]{9}',
                 hint: 'Norwegian companies', 
                 api: 'bronnoysund',
-                hasAPI: true  // ✅ API funcional
+                hasAPI: true
             },
             BR: { 
                 name: 'CNPJ', 
@@ -586,41 +603,34 @@
                 pattern: '[0-9./-]+',
                 hint: 'Brazilian companies', 
                 api: 'receitaws',
-                hasAPI: true  // ✅ API funcional
+                hasAPI: true
             },
-            GB: { 
-                name: 'Company Number', 
-                placeholder: '00000001', 
-                maxlength: 8, 
-                pattern: '[0-9]{8}',
-                hint: 'UK companies (manual entry)', 
-                api: 'companieshouse',
-                hasAPI: false  // ❌ Requer API key paga
-            },
-            DK: { 
-                name: 'CVR Number', 
-                placeholder: '12345678', 
-                maxlength: 8, 
-                pattern: '[0-9]{8}',
-                hint: 'Danish companies (manual entry)', 
-                api: 'cvr',
-                hasAPI: false  // ❌ Cloudflare block
-            },
-            SE: { 
-                name: 'Organisationsnummer', 
-                placeholder: '556000-0000', 
+            
+            // ❌ Países da UE (entrada manual - sem API gratuita)
+            ES: { 
+                name: 'CIF/NIF', 
+                placeholder: 'A12345678', 
                 maxlength: 10, 
-                pattern: '[0-9-]+',
-                hint: 'Swedish companies (manual entry)', 
-                api: 'bolagsverket',
+                pattern: '[A-Z0-9]+',
+                hint: 'Spanish companies (manual entry)', 
+                api: 'opencorporates',
                 hasAPI: false
             },
-            DE: { 
-                name: 'Handelsregister', 
-                placeholder: 'HRB 12345', 
-                maxlength: 20, 
-                pattern: '.*',
-                hint: 'German companies (manual entry)', 
+            PT: { 
+                name: 'NIPC', 
+                placeholder: '123456789', 
+                maxlength: 9, 
+                pattern: '[0-9]{9}',
+                hint: 'Portuguese companies (manual entry)', 
+                api: 'opencorporates',
+                hasAPI: false
+            },
+            IT: { 
+                name: 'Partita IVA', 
+                placeholder: '12345678901', 
+                maxlength: 11, 
+                pattern: '[0-9]{11}',
+                hint: 'Italian companies (manual entry)', 
                 api: 'opencorporates',
                 hasAPI: false
             },
@@ -633,6 +643,73 @@
                 api: 'opencorporates',
                 hasAPI: false
             },
+            DE: { 
+                name: 'Handelsregister', 
+                placeholder: 'HRB 12345', 
+                maxlength: 20, 
+                pattern: '.*',
+                hint: 'German companies (manual entry)', 
+                api: 'opencorporates',
+                hasAPI: false
+            },
+            NL: { 
+                name: 'KvK Number', 
+                placeholder: '12345678', 
+                maxlength: 8, 
+                pattern: '[0-9]{8}',
+                hint: 'Dutch companies (manual entry)', 
+                api: 'opencorporates',
+                hasAPI: false
+            },
+            BE: { 
+                name: 'Enterprise Number', 
+                placeholder: '0123.456.789', 
+                maxlength: 12, 
+                pattern: '[0-9.]+',
+                hint: 'Belgian companies (manual entry)', 
+                api: 'opencorporates',
+                hasAPI: false
+            },
+            
+            // ❌ Outros países nórdicos/europeus (entrada manual)
+            DK: { 
+                name: 'CVR Number', 
+                placeholder: '12345678', 
+                maxlength: 8, 
+                pattern: '[0-9]{8}',
+                hint: 'Danish companies (manual entry)', 
+                api: 'cvr',
+                hasAPI: false
+            },
+            SE: { 
+                name: 'Organisationsnummer', 
+                placeholder: '556000-0000', 
+                maxlength: 10, 
+                pattern: '[0-9-]+',
+                hint: 'Swedish companies (manual entry)', 
+                api: 'bolagsverket',
+                hasAPI: false
+            },
+            FI: { 
+                name: 'Y-tunnus', 
+                placeholder: '1234567-8', 
+                maxlength: 9, 
+                pattern: '[0-9-]+',
+                hint: 'Finnish companies (manual entry)', 
+                api: 'opencorporates',
+                hasAPI: false
+            },
+            GB: { 
+                name: 'Company Number', 
+                placeholder: '00000001', 
+                maxlength: 8, 
+                pattern: '[0-9]{8}',
+                hint: 'UK companies (manual entry)', 
+                api: 'companieshouse',
+                hasAPI: false
+            },
+            
+            // ❌ Ásia (entrada manual)
             CN: { 
                 name: 'Unified Social Code', 
                 placeholder: '91110000MA0000001X', 
@@ -642,6 +719,8 @@
                 api: 'opencorporates',
                 hasAPI: false
             },
+            
+            // ❌ Outros
             OTHER: { 
                 name: 'Registration ID', 
                 placeholder: 'Enter registration number', 
