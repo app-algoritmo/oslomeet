@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#8b5cf6" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — Oslo Meet</title>
+    <meta name="description" content="Learn about Oslo Meet - AI-powered business connections across Europe, Brazil, China and Nordics.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --success-green: #10b981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .language-selector {
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .language-selector select {
+            background: transparent; border: none; color: white;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        }
+        .language-selector select option { background: var(--dark-bg); color: white; }
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 120px 20px 80px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Sections */
+        .section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .section-subtitle {
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 1.1rem;
+        }
+        
+        /* Mission Cards */
+        .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .mission-card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        .mission-card:hover {
+            border-color: var(--accent-purple);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139,92,246,0.2);
+        }
+        .mission-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .mission-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+        .mission-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Global Coverage */
+        .coverage {
+            background: var(--card-bg);
+            padding: 80px 20px;
+        }
+        .coverage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 40px auto 0;
+        }
+        .coverage-item {
+            text-align: center;
+            padding: 30px;
+        }
+        .coverage-flag {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .coverage-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        .coverage-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Trust Section */
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .trust-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .trust-icon {
+            color: var(--success-green);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .trust-content h4 {
+            margin-bottom: 8px;
+        }
+        .trust-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* Team Section */
+        .team {
+            background: var(--card-bg);
+            padding: 80px 20px;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 40px auto 0;
+        }
+        .team-card {
+            text-align: center;
+        }
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        .team-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .team-role {
+            color: var(--accent-purple);
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .team-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 100px 20px;
+            text-align: center;
+        }
+        .cta h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        .cta p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .btn-primary {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139,92,246,0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            background: #020617;
+            padding: 60px 20px 30px;
+            border-top: 1px solid var(--border-color);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) {
+            .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; }
+        }
+        .footer-brand h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            background: var(--card-bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .footer-social a:hover {
+            background: var(--accent-purple);
+            color: white;
+            transform: translateY(-3px);
+        }
+        .footer-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .footer-links {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--accent-blue);
+        }
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding: 20px 0 0;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .developer-credit {
+            color: #fbbf24 !important;
+            text-decoration: none;
+        }
+        .developer-credit:hover {
+            color: #f59e0b !important;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .section { padding: 60px 20px; }
+            .section-title { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 data-i18n="heroTitle">Connecting Businesses Globally with AI</h1>
+        <p data-i18n="heroSubtitle">Oslo Meet bridges continents and cultures, using intelligent matching to create meaningful B2B partnerships across Europe, Brazil, China, and the Nordics.</p>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="section">
+        <h2 class="section-title" data-i18n="missionTitle">Our Mission</h2>
+        <p class="section-subtitle" data-i18n="missionSubtitle">We're on a journey to make international business connections accessible, intelligent, and successful</p>
+        
+        <div class="mission-grid">
+            <div class="mission-card">
+                <div class="mission-icon">🌍</div>
+                <h3 data-i18n="mission1Title">Cross-Border Partnerships</h3>
+                <p data-i18n="mission1Desc">Breaking down geographical barriers to connect ambitious companies with their perfect international partners.</p>
+            </div>
+            <div class="mission-card">
+                <div class="mission-icon">🤖</div>
+                <h3 data-i18n="mission2Title">AI-Powered Matching</h3>
+                <p data-i18n="mission2Desc">Our intelligent algorithm analyzes hundreds of data points to find compatibility scores above 90%.</p>
+            </div>
+            <div class="mission-card">
+                <div class="mission-icon">🔐</div>
+                <h3 data-i18n="mission3Title">Trusted & Secure</h3>
+                <p data-i18n="mission3Desc">GDPR-compliant platform with verified companies and secure data handling across all jurisdictions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Coverage -->
+    <section class="coverage">
+        <div class="section" style="padding-top:0;padding-bottom:0;">
+            <h2 class="section-title" data-i18n="coverageTitle">Global Coverage, Local Expertise</h2>
+            <p class="section-subtitle" data-i18n="coverageSubtitle">Integrated with official business registries for accurate, verified company data</p>
+            
+            <div class="coverage-grid">
+                <div class="coverage-item">
+                    <div class="coverage-flag">🇳🇴</div>
+                    <h4>Norway</h4>
+                    <p>Brønnøysundregistrene</p>
+                </div>
+                <div class="coverage-item">
+                    <div class="coverage-flag">🇧🇷</div>
+                    <h4>Brazil</h4>
+                    <p>Receita Federal WS</p>
+                </div>
+                <div class="coverage-item">
+                    <div class="coverage-flag">🇬🇧</div>
+                    <h4>United Kingdom</h4>
+                    <p>Companies House</p>
+                </div>
+                <div class="coverage-item">
+                    <div class="coverage-flag">🇪🇺</div>
+                    <h4>Europe</h4>
+                    <p>GDPR Compliant</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="section">
+        <h2 class="section-title" data-i18n="trustTitle">Why Companies Trust Oslo Meet</h2>
+        <p class="section-subtitle" data-i18n="trustSubtitle">Built on principles of transparency, security, and results</p>
+        
+        <div class="trust-grid">
+            <div class="trust-item">
+                <i class="fas fa-check-circle trust-icon"></i>
+                <div class="trust-content">
+                    <h4 data-i18n="trust1Title">Verified Companies</h4>
+                    <p data-i18n="trust1Desc">Every company is validated through official government registries and business databases.</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-shield-alt trust-icon"></i>
+                <div class="trust-content">
+                    <h4 data-i18n="trust2Title">Data Protection</h4>
+                    <p data-i18n="trust2Desc">Enterprise-grade encryption and full GDPR compliance for European operations.</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-brain trust-icon"></i>
+                <div class="trust-content">
+                    <h4 data-i18n="trust3Title">Smart Matching</h4>
+                    <p data-i18n="trust3Desc">AI analyzes industry, size, goals, and culture to find truly compatible partners.</p>
+                </div>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-comments trust-icon"></i>
+                <div class="trust-content">
+                    <h4 data-i18n="trust4Title">Direct Communication</h4>
+                    <p data-i18n="trust4Desc">Secure messaging platform to connect and negotiate directly with matches.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+        <div class="section" style="padding-top:0;padding-bottom:0;">
+            <h2 class="section-title" data-i18n="teamTitle">Founded in Oslo, Built for the World</h2>
+            <p class="section-subtitle" data-i18n="teamSubtitle">A team passionate about international business and technology</p>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">OM</div>
+                    <h4 data-i18n="founder1Name">Oslo Meet Team</h4>
+                    <div class="team-role" data-i18n="founder1Role">Founding Team</div>
+                    <p data-i18n="founder1Bio">Dedicated to creating meaningful business connections across borders through innovative technology and deep market understanding.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <h2 data-i18n="ctaTitle">Ready to Expand Your Business Globally?</h2>
+        <p data-i18n="ctaSubtitle">Join Oslo Meet today and discover your perfect international business partners</p>
+        <a href="join.html" class="btn-primary" data-i18n="ctaButton">Join Now — It's Free</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
+                <div class="footer-social">
+                    <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+                    <li><a href="dashboard.html" data-i18n="navDashboard">Dashboard</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html" data-i18n="navAbout">About</a></li>
+                    <li><a href="insights.html" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                    <li><a href="support.html" data-i18n="navSupport">Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Oslo Meet</div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            en: {
+                heroTitle: "Connecting Businesses Globally with AI",
+                heroSubtitle: "Oslo Meet bridges continents and cultures, using intelligent matching to create meaningful B2B partnerships across Europe, Brazil, China, and the Nordics.",
+                missionTitle: "Our Mission",
+                missionSubtitle: "We're on a journey to make international business connections accessible, intelligent, and successful",
+                mission1Title: "Cross-Border Partnerships",
+                mission1Desc: "Breaking down geographical barriers to connect ambitious companies with their perfect international partners.",
+                mission2Title: "AI-Powered Matching",
+                mission2Desc: "Our intelligent algorithm analyzes hundreds of data points to find compatibility scores above 90%.",
+                mission3Title: "Trusted & Secure",
+                mission3Desc: "GDPR-compliant platform with verified companies and secure data handling across all jurisdictions.",
+                coverageTitle: "Global Coverage, Local Expertise",
+                coverageSubtitle: "Integrated with official business registries for accurate, verified company data",
+                trustTitle: "Why Companies Trust Oslo Meet",
+                trustSubtitle: "Built on principles of transparency, security, and results",
+                trust1Title: "Verified Companies",
+                trust1Desc: "Every company is validated through official government registries and business databases.",
+                trust2Title: "Data Protection",
+                trust2Desc: "Enterprise-grade encryption and full GDPR compliance for European operations.",
+                trust3Title: "Smart Matching",
+                trust3Desc: "AI analyzes industry, size, goals, and culture to find truly compatible partners.",
+                trust4Title: "Direct Communication",
+                trust4Desc: "Secure messaging platform to connect and negotiate directly with matches.",
+                teamTitle: "Founded in Oslo, Built for the World",
+                teamSubtitle: "A team passionate about international business and technology",
+                founder1Name: "Oslo Meet Team",
+                founder1Role: "Founding Team",
+                founder1Bio: "Dedicated to creating meaningful business connections across borders through innovative technology and deep market understanding.",
+                ctaTitle: "Ready to Expand Your Business Globally?",
+                ctaSubtitle: "Join Oslo Meet today and discover your perfect international business partners",
+                ctaButton: "Join Now — It's Free",
+                footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
+                navPlatform: "Platform",
+                navHome: "Home",
+                navHow: "How Matching Works",
+                navJoin: "Join Now",
+                navPricing: "Pricing",
+                navDashboard: "Dashboard",
+                navCompany: "Company",
+                navAbout: "About",
+                navBlog: "Insights",
+                navContact: "Contact",
+                navSupport: "Support",
+                navLegal: "Legal",
+                navTerms: "Terms",
+                navPrivacy: "Privacy",
+                navCookies: "Cookies",
+                navGDPR: "GDPR Rights"
+            },
+            no: {
+                heroTitle: "Kobler bedrifter globalt med AI",
+                heroSubtitle: "Oslo Meet bygger bro mellom kontinenter og kulturer, og bruker intelligent matching for å skape meningsfulle B2B-partnerskap på tvers av Europa, Brasil, Kina og Norden.",
+                missionTitle: "Vår Misjon",
+                missionSubtitle: "Vi er på en reise for å gjøre internasjonale forretningsforbindelser tilgjengelige, intelligente og vellykkede",
+                mission1Title: "Grenseoverskridende Partnerskap",
+                mission1Desc: "Bryter ned geografiske barrierer for å koble ambisiøse bedrifter med deres perfekte internasjonale partnere.",
+                mission2Title: "AI-Drevet Matching",
+                mission2Desc: "Vår intelligente algoritme analyserer hundrevis av datapunkter for å finne kompatibilitetsscore over 90%.",
+                mission3Title: "Pålitelig & Sikker",
+                mission3Desc: "GDPR-kompatibel plattform med verifiserte bedrifter og sikker datahåndtering på tvers av alle jurisdiksjoner.",
+                coverageTitle: "Global Dekning, Lokal Ekspertise",
+                coverageSubtitle: "Integrert med offisielle foretaksregistre for nøyaktige, verifiserte bedriftsdata",
+                trustTitle: "Hvorfor Bedrifter Stoler på Oslo Meet",
+                trustSubtitle: "Bygd på prinsipper om transparens, sikkerhet og resultater",
+                trust1Title: "Verifiserte Bedrifter",
+                trust1Desc: "Hver bedrift er validert gjennom offisielle offentlige registre og forretningsdatabaser.",
+                trust2Title: "Databeskyttelse",
+                trust2Desc: "Kryptering på bedriftsnivå og full GDPR-overholdelse for europeiske operasjoner.",
+                trust3Title: "Smart Matching",
+                trust3Desc: "AI analyserer bransje, størrelse, mål og kultur for å finne virkelig kompatible partnere.",
+                trust4Title: "Direkte Kommunikasjon",
+                trust4Desc: "Sikker meldingsplattform for å koble og forhandle direkte med matcher.",
+                teamTitle: "Grunnlagt i Oslo, Bygd for Verden",
+                teamSubtitle: "Et team lidenskapelig opptatt av internasjonal forretning og teknologi",
+                founder1Name: "Oslo Meet Team",
+                founder1Role: "Grunnleggerteam",
+                founder1Bio: "Dedikert til å skape meningsfulle forretningsforbindelser på tvers av grenser gjennom innovativ teknologi og dyp markedskunnskap.",
+                ctaTitle: "Klar til å Utvide Din Bedrift Globalt?",
+                ctaSubtitle: "Bli med i Oslo Meet i dag og oppdag dine perfekte internasjonale forretningspartnere",
+                ctaButton: "Bli Med Nå — Det Er Gratis",
+                footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
+                navPlatform: "Plattform",
+                navHome: "Hjem",
+                navHow: "Hvordan Matching Virker",
+                navJoin: "Bli Med Nå",
+                navPricing: "Priser",
+                navDashboard: "Dashbord",
+                navCompany: "Selskap",
+                navAbout: "Om",
+                navBlog: "Innsikt",
+                navContact: "Kontakt",
+                navSupport: "Støtte",
+                navLegal: "Juridisk",
+                navTerms: "Vilkår",
+                navPrivacy: "Personvern",
+                navCookies: "Cookies",
+                navGDPR: "GDPR-rettigheter"
+            },
+            pt: {
+                heroTitle: "Conectando Empresas Globalmente com IA",
+                heroSubtitle: "Oslo Meet une continentes e culturas, usando matching inteligente para criar parcerias B2B significativas através da Europa, Brasil, China e Nórdicos.",
+                missionTitle: "Nossa Missão",
+                missionSubtitle: "Estamos em uma jornada para tornar conexões empresariais internacionais acessíveis, inteligentes e bem-sucedidas",
+                mission1Title: "Parcerias Cross-Border",
+                mission1Desc: "Quebrando barreiras geográficas para conectar empresas ambiciosas com seus parceiros internacionais perfeitos.",
+                mission2Title: "Matching com IA",
+                mission2Desc: "Nosso algoritmo inteligente analisa centenas de pontos de dados para encontrar scores de compatibilidade acima de 90%.",
+                mission3Title: "Confiável & Seguro",
+                mission3Desc: "Plataforma GDPR-compliant com empresas verificadas e manuseio seguro de dados em todas as jurisdições.",
+                coverageTitle: "Cobertura Global, Expertise Local",
+                coverageSubtitle: "Integrado com registros oficiais de empresas para dados precisos e verificados",
+                trustTitle: "Por Que Empresas Confiar na Oslo Meet",
+                trustSubtitle: "Construído sobre princípios de transparência, segurança e resultados",
+                trust1Title: "Empresas Verificadas",
+                trust1Desc: "Cada empresa é validada através de registros governamentais oficiais e bancos de dados empresariais.",
+                trust2Title: "Proteção de Dados",
+                trust2Desc: "Criptografia de nível empresarial e total conformidade GDPR para operações europeias.",
+                trust3Title: "Matching Inteligente",
+                trust3Desc: "IA analisa indústria, tamanho, objetivos e cultura para encontrar parceiros verdadeiramente compatíveis.",
+                trust4Title: "Comunicação Direta",
+                trust4Desc: "Plataforma de mensagens segura para conectar e negociar diretamente com matches.",
+                teamTitle: "Fundada em Oslo, Construída para o Mundo",
+                teamSubtitle: "Uma equipe apaixonada por negócios internacionais e tecnologia",
+                founder1Name: "Time Oslo Meet",
+                founder1Role: "Time Fundador",
+                founder1Bio: "Dedicado a criar conexões empresariais significativas através de fronteiras através de tecnologia inovadora e profundo entendimento de mercado.",
+                ctaTitle: "Pronto para Expandir Seu Negócio Globalmente?",
+                ctaSubtitle: "Junte-se à Oslo Meet hoje e descubra seus parceiros de negócios internacionais perfeitos",
+                ctaButton: "Entrar Agora — É Grátis",
+                footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
+                navPlatform: "Plataforma",
+                navHome: "Início",
+                navHow: "Como Funciona",
+                navJoin: "Entrar Agora",
+                navPricing: "Preços",
+                navDashboard: "Dashboard",
+                navCompany: "Empresa",
+                navAbout: "Sobre",
+                navBlog: "Insights",
+                navContact: "Contato",
+                navSupport: "Suporte",
+                navLegal: "Legal",
+                navTerms: "Termos",
+                navPrivacy: "Privacidade",
+                navCookies: "Cookies",
+                navGDPR: "Direitos GDPR"
+            },
+            es: {
+                heroTitle: "Conectando Empresas Globalmente con IA",
+                heroSubtitle: "Oslo Meet une continentes y culturas, usando matching inteligente para crear asociaciones B2B significativas a través de Europa, Brasil, China y Nórdicos.",
+                missionTitle: "Nuestra Misión",
+                missionSubtitle: "Estamos en un viaje para hacer que las conexiones empresariales internacionales sean accesibles, inteligentes y exitosas",
+                mission1Title: "Asociaciones Transfronterizas",
+                mission1Desc: "Rompiendo barreras geográficas para conectar empresas ambiciosas con sus socios internacionales perfectos.",
+                mission2Title: "Matching Impulsado por IA",
+                mission2Desc: "Nuestro algoritmo inteligente analiza cientos de puntos de datos para encontrar puntuaciones de compatibilidad superiores al 90%.",
+                mission3Title: "Confiable y Seguro",
+                mission3Desc: "Plataforma compatible con GDPR con empresas verificadas y manejo seguro de datos en todas las jurisdicciones.",
+                coverageTitle: "Cobertura Global, Experiencia Local",
+                coverageSubtitle: "Integrado con registros oficiales de empresas para datos precisos y verificados",
+                trustTitle: "Por Qué las Empresas Confían en Oslo Meet",
+                trustSubtitle: "Construido sobre principios de transparencia, seguridad y resultados",
+                trust1Title: "Empresas Verificadas",
+                trust1Desc: "Cada empresa está validada a través de registros gubernamentales oficiales y bases de datos empresariales.",
+                trust2Title: "Protección de Datos",
+                trust2Desc: "Cifrado de nivel empresarial y total cumplimiento de GDPR para operaciones europeas.",
+                trust3Title: "Matching Inteligente",
+                trust3Desc: "La IA analiza industria, tamaño, objetivos y cultura para encontrar socios verdaderamente compatibles.",
+                trust4Title: "Comunicación Directa",
+                trust4Desc: "Plataforma de mensajería segura para conectar y negociar directamente con matches.",
+                teamTitle: "Fundada en Oslo, Construida para el Mundo",
+                teamSubtitle: "Un equipo apasionado por los negocios internacionales y la tecnología",
+                founder1Name: "Equipo Oslo Meet",
+                founder1Role: "Equipo Fundador",
+                founder1Bio: "Dedicado a crear conexiones empresariales significativas a través de fronteras a través de tecnología innovadora y profundo conocimiento del mercado.",
+                ctaTitle: "¿Listo para Expandir Tu Negocio Globalmente?",
+                ctaSubtitle: "Únete a Oslo Meet hoy y descubre tus socios comerciales internacionales perfectos",
+                ctaButton: "Unirse Ahora — Es Gratis",
+                footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
+                navPlatform: "Plataforma",
+                navHome: "Inicio",
+                navHow: "Cómo Funciona el Matching",
+                navJoin: "Unirse Ahora",
+                navPricing: "Precios",
+                navDashboard: "Dashboard",
+                navCompany: "Empresa",
+                navAbout: "Sobre",
+                navBlog: "Insights",
+                navContact: "Contacto",
+                navSupport: "Soporte",
+                navLegal: "Legal",
+                navTerms: "Términos",
+                navPrivacy: "Privacidad",
+                navCookies: "Cookies",
+                navGDPR: "Derechos GDPR"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang]?.[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = translations[lang][key];
+                    } else {
+                        el.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = saved;
+            changeLanguage(saved);
+        });
+    </script>
+</body>
+</html>
