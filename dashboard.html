@@ -59,40 +59,19 @@
         }
         .dashboard-header h1 { font-size: 1.5rem; font-weight: 700; }
         .user-info { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
-        
-        /* Ícone de Mensagens */
         .btn-icon {
-            padding: 8px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--text-secondary);
-            transition: color 0.3s;
-            border-radius: 8px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 8px; background: none; border: none; cursor: pointer;
+            color: var(--text-secondary); transition: color 0.3s; border-radius: 8px;
+            position: relative; display: flex; align-items: center; justify-content: center;
         }
         .btn-icon:hover { color: var(--accent-purple); background: rgba(139,92,246,0.1); }
         .msg-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: #ef4444;
-            color: white;
-            font-size: 0.65rem;
-            font-weight: 700;
-            padding: 2px 5px;
-            border-radius: 10px;
-            min-width: 18px;
-            text-align: center;
-            line-height: 1;
-            display: none;
+            position: absolute; top: 0; right: 0; background: #ef4444; color: white;
+            font-size: 0.65rem; font-weight: 700; padding: 2px 5px; border-radius: 10px;
+            min-width: 18px; text-align: center; line-height: 1; display: none;
         }
         .msg-badge.show { display: block; animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
-        
         .btn-logout {
             padding: 8px 16px; background: transparent;
             border: 1px solid var(--border-color); color: var(--text-secondary);
@@ -165,7 +144,6 @@
     </style>
 </head>
 <body>
-    <!-- Language Selector -->
     <div class="language-selector">
         <i class="fas fa-globe"></i>
         <select id="languageSelect" onchange="changeLanguage(this.value)">
@@ -176,11 +154,9 @@
         </select>
     </div>
 
-    <!-- Header -->
     <header class="dashboard-header">
         <h1 data-i18n="dashTitle">👋 Welcome to Oslo Meet</h1>
         <div class="user-info">
-            <!-- Ícone de Mensagens com Badge -->
             <button onclick="openMessages()" class="btn-icon" title="Mensagens">
                 <i class="fas fa-envelope" style="font-size:1.1rem;"></i>
                 <span id="msgBadge" class="msg-badge">0</span>
@@ -190,9 +166,7 @@
         </div>
     </header>
 
-    <!-- Container Principal -->
     <div class="container">
-        <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card">
                 <h3 data-i18n="statCompany">Your Company</h3>
@@ -208,7 +182,6 @@
             </div>
         </div>
 
-        <!-- Matches Section -->
         <h2 class="section-title" data-i18n="sectionMatches">🎯 Recommended Matches</h2>
         <div id="matchesContainer" class="matches-grid">
             <div class="loading">
@@ -218,7 +191,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-grid">
             <div class="footer-brand">
@@ -258,14 +230,13 @@
         </div>
     </footer>
 
-    <!-- SCRIPT PRINCIPAL -->
     <script>
-        const SUPABASE_URL = 'https://mrparduxlvvflasgefpt.supabase.co';
+        // ✅ URL CORRETA — lvy (não lvv)
+        const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
         const { createClient } = window.supabase;
         const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Estado global
         let currentCompany = null;
         let messagesSubscription = null;
 
@@ -282,113 +253,60 @@
             window.location.replace('login.html');
         }
 
-        // ABRIR PÁGINA DE MENSAGENS
         function openMessages() {
             window.location.href = 'messages.html';
         }
 
-        // INICIAR CONVERSA COM MATCH
         async function startConversation(matchedCompanyId, matchedCompanyName) {
-            if (!currentCompany) {
-                alert('Carregando dados da empresa...');
-                return;
-            }
-            
+            if (!currentCompany) { alert('Carregando dados da empresa...'); return; }
             try {
-                // Criar ou obter ID da conversa (ordem consistente: menor ID primeiro)
                 const idA = currentCompany.id < matchedCompanyId ? currentCompany.id : matchedCompanyId;
                 const idB = currentCompany.id > matchedCompanyId ? currentCompany.id : matchedCompanyId;
-                
-                // Tenta encontrar conversa existente
-                const { data: existing } = await db
-                    .from('conversations')
-                    .select('id')
-                    .eq('company_a_id', idA)
-                    .eq('company_b_id', idB)
-                    .maybeSingle();
-                
+                const { data: existing } = await db.from('conversations').select('id').eq('company_a_id', idA).eq('company_b_id', idB).maybeSingle();
                 let convId;
                 if (existing) {
                     convId = existing.id;
                 } else {
-                    // Cria nova conversa
-                    const { data: newConv, error: convError } = await db
-                        .from('conversations')
-                        .insert({ company_a_id: idA, company_b_id: idB })
-                        .select('id')
-                        .single();
-                    
+                    const { data: newConv, error: convError } = await db.from('conversations').insert({ company_a_id: idA, company_b_id: idB }).select('id').single();
                     if (convError) throw convError;
                     convId = newConv.id;
                 }
-                
-                // Redireciona para página de mensagens
                 window.location.href = `messages.html?conv=${convId}`;
-                
             } catch (err) {
                 console.error('Erro ao iniciar conversa:', err);
                 alert('Erro ao conectar. Tente novamente.');
             }
         }
 
-        // ATUALIZAR BADGE DE MENSAGENS
         async function updateMessageBadge() {
             if (!currentCompany) return;
-            
             const badge = document.getElementById('msgBadge');
-            
             try {
-                // Contar mensagens não lidas enviadas POR OUTROS para conversas do usuário
-                const { count, error } = await db
-                    .from('messages')
+                const { count, error } = await db.from('messages')
                     .select('*', { count: 'exact', head: true })
-                    .in('conversation_id', 
-                        db.from('conversations')
-                          .select('id')
-                          .or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`)
+                    .in('conversation_id',
+                        db.from('conversations').select('id').or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`)
                     )
                     .eq('is_read', false)
                     .neq('sender_company_id', currentCompany.id);
-                
                 if (error) throw error;
-                
                 if (count > 0) {
                     badge.textContent = count > 99 ? '99+' : count;
                     badge.classList.add('show');
                 } else {
                     badge.classList.remove('show');
                 }
-            } catch (err) {
-                console.warn('Erro ao atualizar badge:', err);
-            }
+            } catch (err) { console.warn('Erro ao atualizar badge:', err); }
         }
 
-        // CONFIGURAR REAL-TIME PARA BADGE
         function setupMessagesRealtime() {
-            messagesSubscription = db
-                .channel('dashboard_messages')
-                .on('postgres_changes', {
-                    event: 'INSERT',
-                    schema: 'public',
-                    table: 'messages',
-                    filter: `sender_company_id.neq.${currentCompany?.id || ''}`
-                }, () => {
-                    updateMessageBadge();
-                })
-                .on('postgres_changes', {
-                    event: 'UPDATE',
-                    schema: 'public',
-                    table: 'messages',
-                    filter: `is_read=eq.true`
-                }, () => {
-                    updateMessageBadge();
-                })
+            messagesSubscription = db.channel('dashboard_messages')
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `sender_company_id.neq.${currentCompany?.id || ''}` }, () => { updateMessageBadge(); })
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages', filter: `is_read=eq.true` }, () => { updateMessageBadge(); })
                 .subscribe();
         }
 
-        // CARREGAR DASHBOARD
         async function loadDashboard() {
-            // Auth Guard
             const { data: { session } } = await db.auth.getSession();
             if (!session) {
                 window.location.replace('login.html');
@@ -397,9 +315,7 @@
 
             document.getElementById('userEmail').textContent = session.user.email;
 
-            // Buscar empresa do usuário
             let company = await db.from('companies').select('id, name, contact_email').eq('user_id', session.user.id).maybeSingle().then(r => r.data);
-            
             if (!company) {
                 company = await db.from('companies').select('id, name, contact_email').eq('contact_email', session.user.email).maybeSingle().then(r => r.data);
             }
@@ -418,11 +334,8 @@
             currentCompany = company;
             document.getElementById('companyName').textContent = company.name;
 
-            // Carregar matches
             const { data: matches } = await db.rpc('get_company_matches', {
-                target_company_id: company.id,
-                match_limit: 10,
-                min_score: 0.3
+                target_company_id: company.id, match_limit: 10, min_score: 0.3
             });
 
             if (!matches || matches.length === 0) {
@@ -436,7 +349,6 @@
             } else {
                 document.getElementById('matchCount').textContent = matches.length;
                 document.getElementById('topScore').textContent = Math.round(matches[0].compatibility_score * 100) + '%';
-                
                 document.getElementById('matchesContainer').innerHTML = matches.map(match => `
                     <div class="match-card">
                         <div class="match-header">
@@ -454,12 +366,10 @@
                     </div>`).join('');
             }
 
-            // Atualizar badge de mensagens
             await updateMessageBadge();
             setupMessagesRealtime();
         }
 
-        // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
@@ -467,13 +377,11 @@
             loadDashboard();
         });
 
-        // Cleanup ao sair da página
         window.addEventListener('beforeunload', () => {
             if (messagesSubscription) db.removeChannel(messagesSubscription);
         });
     </script>
 
-    <!-- TRADUÇÕES -->
     <script>
         const translations = {
             en: {
