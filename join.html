@@ -566,25 +566,101 @@
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ============================================
-        // 🌍 MULTI-COUNTRY ENRICHMENT SYSTEM
+        // 🌍 MULTI-COUNTRY ENRICHMENT SYSTEM (HÍBRIDO)
         // ============================================
         
         const COUNTRY_CONFIG = {
-            NO: { name: 'Organisasjonsnummer', placeholder: '999 999 999', maxlength: 9, pattern: '[0-9]{9}', hint: 'Norwegian companies', api: 'bronnoysund' },
-            BR: { name: 'CNPJ', placeholder: '00.000.000/0001-91', maxlength: 18, pattern: '[0-9./-]+', hint: 'Brazilian companies', api: 'receitaws' },
-            GB: { name: 'Company Number', placeholder: '00000001', maxlength: 8, pattern: '[0-9]{8}', hint: 'UK companies', api: 'companieshouse' },
-            DK: { name: 'CVR Number', placeholder: '12345678', maxlength: 8, pattern: '[0-9]{8}', hint: 'Danish companies', api: 'cvr' },
-            SE: { name: 'Organisationsnummer', placeholder: '556000-0000', maxlength: 10, pattern: '[0-9-]+', hint: 'Swedish companies', api: 'bolagsverket' },
-            CN: { name: 'Unified Social Code', placeholder: '91110000MA0000001X', maxlength: 18, pattern: '[A-Z0-9]+', hint: 'Chinese companies', api: 'opencorporates' },
-            OTHER: { name: 'Registration ID', placeholder: 'Enter registration number', maxlength: 30, pattern: '.*', hint: 'Optional', api: 'opencorporates' }
+            NO: { 
+                name: 'Organisasjonsnummer', 
+                placeholder: '999 999 999', 
+                maxlength: 9, 
+                pattern: '[0-9]{9}',
+                hint: 'Norwegian companies', 
+                api: 'bronnoysund',
+                hasAPI: true  // ✅ API funcional
+            },
+            BR: { 
+                name: 'CNPJ', 
+                placeholder: '00.000.000/0001-91', 
+                maxlength: 18, 
+                pattern: '[0-9./-]+',
+                hint: 'Brazilian companies', 
+                api: 'receitaws',
+                hasAPI: true  // ✅ API funcional
+            },
+            GB: { 
+                name: 'Company Number', 
+                placeholder: '00000001', 
+                maxlength: 8, 
+                pattern: '[0-9]{8}',
+                hint: 'UK companies (manual entry)', 
+                api: 'companieshouse',
+                hasAPI: false  // ❌ Requer API key paga
+            },
+            DK: { 
+                name: 'CVR Number', 
+                placeholder: '12345678', 
+                maxlength: 8, 
+                pattern: '[0-9]{8}',
+                hint: 'Danish companies (manual entry)', 
+                api: 'cvr',
+                hasAPI: false  // ❌ Cloudflare block
+            },
+            SE: { 
+                name: 'Organisationsnummer', 
+                placeholder: '556000-0000', 
+                maxlength: 10, 
+                pattern: '[0-9-]+',
+                hint: 'Swedish companies (manual entry)', 
+                api: 'bolagsverket',
+                hasAPI: false
+            },
+            DE: { 
+                name: 'Handelsregister', 
+                placeholder: 'HRB 12345', 
+                maxlength: 20, 
+                pattern: '.*',
+                hint: 'German companies (manual entry)', 
+                api: 'opencorporates',
+                hasAPI: false
+            },
+            FR: { 
+                name: 'SIREN/SIRET', 
+                placeholder: '123 456 789', 
+                maxlength: 14, 
+                pattern: '[0-9 ]+',
+                hint: 'French companies (manual entry)', 
+                api: 'opencorporates',
+                hasAPI: false
+            },
+            CN: { 
+                name: 'Unified Social Code', 
+                placeholder: '91110000MA0000001X', 
+                maxlength: 18, 
+                pattern: '[A-Z0-9]+',
+                hint: 'Chinese companies (manual entry)', 
+                api: 'opencorporates',
+                hasAPI: false
+            },
+            OTHER: { 
+                name: 'Registration ID', 
+                placeholder: 'Enter registration number', 
+                maxlength: 30, 
+                pattern: '.*',
+                hint: 'Optional', 
+                api: 'opencorporates',
+                hasAPI: false
+            }
         };
 
         function updateIdField() {
             const country = document.getElementById('countrySelect').value;
             const container = document.getElementById('idFieldContainer');
+            const btn = document.getElementById('enrichBtn');
             const label = document.getElementById('idFieldName');
             const hint = document.getElementById('idFieldHint');
             const input = document.getElementById('fiscalIdInput');
+            const statusEl = document.getElementById('orgStatus');
             
             if (!country || country === 'OTHER') {
                 container.style.display = 'none';
@@ -600,7 +676,18 @@
             input.maxLength = config.maxlength;
             input.pattern = config.pattern;
             input.value = '';
-            document.getElementById('orgStatus').textContent = '';
+            
+            // ✅ LÓGICA HÍBRIDA: Mostrar/esconder botão baseado em hasAPI
+            if (config.hasAPI) {
+                btn.style.display = 'block';
+                btn.disabled = false;
+                statusEl.textContent = '';
+                statusEl.style.color = 'var(--text-secondary)';
+            } else {
+                btn.style.display = 'none';
+                statusEl.textContent = '💡 Manual entry - fill company details below';
+                statusEl.style.color = 'var(--text-secondary)';
+            }
         }
 
         // CNPJ masking for Brazil
@@ -618,79 +705,87 @@
 
         // Main enrichment function
         async function enrichCompany() {
-    const country = document.getElementById('countrySelect').value;
-    const fiscalId = document.getElementById('fiscalIdInput').value.trim();
-    const statusEl = document.getElementById('orgStatus');
-    const btn = document.getElementById('enrichBtn');
-    
-    if (!country) {
-        statusEl.textContent = "⚠️ Please select a country first";
-        statusEl.style.color = "#f59e0b";
-        return;
-    }
-    
-    if (!fiscalId) {
-        statusEl.textContent = "⚠️ Please enter a registration number";
-        statusEl.style.color = "#f59e0b";
-        return;
-    }
-
-    const config = COUNTRY_CONFIG[country] || COUNTRY_CONFIG.OTHER;
-    
-    // UI loading state
-    const originalBtnText = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
-    btn.disabled = true;
-    statusEl.textContent = `🔍 Querying ${config.name}...`;
-    statusEl.style.color = "var(--accent-blue)";
-
-    try {
-        const response = await fetch(`${SUPABASE_URL}/functions/v1/enrich-company`, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'apikey': SUPABASE_ANON_KEY,  // ✅ Header correto
-                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`  // ✅ Adicionado
-            },
-            body: JSON.stringify({ fiscalId, country })
-        });
-
-        const result = await response.json();
-
-        if (result.success && result.data) {
-            statusEl.textContent = `✅ Found via ${result.source}! Form auto-filled.`;
-            statusEl.style.color = "var(--success-green)";
+            const country = document.getElementById('countrySelect').value;
+            const fiscalId = document.getElementById('fiscalIdInput').value.trim();
+            const statusEl = document.getElementById('orgStatus');
+            const btn = document.getElementById('enrichBtn');
             
-            // Auto-fill fields
-            const fields = {
-                'companyName': result.data.name,
-                'industry': mapIndustry(result.data.industry, result.data.country),
-            };
+            // ✅ Verificação extra: bloquear busca se país não tem API
+            const config = COUNTRY_CONFIG[country];
+            if (config && !config.hasAPI) {
+                statusEl.textContent = '❌ Auto-search not available for this country. Please fill manually.';
+                statusEl.style.color = '#f59e0b';
+                return;
+            }
             
-            Object.entries(fields).forEach(([id, value]) => {
-                const el = document.getElementById(id);
-                if (el && value) {
-                    el.value = value;
-                    el.style.borderColor = "var(--success-green)";
-                    setTimeout(() => el.style.borderColor = "var(--border-color)", 2000);
+            if (!country) {
+                statusEl.textContent = "⚠️ Please select a country first";
+                statusEl.style.color = "#f59e0b";
+                return;
+            }
+            
+            if (!fiscalId) {
+                statusEl.textContent = "⚠️ Please enter a registration number";
+                statusEl.style.color = "#f59e0b";
+                return;
+            }
+
+            const apiConfig = COUNTRY_CONFIG[country] || COUNTRY_CONFIG.OTHER;
+            
+            // UI loading state
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+            btn.disabled = true;
+            statusEl.textContent = `🔍 Querying ${apiConfig.name}...`;
+            statusEl.style.color = "var(--accent-blue)";
+
+            try {
+                const response = await fetch(`${SUPABASE_URL}/functions/v1/enrich-company`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    },
+                    body: JSON.stringify({ fiscalId, country })
+                });
+
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    statusEl.textContent = `✅ Found via ${result.source}! Form auto-filled.`;
+                    statusEl.style.color = "var(--success-green)";
+                    
+                    // Auto-fill fields
+                    const fields = {
+                        'companyName': result.data.name,
+                        'industry': mapIndustry(result.data.industry, result.data.country),
+                    };
+                    
+                    Object.entries(fields).forEach(([id, value]) => {
+                        const el = document.getElementById(id);
+                        if (el && value) {
+                            el.value = value;
+                            el.style.borderColor = "var(--success-green)";
+                            setTimeout(() => el.style.borderColor = "var(--border-color)", 2000);
+                        }
+                    });
+                    
+                } else {
+                    const errorMsg = result.error || `Company not found in ${apiConfig.name}`;
+                    statusEl.textContent = `❌ ${errorMsg}`;
+                    statusEl.style.color = "#ef4444";
                 }
-            });
-            
-        } else {
-            const errorMsg = result.error || `Company not found in ${config.name}`;
-            statusEl.textContent = `❌ ${errorMsg}`;
-            statusEl.style.color = "#ef4444";
-        }
 
-    } catch (error) {
-        console.error('Enrichment error:', error);
-        statusEl.textContent = "❌ Connection error. Please try again.";
-        statusEl.style.color = "#ef4444";
-    } finally {
-        btn.innerHTML = originalBtnText;
-        btn.disabled = false;
-    }
-}
+            } catch (error) {
+                console.error('Enrichment error:', error);
+                statusEl.textContent = "❌ Connection error. Please try again.";
+                statusEl.style.color = "#ef4444";
+            } finally {
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+            }
+        }
 
         // Map industry descriptions to form values
         function mapIndustry(industryDesc, country) {
@@ -872,14 +967,14 @@
         });
 
         // ============================================
-        // EXPOSE FUNCTIONS TO GLOBAL SCOPE (FIX FOR MODULE)
+        // EXPOSE FUNCTIONS TO GLOBAL SCOPE
         // ============================================
         window.nextStep = nextStep;
         window.prevStep = prevStep;
         window.selectPlan = selectPlan;
         window.enrichCompany = enrichCompany;
         window.updateIdField = updateIdField;
-        window.changeLanguage = changeLanguage; // ✅ CRUCIAL FIX
+        window.changeLanguage = changeLanguage;
 
     </script>
 
