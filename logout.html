@@ -199,7 +199,7 @@
         </div>
     </div>
 
-    <!-- Supabase SDK -->
+        <!-- Supabase SDK -->
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
@@ -211,12 +211,15 @@
         // Mostrar email do usuário logado
         async function showUserEmail() {
             const { data: { user } } = await supabase.auth.getUser();
-            if (user) {
-                document.getElementById('userEmail').textContent = user.email;
-            } else {
-                // Se não tem usuário, redireciona para login
-                window.location.href = 'login.html';
+            
+            // Se o usuário já não estiver logado ao entrar aqui, manda para a Home
+            if (!user) {
+                window.location.href = 'index.html';
+                return;
             }
+            
+            // Se estiver logado, mostra o email na tela
+            document.getElementById('userEmail').textContent = user.email;
         }
 
         // Função de logout
@@ -229,15 +232,13 @@
                 // Chamar logout do Supabase
                 const { error } = await supabase.auth.signOut();
                 
-                if (error) {
-                    throw error;
-                }
+                if (error) throw error;
                 
                 // Mostrar sucesso
                 document.getElementById('processingSection').style.display = 'none';
                 document.getElementById('successSection').classList.add('active');
                 
-                // Countdown e redirecionamento
+                // Countdown e redirecionamento para a HOME (Index)
                 let seconds = 3;
                 const counter = setInterval(() => {
                     seconds--;
@@ -245,6 +246,7 @@
                     
                     if (seconds <= 0) {
                         clearInterval(counter);
+                        // ✅ IMPORTANTE: Redirecionar para a Home, não para Login
                         window.location.href = 'index.html';
                     }
                 }, 1000);
