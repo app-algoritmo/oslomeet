@@ -3,93 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Logout - Oslo Meet</title>
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <title>Logout Debug - Oslo Meet</title>
     <style>
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
-            background: #0f172a; 
-            color: #f8fafc; 
-            min-height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin: 0; 
-        }
-        .container { 
-            text-align: center; 
-            padding: 3rem; 
-            background: #1e293b; 
-            border-radius: 20px; 
-            max-width: 450px; 
-        }
-        .spinner { 
-            width: 50px; 
-            height: 50px; 
-            border: 4px solid rgba(139,92,246,0.2); 
-            border-top-color: #8b5cf6; 
-            border-radius: 50%; 
-            animation: spin 1s linear infinite; 
-            margin: 0 auto 1.5rem; 
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .btn { 
-            margin: 10px; 
-            padding: 12px 24px; 
-            border-radius: 8px; 
-            border: none; 
-            cursor: pointer; 
-            font-weight: 600; 
-            text-decoration: none; 
-            display: inline-block; 
-        }
-        .btn-logout { background: #ef4444; color: white; }
-        .btn-cancel { background: transparent; color: #94a3b8; border: 1px solid #94a3b8; }
+        body { font-family: monospace; background: #0f172a; color: #f8fafc; padding: 20px; }
+        .log { background: #1e293b; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #8b5cf6; white-space: pre-wrap; }
+        .error { border-left-color: #ef4444; color: #fca5a5; }
+        .success { border-left-color: #10b981; color: #6ee7b7; }
+        .btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #8b5cf6; color: white; text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="content">
-            <div class="spinner"></div>
-            <h2>Processando logout...</h2>
-        </div>
-    </div>
+    <h1>🔍 Debug Logout</h1>
+    <div id="logs"></div>
+    <a href="index.html" class="btn">Voltar para Home</a>
 
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
         
+        const logEl = document.getElementById('logs');
+        function log(msg, type = 'info') {
+            console.log(`[LOGOUT] ${msg}`);
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            logEl.appendChild(div);
+        }
+
+        log('🚀 Script iniciado...');
+
+        // Verificar se o módulo carregou
+        if (typeof createClient !== 'function') {
+            log('❌ ERRO CRÍTICO: createClient não encontrado. Verifique a importação.', 'error');
+        }
+
         const supabase = createClient(
             'https://mrparduxlvvflasgefpt.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0'
         );
+        log('✅ Cliente Supabase criado');
 
-        // Aguarda 1 segundo para garantir que a página carregou
-        setTimeout(async () => {
-            try {
-                // Faz logout
-                await supabase.auth.signOut();
-                
-                // Mostra mensagem de sucesso
-                document.getElementById('content').innerHTML = `
-                    <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
-                    <h2>Logout realizado!</h2>
-                    <p style="color: #94a3b8; margin: 1rem 0;">Redirecionando...</p>
-                `;
-                
-                // Aguarda 1.5s e vai para home
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-                
-            } catch (error) {
-                document.getElementById('content').innerHTML = `
-                    <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
-                    <h2>Erro ao sair</h2>
-                    <p style="color: #94a3b8;">${error.message}</p>
-                    <a href="index.html" class="btn btn-cancel">Voltar para Home</a>
-                `;
-            }
-        }, 1000);
+        // Verificar sessão ANTES
+        supabase.auth.getSession().then(({ data, error }) => {
+            if (error) log(`⚠️ Erro ao pegar sessão: ${error.message}`, 'error');
+            else if (data.session) log(`🔐 Usuário logado ANTES: ${data.session.user.email}`);
+            else log(`⚠️ NENHUM usuário logado ao entrar na página.`);
+            
+            // Tentar fazer logout após 1 segundo
+            setTimeout(async () => {
+                log('🔄 Chamando supabase.auth.signOut()...');
+                try {
+                    const { error } = await supabase.auth.signOut();
+                    if (error) throw error;
+                    log('✅ signOut() executado com sucesso!', 'success');
+                    
+                    // Verificar sessão DEPOIS
+                    const { data: checkData } = await supabase.auth.getSession();
+                    if (!checkData.session) {
+                        log('🎉 Sessão confirmada como encerrada. Redirecionando...', 'success');
+                        setTimeout(() => window.location.href = 'index.html', 2000);
+                    } else {
+                        log('⚠️ AVISO: signOut rodou, mas a sessão ainda existe (cache?).', 'error');
+                        log('💡 Dica: Tente limpar cookies de supabase.com', 'error');
+                    }
+                } catch (err) {
+                    log(`❌ ERRO FATAL no signOut: ${err.message}`, 'error');
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html>
