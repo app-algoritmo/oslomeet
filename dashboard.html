@@ -417,44 +417,59 @@
         </div>
     </footer>
 
-    <!-- ✅ UM ÚNICO SCRIPT — importa tudo do auth.js -->
+    <!-- UM ÚNICO SCRIPT — importa tudo do auth.js -->
     <script type="module">
-        // ✅ Importa o cliente e funções já prontas do auth.js
         import { supabase, requireAuth, signOut } from './auth.js';
 
-        // ✅ LOGOUT: usa signOut do auth.js (mesmo cliente que fez login)
+        // LOGOUT: usa signOut do auth.js (mesmo cliente que fez login)
         window.doLogout = async function() {
             if (!confirm('Deseja realmente sair?')) return;
-            await signOut(); // auth.js já redireciona para login.html após signOut
+            await signOut();
         };
 
         async function loadDashboard() {
-            // ✅ GUARD: usa requireAuth do auth.js (mesmo cliente, mesma sessão)
+            // GUARD: usa requireAuth do auth.js (mesmo cliente, mesma sessão)
             const session = await requireAuth();
-            if (!session) return; // requireAuth já redireciona se não houver sessão
+            if (!session) return;
 
-            // Exibe email do usuário logado
             document.getElementById('userEmail').textContent = session.user.email;
 
-            // Busca empresa vinculada ao email do usuário logado
+            // ✅ Busca empresa pelo user_id do auth (mais confiável que email)
             const { data: company, error } = await supabase
                 .from('companies')
                 .select('id, name, contact_email')
-                .eq('contact_email', session.user.email)
+                .eq('user_id', session.user.id)
                 .single();
 
             if (error || !company) {
-                document.getElementById('matchesContainer').innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3 data-i18n="emptyTitle">No company found</h3>
-                        <p data-i18n="emptyDesc">Register your company first to see matches.</p>
-                        <a href="join.html" style="color: var(--accent-purple); display: inline-block; margin-top: 15px;" data-i18n="btnGoRegister">Go to Registration →</a>
-                    </div>
-                `;
+                // Fallback: tenta pelo email caso user_id não esteja preenchido
+                const { data: companyByEmail, error: emailError } = await supabase
+                    .from('companies')
+                    .select('id, name, contact_email')
+                    .eq('contact_email', session.user.email)
+                    .single();
+
+                if (emailError || !companyByEmail) {
+                    document.getElementById('matchesContainer').innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <h3 data-i18n="emptyTitle">No company found</h3>
+                            <p data-i18n="emptyDesc">Register your company first to see matches.</p>
+                            <a href="join.html" style="color: var(--accent-purple); display: inline-block; margin-top: 15px;" data-i18n="btnGoRegister">Go to Registration →</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Usa resultado do fallback por email
+                await loadMatches(companyByEmail);
                 return;
             }
 
+            await loadMatches(company);
+        }
+
+        async function loadMatches(company) {
             document.getElementById('companyName').textContent = company.name;
 
             const { data: matches, error: matchesError } = await supabase
