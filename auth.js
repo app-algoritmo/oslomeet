@@ -2,8 +2,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
 // Substitua pelos seus dados reais do Supabase (Dashboard > Project Settings > API)
-const SUPABASE_URL = 'https://mrparduxlvvflasgefpt.supabase.co' // Exemplo baseado na sua URL
-const SUPABASE_ANON_KEY = 'SUA_CHAVE_ANON_AQUI' 
+const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co' // Exemplo baseado na sua URL
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0' 
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
