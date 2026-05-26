@@ -84,9 +84,33 @@
             display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px; margin-bottom: 40px;
         }
-        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .stat-card { 
+            background: var(--card-bg); 
+            padding: 20px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .stat-card:hover { 
+            border-color: var(--accent-purple); 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139,92,246,0.2);
+        }
         .stat-card h3 { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; }
         .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--accent-purple); }
+        .stat-card.clickable { position: relative; }
+        .stat-card.clickable::after {
+            content: '→';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--accent-purple);
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .stat-card.clickable:hover::after { opacity: 1; }
         .section-title { font-size: 1.5rem; margin-bottom: 20px; font-weight: 700; }
         .matches-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
         @media (min-width: 768px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -179,6 +203,14 @@
             <div class="stat-card">
                 <h3 data-i18n="statTopScore">Top Match Score</h3>
                 <div class="value" id="topScore">0%</div>
+            </div>
+            <!-- ✅ NOVO CARD DE MENSAGENS -->
+            <div class="stat-card clickable" onclick="openMessages()" style="cursor:pointer;">
+                <h3 data-i18n="statMessages">Messages</h3>
+                <div class="value" id="messageCount" style="display:flex;align-items:center;gap:10px;">
+                    <i class="fas fa-comments" style="font-size:1.5rem;"></i>
+                    <span>0</span>
+                </div>
             </div>
         </div>
 
@@ -282,28 +314,56 @@
         async function updateMessageBadge() {
             if (!currentCompany) return;
             const badge = document.getElementById('msgBadge');
+            const messageCountEl = document.getElementById('messageCount');
+            
             try {
-                const { count, error } = await db.from('messages')
+                // Contar conversas ativas
+                const { data: conversations, error: convError } = await db
+                    .from('conversations')
+                    .select('id')
+                    .or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`);
+                
+                if (convError) throw convError;
+                
+                const totalConversations = conversations ? conversations.length : 0;
+                
+                // Contar mensagens não lidas
+                const { count, error: msgError } = await db.from('messages')
                     .select('*', { count: 'exact', head: true })
                     .in('conversation_id',
                         db.from('conversations').select('id').or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`)
                     )
                     .eq('is_read', false)
                     .neq('sender_company_id', currentCompany.id);
-                if (error) throw error;
+                
+                if (msgError) throw msgError;
+                
+                // Atualizar badge do header
                 if (count > 0) {
                     badge.textContent = count > 99 ? '99+' : count;
                     badge.classList.add('show');
                 } else {
                     badge.classList.remove('show');
                 }
-            } catch (err) { console.warn('Erro ao atualizar badge:', err); }
+                
+                // Atualizar card de mensagens
+                if (messageCountEl) {
+                    const unreadText = count > 0 ? ` (${count} ${count === 1 ? 'new' : 'new'})` : '';
+                    messageCountEl.innerHTML = `
+                        <i class="fas fa-comments" style="font-size:1.5rem;"></i>
+                        <span>${totalConversations}${unreadText}</span>
+                    `;
+                }
+            } catch (err) { 
+                console.warn('Erro ao atualizar badge:', err);
+            }
         }
 
         function setupMessagesRealtime() {
             messagesSubscription = db.channel('dashboard_messages')
                 .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `sender_company_id.neq.${currentCompany?.id || ''}` }, () => { updateMessageBadge(); })
                 .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages', filter: `is_read=eq.true` }, () => { updateMessageBadge(); })
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'conversations' }, () => { updateMessageBadge(); })
                 .subscribe();
         }
 
@@ -388,45 +448,49 @@
             en: {
                 dashTitle: "👋 Welcome to Oslo Meet", btnLogout: "Logout", btnConnect: "Connect",
                 statCompany: "Your Company", statMatches: "Matches Found", statTopScore: "Top Match Score",
+                statMessages: "💬 Messages",
                 sectionMatches: "🎯 Recommended Matches", loadingText: "Finding your best matches...",
                 emptyTitle: "No company found", emptyDesc: "Register your company first to see matches.", btnGoRegister: "Go to Registration →",
                 noMatchesTitle: "No matches yet", noMatchesDesc: "As more companies join, you'll see compatible matches here.",
                 footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
                 navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
-                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
+                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact", navSupport: "Support",
                 navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
                 dashTitle: "👋 Velkommen til Oslo Meet", btnLogout: "Logg ut", btnConnect: "Koble til",
                 statCompany: "Din bedrift", statMatches: "Matcher funnet", statTopScore: "Topp match-score",
+                statMessages: "💬 Meldinger",
                 sectionMatches: "🎯 Anbefalte matcher", loadingText: "Finner dine beste matcher...",
                 emptyTitle: "Ingen bedrift funnet", emptyDesc: "Registrer din bedrift først for å se matcher.", btnGoRegister: "Gå til registrering →",
                 noMatchesTitle: "Ingen matcher ennå", noMatchesDesc: "Etter hvert som flere bedrifter blir med, vil du se kompatible matcher her.",
                 footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
                 navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
-                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
+                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt", navSupport: "Støtte",
                 navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
                 dashTitle: "👋 Bem-vindo ao Oslo Meet", btnLogout: "Sair", btnConnect: "Conectar",
                 statCompany: "Sua Empresa", statMatches: "Matches Encontrados", statTopScore: "Melhor Score",
+                statMessages: "💬 Mensagens",
                 sectionMatches: "🎯 Matches Recomendados", loadingText: "Encontrando seus melhores matches...",
                 emptyTitle: "Nenhuma empresa encontrada", emptyDesc: "Cadastre sua empresa primeiro para ver matches.", btnGoRegister: "Ir para Cadastro →",
                 noMatchesTitle: "Nenhum match ainda", noMatchesDesc: "À medida que mais empresas entram, você verá matches compatíveis aqui.",
                 footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
                 navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
-                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato", navSupport: "Suporte",
                 navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
                 dashTitle: "👋 Bienvenido a Oslo Meet", btnLogout: "Salir", btnConnect: "Conectar",
                 statCompany: "Tu Empresa", statMatches: "Matches Encontrados", statTopScore: "Mejor Puntuación",
+                statMessages: "💬 Mensajes",
                 sectionMatches: "🎯 Matches Recomendados", loadingText: "Encontrando tus mejores matches...",
                 emptyTitle: "Ninguna empresa encontrada", emptyDesc: "Registra tu empresa primero para ver matches.", btnGoRegister: "Ir a Registro →",
                 noMatchesTitle: "Sin matches aún", noMatchesDesc: "A medida que más empresas se unan, verás matches compatibles aquí.",
                 footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
                 navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
-                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
+                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto", navSupport: "Soporte",
                 navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
             }
         };
