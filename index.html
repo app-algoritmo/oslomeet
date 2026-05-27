@@ -38,6 +38,21 @@
             --success-green: #10b981;
             --warning-orange: #f59e0b;
             --ai-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+            
+            /* Cookie Banner Barros - Variáveis personalizadas para Oslo Meet */
+            --cb-bg: #0f172a;
+            --cb-border: #8b5cf6;
+            --cb-title: #a5b4fc;
+            --cb-text: #94a3b8;
+            --cb-link: #60a5fa;
+            --cb-link-hover: #93c5fd;
+            --cb-btn-primary: #8b5cf6;
+            --cb-btn-primary-hover: #7c3aed;
+            --cb-btn-secondary: #6366f1;
+            --cb-btn-reject: #64748b;
+            --cb-toggle-bg: #334155;
+            --cb-toggle-active: #8b5cf6;
+            --cb-icon: #fbbf24;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -48,6 +63,236 @@
             overflow-x: hidden;
             -webkit-text-size-adjust: 100%;
         }
+        
+        /* ═══════════════════════════════════════════
+           COOKIE BANNER CSS — MODELO BARROS (OSLO MEET)
+           ═══════════════════════════════════════════ */
+        
+        #cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: var(--cb-bg);
+            border-top: 2px solid var(--cb-border);
+            padding: 16px 28px 14px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            transform: translateY(100%);
+            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        #cookie-banner.show {
+            transform: translateY(0);
+        }
+        
+        #cookie-banner.hidden {
+            display: none;
+        }
+        
+        .cb-top {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .cb-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+        
+        .cb-icon {
+            font-size: 18px;
+            color: var(--cb-icon);
+        }
+        
+        .cb-title {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--cb-title);
+            text-transform: uppercase;
+        }
+        
+        .cb-desc {
+            font-size: 12px;
+            color: var(--cb-text);
+            line-height: 1.55;
+            max-width: 420px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .cb-desc a {
+            color: var(--cb-link);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s;
+        }
+        
+        .cb-desc a:hover {
+            color: var(--cb-link-hover);
+        }
+        
+        .cb-btns {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        .cb-btn-accept {
+            background: var(--cb-btn-primary);
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s, transform 0.15s;
+        }
+        
+        .cb-btn-accept:hover {
+            background: var(--cb-btn-primary-hover);
+            transform: translateY(-1px);
+        }
+        
+        .cb-btn-save {
+            background: transparent;
+            color: var(--cb-btn-secondary);
+            border: 1.5px solid var(--cb-btn-primary);
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        
+        .cb-btn-save:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--cb-title);
+        }
+        
+        .cb-btn-reject {
+            background: transparent;
+            color: var(--cb-btn-reject);
+            border: none;
+            padding: 7px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: inherit;
+            transition: color 0.2s;
+        }
+        
+        .cb-btn-reject:hover {
+            color: #94a3b8;
+        }
+        
+        .cb-bottom {
+            max-width: 1120px;
+            margin: 10px auto 0;
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            flex-wrap: wrap;
+        }
+        
+        .cb-toggle-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .cb-toggle-label {
+            font-size: 12px;
+            color: var(--cb-text);
+            font-weight: 500;
+        }
+        
+        .cb-toggle {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .cb-toggle input {
+            display: none;
+        }
+        
+        .cb-track {
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: var(--cb-toggle-bg);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .cb-track::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #fff;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .cb-toggle input:checked + .cb-track {
+            background: var(--cb-toggle-active);
+        }
+        
+        .cb-toggle input:checked + .cb-track::after {
+            transform: translateX(16px);
+        }
+        
+        .cb-toggle input:disabled + .cb-track {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        @media (max-width: 640px) {
+            .cb-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .cb-btns {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .cb-btn {
+                flex: 1;
+            }
+        }
+        
         /* Language Selector - Mobile Friendly */
         .language-selector {
             position: fixed; top: 12px; right: 12px; z-index: 1000;
@@ -588,9 +833,65 @@
         </div>
     </footer>
 
+    <!-- ═══════════════════════════════════════════
+         COOKIE BANNER HTML — MODELO BARROS (OSLO MEET)
+         ═══════════════════════════════════════════ -->
+    <div id="cookie-banner">
+        <div class="cb-top">
+            <div class="cb-left">
+                <i class="fas fa-cookie-bite cb-icon"></i>
+                <span class="cb-title" data-i18n="cookieTitle">PRIVACY & COOKIES</span>
+            </div>
+            <p class="cb-desc">
+                <span data-i18n="cookieText">We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our</span>
+                <a href="privacy-policy.html" data-i18n="cookiePolicy">Privacy Policy</a>.
+            </p>
+            <div class="cb-btns">
+                <button class="cb-btn-save" id="cb-save" data-i18n="saveChoice">SAVE CHOICE</button>
+                <button class="cb-btn-accept" id="cb-accept" data-i18n="acceptAll">ACCEPT ALL</button>
+                <button class="cb-btn-reject" id="cb-reject" data-i18n="reject">REJECT</button>
+            </div>
+        </div>
+        <div class="cb-bottom">
+            <div class="cb-toggle-item">
+                <label class="cb-toggle">
+                    <input type="checkbox" id="cb-necessary" checked disabled>
+                    <span class="cb-track"></span>
+                </label>
+                <span class="cb-toggle-label" data-i18n="necessary">Necessary</span>
+            </div>
+            <div class="cb-toggle-item">
+                <label class="cb-toggle">
+                    <input type="checkbox" id="cb-analytics" checked>
+                    <span class="cb-track"></span>
+                </label>
+                <span class="cb-toggle-label" data-i18n="analytics">Analytics</span>
+            </div>
+            <div class="cb-toggle-item">
+                <label class="cb-toggle">
+                    <input type="checkbox" id="cb-marketing" checked>
+                    <span class="cb-track"></span>
+                </label>
+                <span class="cb-toggle-label" data-i18n="marketing">Marketing</span>
+            </div>
+        </div>
+    </div>
+
     <script>
         const translations = {
             en: {
+                // Cookie Banner Barros
+                cookieTitle: "PRIVACY & COOKIES",
+                cookieText: "We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our",
+                cookiePolicy: "Privacy Policy",
+                necessary: "Necessary",
+                analytics: "Analytics",
+                marketing: "Marketing",
+                saveChoice: "SAVE CHOICE",
+                acceptAll: "ACCEPT ALL",
+                reject: "REJECT",
+                
+                // Oslo Meet original translations
                 aiBadge: "Powered by Intelligent Matching",
                 globalBadge: "Europe • Brazil • China • Nordics",
                 heroTagline: "Connecting businesses, creators and innovators globally",
@@ -628,6 +929,18 @@
                 navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
+                // Cookie Banner Barros
+                cookieTitle: "PERSONVERN & COOKIES",
+                cookieText: "Vi bruker cookies for å analysere trafikk og tilpasse annonser. Du kan velge hvilke du vil godta. Les vår",
+                cookiePolicy: "Personvernerklæring",
+                necessary: "Nødvendige",
+                analytics: "Analyse",
+                marketing: "Markedsføring",
+                saveChoice: "LAGRE VALG",
+                acceptAll: "ACCEPTER ALLE",
+                reject: "AVVIS",
+                
+                // Oslo Meet original translations
                 aiBadge: "Drevet av intelligent matching",
                 globalBadge: "Europa • Brasil • Kina • Norden",
                 heroTagline: "Kobler bedrifter, skapere og innovatører globalt",
@@ -665,6 +978,18 @@
                 navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
+                // Cookie Banner Barros
+                cookieTitle: "PRIVACIDADE & COOKIES",
+                cookieText: "Utilizamos cookies para analisar o tráfego e personalizar anúncios. Você pode escolher quais aceitar. Leia nossa",
+                cookiePolicy: "Política de Privacidade",
+                necessary: "Necessários",
+                analytics: "Analytics",
+                marketing: "Marketing",
+                saveChoice: "SALVAR ESCOLHA",
+                acceptAll: "ACEITAR TUDO",
+                reject: "RECUSAR",
+                
+                // Oslo Meet original translations
                 aiBadge: "Impulsionado por Matching Inteligente",
                 globalBadge: "Europa • Brasil • China • Nórdicos",
                 heroTagline: "Conectando empresas, criadores e inovadores globalmente",
@@ -702,6 +1027,18 @@
                 navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
+                // Cookie Banner Barros
+                cookieTitle: "PRIVACIDAD & COOKIES",
+                cookieText: "Utilizamos cookies para analizar el tráfico y personalizar anuncios. Puedes elegir cuáles aceptar. Lee nuestra",
+                cookiePolicy: "Política de Privacidad",
+                necessary: "Necesarios",
+                analytics: "Analytics",
+                marketing: "Marketing",
+                saveChoice: "GUARDAR ELECCIÓN",
+                acceptAll: "ACEPTAR TODO",
+                reject: "RECHAZAR",
+                
+                // Oslo Meet original translations
                 aiBadge: "Impulsado por Matching Inteligente",
                 globalBadge: "Europa • Brasil • China • Nórdicos",
                 heroTagline: "Conectando empresas, creadores e innovadores globalmente",
@@ -741,25 +1078,246 @@
         };
 
         function changeLanguage(lang) {
+            // Atualiza todo o conteúdo com data-i18n (incluindo cookie banner)
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+                if (translations[lang]?.[key]) {
+                    el.innerHTML = translations[lang][key];
+                }
             });
             document.documentElement.lang = lang;
             localStorage.setItem('preferredLanguage', lang);
+            
+            // Atualiza o cookie banner se ele estiver visível
+            if (window.cookieBannerAPI) {
+                window.cookieBannerAPI.updateLanguage(lang);
+            }
         }
 
         function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); }
 
-        window.addEventListener('load', () => {
-            const saved = localStorage.getItem('preferredLanguage') || 'en';
-            document.getElementById('languageSelect').value = saved;
-            changeLanguage(saved);
+        /**
+         * Cookie Banner — Modelo Barros (Integrado com Oslo Meet)
+         * Sistema de consentimento LGPD/GDPR compliant
+         */
+        function initCookieBanner(config = {}) {
+            const defaults = {
+                consentKey: 'oslomeet_cookieConsent',
+                delay: 1500,
+                lang: detectLanguage(),
+                onAccept: () => {},
+                onSave: () => {},
+                onReject: () => {}
+            };
+            
+            const settings = { ...defaults, ...config };
+            
+            const banner = document.getElementById('cookie-banner');
+            if (!banner) {
+                console.warn('Cookie Banner: Elemento #cookie-banner não encontrado');
+                return;
+            }
+            
+            const cbAccept = document.getElementById('cb-accept');
+            const cbSave = document.getElementById('cb-save');
+            const cbReject = document.getElementById('cb-reject');
+            const cbAnalytics = document.getElementById('cb-analytics');
+            const cbMarketing = document.getElementById('cb-marketing');
+            
+            // Detecta idioma automaticamente
+            function detectLanguage() {
+                const lang = document.documentElement.lang || navigator.language || 'en';
+                if (lang.startsWith('pt')) return 'pt';
+                if (lang.startsWith('es')) return 'es';
+                if (lang.startsWith('no')) return 'no';
+                return 'en';
+            }
+            
+            // Atualiza traduções do banner conforme idioma
+            function updateBannerLanguage(lang) {
+                const t = translations[lang] || translations.en;
+                
+                const titleEl = banner.querySelector('.cb-title');
+                const descEl = banner.querySelector('.cb-desc span');
+                const policyLink = banner.querySelector('.cb-desc a');
+                const necessaryLabel = banner.querySelector('[data-i18n="necessary"]');
+                const analyticsLabel = banner.querySelector('[data-i18n="analytics"]');
+                const marketingLabel = banner.querySelector('[data-i18n="marketing"]');
+                
+                if (titleEl) titleEl.textContent = t.cookieTitle;
+                if (descEl) descEl.textContent = t.cookieText + ' ';
+                if (policyLink) policyLink.textContent = t.cookiePolicy;
+                if (necessaryLabel) necessaryLabel.textContent = t.necessary;
+                if (analyticsLabel) analyticsLabel.textContent = t.analytics;
+                if (marketingLabel) marketingLabel.textContent = t.marketing;
+                if (cbSave) cbSave.textContent = t.saveChoice;
+                if (cbAccept) cbAccept.textContent = t.acceptAll;
+                if (cbReject) cbReject.textContent = t.reject;
+            }
+            
+            // Verifica consentimento salvo
+            function checkConsent() {
+                const consent = localStorage.getItem(settings.consentKey);
+                
+                if (!consent) {
+                    // Mostra banner após delay
+                    setTimeout(() => {
+                        banner.classList.remove('hidden');
+                        banner.classList.add('show');
+                    }, settings.delay);
+                } else {
+                    // Aplica preferências salvas
+                    const preferences = JSON.parse(consent);
+                    
+                    if (cbAnalytics) cbAnalytics.checked = preferences.analytics;
+                    if (cbMarketing) cbMarketing.checked = preferences.marketing;
+                    
+                    // Ativa funcionalidades conforme consentimento
+                    if (preferences.analytics) {
+                        settings.onAccept('analytics');
+                        console.log('Analytics enabled from saved consent');
+                    }
+                    
+                    if (preferences.marketing) {
+                        settings.onAccept('marketing');
+                        console.log('Marketing enabled from saved consent');
+                    }
+                }
+            }
+            
+            // Obtém preferências atuais
+            function getPreferences() {
+                return {
+                    necessary: true,
+                    analytics: cbAnalytics?.checked || false,
+                    marketing: cbMarketing?.checked || false,
+                    timestamp: new Date().toISOString(),
+                    version: '1.0.0'
+                };
+            }
+            
+            // Salva preferências
+            function savePreferences(preferences) {
+                localStorage.setItem(settings.consentKey, JSON.stringify(preferences));
+                
+                banner.classList.remove('show');
+                setTimeout(() => {
+                    banner.classList.add('hidden');
+                }, 400);
+                
+                console.log('Cookie preferences saved:', preferences);
+            }
+            
+            // Event Listeners
+            cbAccept?.addEventListener('click', () => {
+                if (cbAnalytics) cbAnalytics.checked = true;
+                if (cbMarketing) cbMarketing.checked = true;
+                
+                const preferences = getPreferences();
+                savePreferences(preferences);
+                
+                settings.onAccept('all');
+                settings.onSave(preferences);
+                
+                // Ativa tudo
+                settings.onAccept('analytics');
+                settings.onAccept('marketing');
+            });
+            
+            cbSave?.addEventListener('click', () => {
+                const preferences = getPreferences();
+                savePreferences(preferences);
+                
+                settings.onSave(preferences);
+                
+                // Ativa conforme seleção
+                if (preferences.analytics) settings.onAccept('analytics');
+                if (preferences.marketing) settings.onAccept('marketing');
+            });
+            
+            cbReject?.addEventListener('click', () => {
+                if (cbAnalytics) cbAnalytics.checked = false;
+                if (cbMarketing) cbMarketing.checked = false;
+                
+                const preferences = getPreferences();
+                savePreferences(preferences);
+                
+                settings.onReject();
+                console.log('All non-essential cookies rejected');
+            });
+            
+            // Inicializa
+            updateBannerLanguage(settings.lang);
+            checkConsent();
+            
+            // Retorna API pública
+            return {
+                show: () => {
+                    banner.classList.remove('hidden');
+                    banner.classList.add('show');
+                },
+                hide: () => {
+                    banner.classList.remove('show');
+                    setTimeout(() => banner.classList.add('hidden'), 400);
+                },
+                getPreferences: () => JSON.parse(localStorage.getItem(settings.consentKey) || '{}'),
+                clearConsent: () => {
+                    localStorage.removeItem(settings.consentKey);
+                    checkConsent();
+                },
+                updateLanguage: (lang) => {
+                    updateBannerLanguage(lang);
+                }
+            };
+        }
+        
+        // Inicialização automática quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
+            // Verifica se o banner existe
+            if (document.getElementById('cookie-banner')) {
+                // Inicializa com configurações personalizadas para Oslo Meet
+                window.cookieBannerAPI = initCookieBanner({
+                    consentKey: 'oslomeet_cookieConsent',
+                    delay: 1500,
+                    onAccept: (type) => {
+                        console.log(`Cookie accepted: ${type}`);
+                        // Aqui você pode ativar Google Analytics, Facebook Pixel, etc.
+                        if (type === 'analytics') {
+                            // initGoogleAnalytics();
+                        }
+                        if (type === 'marketing') {
+                            // initFacebookPixel();
+                        }
+                    },
+                    onSave: (prefs) => {
+                        console.log('Preferences saved:', prefs);
+                    },
+                    onReject: () => {
+                        console.log('All non-essential cookies rejected');
+                        // Limpa cookies de terceiros se necessário
+                    }
+                });
+            }
+            
+            // Inicializa idioma salvo
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('languageSelect').value = savedLang;
+            changeLanguage(savedLang);
+            
+            // Observador de animações de scroll
             const observer = new IntersectionObserver(entries => {
-                entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
+                entries.forEach(e => { 
+                    if (e.isIntersecting) { 
+                        e.target.style.opacity = '1'; 
+                        e.target.style.transform = 'translateY(0)'; 
+                    } 
+                });
             }, { threshold: 0.1 });
+            
             document.querySelectorAll('.ai-step, .pricing-card, .company-card').forEach(el => {
-                el.style.opacity = '0'; el.style.transform = 'translateY(20px)'; el.style.transition = 'all 0.6s ease';
+                el.style.opacity = '0'; 
+                el.style.transform = 'translateY(20px)'; 
+                el.style.transition = 'all 0.6s ease';
                 observer.observe(el);
             });
         });
