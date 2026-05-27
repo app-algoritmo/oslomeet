@@ -1,0 +1,10 @@
+# Oslo Meet - robots.txt
+User-agent: *
+Allow: /
+
+# Bloquear áreas administrativas (se houver)
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://oslomeet.org/sitemap.xml
