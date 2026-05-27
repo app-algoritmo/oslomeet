@@ -8,7 +8,6 @@
     <lastmod>2026-05-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <!-- Links alternativos de idioma -->
     <xhtml:link rel="alternate" hreflang="en" href="https://oslomeet.org/?lang=en"/>
     <xhtml:link rel="alternate" hreflang="no" href="https://oslomeet.org/?lang=no"/>
     <xhtml:link rel="alternate" hreflang="pt" href="https://oslomeet.org/?lang=pt"/>
@@ -40,12 +39,28 @@
     <priority>0.8</priority>
   </url>
 
-  <!-- DASHBOARD (Área restrita, baixa prioridade para indexação pública) -->
+  <!-- BLOG / INSIGHTS (Conteúdo frequente = Alta prioridade) -->
   <url>
-    <loc>https://oslomeet.org/dashboard.html</loc>
+    <loc>https://oslomeet.org/insights.html</loc>
     <lastmod>2026-05-28</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.3</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- SOBRE A EMPRESA (Confiança e Branding) -->
+  <url>
+    <loc>https://oslomeet.org/about.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- CONTATO (Suporte e Conversão) -->
+  <url>
+    <loc>https://oslomeet.org/contact.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <!-- SUPORTE -->
@@ -56,7 +71,31 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- PÁGINAS LEGAIS (Importantes para SEO e Confiança) -->
+  <!-- DASHBOARD (Área restrita, baixa prioridade para busca pública) -->
+  <url>
+    <loc>https://oslomeet.org/dashboard.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- MENSAGENS (Área do App - Não indexar para SEO) -->
+  <url>
+    <loc>https://oslomeet.org/messages.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.2</priority>
+  </url>
+
+  <!-- SUCESSO PÓS-PAGAMENTO (Página de confirmação) -->
+  <url>
+    <loc>https://oslomeet.org/success.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
+  <!-- PÁGINAS LEGAIS -->
   <url>
     <loc>https://oslomeet.org/terms-of-use.html</loc>
     <lastmod>2026-05-28</lastmod>
