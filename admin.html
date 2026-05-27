@@ -17,6 +17,9 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
+    <!-- Supabase JS (necessário para auth) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
         :root {
             --bg-primary: #0a0e1a;
@@ -66,10 +69,10 @@
             width: 90%;
             max-width: 420px;
             box-shadow: var(--shadow-glow);
+            text-align: center;
         }
         
         .login-header {
-            text-align: center;
             margin-bottom: 2rem;
         }
         
@@ -86,24 +89,6 @@
             font-size: 0.9rem;
         }
         
-        .login-input {
-            width: 100%;
-            padding: 14px 18px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .login-input:focus {
-            outline: none;
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-        
         .login-btn {
             width: 100%;
             padding: 14px;
@@ -115,11 +100,27 @@
             font-size: 1rem;
             cursor: pointer;
             transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .login-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+        
+        .login-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        
+        .login-btn.secondary:hover {
+            border-color: var(--accent-purple);
+            color: var(--text-primary);
         }
         
         /* Main Dashboard */
@@ -532,22 +533,20 @@
 </head>
 <body>
 
-    <!-- Login Screen -->
+    <!-- Login Screen (Auth Check) -->
     <div class="login-screen" id="loginScreen">
         <div class="login-box">
             <div class="login-header">
                 <h1><i class="fas fa-shield-alt"></i> Admin Access</h1>
                 <p>Oslo Meet Control Panel</p>
             </div>
-            <form id="loginForm">
-                <input type="password" class="login-input" id="adminPassword" placeholder="Enter admin password" required>
-                <button type="submit" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> Access Dashboard
-                </button>
-            </form>
-            <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-secondary); text-align: center;">
-                <i class="fas fa-lock"></i> Secure admin area
-            </p>
+            <div id="authStatus">
+                <i class="fas fa-circle-notch fa-spin fa-2x" style="color: var(--accent-purple); margin-bottom: 1rem;"></i>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Verificando sessão...</p>
+                <a href="/login.html" class="login-btn secondary">
+                    <i class="fas fa-sign-in-alt"></i> Fazer Login
+                </a>
+            </div>
         </div>
     </div>
 
@@ -609,10 +608,10 @@
                 </div>
                 <div class="user-menu">
                     <div style="text-align: right;">
-                        <div style="font-weight: 600;">Admin User</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Super Admin</div>
+                        <div style="font-weight: 600;" id="adminEmail">Admin</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);" id="adminRole">Super Admin</div>
                     </div>
-                    <div class="user-avatar">A</div>
+                    <div class="user-avatar" id="adminAvatar">A</div>
                 </div>
             </div>
 
@@ -725,7 +724,7 @@
             <div class="table-card">
                 <div class="chart-header">
                     <div class="chart-title">Recent Companies</div>
-                    <button style="background: var(--gradient-1); border: none; color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                    <button style="background: var(--gradient-1); border: none; color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;" data-requires="super_admin">
                         <i class="fas fa-plus"></i> Add Company
                     </button>
                 </div>
@@ -753,35 +752,66 @@
     </div>
 
     <script>
-        // Configuration
-        const ADMIN_PASSWORD = 'OsloMeet2026!'; // Change this!
-        const SUPABASE_URL = 'https://mrparduxlvvflasgefpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'your-anon-key-here';
-
-        // State
+        // 🔐 CONFIGURAÇÃO SUPABASE
+        // ⚠️ Substitua pelos valores reais do seu projeto
+        const SUPABASE_URL = 'https://seu-projeto.supabase.co';
+        const SUPABASE_ANON_KEY = 'sua-chave-anon-aqui';
+        
+        // Inicializa cliente Supabase
+        const supabase = window.supabase || createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        // Estado
         let revenueChartInstance = null;
         let plansChartInstance = null;
+        let currentAdminRole = null;
 
-        // Login
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const password = document.getElementById('adminPassword').value;
+        // 🔍 VERIFICAÇÃO DE ACESSO SEGURA
+        async function checkAuth() {
+            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
             
-            if (password === ADMIN_PASSWORD) {
-                sessionStorage.setItem('adminAuthenticated', 'true');
-                showDashboard();
-                await loadDashboardData();
-            } else {
-                alert('Invalid password!');
+            if (sessionError || !session) {
+                showLoginScreen('Não autenticado. <a href="/login.html" style="color:var(--accent-blue)">Faça login</a>.');
+                return;
             }
-        });
 
-        // Check auth
-        function checkAuth() {
-            if (sessionStorage.getItem('adminAuthenticated') === 'true') {
-                showDashboard();
-                loadDashboardData();
+            const userEmail = session.user.email;
+            
+            // Consulta dinâmica à tabela admin_roles (zero emails hardcoded)
+            const { data: adminRole, error: roleError } = await supabase
+                .from('admin_roles')
+                .select('role, active')
+                .eq('email', userEmail)
+                .eq('active', true)
+                .maybeSingle();
+            
+            if (roleError || !adminRole) {
+                showLoginScreen('🔒 Acesso negado. Você não tem permissão de administrador.');
+                await supabase.auth.signOut();
+                return;
             }
+
+            // Autenticação bem-sucedida
+            console.log('✅ Admin autenticado:', userEmail, 'Role:', adminRole.role);
+            currentAdminRole = adminRole.role;
+            
+            // Atualiza UI do usuário
+            document.getElementById('adminEmail').textContent = userEmail.split('@')[0];
+            document.getElementById('adminRole').textContent = adminRole.role === 'super_admin' ? 'Super Admin' : 'Admin';
+            document.getElementById('adminAvatar').textContent = userEmail.charAt(0).toUpperCase();
+            
+            showDashboard();
+            loadDashboardData();
+            applyRolePermissions(adminRole.role);
+        }
+
+        function showLoginScreen(message) {
+            document.getElementById('authStatus').innerHTML = `
+                <i class="fas fa-lock fa-2x" style="color: var(--danger-red); margin-bottom: 1rem;"></i>
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">${message}</p>
+                <a href="/login.html" class="login-btn secondary">
+                    <i class="fas fa-sign-in-alt"></i> Fazer Login
+                </a>
+            `;
         }
 
         function showDashboard() {
@@ -789,49 +819,64 @@
             document.getElementById('dashboard').style.display = 'block';
         }
 
-        function logout() {
-            sessionStorage.removeItem('adminAuthenticated');
+        async function logout() {
+            await supabase.auth.signOut();
             location.reload();
         }
 
-        // Load Data
+        // Aplica permissões baseado no role
+        function applyRolePermissions(role) {
+            if (role !== 'super_admin') {
+                document.querySelectorAll('[data-requires="super_admin"]').forEach(el => {
+                    el.style.display = 'none';
+                });
+            }
+        }
+
+        // Carrega dados do dashboard
         async function loadDashboardData() {
             try {
-                // Fetch companies from Supabase
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/companies?select=*`, {
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Prefer': 'count=exact'
-                    }
-                });
+                // Fetch companies com RLS do Supabase
+                const { data: companies, error } = await supabase
+                    .from('companies')
+                    .select('*')
+                    .order('created_at', { ascending: false });
                 
-                const companies = await response.json();
+                if (error) throw error;
                 
-                // Calculate metrics
-                const totalRevenue = companies.reduce((sum, c) => sum + (c.plan === 'founding_member' ? 1290 : c.plan === 'business' ? 4900 : c.plan === 'partner' ? 15000 : 1890), 0);
-                const foundingMembers = companies.filter(c => c.plan === 'founding_member').length;
-                const activeCompanies = companies.filter(c => c.status === 'active').length;
+                // Calcula métricas
+                const totalRevenue = (companies || []).reduce((sum, c) => {
+                    const planPrices = {
+                        'founding_member': 1290,
+                        'business': 4900,
+                        'partner': 15000,
+                        'starter': 1890
+                    };
+                    return sum + (planPrices[c.plan] || 0);
+                }, 0);
                 
-                // Update stats
+                const foundingMembers = (companies || []).filter(c => c.plan === 'founding_member').length;
+                const activeCompanies = (companies || []).filter(c => c.status === 'active').length;
+                
+                // Atualiza stats na UI
                 document.getElementById('totalRevenue').textContent = `NOK ${totalRevenue.toLocaleString()}`;
                 document.getElementById('foundingCount').innerHTML = `${foundingMembers}<span style="font-size: 1rem; color: var(--text-secondary);">/50</span>`;
-                document.getElementById('foundingRemaining').textContent = `${50 - foundingMembers} spots remaining`;
+                document.getElementById('foundingRemaining').textContent = `${Math.max(0, 50 - foundingMembers)} spots remaining`;
                 document.getElementById('foundingBadge').textContent = `${foundingMembers}/50`;
                 document.getElementById('activeCompanies').textContent = activeCompanies;
                 document.getElementById('mrrValue').textContent = `NOK ${Math.round(totalRevenue / 12).toLocaleString()}`;
                 
-                // Update charts
-                updateCharts(companies);
-                
-                // Update table
-                updateCompaniesTable(companies);
-                
-                // Update activity
-                updateActivity(companies);
+                // Atualiza gráficos e tabelas
+                updateCharts(companies || []);
+                updateCompaniesTable(companies || []);
+                updateActivity(companies || []);
                 
             } catch (error) {
-                console.error('Error loading data:', error);
+                console.error('❌ Error loading dashboard data:', error);
+                // Fallback com dados mockados para desenvolvimento
+                updateCharts([]);
+                updateCompaniesTable([]);
+                updateActivity([]);
             }
         }
 
@@ -856,9 +901,7 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    plugins: { legend: { display: false } },
                     scales: {
                         y: {
                             beginAtZero: true,
@@ -898,10 +941,7 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { color: '#9ca3af', padding: 15 }
-                        }
+                        legend: { position: 'bottom', labels: { color: '#9ca3af', padding: 15 } }
                     }
                 }
             });
@@ -909,6 +949,11 @@
 
         function updateCompaniesTable(companies) {
             const tbody = document.getElementById('companiesTable');
+            if (!companies.length) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text-secondary);padding:2rem">Nenhuma empresa cadastrada ainda</td></tr>`;
+                return;
+            }
+            
             tbody.innerHTML = companies.slice(0, 10).map(company => `
                 <tr>
                     <td>
@@ -916,11 +961,11 @@
                         <div style="font-size: 0.8rem; color: var(--text-secondary);">${company.email || 'email@company.com'}</div>
                     </td>
                     <td><span class="badge badge-purple">${company.plan || 'starter'}</span></td>
-                    <td><span class="badge badge-success">${company.status || 'active'}</span></td>
-                    <td>NOK ${company.plan === 'founding_member' ? '1,290' : company.plan === 'business' ? '4,900' : '15,000'}</td>
-                    <td>${new Date(company.created_at).toLocaleDateString()}</td>
+                    <td><span class="badge ${company.status === 'active' ? 'badge-success' : 'badge-warning'}">${company.status || 'pending'}</span></td>
+                    <td>NOK ${company.plan === 'founding_member' ? '1,290' : company.plan === 'business' ? '4,900' : company.plan === 'partner' ? '15,000' : '1,890'}</td>
+                    <td>${company.created_at ? new Date(company.created_at).toLocaleDateString() : '-'}</td>
                     <td>
-                        <button style="background: transparent; border: none; color: var(--accent-blue); cursor: pointer; padding: 4px 8px;">
+                        <button style="background: transparent; border: none; color: var(--accent-blue); cursor: pointer; padding: 4px 8px;" data-requires="super_admin">
                             <i class="fas fa-edit"></i>
                         </button>
                     </td>
@@ -930,9 +975,14 @@
 
         function updateActivity(companies) {
             const activityList = document.getElementById('activityList');
-            const recentCompanies = companies.slice(0, 5);
+            const recent = companies.slice(0, 5);
             
-            activityList.innerHTML = recentCompanies.map(company => `
+            if (!recent.length) {
+                activityList.innerHTML = `<div style="text-align:center;color:var(--text-secondary);padding:1rem">Nenhuma atividade recente</div>`;
+                return;
+            }
+            
+            activityList.innerHTML = recent.map(company => `
                 <div class="activity-item">
                     <div class="activity-icon">
                         <i class="fas fa-user-plus"></i>
@@ -941,7 +991,7 @@
                         <div class="activity-text">
                             <strong>${company.name || 'New company'}</strong> joined as <strong>${company.plan || 'Starter'}</strong> member
                         </div>
-                        <div class="activity-time">${new Date(company.created_at).toLocaleString()}</div>
+                        <div class="activity-time">${company.created_at ? new Date(company.created_at).toLocaleString() : 'Recently'}</div>
                     </div>
                 </div>
             `).join('');
@@ -952,13 +1002,13 @@
         }
 
         function showSection(section) {
-            // Navigation logic here
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             event.target.closest('.nav-item').classList.add('active');
+            // Lógica de navegação pode ser expandida aqui
         }
 
-        // Initialize
-        checkAuth();
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', checkAuth);
     </script>
 </body>
 </html>
