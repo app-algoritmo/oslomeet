@@ -1,10 +1,18 @@
-# Oslo Meet - robots.txt
+# robots.txt para Oslo Meet
+# Sitemap: https://oslomeet.org/sitemap.xml
+
 User-agent: *
 Allow: /
 
-# Bloquear áreas administrativas (se houver)
+# Bloquear áreas administrativas ou de sistema (para segurança)
 Disallow: /dashboard/
 Disallow: /admin/
+Disallow: /private/
+Disallow: /src/
 
-# Sitemap
-Sitemap: https://oslomeet.org/sitemap.xml
+# Regras específicas para bots de IA (opcional, mas bom para controle)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
