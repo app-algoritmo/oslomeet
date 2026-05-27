@@ -892,6 +892,23 @@
     </div>
 
     <script>
+        // 🟢 CONFIGURAÇÃO STRIPE - Price IDs para referência futura
+        // Quando desejar migrar para checkout direto, use estas constantes
+        const STRIPE_CONFIG = {
+            prices: {
+                starter: 'price_1TaAbdLqoEcF1Aa81cDdhrBA',
+                business: 'price_1TaAirLqoEcF1Aa81EJQs2gb',
+                partner: 'price_1TaAl4LqoEcF1Aa824RpOjWi'
+            },
+            webhook: {
+                endpoint: 'https://mrparduxlvvflasgefpt.supabase.co/functions/v1/stripe-webhook',
+                events: ['checkout.session.completed', 'invoice.payment_succeeded']
+            },
+            metadata: {
+                keys: ['oslo_company_id', 'oslo_user_id', 'plan_type', 'locale']
+            }
+        };
+
         const translations = {
             en: {
                 // Cookie Banner Barros
