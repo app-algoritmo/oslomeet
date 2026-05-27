@@ -283,7 +283,7 @@
                     <li><i class="fas fa-check"></i> <span data-i18n="feat4">Basic opportunity feed</span></li>
                     <li><i class="fas fa-check"></i> <span data-i18n="feat5">Email support</span></li>
                 </ul>
-                <!-- ✅ LINK UNIFICADO PARA JOIN.HTML -->
+                <!-- ✅ LINK PARA JOIN.HTML (mantido conforme solicitado) -->
                 <a href="join.html?plan=starter" class="cta-button secondary" data-i18n="btnStarter">Get Started</a>
             </div>
 
@@ -301,7 +301,7 @@
                     <li><i class="fas fa-check"></i> <span data-i18n="feat10">Featured in Opportunity Feed</span></li>
                     <li><i class="fas fa-check"></i> <span data-i18n="feat11">Priority email support</span></li>
                 </ul>
-                <!-- ✅ LINK UNIFICADO PARA JOIN.HTML -->
+                <!-- ✅ LINK PARA JOIN.HTML (mantido conforme solicitado) -->
                 <a href="join.html?plan=business" class="cta-button ai" data-i18n="btnBusiness">Join Business</a>
             </div>
 
@@ -319,7 +319,7 @@
                     <li><i class="fas fa-check"></i> <span data-i18n="feat16">Dedicated success manager</span></li>
                     <li><i class="fas fa-check"></i> <span data-i18n="feat17">API access & analytics</span></li>
                 </ul>
-                <!-- ✅ LINK UNIFICADO PARA JOIN.HTML -->
+                <!-- ✅ LINK PARA JOIN.HTML (mantido conforme solicitado) -->
                 <a href="join.html?plan=partner" class="cta-button secondary" data-i18n="btnPartner">Contact Sales</a>
             </div>
         </div>
@@ -346,7 +346,7 @@
             Join Oslo's first AI business network as a Founding Member and lock in lifetime pricing, 
             get an exclusive badge, and receive priority access to all new features.
         </p>
-        <!-- ✅ LINK UNIFICADO COM PARÂMETRO FOUNDING -->
+        <!-- ✅ LINK PARA JOIN.HTML COM PARÂMETRO FOUNDING -->
         <a href="join.html?plan=business&founding=true" class="founding-cta">
             <i class="fas fa-star"></i>
             <span data-i18n="btnFounding">Reserve Founding Spot (50% off with code FOUNDING50)</span>
@@ -434,6 +434,24 @@
     </footer>
 
     <script>
+        // 🟢 CONFIGURAÇÃO STRIPE - Price IDs para referência futura
+        // Quando desejar migrar para checkout direto, use estas constantes
+        const STRIPE_CONFIG = {
+            prices: {
+                starter: 'price_1TaAbdLqoEcF1Aa81cDdhrBA',
+                business: 'price_1TaAirLqoEcF1Aa81EJQs2gb',
+                partner: 'price_1TaAl4LqoEcF1Aa824RpOjWi'
+            },
+            webhook: {
+                endpoint: 'https://mrparduxlvvflasgefpt.supabase.co/functions/v1/stripe-webhook',
+                events: ['checkout.session.completed', 'invoice.payment_succeeded']
+            },
+            metadata: {
+                keys: ['oslo_company_id', 'oslo_user_id', 'plan_type', 'locale']
+            }
+        };
+
+        // Traduções
         const translations = {
             en: {
                 pageTitle: "Simple, Transparent Pricing",
@@ -615,4 +633,3 @@
     </script>
 </body>
 </html>
-
