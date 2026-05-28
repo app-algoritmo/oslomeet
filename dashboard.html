@@ -1,546 +1,659 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
-    <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#8b5cf6" />
-    
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96"/>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet"/>
+    <link rel="manifest" href="/site.webmanifest"/>
+    <meta name="theme-color" content="#3b82f6"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard — Oslo Meet</title>
     <meta name="description" content="View your AI-powered business matches and connections.">
-
     <meta property="og:image" content="https://oslomeet.org/web.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Oslo Meet - AI-Powered Global Business Network">
     <meta property="og:site_name" content="Oslo Meet">
-    <meta property="og:locale" content="en_US">
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Oslo Meet — Global AI Business Matching">
-    <meta name="twitter:description" content="Strategic connections across Europe, Brazil, China & Nordics.">
     <meta name="twitter:image" content="https://oslomeet.org/web.png">
-    <meta name="twitter:image:alt" content="Oslo Meet - AI Business Matching Platform">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <meta name="google-site-verification" content="CRM-dMkWd--H5ZUbXfcT6P4OILoxyN9HrYl3ZJ7EDrk" />
-
-    <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C5E3B7CKET"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX', {
-    'anonymize_ip': true,
-    'cookie_flags': 'SameSite=None;Secure'
-  });
-</script>
-
-    <!-- hreflang tags para multi-idioma -->
-<link rel="alternate" hreflang="en" href="https://oslomeet.org/" />
-<link rel="alternate" hreflang="no" href="https://oslomeet.org/?lang=no" />
-<link rel="alternate" hreflang="pt" href="https://oslomeet.org/?lang=pt" />
-<link rel="alternate" hreflang="es" href="https://oslomeet.org/?lang=es" />
-<link rel="alternate" hreflang="x-default" href="https://oslomeet.org/" />
-    
-    <!-- Supabase via CDN clássico -->
+    <meta name="google-site-verification" content="CRM-dMkWd--H5ZUbXfcT6P4OILoxyN9HrYl3ZJ7EDrk"/>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5E3B7CKET"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX',{'anonymize_ip':true,'cookie_flags':'SameSite=None;Secure'});</script>
+    <link rel="alternate" hreflang="en" href="https://oslomeet.org/"/>
+    <link rel="alternate" hreflang="no" href="https://oslomeet.org/?lang=no"/>
+    <link rel="alternate" hreflang="pt" href="https://oslomeet.org/?lang=pt"/>
+    <link rel="alternate" hreflang="x-default" href="https://oslomeet.org/"/>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <style>
-        :root {
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --success-green: #10b981;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            -webkit-text-size-adjust: 100%;
-            padding-top: 50px;
-        }
-        .language-selector {
-            position: fixed; top: 12px; right: 12px; z-index: 1000;
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
-            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
-        }
-        .language-selector select {
-            background: transparent; border: none; color: white;
-            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
-            cursor: pointer; outline: none; padding: 4px;
-            -webkit-appearance: none; -moz-appearance: none; appearance: none;
-        }
-        .language-selector select option { background: var(--dark-bg); color: white; }
-        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
-        .dashboard-header {
-            background: linear-gradient(135deg, #1e1b4b, #312e81);
-            padding: 20px 16px; display: flex;
-            justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .dashboard-header h1 { font-size: 1.5rem; font-weight: 700; }
-        .user-info { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
-        .btn-icon {
-            padding: 8px; background: none; border: none; cursor: pointer;
-            color: var(--text-secondary); transition: color 0.3s; border-radius: 8px;
-            position: relative; display: flex; align-items: center; justify-content: center;
-        }
-        .btn-icon:hover { color: var(--accent-purple); background: rgba(139,92,246,0.1); }
-        .msg-badge {
-            position: absolute; top: 0; right: 0; background: #ef4444; color: white;
-            font-size: 0.65rem; font-weight: 700; padding: 2px 5px; border-radius: 10px;
-            min-width: 18px; text-align: center; line-height: 1; display: none;
-        }
-        .msg-badge.show { display: block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.7} }
-        .btn-logout {
-            padding: 8px 16px; background: transparent;
-            border: 1px solid var(--border-color); color: var(--text-secondary);
-            border-radius: 8px; cursor: pointer; text-decoration: none;
-            font-size: 0.9rem; transition: all 0.3s;
-        }
-        .btn-logout:hover { border-color: var(--accent-purple); color: white; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px 16px; }
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px; margin-bottom: 40px;
-        }
-        .stat-card { 
-            background: var(--card-bg); 
-            padding: 20px; 
-            border-radius: 12px; 
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .stat-card:hover { 
-            border-color: var(--accent-purple); 
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(139,92,246,0.2);
-        }
-        .stat-card h3 { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; }
-        .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--accent-purple); }
-        .stat-card.clickable { position: relative; }
-        .stat-card.clickable::after {
-            content: '→';
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            color: var(--accent-purple);
-            font-size: 1.2rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .stat-card.clickable:hover::after { opacity: 1; }
-        .section-title { font-size: 1.5rem; margin-bottom: 20px; font-weight: 700; }
-        .matches-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        @media (min-width: 768px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
-        .match-card {
-            background: var(--card-bg); padding: 20px; border-radius: 12px;
-            border: 1px solid var(--border-color); transition: all 0.3s;
-        }
-        .match-card:hover { border-color: var(--accent-purple); transform: translateY(-2px); }
-        .match-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
-        .match-header h4 { font-size: 1.1rem; font-weight: 600; }
-        .match-score {
-            background: linear-gradient(135deg, var(--success-green), #059669);
-            color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;
-        }
-        .match-industry { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 12px; }
-        .match-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-        .tag { background: rgba(59,130,246,0.15); color: #93c5fd; padding: 4px 10px; border-radius: 16px; font-size: 0.75rem; }
-        .btn-connect {
-            width: 100%; margin-top: 15px; padding: 10px;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
-            color: white; border: none; border-radius: 8px; font-weight: 600;
-            cursor: pointer; text-decoration: none; display: inline-block; text-align: center;
-        }
-        .btn-connect:hover { opacity: 0.9; }
-        .loading { text-align: center; padding: 40px; color: var(--text-secondary); }
-        .empty-state {
-            text-align: center; padding: 60px 20px; color: var(--text-secondary);
-            background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);
-        }
-        .empty-state i { font-size: 3rem; margin-bottom: 20px; opacity: 0.5; color: var(--accent-purple); }
-        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); margin-top: 40px; }
-        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
-        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
-        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
-        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 0.5rem; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
-        .footer-links a:hover { color: var(--accent-blue); }
-        .footer-bottom {
-            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
-            border-top: 1px solid var(--border-color); display: flex;
-            justify-content: center; align-items: center; flex-wrap: wrap;
-            gap: 1rem; color: var(--text-secondary); font-size: 0.85rem; text-align: center;
-        }
-        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
-        .footer-bottom a:hover { color: var(--accent-blue); }
-        .developer-credit { color: #fbbf24 !important; }
-        @media (max-width: 768px) {
-            .dashboard-header { flex-direction: column; gap: 15px; text-align: center; padding-right: 80px; }
-            .user-info { width: 100%; justify-content: center; }
-            .language-selector { top: 8px; right: 8px; padding: 4px 8px; }
-        }
-    </style>
+
+<style>
+:root{
+  --bg:#0b0f1a;
+  --nav:#0d1221;
+  --surface:#111827;
+  --card:#161d2e;
+  --border:#1e2d45;
+  --border2:#2a3a56;
+  --text:#e2e8f4;
+  --sub:#7a8fac;
+  --muted:#3d5068;
+  --accent:#3b82f6;
+  --accent2:#6366f1;
+  --green:#10b981;
+  --red:#f43f5e;
+  --amber:#f59e0b;
+  --cyan:#06b6d4;
+  --purple:#8b5cf6;
+  --a-dim:rgba(59,130,246,.12);
+  --g-dim:rgba(16,185,129,.12);
+  --am-dim:rgba(245,158,11,.1);
+  --c-dim:rgba(6,182,212,.1);
+  --p-dim:rgba(139,92,246,.12);
+  --r-dim:rgba(244,63,94,.1);
+  --grad:linear-gradient(135deg,#3b82f6,#6366f1);
+  --grad2:linear-gradient(135deg,#10b981,#06b6d4);
+  --max:1100px;
+  --r:12px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;overflow-x:hidden}
+
+/* ── TOPNAV ── */
+.topnav{
+  position:sticky;top:0;z-index:200;
+  background:var(--nav);border-bottom:1px solid var(--border);
+  padding:0 1.25rem;height:56px;
+  display:flex;align-items:center;
+}
+.topnav-inner{max-width:var(--max);width:100%;margin:0 auto;display:flex;align-items:center;gap:.875rem}
+.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0;text-decoration:none}
+.nav-logo img{height:24px;width:auto}
+.nav-sep{width:1px;height:18px;background:var(--border);flex-shrink:0}
+.nav-spacer{flex:1}
+.nav-right{display:flex;align-items:center;gap:.5rem}
+
+.lang-pill{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.lang-pill i{color:var(--accent);font-size:.75rem}
+.lang-pill select{background:transparent;border:none;color:var(--sub);font-family:'Inter',sans-serif;font-size:.73rem;font-weight:600;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none}
+.lang-pill select option{background:var(--nav)}
+
+.nav-icon-btn{width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--sub);cursor:pointer;font-size:.85rem;transition:.2s;position:relative;flex-shrink:0}
+.nav-icon-btn:hover{border-color:var(--border2);color:var(--text)}
+.msg-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--red);border-radius:50%;border:1px solid var(--nav);display:none}
+.msg-dot.on{display:block;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.msg-count{position:absolute;top:-2px;right:-2px;background:var(--red);color:#fff;font-size:.55rem;font-weight:700;padding:1px 4px;border-radius:10px;min-width:16px;text-align:center;display:none}
+.msg-count.on{display:block}
+
+.nav-user{display:flex;align-items:center;gap:7px;padding:5px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px;max-width:180px}
+.nav-av{width:26px;height:26px;background:var(--grad);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;flex-shrink:0}
+.nav-email{font-size:.72rem;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.nav-logout{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px 6px;border-radius:5px;font-size:.78rem;transition:.2s;flex-shrink:0;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:4px}
+.nav-logout:hover{color:var(--text)}
+
+.nav-burger{display:none;width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:.875rem;flex-shrink:0}
+
+/* ── MOB DRAWER ── */
+.mob-drawer{display:none;position:fixed;top:56px;left:0;right:0;background:var(--nav);border-bottom:1px solid var(--border);padding:.875rem 1.25rem;flex-direction:column;gap:8px;z-index:199}
+.mob-drawer.open{display:flex}
+.mob-row{display:flex;align-items:center;gap:10px}
+.mob-email{font-size:.8rem;color:var(--sub);overflow:hidden;text-overflow:ellipsis}
+
+/* ── MAIN ── */
+.content{max-width:var(--max);margin:0 auto;padding:1.75rem 1.25rem 3rem}
+
+.pg-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.pg-title{font-size:1.2rem;font-weight:700}
+.pg-sub{font-size:.75rem;color:var(--sub);margin-top:3px}
+
+/* ── KPI CARDS ── */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;margin-bottom:1.375rem}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.125rem;position:relative;overflow:hidden;transition:border-color .2s,transform .18s;cursor:default}
+.kpi:hover{border-color:var(--border2);transform:translateY(-2px)}
+.kpi.clickable{cursor:pointer}
+.kpi.clickable:hover{border-color:var(--accent)}
+.kpi-bar{position:absolute;bottom:0;left:0;right:0;height:2px;opacity:.5}
+.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.875rem}
+.kpi-lbl{font-size:.67rem;color:var(--sub);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.kpi-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.kpi-val{font-size:1.5rem;font-weight:700;letter-spacing:-.025em;line-height:1;margin-bottom:.35rem}
+.kpi-note{font-size:.7rem;color:var(--sub);display:flex;align-items:center;gap:4px}
+.kpi-note.up{color:var(--green)}
+.kpi-arrow{position:absolute;top:1rem;right:1rem;color:var(--accent);font-size:.8rem;opacity:0;transition:.2s}
+.kpi.clickable:hover .kpi-arrow{opacity:1}
+
+/* ── SECTION HEAD ── */
+.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.sec-title{font-size:.95rem;font-weight:600}
+.sec-sub{font-size:.72rem;color:var(--sub);margin-top:2px}
+.sec-badge{padding:3px 10px;background:var(--a-dim);color:var(--accent);border-radius:20px;font-size:.7rem;font-weight:600}
+
+/* ── MATCHES GRID ── */
+.matches-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.875rem}
+.match-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;transition:border-color .2s,transform .18s}
+.match-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.mc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.625rem;gap:.625rem}
+.mc-name{font-size:.9rem;font-weight:600;line-height:1.3}
+.mc-score{flex-shrink:0;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;background:var(--g-dim);color:var(--green)}
+.mc-industry{color:var(--sub);font-size:.78rem;margin-bottom:.875rem;display:flex;align-items:center;gap:5px}
+.mc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem}
+.mc-tag{background:var(--a-dim);color:#93c5fd;padding:3px 9px;border-radius:16px;font-size:.7rem}
+.mc-bar{width:100%;height:4px;background:var(--border);border-radius:4px;margin-bottom:1rem;overflow:hidden}
+.mc-bar-fill{height:100%;border-radius:4px;background:var(--grad2);transition:width .6s ease}
+.btn-connect{width:100%;padding:9px;background:var(--grad);color:#fff;border:none;border-radius:9px;font-weight:600;font-size:.8rem;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-connect:hover{opacity:.88}
+
+/* ── EMPTY / LOADING ── */
+.empty-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3.5rem 2rem;text-align:center;color:var(--sub)}
+.empty-panel i{font-size:2.5rem;margin-bottom:1.25rem;color:var(--muted);display:block}
+.empty-panel h3{font-size:.95rem;margin-bottom:.5rem;color:var(--text)}
+.empty-panel p{font-size:.82rem;line-height:1.6;margin-bottom:1.25rem}
+.empty-panel a{color:var(--accent);font-size:.82rem;text-decoration:none}
+.empty-panel a:hover{text-decoration:underline}
+.loading-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3rem;text-align:center;color:var(--sub);font-size:.82rem}
+.loading-panel i{display:block;font-size:1.5rem;margin-bottom:.875rem;color:var(--accent)}
+
+/* ── FOOTER ── */
+.footer{background:#060a14;border-top:1px solid var(--border);margin-top:3rem;padding:2.5rem 1.25rem 1.5rem}
+.footer-inner{max-width:var(--max);margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:1.5rem}
+.footer-brand h2{font-size:1.2rem;font-weight:800;margin-bottom:.75rem;background:linear-gradient(135deg,#fff,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer-brand p{color:var(--sub);font-size:.8rem;line-height:1.6}
+.footer-col-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;color:var(--text)}
+.footer-links{list-style:none}
+.footer-links li{margin-bottom:.4rem}
+.footer-links a{color:var(--sub);text-decoration:none;font-size:.8rem;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+.footer-bottom{padding-top:1.25rem;border-top:1px solid var(--border);display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.78rem}
+.footer-bottom a{color:var(--muted);text-decoration:none}
+.footer-bottom a:hover{color:var(--sub)}
+.dev-credit{color:#f59e0b!important}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .matches-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .nav-user .nav-email{display:none}
+  .lang-pill{display:none}
+  .nav-burger{display:flex}
+  .content{padding:1rem .875rem 3rem}
+  .kpi-row{grid-template-columns:1fr 1fr;gap:.625rem}
+  .kpi{padding:.875rem}
+  .kpi-val{font-size:1.2rem}
+  .kpi-lbl{font-size:.62rem}
+  .kpi-ico{width:28px;height:28px;font-size:.78rem}
+  .pg-title{font-size:1.05rem}
+  .footer-grid{grid-template-columns:1fr}
+}
+@media(max-width:400px){
+  .kpi-row{grid-template-columns:1fr}
+  .nav-user{display:none}
+}
+</style>
 </head>
 <body>
-    <div class="language-selector">
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="https://oslomeet.org/omlogo.png" alt="Oslo Meet"
+           onerror="this.style.display='none';document.getElementById('lFb').style.display='flex'">
+      <div id="lFb" style="display:none;width:24px;height:24px;background:var(--grad);border-radius:6px;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">OM</div>
+    </a>
+
+    <div class="nav-spacer"></div>
+
+    <div class="nav-right">
+      <!-- Language -->
+      <div class="lang-pill">
         <i class="fas fa-globe"></i>
         <select id="languageSelect" onchange="changeLanguage(this.value)">
-            <option value="en">English</option>
-            <option value="no">Norsk</option>
-            <option value="pt">Português</option>
-            <option value="es">Español</option>
+          <option value="en">EN</option>
+          <option value="no">NO</option>
+          <option value="pt">PT</option>
+          <option value="es">ES</option>
         </select>
+      </div>
+
+      <!-- Messages -->
+      <button class="nav-icon-btn" onclick="openMessages()" title="Messages">
+        <i class="fas fa-envelope" style="font-size:.8rem"></i>
+        <span id="msgCount" class="msg-count"></span>
+        <span id="msgDot" class="msg-dot"></span>
+      </button>
+
+      <!-- User -->
+      <div class="nav-user">
+        <div class="nav-av" id="navAv">?</div>
+        <span class="nav-email" id="userEmail">Loading…</span>
+        <button class="nav-logout" onclick="doLogout()" title="Logout" data-i18n-title="btnLogout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+
+      <!-- Burger (mobile) -->
+      <button class="nav-burger" id="burgerBtn" onclick="toggleDrawer()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="mob-drawer" id="mobDrawer">
+  <div class="mob-row">
+    <div class="nav-av" id="navAv2">?</div>
+    <span class="mob-email" id="mobEmail">Loading…</span>
+  </div>
+  <div class="mob-row">
+    <div class="lang-pill" style="display:flex">
+      <i class="fas fa-globe"></i>
+      <select id="languageSelect2" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="no">Norsk</option>
+        <option value="pt">Português</option>
+        <option value="es">Español</option>
+      </select>
+    </div>
+    <button class="nav-icon-btn" onclick="openMessages();closeDrawer()">
+      <i class="fas fa-envelope" style="font-size:.8rem"></i>
+      <span id="msgCount2" class="msg-count"></span>
+    </button>
+  </div>
+  <button class="btn-connect" onclick="doLogout()" style="background:var(--card);border:1px solid var(--border);color:var(--sub);font-weight:500;margin-top:4px" data-i18n="btnLogout">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </button>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="pg-head">
+    <div>
+      <div class="pg-title" id="pgTitle" data-i18n="dashTitle">👋 Welcome to Oslo Meet</div>
+      <div class="pg-sub" id="pgSub">Your AI-powered business dashboard</div>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-row">
+
+    <div class="kpi">
+      <div class="kpi-bar" style="background:var(--grad)"></div>
+      <div class="kpi-top">
+        <div class="kpi-lbl" data-i18n="statCompany">Your Company</div>
+        <div class="kpi-ico" style="background:var(--p-dim);color:var(--purple)"><i class="fas fa-building"></i></div>
+      </div>
+      <div class="kpi-val" id="companyName" style="font-size:1rem;letter-spacing:0;font-weight:700">—</div>
+      <div class="kpi-note"><i class="fas fa-circle-check"></i> Registered</div>
     </div>
 
-    <header class="dashboard-header">
-        <h1 data-i18n="dashTitle">👋 Welcome to Oslo Meet</h1>
-        <div class="user-info">
-            <button onclick="openMessages()" class="btn-icon" title="Mensagens">
-                <i class="fas fa-envelope" style="font-size:1.1rem;"></i>
-                <span id="msgBadge" class="msg-badge">0</span>
-            </button>
-            <span id="userEmail">Loading...</span>
-            <button onclick="doLogout()" class="btn-logout" data-i18n="btnLogout">Logout</button>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3 data-i18n="statCompany">Your Company</h3>
-                <div class="value" id="companyName">-</div>
-            </div>
-            <div class="stat-card">
-                <h3 data-i18n="statMatches">Matches Found</h3>
-                <div class="value" id="matchCount">0</div>
-            </div>
-            <div class="stat-card">
-                <h3 data-i18n="statTopScore">Top Match Score</h3>
-                <div class="value" id="topScore">0%</div>
-            </div>
-            <!-- ✅ NOVO CARD DE MENSAGENS -->
-            <div class="stat-card clickable" onclick="openMessages()" style="cursor:pointer;">
-                <h3 data-i18n="statMessages">Messages</h3>
-                <div class="value" id="messageCount" style="display:flex;align-items:center;gap:10px;">
-                    <i class="fas fa-comments" style="font-size:1.5rem;"></i>
-                    <span>0</span>
-                </div>
-            </div>
-        </div>
-
-        <h2 class="section-title" data-i18n="sectionMatches">🎯 Recommended Matches</h2>
-        <div id="matchesContainer" class="matches-grid">
-            <div class="loading">
-                <i class="fas fa-spinner fa-spin"></i>
-                <p data-i18n="loadingText">Finding your best matches...</p>
-            </div>
-        </div>
+    <div class="kpi">
+      <div class="kpi-bar" style="background:var(--grad2)"></div>
+      <div class="kpi-top">
+        <div class="kpi-lbl" data-i18n="statMatches">Matches Found</div>
+        <div class="kpi-ico" style="background:var(--g-dim);color:var(--green)"><i class="fas fa-handshake"></i></div>
+      </div>
+      <div class="kpi-val" id="matchCount">0</div>
+      <div class="kpi-note up" id="matchNote"><i class="fas fa-arrow-trend-up"></i> Compatible partners</div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h2>OSLO MEET</h2>
-                <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
-            </div>
-            <div>
-                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
-                <ul class="footer-links">
-                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
-                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
-                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
-                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
-                <ul class="footer-links">
-                    <li><a href="about.html" data-i18n="navAbout">About</a></li>
-                    <li><a href="insights.html" data-i18n="navBlog">Insights</a></li>
-                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
-                    <li><a href="support.html" data-i18n="navSupport">Support</a></li>
-                </ul>
-            </div>
-            <div>
-                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
-                <ul class="footer-links">
-                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
-                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
-                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
-                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div>&copy; 2026 Oslo Meet</div>
-            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
-        </div>
-    </footer>
+    <div class="kpi">
+      <div class="kpi-bar" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
+      <div class="kpi-top">
+        <div class="kpi-lbl" data-i18n="statTopScore">Top Match Score</div>
+        <div class="kpi-ico" style="background:var(--am-dim);color:var(--amber)"><i class="fas fa-star"></i></div>
+      </div>
+      <div class="kpi-val" id="topScore">0%</div>
+      <div class="kpi-note"><i class="fas fa-chart-bar"></i> Compatibility</div>
+    </div>
 
-    <script>
-        // ✅ 
-        const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
-        const { createClient } = window.supabase;
-        const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    <div class="kpi clickable" onclick="openMessages()">
+      <div class="kpi-bar" style="background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
+      <div class="kpi-arrow"><i class="fas fa-arrow-right"></i></div>
+      <div class="kpi-top">
+        <div class="kpi-lbl" data-i18n="statMessages">Messages</div>
+        <div class="kpi-ico" style="background:var(--c-dim);color:var(--cyan)"><i class="fas fa-comments"></i></div>
+      </div>
+      <div class="kpi-val" id="messageCount">0</div>
+      <div class="kpi-note" id="msgNote"><i class="fas fa-inbox"></i> Active conversations</div>
+    </div>
 
-        let currentCompany = null;
-        let messagesSubscription = null;
+  </div>
 
-        // LOGOUT
-        async function doLogout() {
-            if (!confirm('Deseja realmente sair?')) return;
-            try {
-                await db.auth.signOut({ scope: 'global' });
-                if (messagesSubscription) db.removeChannel(messagesSubscription);
-            } catch(e) { console.warn('signOut error:', e); }
-            Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
-            localStorage.clear();
-            sessionStorage.clear();
-            window.location.replace('login.html');
-        }
+  <!-- Matches section -->
+  <div class="sec-head">
+    <div>
+      <div class="sec-title" data-i18n="sectionMatches">🎯 Recommended Matches</div>
+      <div class="sec-sub" data-i18n="sectionMatchesSub">AI-powered compatibility ranking</div>
+    </div>
+    <span class="sec-badge" id="matchBadge" style="display:none"></span>
+  </div>
 
-        function openMessages() {
-            window.location.href = 'messages.html';
-        }
+  <div id="matchesContainer">
+    <div class="loading-panel">
+      <i class="fas fa-spinner fa-spin"></i>
+      <span data-i18n="loadingText">Finding your best matches…</span>
+    </div>
+  </div>
 
-        async function startConversation(matchedCompanyId, matchedCompanyName) {
-            if (!currentCompany) { alert('Carregando dados da empresa...'); return; }
-            try {
-                const idA = currentCompany.id < matchedCompanyId ? currentCompany.id : matchedCompanyId;
-                const idB = currentCompany.id > matchedCompanyId ? currentCompany.id : matchedCompanyId;
-                const { data: existing } = await db.from('conversations').select('id').eq('company_a_id', idA).eq('company_b_id', idB).maybeSingle();
-                let convId;
-                if (existing) {
-                    convId = existing.id;
-                } else {
-                    const { data: newConv, error: convError } = await db.from('conversations').insert({ company_a_id: idA, company_b_id: idB }).select('id').single();
-                    if (convError) throw convError;
-                    convId = newConv.id;
-                }
-                window.location.href = `messages.html?conv=${convId}`;
-            } catch (err) {
-                console.error('Erro ao iniciar conversa:', err);
-                alert('Erro ao conectar. Tente novamente.');
-            }
-        }
+</div><!-- /content -->
 
-        async function updateMessageBadge() {
-            if (!currentCompany) return;
-            const badge = document.getElementById('msgBadge');
-            const messageCountEl = document.getElementById('messageCount');
-            
-            try {
-                // Contar conversas ativas
-                const { data: conversations, error: convError } = await db
-                    .from('conversations')
-                    .select('id')
-                    .or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`);
-                
-                if (convError) throw convError;
-                
-                const totalConversations = conversations ? conversations.length : 0;
-                
-                // Contar mensagens não lidas
-                const { count, error: msgError } = await db.from('messages')
-                    .select('*', { count: 'exact', head: true })
-                    .in('conversation_id',
-                        db.from('conversations').select('id').or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`)
-                    )
-                    .eq('is_read', false)
-                    .neq('sender_company_id', currentCompany.id);
-                
-                if (msgError) throw msgError;
-                
-                // Atualizar badge do header
-                if (count > 0) {
-                    badge.textContent = count > 99 ? '99+' : count;
-                    badge.classList.add('show');
-                } else {
-                    badge.classList.remove('show');
-                }
-                
-                // Atualizar card de mensagens
-                if (messageCountEl) {
-                    const unreadText = count > 0 ? ` (${count} ${count === 1 ? 'new' : 'new'})` : '';
-                    messageCountEl.innerHTML = `
-                        <i class="fas fa-comments" style="font-size:1.5rem;"></i>
-                        <span>${totalConversations}${unreadText}</span>
-                    `;
-                }
-            } catch (err) { 
-                console.warn('Erro ao atualizar badge:', err);
-            }
-        }
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h2>OSLO MEET</h2>
+        <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="navPlatform">Platform</div>
+        <ul class="footer-links">
+          <li><a href="index.html" data-i18n="navHome">Home</a></li>
+          <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+          <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+          <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="navCompany">Company</div>
+        <ul class="footer-links">
+          <li><a href="about.html" data-i18n="navAbout">About</a></li>
+          <li><a href="insights.html" data-i18n="navBlog">Insights</a></li>
+          <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+          <li><a href="support.html" data-i18n="navSupport">Support</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title" data-i18n="navLegal">Legal</div>
+        <ul class="footer-links">
+          <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+          <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+          <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+          <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Oslo Meet</span>
+      <a href="https://app-algoritmo.github.io/digital-solutions" class="dev-credit"><i class="fas fa-code"></i> Digital Solutions</a>
+    </div>
+  </div>
+</footer>
 
-        function setupMessagesRealtime() {
-            messagesSubscription = db.channel('dashboard_messages')
-                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `sender_company_id.neq.${currentCompany?.id || ''}` }, () => { updateMessageBadge(); })
-                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'messages', filter: `is_read=eq.true` }, () => { updateMessageBadge(); })
-                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'conversations' }, () => { updateMessageBadge(); })
-                .subscribe();
-        }
+<script>
+const SUPABASE_URL='https://mrparduxlvyflasgefpt.supabase.co';
+const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+const{createClient}=window.supabase;
+const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-        async function loadDashboard() {
-            const { data: { session } } = await db.auth.getSession();
-            if (!session) {
-                window.location.replace('login.html');
-                return;
-            }
+let currentCompany=null;
+let messagesSubscription=null;
 
-            document.getElementById('userEmail').textContent = session.user.email;
+/* ── LOGOUT ── */
+async function doLogout(){
+  if(!confirm('Are you sure you want to logout?'))return;
+  try{await db.auth.signOut({scope:'global'});
+  if(messagesSubscription)db.removeChannel(messagesSubscription);}
+  catch(e){console.warn('signOut:',e);}
+  Object.keys(localStorage).forEach(k=>{if(k.startsWith('sb-'))localStorage.removeItem(k);});
+  localStorage.clear();sessionStorage.clear();
+  window.location.replace('login.html');
+}
 
-            let company = await db.from('companies').select('id, name, contact_email').eq('user_id', session.user.id).maybeSingle().then(r => r.data);
-            if (!company) {
-                company = await db.from('companies').select('id, name, contact_email').eq('contact_email', session.user.email).maybeSingle().then(r => r.data);
-            }
+function openMessages(){window.location.href='messages.html';}
 
-            if (!company) {
-                document.getElementById('matchesContainer').innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <h3 data-i18n="emptyTitle">No company found</h3>
-                        <p data-i18n="emptyDesc">Register your company first to see matches.</p>
-                        <a href="join.html" style="color:var(--accent-purple);display:inline-block;margin-top:15px;" data-i18n="btnGoRegister">Go to Registration →</a>
-                    </div>`;
-                return;
-            }
+/* ── START CONVERSATION ── */
+async function startConversation(matchedCompanyId,matchedCompanyName){
+  if(!currentCompany){alert('Loading company data...');return;}
+  try{
+    const idA=currentCompany.id<matchedCompanyId?currentCompany.id:matchedCompanyId;
+    const idB=currentCompany.id>matchedCompanyId?currentCompany.id:matchedCompanyId;
+    const{data:existing}=await db.from('conversations').select('id').eq('company_a_id',idA).eq('company_b_id',idB).maybeSingle();
+    let convId;
+    if(existing){convId=existing.id;}
+    else{
+      const{data:newConv,error:convError}=await db.from('conversations').insert({company_a_id:idA,company_b_id:idB}).select('id').single();
+      if(convError)throw convError;
+      convId=newConv.id;
+    }
+    window.location.href=`messages.html?conv=${convId}`;
+  }catch(err){console.error('Conversation error:',err);alert('Error connecting. Please try again.');}
+}
 
-            currentCompany = company;
-            document.getElementById('companyName').textContent = company.name;
+/* ── MESSAGE BADGE ── */
+async function updateMessageBadge(){
+  if(!currentCompany)return;
+  try{
+    const{data:conversations}=await db.from('conversations').select('id')
+      .or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`);
+    const total=conversations?conversations.length:0;
+    const{count}=await db.from('messages').select('*',{count:'exact',head:true})
+      .in('conversation_id',db.from('conversations').select('id').or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`))
+      .eq('is_read',false).neq('sender_company_id',currentCompany.id);
 
-            const { data: matches } = await db.rpc('get_company_matches', {
-                target_company_id: company.id, match_limit: 10, min_score: 0.3
-            });
+    // Update KPI card
+    const el=document.getElementById('messageCount');
+    if(el)el.textContent=total;
+    const noteEl=document.getElementById('msgNote');
+    if(noteEl)noteEl.innerHTML=count>0
+      ?`<i class="fas fa-circle" style="color:var(--red);font-size:.5rem"></i> ${count} unread`
+      :`<i class="fas fa-inbox"></i> ${total} conversation${total!==1?'s':''}`;
 
-            if (!matches || matches.length === 0) {
-                document.getElementById('matchesContainer').innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-search"></i>
-                        <h3 data-i18n="noMatchesTitle">No matches yet</h3>
-                        <p data-i18n="noMatchesDesc">As more companies join, you'll see compatible matches here.</p>
-                    </div>`;
-                document.getElementById('matchCount').textContent = '0';
-            } else {
-                document.getElementById('matchCount').textContent = matches.length;
-                document.getElementById('topScore').textContent = Math.round(matches[0].compatibility_score * 100) + '%';
-                document.getElementById('matchesContainer').innerHTML = matches.map(match => `
-                    <div class="match-card">
-                        <div class="match-header">
-                            <h4>${match.matched_name}</h4>
-                            <span class="match-score">${Math.round(match.compatibility_score * 100)}% Match</span>
-                        </div>
-                        <div class="match-industry">${match.matched_industry || 'Industry not specified'}</div>
-                        <div class="match-tags">
-                            <span class="tag"><i class="fas fa-handshake"></i> Partnership</span>
-                            <span class="tag"><i class="fas fa-globe"></i> Cross-border</span>
-                        </div>
-                        <button class="btn-connect" onclick="startConversation('${match.matched_id}', '${match.matched_name.replace(/'/g, "\\'")}')">
-                            <i class="fas fa-envelope"></i> <span data-i18n="btnConnect">Connect</span>
-                        </button>
-                    </div>`).join('');
-            }
+    // Nav badge
+    const mc=document.getElementById('msgCount');
+    const mc2=document.getElementById('msgCount2');
+    const md=document.getElementById('msgDot');
+    if(count>0){
+      const txt=count>99?'99+':count;
+      if(mc){mc.textContent=txt;mc.classList.add('on');}
+      if(mc2){mc2.textContent=txt;mc2.classList.add('on');}
+      if(md)md.classList.add('on');
+    }else{
+      if(mc)mc.classList.remove('on');
+      if(mc2)mc2.classList.remove('on');
+      if(md)md.classList.remove('on');
+    }
+  }catch(err){console.warn('Badge error:',err);}
+}
 
-            await updateMessageBadge();
-            setupMessagesRealtime();
-        }
+/* ── REALTIME ── */
+function setupMessagesRealtime(){
+  messagesSubscription=db.channel('dashboard_messages')
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:`sender_company_id.neq.${currentCompany?.id||''}`},()=>updateMessageBadge())
+    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'messages',filter:`is_read=eq.true`},()=>updateMessageBadge())
+    .on('postgres_changes',{event:'INSERT',schema:'public',table:'conversations'},()=>updateMessageBadge())
+    .subscribe();
+}
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('preferredLanguage') || 'en';
-            document.getElementById('languageSelect').value = saved;
-            changeLanguage(saved);
-            loadDashboard();
-        });
+/* ── MATCHES RENDER ── */
+function renderMatches(matches){
+  const lang=localStorage.getItem('preferredLanguage')||'en';
+  const t=translations[lang]||translations.en;
 
-        window.addEventListener('beforeunload', () => {
-            if (messagesSubscription) db.removeChannel(messagesSubscription);
-        });
-    </script>
+  if(!matches||matches.length===0){
+    document.getElementById('matchesContainer').innerHTML=`
+      <div class="empty-panel">
+        <i class="fas fa-search"></i>
+        <h3>${t.noMatchesTitle}</h3>
+        <p>${t.noMatchesDesc}</p>
+      </div>`;
+    return;
+  }
 
-    <script>
-        const translations = {
-            en: {
-                dashTitle: "👋 Welcome to Oslo Meet", btnLogout: "Logout", btnConnect: "Connect",
-                statCompany: "Your Company", statMatches: "Matches Found", statTopScore: "Top Match Score",
-                statMessages: "💬 Messages",
-                sectionMatches: "🎯 Recommended Matches", loadingText: "Finding your best matches...",
-                emptyTitle: "No company found", emptyDesc: "Register your company first to see matches.", btnGoRegister: "Go to Registration →",
-                noMatchesTitle: "No matches yet", noMatchesDesc: "As more companies join, you'll see compatible matches here.",
-                footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
-                navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
-                navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact", navSupport: "Support",
-                navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
-            },
-            no: {
-                dashTitle: "👋 Velkommen til Oslo Meet", btnLogout: "Logg ut", btnConnect: "Koble til",
-                statCompany: "Din bedrift", statMatches: "Matcher funnet", statTopScore: "Topp match-score",
-                statMessages: "💬 Meldinger",
-                sectionMatches: "🎯 Anbefalte matcher", loadingText: "Finner dine beste matcher...",
-                emptyTitle: "Ingen bedrift funnet", emptyDesc: "Registrer din bedrift først for å se matcher.", btnGoRegister: "Gå til registrering →",
-                noMatchesTitle: "Ingen matcher ennå", noMatchesDesc: "Etter hvert som flere bedrifter blir med, vil du se kompatible matcher her.",
-                footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
-                navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
-                navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt", navSupport: "Støtte",
-                navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
-            },
-            pt: {
-                dashTitle: "👋 Bem-vindo ao Oslo Meet", btnLogout: "Sair", btnConnect: "Conectar",
-                statCompany: "Sua Empresa", statMatches: "Matches Encontrados", statTopScore: "Melhor Score",
-                statMessages: "💬 Mensagens",
-                sectionMatches: "🎯 Matches Recomendados", loadingText: "Encontrando seus melhores matches...",
-                emptyTitle: "Nenhuma empresa encontrada", emptyDesc: "Cadastre sua empresa primeiro para ver matches.", btnGoRegister: "Ir para Cadastro →",
-                noMatchesTitle: "Nenhum match ainda", noMatchesDesc: "À medida que mais empresas entram, você verá matches compatíveis aqui.",
-                footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
-                navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
-                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato", navSupport: "Suporte",
-                navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
-            },
-            es: {
-                dashTitle: "👋 Bienvenido a Oslo Meet", btnLogout: "Salir", btnConnect: "Conectar",
-                statCompany: "Tu Empresa", statMatches: "Matches Encontrados", statTopScore: "Mejor Puntuación",
-                statMessages: "💬 Mensajes",
-                sectionMatches: "🎯 Matches Recomendados", loadingText: "Encontrando tus mejores matches...",
-                emptyTitle: "Ninguna empresa encontrada", emptyDesc: "Registra tu empresa primero para ver matches.", btnGoRegister: "Ir a Registro →",
-                noMatchesTitle: "Sin matches aún", noMatchesDesc: "A medida que más empresas se unan, verás matches compatibles aquí.",
-                footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
-                navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
-                navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto", navSupport: "Soporte",
-                navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR"
-            }
-        };
+  const badge=document.getElementById('matchBadge');
+  if(badge){badge.textContent=`${matches.length} matches`;badge.style.display='';}
 
-        function changeLanguage(lang) {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
-            });
-            document.documentElement.lang = lang;
-            localStorage.setItem('preferredLanguage', lang);
-        }
-    </script>
+  document.getElementById('matchesContainer').innerHTML=`
+    <div class="matches-grid">
+      ${matches.map(m=>{
+        const score=Math.round(m.compatibility_score*100);
+        const scoreColor=score>=70?'var(--green)':score>=50?'var(--amber)':'var(--sub)';
+        const scoreBg=score>=70?'var(--g-dim)':score>=50?'var(--am-dim)':'rgba(255,255,255,.05)';
+        return`<div class="match-card">
+          <div class="mc-top">
+            <div class="mc-name">${esc(m.matched_name)}</div>
+            <span class="mc-score" style="background:${scoreBg};color:${scoreColor}">${score}% Match</span>
+          </div>
+          <div class="mc-industry"><i class="fas fa-industry" style="font-size:.7rem"></i> ${esc(m.matched_industry||'Industry not specified')}</div>
+          <div class="mc-bar"><div class="mc-bar-fill" style="width:${score}%"></div></div>
+          <div class="mc-tags">
+            <span class="mc-tag"><i class="fas fa-handshake"></i> Partnership</span>
+            <span class="mc-tag"><i class="fas fa-globe"></i> Cross-border</span>
+          </div>
+          <button class="btn-connect" onclick="startConversation('${m.matched_id}','${esc(m.matched_name).replace(/'/g,"\\'")}')">
+            <i class="fas fa-envelope"></i> <span data-i18n="btnConnect">${t.btnConnect}</span>
+          </button>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+/* ── LOAD DASHBOARD ── */
+async function loadDashboard(){
+  const{data:{session}}=await db.auth.getSession();
+  if(!session){window.location.replace('login.html');return;}
+
+  const email=session.user.email||'';
+  document.getElementById('userEmail').textContent=email;
+  document.getElementById('mobEmail').textContent=email;
+  const initials=email.charAt(0).toUpperCase();
+  document.getElementById('navAv').textContent=initials;
+  document.getElementById('navAv2').textContent=initials;
+  document.getElementById('pgSub').textContent=`${email} · AI-powered dashboard`;
+
+  let company=await db.from('companies').select('id,name,contact_email').eq('user_id',session.user.id).maybeSingle().then(r=>r.data);
+  if(!company)company=await db.from('companies').select('id,name,contact_email').eq('contact_email',email).maybeSingle().then(r=>r.data);
+
+  if(!company){
+    const lang=localStorage.getItem('preferredLanguage')||'en';
+    const t=translations[lang]||translations.en;
+    document.getElementById('companyName').textContent='—';
+    document.getElementById('matchesContainer').innerHTML=`
+      <div class="empty-panel">
+        <i class="fas fa-inbox"></i>
+        <h3>${t.emptyTitle}</h3>
+        <p>${t.emptyDesc}</p>
+        <a href="join.html">${t.btnGoRegister}</a>
+      </div>`;
+    return;
+  }
+
+  currentCompany=company;
+  document.getElementById('companyName').textContent=company.name;
+
+  const{data:matches}=await db.rpc('get_company_matches',{
+    target_company_id:company.id,match_limit:10,min_score:0.3
+  });
+
+  if(matches&&matches.length>0){
+    document.getElementById('matchCount').textContent=matches.length;
+    document.getElementById('topScore').textContent=Math.round(matches[0].compatibility_score*100)+'%';
+  }
+
+  renderMatches(matches);
+  await updateMessageBadge();
+  setupMessagesRealtime();
+}
+
+/* ── MOBILE DRAWER ── */
+function toggleDrawer(){document.getElementById('mobDrawer').classList.toggle('open');}
+function closeDrawer(){document.getElementById('mobDrawer').classList.remove('open');}
+document.addEventListener('click',e=>{
+  const d=document.getElementById('mobDrawer'),b=document.getElementById('burgerBtn');
+  if(d&&b&&!d.contains(e.target)&&!b.contains(e.target))d.classList.remove('open');
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+
+/* ── UTILS ── */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  const saved=localStorage.getItem('preferredLanguage')||'en';
+  document.getElementById('languageSelect').value=saved;
+  document.getElementById('languageSelect2').value=saved;
+  changeLanguage(saved);
+  loadDashboard();
+});
+
+window.addEventListener('beforeunload',()=>{
+  if(messagesSubscription)db.removeChannel(messagesSubscription);
+});
+</script>
+
+<script>
+const translations={
+  en:{
+    dashTitle:"👋 Welcome to Oslo Meet",btnLogout:"Logout",btnConnect:"Connect",
+    statCompany:"Your Company",statMatches:"Matches Found",statTopScore:"Top Match Score",statMessages:"Messages",
+    sectionMatches:"🎯 Recommended Matches",sectionMatchesSub:"AI-powered compatibility ranking",
+    loadingText:"Finding your best matches…",
+    emptyTitle:"No company found",emptyDesc:"Register your company first to see matches.",btnGoRegister:"Go to Registration →",
+    noMatchesTitle:"No matches yet",noMatchesDesc:"As more companies join, you'll see compatible matches here.",
+    footerSlogan:"AI-powered global business connections across Europe, Brazil, China and Nordics.",
+    navHome:"Home",navPlatform:"Platform",navHow:"How Matching Works",navJoin:"Join Now",navPricing:"Pricing",
+    navCompany:"Company",navAbout:"About",navBlog:"Insights",navContact:"Contact",navSupport:"Support",
+    navLegal:"Legal",navTerms:"Terms",navPrivacy:"Privacy",navCookies:"Cookies",navGDPR:"GDPR Rights"
+  },
+  no:{
+    dashTitle:"👋 Velkommen til Oslo Meet",btnLogout:"Logg ut",btnConnect:"Koble til",
+    statCompany:"Din bedrift",statMatches:"Matcher funnet",statTopScore:"Topp match-score",statMessages:"Meldinger",
+    sectionMatches:"🎯 Anbefalte matcher",sectionMatchesSub:"AI-drevet kompatibilitetsrangering",
+    loadingText:"Finner dine beste matcher…",
+    emptyTitle:"Ingen bedrift funnet",emptyDesc:"Registrer din bedrift først for å se matcher.",btnGoRegister:"Gå til registrering →",
+    noMatchesTitle:"Ingen matcher ennå",noMatchesDesc:"Etter hvert som flere bedrifter blir med, vil du se matcher her.",
+    footerSlogan:"AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
+    navHome:"Hjem",navPlatform:"Plattform",navHow:"Hvordan matching virker",navJoin:"Bli med nå",navPricing:"Priser",
+    navCompany:"Selskap",navAbout:"Om",navBlog:"Innsikt",navContact:"Kontakt",navSupport:"Støtte",
+    navLegal:"Juridisk",navTerms:"Vilkår",navPrivacy:"Personvern",navCookies:"Cookies",navGDPR:"GDPR-rettigheter"
+  },
+  pt:{
+    dashTitle:"👋 Bem-vindo ao Oslo Meet",btnLogout:"Sair",btnConnect:"Conectar",
+    statCompany:"Sua Empresa",statMatches:"Matches Encontrados",statTopScore:"Melhor Score",statMessages:"Mensagens",
+    sectionMatches:"🎯 Matches Recomendados",sectionMatchesSub:"Ranking de compatibilidade por IA",
+    loadingText:"Encontrando seus melhores matches…",
+    emptyTitle:"Nenhuma empresa encontrada",emptyDesc:"Cadastre sua empresa primeiro para ver matches.",btnGoRegister:"Ir para Cadastro →",
+    noMatchesTitle:"Nenhum match ainda",noMatchesDesc:"À medida que mais empresas entram, você verá matches aqui.",
+    footerSlogan:"Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
+    navHome:"Início",navPlatform:"Plataforma",navHow:"Como Funciona",navJoin:"Entrar Agora",navPricing:"Preços",
+    navCompany:"Empresa",navAbout:"Sobre",navBlog:"Insights",navContact:"Contato",navSupport:"Suporte",
+    navLegal:"Legal",navTerms:"Termos",navPrivacy:"Privacidade",navCookies:"Cookies",navGDPR:"Direitos GDPR"
+  },
+  es:{
+    dashTitle:"👋 Bienvenido a Oslo Meet",btnLogout:"Salir",btnConnect:"Conectar",
+    statCompany:"Tu Empresa",statMatches:"Matches Encontrados",statTopScore:"Mejor Puntuación",statMessages:"Mensajes",
+    sectionMatches:"🎯 Matches Recomendados",sectionMatchesSub:"Ranking de compatibilidad por IA",
+    loadingText:"Encontrando tus mejores matches…",
+    emptyTitle:"Ninguna empresa encontrada",emptyDesc:"Registra tu empresa primero para ver matches.",btnGoRegister:"Ir a Registro →",
+    noMatchesTitle:"Sin matches aún",noMatchesDesc:"A medida que más empresas se unan, verás matches compatibles aquí.",
+    footerSlogan:"Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
+    navHome:"Inicio",navPlatform:"Plataforma",navHow:"Cómo Funciona",navJoin:"Unirse Ahora",navPricing:"Precios",
+    navCompany:"Empresa",navAbout:"Sobre",navBlog:"Insights",navContact:"Contacto",navSupport:"Soporte",
+    navLegal:"Legal",navTerms:"Términos",navPrivacy:"Privacidad",navCookies:"Cookies",navGDPR:"Derechos GDPR"
+  }
+};
+
+function changeLanguage(lang){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(translations[lang]?.[k])el.innerHTML=translations[lang][k];
+  });
+  document.documentElement.lang=lang;
+  localStorage.setItem('preferredLanguage',lang);
+  document.getElementById('languageSelect').value=lang;
+  document.getElementById('languageSelect2').value=lang;
+  // Re-render matches with new language if loaded
+  if(window._matchesCache)renderMatches(window._matchesCache);
+}
+</script>
 </body>
 </html>
