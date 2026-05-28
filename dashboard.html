@@ -454,6 +454,18 @@ function openMessages(){window.location.href='messages.html';}
 async function startConversation(matchedCompanyId,matchedCompanyName){
   if(!currentCompany){alert('Loading...');return;}
   try{
+    // Verifica match valido (score >= 30%) antes de criar conversa
+    const{data:matches}=await db.rpc('get_company_matches',{
+      target_company_id:currentCompany.id,match_limit:100,min_score:0.3
+    });
+    const hasMatch=matches?.some(m=>m.matched_id===matchedCompanyId);
+    if(!hasMatch){
+      const lang=localStorage.getItem('preferredLanguage')||'en';
+      const msgs={en:'No compatible match found with this company.',pt:'Nenhum match compativel encontrado.',no:'Ingen kompatibel match funnet.',es:'No se encontro ninguna coincidencia compatible.'};
+      alert(msgs[lang]||msgs.en);
+      return;
+    }
+    // Match confirmado - cria ou recupera conversa
     const idA=currentCompany.id<matchedCompanyId?currentCompany.id:matchedCompanyId;
     const idB=currentCompany.id>matchedCompanyId?currentCompany.id:matchedCompanyId;
     const{data:existing}=await db.from('conversations').select('id').eq('company_a_id',idA).eq('company_b_id',idB).maybeSingle();
