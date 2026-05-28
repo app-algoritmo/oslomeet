@@ -35,11 +35,11 @@
   --p-dim:rgba(139,92,246,.12);
   --grad:linear-gradient(135deg,#3b82f6,#6366f1);
   --grad2:linear-gradient(135deg,#10b981,#06b6d4);
-  --max:1100px;
+  --sw:220px;
   --r:12px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;overflow-x:hidden}
 
 /* ── SCREENS ── */
 #loadingScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;z-index:9999}
@@ -55,114 +55,118 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .btn-back{display:inline-flex;align-items:center;gap:7px;padding:9px 18px;border:1px solid var(--border);border-radius:9px;color:var(--sub);background:none;font-size:.85rem;cursor:pointer;text-decoration:none;transition:.2s}
 .btn-back:hover{border-color:var(--border2);color:var(--text)}
 
-/* ── TOPNAV ── */
-#dashboard{display:none;min-height:100vh;flex-direction:column}
+/* ── LAYOUT ── */
+#dashboard{display:none;min-height:100vh}
 
-.topnav{
-  position:sticky;top:0;z-index:100;
+/* ── OVERLAY (mobile) ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99;backdrop-filter:blur(2px)}
+.overlay.on{display:block}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;
+  width:var(--sw);
+  background:var(--nav);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  padding:1.25rem .875rem;
+  overflow-y:auto;
+  z-index:100;
+  transition:transform .25s cubic-bezier(.4,0,.2,1);
+}
+
+.logo-wrap{display:flex;align-items:center;gap:9px;padding:.5rem .5rem 1.25rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
+.logo-img{height:26px;width:auto;object-fit:contain}
+.logo-sep{width:1px;height:18px;background:var(--border);flex-shrink:0}
+.logo-tag{font-size:.63rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sub)}
+
+.nav-sec{margin-bottom:1.5rem}
+.nav-lbl{font-size:.63rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:0 .5rem;margin-bottom:.35rem}
+.nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;border-radius:8px;background:none;border:none;color:var(--sub);font-size:.8rem;font-family:'Inter',sans-serif;cursor:pointer;text-align:left;transition:.15s;margin-bottom:2px;text-decoration:none}
+.nav-btn i{width:14px;font-size:.78rem;text-align:center;flex-shrink:0}
+.nav-btn:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.nav-btn.on{background:var(--a-dim);color:var(--text)}
+.nav-btn.on i{color:var(--accent)}
+.nav-btn.site{color:var(--sub)}
+.nav-btn.site:hover{color:var(--text)}
+.nav-chip{margin-left:auto;padding:2px 7px;background:var(--am-dim);color:var(--amber);border-radius:20px;font-size:.62rem;font-weight:600}
+
+.sidebar-foot{margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)}
+.user-row{display:flex;align-items:center;gap:9px;padding:9px 10px;background:var(--card);border-radius:10px;border:1px solid var(--border)}
+.user-av{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:.75rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:.63rem;color:var(--accent)}
+.logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:5px;font-size:.8rem;transition:.2s;flex-shrink:0}
+.logout-btn:hover{color:var(--text)}
+
+/* ── MOBILE TOP BAR ── */
+.mob-bar{
+  display:none;
+  position:sticky;top:0;z-index:98;
   background:var(--nav);
   border-bottom:1px solid var(--border);
-  padding:0 1.25rem;
-  height:56px;
-  display:flex;align-items:center;
+  padding:0 1rem;
+  height:52px;
+  align-items:center;
+  justify-content:space-between;
 }
-.topnav-inner{
-  max-width:var(--max);width:100%;margin:0 auto;
-  display:flex;align-items:center;gap:1rem;
-}
-.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0;text-decoration:none}
-.nav-logo img{height:24px;width:auto}
-.nav-logo-sep{width:1px;height:18px;background:var(--border)}
-.nav-logo-tag{font-size:.65rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sub)}
+.mob-logo{display:flex;align-items:center;gap:8px}
+.mob-logo img{height:22px;width:auto}
+.mob-logo-sep{width:1px;height:16px;background:var(--border)}
+.mob-logo-tag{font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+.mob-right{display:flex;align-items:center;gap:.5rem}
+.mob-btn{width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:.85rem}
 
-.nav-links{display:flex;align-items:center;gap:2px;margin-left:1.5rem}
-.nav-link{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:7px;color:var(--sub);font-size:.78rem;font-weight:500;text-decoration:none;border:none;background:none;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;transition:.15s}
-.nav-link:hover{background:rgba(255,255,255,.05);color:var(--text)}
-.nav-link.on{background:var(--a-dim);color:var(--text)}
-.nav-link.on i{color:var(--accent)}
-.nav-link i{font-size:.75rem;width:13px;text-align:center}
+/* ── MAIN ── */
+.main{margin-left:var(--sw);padding:1.75rem 2rem;min-height:100vh}
 
-.nav-chip{padding:2px 7px;background:var(--am-dim);color:var(--amber);border-radius:20px;font-size:.62rem;font-weight:600}
-
-.nav-spacer{flex:1}
-
-.nav-right{display:flex;align-items:center;gap:.625rem}
-.nav-user{display:flex;align-items:center;gap:7px;padding:5px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px}
-.nav-av{width:26px;height:26px;background:var(--grad);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;flex-shrink:0}
-.nav-uname{font-size:.75rem;font-weight:500;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.nav-urole{font-size:.62rem;color:var(--accent)}
-.nav-logout{background:none;border:none;color:var(--muted);cursor:pointer;padding:5px 7px;border-radius:6px;font-size:.8rem;transition:.2s}
-.nav-logout:hover{color:var(--text);background:rgba(255,255,255,.05)}
-
-.nav-refresh{padding:6px 12px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--sub);cursor:pointer;font-size:.75rem;display:flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;transition:.2s;white-space:nowrap}
-.nav-refresh:hover{border-color:var(--border2);color:var(--text)}
-
-/* hamburger */
-.nav-burger{display:none;width:36px;height:36px;background:var(--card);border:1px solid var(--border);border-radius:8px;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:.875rem;flex-shrink:0}
-
-/* mobile menu drawer */
-.mob-drawer{
-  display:none;
-  position:fixed;top:56px;left:0;right:0;
-  background:var(--nav);border-bottom:1px solid var(--border);
-  padding:.75rem 1.25rem 1rem;
-  flex-direction:column;gap:3px;
-  z-index:99;
-}
-.mob-drawer.open{display:flex}
-.mob-drawer .nav-link{font-size:.85rem;padding:9px 12px}
-
-/* ── MAIN CONTENT ── */
-.content{flex:1;padding:1.75rem 1.25rem 3rem;width:100%;max-width:calc(var(--max) + 2.5rem);margin:0 auto}
-
-.pg-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
 .pg-title{font-size:1.2rem;font-weight:700}
 .pg-sub{font-size:.75rem;color:var(--sub);margin-top:3px}
-.pg-date{font-size:.73rem;color:var(--sub);padding:5px 11px;background:var(--card);border:1px solid var(--border);border-radius:8px}
+.topbar-right{display:flex;align-items:center;gap:.625rem}
+.refresh-btn{padding:7px 13px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--sub);cursor:pointer;font-size:.75rem;display:flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;transition:.2s}
+.refresh-btn:hover{border-color:var(--border2);color:var(--text)}
+.date-badge{font-size:.73rem;color:var(--sub);padding:6px 11px;background:var(--card);border:1px solid var(--border);border-radius:8px}
 
-/* ── KPI CARDS ── */
+/* ── KPI ── */
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;margin-bottom:1.125rem}
 .kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.125rem;position:relative;overflow:hidden;transition:border-color .2s,transform .18s}
 .kpi:hover{border-color:var(--border2);transform:translateY(-2px)}
-.kpi-accent{position:absolute;bottom:0;left:0;right:0;height:2px;opacity:.5}
+.kpi-bar{position:absolute;bottom:0;left:0;right:0;height:2px;opacity:.5}
 .kpi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.875rem}
-.kpi-lbl{font-size:.67rem;color:var(--sub);font-weight:500;text-transform:uppercase;letter-spacing:.06em;line-height:1.3}
+.kpi-lbl{font-size:.67rem;color:var(--sub);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
 .kpi-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
 .kpi-val{font-size:1.5rem;font-weight:700;letter-spacing:-.025em;line-height:1;margin-bottom:.35rem}
 .kpi-val small{font-size:.85rem;font-weight:400;color:var(--sub)}
 .kpi-note{font-size:.7rem;color:var(--sub);display:flex;align-items:center;gap:4px}
-.kpi-note.up{color:var(--green)}.kpi-note.dn{color:var(--red)}
+.kpi-note.up{color:var(--green)}
 
 /* ── PANELS ── */
 .chart-row{display:grid;grid-template-columns:1.65fr 1fr;gap:.875rem;margin-bottom:.875rem}
 .bot-row{display:grid;grid-template-columns:1.5fr 1fr;gap:.875rem}
-
 .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem}
 .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.125rem;flex-wrap:wrap;gap:.5rem}
-.ph-left{}
 .pt{font-size:.85rem;font-weight:600}
 .ps{font-size:.7rem;color:var(--sub);margin-top:2px}
 .chart-h{position:relative;height:220px}
 
-/* period seg */
 .seg{display:flex;gap:3px;background:var(--surface);border-radius:7px;padding:3px}
 .seg-btn{padding:4px 9px;border-radius:5px;border:none;background:none;color:var(--sub);font-size:.7rem;cursor:pointer;font-family:'Inter',sans-serif;transition:.12s}
 .seg-btn.on{background:var(--card);color:var(--text)}
 
-/* mini stats */
 .mini-row{display:grid;grid-template-columns:1fr 1fr;gap:.625rem;margin-top:.875rem}
 .mini{background:var(--surface);border-radius:9px;padding:.75rem}
 .mini-lbl{font-size:.63rem;color:var(--sub);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem}
 .mini-val{font-size:1rem;font-weight:700}
 
-/* plan legend */
 .plan-leg{display:flex;flex-direction:column;gap:7px;margin-top:.875rem}
 .leg-row{display:flex;align-items:center;justify-content:space-between;font-size:.75rem}
 .leg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .leg-lbl{display:flex;align-items:center;gap:6px;color:var(--sub)}
 .leg-val{font-weight:600}
 
-/* table */
+/* ── TABLE ── */
 .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:.25rem}
 table{width:100%;border-collapse:collapse;min-width:460px}
 thead th{font-size:.63rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;padding:.4rem .875rem .65rem;text-align:left;border-bottom:1px solid var(--border)}
@@ -186,34 +190,32 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
 .feed-txt{font-size:.75rem;line-height:1.5}
 .feed-txt strong{font-weight:600}
 .feed-time{font-size:.65rem;color:var(--muted);margin-top:1px}
-
 .empty{text-align:center;padding:2rem;color:var(--muted);font-size:.8rem}
 
 /* ── RESPONSIVE ── */
-
-/* Tablet */
-@media(max-width:960px){
+@media(max-width:1200px){
   .kpi-row{grid-template-columns:repeat(2,1fr)}
   .chart-row,.bot-row{grid-template-columns:1fr}
-  .chart-h{height:200px}
 }
 
-/* Mobile */
-@media(max-width:640px){
-  .nav-links{display:none}
-  .nav-burger{display:flex}
-  .nav-user .nav-uname,.nav-user .nav-urole{display:none}
-  .nav-refresh span{display:none}
-  .nav-refresh{padding:6px 8px}
-  .content{padding:1rem .875rem 3rem}
-  .pg-head{margin-bottom:1.125rem}
+@media(max-width:768px){
+  /* Show mobile bar, hide main sidebar */
+  .mob-bar{display:flex}
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0);z-index:101}
+  .main{margin-left:0;padding:.875rem .875rem 3rem}
+  /* Topbar adjusts */
+  .topbar{margin-bottom:1.125rem}
+  .date-badge{display:none}
   .pg-title{font-size:1.05rem}
+  /* KPIs 2 col */
   .kpi-row{grid-template-columns:1fr 1fr;gap:.625rem}
   .kpi{padding:.875rem}
   .kpi-val{font-size:1.2rem}
   .kpi-lbl{font-size:.62rem}
   .kpi-ico{width:28px;height:28px;font-size:.78rem}
-  .chart-h{height:175px}
+  /* Charts shorter */
+  .chart-h{height:185px}
   .panel{padding:.875rem}
   .ph{margin-bottom:.875rem}
   .mini-row{gap:.5rem}
@@ -222,10 +224,8 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
   .seg-btn{padding:3px 7px;font-size:.65rem}
 }
 
-/* Small phone */
-@media(max-width:380px){
+@media(max-width:400px){
   .kpi-row{grid-template-columns:1fr}
-  .pg-date{display:none}
   .kpi-val{font-size:1.35rem}
 }
 </style>
@@ -249,91 +249,96 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboard" style="flex-direction:column">
+<div id="dashboard">
 
-  <!-- TOP NAV -->
-  <nav class="topnav">
-    <div class="topnav-inner">
+  <!-- Mobile overlay -->
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-      <!-- Logo -->
-      <a href="/index.html" class="nav-logo">
-        <img src="https://oslomeet.org/omlogo.png" alt="Oslo Meet"
-             onerror="this.style.display='none';document.getElementById('logoFallback').style.display='flex'">
-        <div id="logoFallback" style="display:none;width:24px;height:24px;background:var(--grad);border-radius:6px;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">OM</div>
-        <div class="nav-logo-sep"></div>
-        <span class="nav-logo-tag">Admin</span>
-      </a>
-
-      <!-- Nav links (desktop) -->
-      <div class="nav-links">
-        <button class="nav-link on" onclick="setSection(this,'overview')"><i class="fas fa-chart-line"></i> Dashboard</button>
-        <button class="nav-link" onclick="setSection(this,'companies')"><i class="fas fa-building"></i> Companies</button>
-        <button class="nav-link" onclick="setSection(this,'founding')">
-          <i class="fas fa-crown"></i> Founding
-          <span class="nav-chip" id="foundBadge">0/50</span>
-        </button>
-        <button class="nav-link" onclick="setSection(this,'revenue')"><i class="fas fa-wallet"></i> Revenue</button>
-        <button class="nav-link" onclick="setSection(this,'coupons')"><i class="fas fa-tags"></i> Coupons</button>
-        <button class="nav-link" onclick="setSection(this,'matches')"><i class="fas fa-handshake"></i> Matches</button>
-        <div style="width:1px;height:18px;background:var(--border);margin:0 4px"></div>
-        <a href="/index.html" class="nav-link" style="color:var(--sub)"><i class="fas fa-home"></i> Back to Site</a>
-      </div>
-
-      <div class="nav-spacer"></div>
-
-      <!-- Right side -->
-      <div class="nav-right">
-        <button class="nav-refresh" onclick="loadData()">
-          <i class="fas fa-sync-alt"></i>
-          <span>Refresh</span>
-        </button>
-        <div class="nav-user">
-          <div class="nav-av" id="adminAv">A</div>
-          <div style="min-width:0">
-            <div class="nav-uname" id="adminName">Admin</div>
-            <div class="nav-urole" id="adminRole">super_admin</div>
-          </div>
-          <button class="nav-logout" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
-        </div>
-        <button class="nav-burger" id="burgerBtn" onclick="toggleDrawer()"><i class="fas fa-bars"></i></button>
-      </div>
-
+  <!-- Mobile top bar -->
+  <div class="mob-bar">
+    <div class="mob-logo">
+      <img src="https://oslomeet.org/omlogo.png" alt="Oslo Meet"
+           onerror="this.style.display='none'">
+      <div class="mob-logo-sep"></div>
+      <span class="mob-logo-tag">Admin</span>
     </div>
-  </nav>
-
-  <!-- MOBILE DRAWER -->
-  <div class="mob-drawer" id="mobDrawer">
-    <button class="nav-link on" onclick="setSection(this,'overview');closeDrawer()"><i class="fas fa-chart-line"></i> Dashboard</button>
-    <button class="nav-link" onclick="setSection(this,'companies');closeDrawer()"><i class="fas fa-building"></i> Companies</button>
-    <button class="nav-link" onclick="setSection(this,'founding');closeDrawer()">
-      <i class="fas fa-crown"></i> Founding Members
-      <span class="nav-chip" id="foundBadge2">0/50</span>
-    </button>
-    <button class="nav-link" onclick="setSection(this,'revenue');closeDrawer()"><i class="fas fa-wallet"></i> Revenue</button>
-    <button class="nav-link" onclick="setSection(this,'coupons');closeDrawer()"><i class="fas fa-tags"></i> Coupons</button>
-    <button class="nav-link" onclick="setSection(this,'matches');closeDrawer()"><i class="fas fa-handshake"></i> Matches</button>
-    <div style="height:1px;background:var(--border);margin:.25rem 0"></div>
-    <a href="/index.html" class="nav-link"><i class="fas fa-home"></i> Back to Site</a>
-    <a href="#" class="nav-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <div class="mob-right">
+      <button class="mob-btn" onclick="loadData()" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+      <button class="mob-btn" onclick="openSidebar()" title="Menu"><i class="fas fa-bars"></i></button>
+    </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div class="content">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
 
-    <!-- Page header -->
-    <div class="pg-head">
+    <div class="logo-wrap">
+      <img src="https://oslomeet.org/omlogo.png" class="logo-img" alt="Oslo Meet"
+           onerror="this.style.display='none';document.getElementById('lFb').style.display='flex'">
+      <div id="lFb" style="display:none;width:26px;height:26px;background:var(--grad);border-radius:6px;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0">OM</div>
+      <div class="logo-sep"></div>
+      <span class="logo-tag">Admin</span>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">Overview</div>
+      <button class="nav-btn on" onclick="setNav(this)"><i class="fas fa-chart-line"></i> Dashboard</button>
+      <button class="nav-btn" onclick="setNav(this)"><i class="fas fa-building"></i> Companies</button>
+      <button class="nav-btn" onclick="setNav(this)">
+        <i class="fas fa-crown"></i> Founding Members
+        <span class="nav-chip" id="foundBadge">0/50</span>
+      </button>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">Financial</div>
+      <button class="nav-btn" onclick="setNav(this)"><i class="fas fa-wallet"></i> Revenue</button>
+      <button class="nav-btn" onclick="setNav(this)"><i class="fas fa-tags"></i> Coupons</button>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">Platform</div>
+      <button class="nav-btn" onclick="setNav(this)"><i class="fas fa-handshake"></i> Matches</button>
+      <button class="nav-btn" onclick="setNav(this)"><i class="fas fa-comment-dots"></i> Messages</button>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">System</div>
+      <!-- Link de volta ao site -->
+      <a href="/index.html" class="nav-btn site"><i class="fas fa-home"></i> Back to Site</a>
+      <button class="nav-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+
+    <div class="sidebar-foot">
+      <div class="user-row">
+        <div class="user-av" id="adminAv">A</div>
+        <div class="user-info">
+          <div class="user-name" id="adminName">Admin</div>
+          <div class="user-role" id="adminRole">super_admin</div>
+        </div>
+        <button class="logout-btn" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="topbar">
       <div>
         <div class="pg-title">Dashboard Overview</div>
         <div class="pg-sub" id="pgSub">Real-time platform analytics</div>
       </div>
-      <div class="pg-date" id="pgDate">—</div>
+      <div class="topbar-right">
+        <div class="date-badge" id="pgDate">—</div>
+        <button class="refresh-btn" onclick="loadData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+      </div>
     </div>
 
     <!-- KPIs -->
     <div class="kpi-row">
-
       <div class="kpi">
-        <div class="kpi-accent" style="background:var(--grad)"></div>
+        <div class="kpi-bar" style="background:var(--grad)"></div>
         <div class="kpi-top">
           <div class="kpi-lbl">Total Revenue</div>
           <div class="kpi-ico" style="background:var(--a-dim);color:var(--accent)"><i class="fas fa-coins"></i></div>
@@ -341,9 +346,8 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
         <div class="kpi-val" id="kRev">NOK <small>0</small></div>
         <div class="kpi-note up"><i class="fas fa-arrow-trend-up"></i> Lifetime</div>
       </div>
-
       <div class="kpi">
-        <div class="kpi-accent" style="background:var(--grad2)"></div>
+        <div class="kpi-bar" style="background:var(--grad2)"></div>
         <div class="kpi-top">
           <div class="kpi-lbl">Monthly Recurring (MRR)</div>
           <div class="kpi-ico" style="background:var(--g-dim);color:var(--green)"><i class="fas fa-chart-line"></i></div>
@@ -351,9 +355,8 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
         <div class="kpi-val" id="kMRR">NOK <small>0</small></div>
         <div class="kpi-note up"><i class="fas fa-arrow-up"></i> Per month</div>
       </div>
-
       <div class="kpi">
-        <div class="kpi-accent" style="background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
         <div class="kpi-top">
           <div class="kpi-lbl">Active Companies</div>
           <div class="kpi-ico" style="background:var(--c-dim);color:var(--cyan)"><i class="fas fa-building"></i></div>
@@ -361,9 +364,8 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
         <div class="kpi-val" id="kActive"><small>0</small></div>
         <div class="kpi-note"><i class="fas fa-circle-dot"></i> <span id="kTotal">0</span> total</div>
       </div>
-
       <div class="kpi">
-        <div class="kpi-accent" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
         <div class="kpi-top">
           <div class="kpi-lbl">Founding Members</div>
           <div class="kpi-ico" style="background:var(--am-dim);color:var(--amber)"><i class="fas fa-crown"></i></div>
@@ -371,18 +373,13 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
         <div class="kpi-val" id="kFound">0 <small>/ 50</small></div>
         <div class="kpi-note"><i class="fas fa-hourglass-half"></i> <span id="kSpots">50</span> spots left</div>
       </div>
-
     </div>
 
     <!-- Charts -->
     <div class="chart-row">
-
       <div class="panel">
         <div class="ph">
-          <div class="ph-left">
-            <div class="pt">Revenue Growth</div>
-            <div class="ps">Cumulative by week</div>
-          </div>
+          <div><div class="pt">Revenue Growth</div><div class="ps">Cumulative by week</div></div>
           <div class="seg">
             <button class="seg-btn" onclick="setPeriod(this,8)">8W</button>
             <button class="seg-btn on" onclick="setPeriod(this,12)">12W</button>
@@ -395,197 +392,128 @@ tbody tr:hover td{background:rgba(255,255,255,.015)}
           <div class="mini"><div class="mini-lbl">Top Plan</div><div class="mini-val" id="mTop">—</div></div>
         </div>
       </div>
-
       <div class="panel">
-        <div class="ph">
-          <div class="ph-left">
-            <div class="pt">Plan Distribution</div>
-            <div class="ps">By subscription type</div>
-          </div>
-        </div>
+        <div class="ph"><div><div class="pt">Plan Distribution</div><div class="ps">By subscription type</div></div></div>
         <div class="chart-h"><canvas id="chartPlan"></canvas></div>
         <div class="plan-leg" id="planLeg"></div>
       </div>
-
     </div>
 
     <!-- Bottom -->
     <div class="bot-row">
-
       <div class="panel">
-        <div class="ph">
-          <div class="ph-left">
-            <div class="pt">Recent Companies</div>
-            <div class="ps" id="coSub">Latest registrations</div>
-          </div>
-        </div>
+        <div class="ph"><div><div class="pt">Recent Companies</div><div class="ps" id="coSub">Latest registrations</div></div></div>
         <div class="tbl-wrap">
           <table>
-            <thead><tr>
-              <th>Company</th><th>Plan</th><th>Status</th><th>Value</th><th>Joined</th>
-            </tr></thead>
+            <thead><tr><th>Company</th><th>Plan</th><th>Status</th><th>Value</th><th>Joined</th></tr></thead>
             <tbody id="tBody"></tbody>
           </table>
         </div>
       </div>
-
       <div class="panel">
-        <div class="ph">
-          <div class="ph-left">
-            <div class="pt">Recent Activity</div>
-            <div class="ps">Latest sign-ups</div>
-          </div>
-        </div>
+        <div class="ph"><div><div class="pt">Recent Activity</div><div class="ps">Latest sign-ups</div></div></div>
         <div id="actFeed"></div>
       </div>
-
     </div>
 
-  </div><!-- /content -->
-</div><!-- /dashboard -->
+  </main>
+</div>
 
 <script>
-/* ═══════════════════════════════
-   CONFIG
-═══════════════════════════════ */
-const SB_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+const SB_URL='https://mrparduxlvyflasgefpt.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+const PRICES={founding_member:1290,starter:1890,business:4900,partner:15000};
+const CHIP={founding_member:['ch-a','Founding'],business:['ch-p','Business'],partner:['ch-c','Partner'],starter:['ch-g','Starter']};
+const PCOLS={Founding:'#f59e0b',Business:'#8b5cf6',Partner:'#06b6d4',Starter:'#10b981'};
 
-const PRICES = {founding_member:1290,starter:1890,business:4900,partner:15000};
-const CHIP   = {founding_member:['ch-a','Founding'],business:['ch-p','Business'],partner:['ch-c','Partner'],starter:['ch-g','Starter']};
-const PCOLS  = {Founding:'#f59e0b',Business:'#8b5cf6',Partner:'#06b6d4',Starter:'#10b981'};
+const sb=supabase.createClient(SB_URL,SB_KEY);
+let cRev=null,cPlan=null,period=12,companies=[];
 
-const sb = supabase.createClient(SB_URL, SB_KEY);
-let cRev=null, cPlan=null, period=12, companies=[];
-
-/* ═══════════════════════════════
-   AUTH — JWT, no email in code
-═══════════════════════════════ */
+/* AUTH */
 async function init(){
   try{
-    const {data:{session}} = await sb.auth.getSession();
-    if(!session?.user){ location.href='/login.html'; return; }
-
-    const r = await fetch(
-      `${SB_URL}/rest/v1/admin_roles?select=role,active&active=eq.true&limit=1`,
-      {headers:{'apikey':SB_KEY,'Authorization':`Bearer ${session.access_token}`}}
-    );
-    const rows = r.ok ? await r.json() : [];
-
+    const{data:{session}}=await sb.auth.getSession();
+    if(!session?.user){location.href='/login.html';return;}
+    const r=await fetch(`${SB_URL}/rest/v1/admin_roles?select=role,active&active=eq.true&limit=1`,
+      {headers:{'apikey':SB_KEY,'Authorization':`Bearer ${session.access_token}`}});
+    const rows=r.ok?await r.json():[];
     if(!rows.length){
-      g('deniedMsg').textContent = `${session.user.email} does not have admin access.`;
-      show('deniedScreen'); hide('loadingScreen'); return;
+      g('deniedMsg').textContent=`${session.user.email} does not have admin access.`;
+      show('deniedScreen');hide('loadingScreen');return;
     }
-
-    const name = (session.user.email||'Admin').split('@')[0];
-    g('adminAv').textContent   = name.charAt(0).toUpperCase();
-    g('adminName').textContent = name;
-    g('adminRole').textContent = rows[0].role||'admin';
-
-    const now = new Date();
-    g('pgDate').textContent = now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-    g('pgSub').textContent  = `Updated ${now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
-
+    const name=(session.user.email||'Admin').split('@')[0];
+    g('adminAv').textContent=name.charAt(0).toUpperCase();
+    g('adminName').textContent=name;
+    g('adminRole').textContent=rows[0].role||'admin';
+    const now=new Date();
+    g('pgDate').textContent=now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    g('pgSub').textContent=`Updated ${now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
     hide('loadingScreen');
-    g('dashboard').style.display = 'flex';
-
+    g('dashboard').style.display='block';
     await loadData();
-  }catch(e){ console.error(e); location.href='/login.html'; }
+  }catch(e){console.error(e);location.href='/login.html';}
 }
 
-/* ═══════════════════════════════
-   DATA
-═══════════════════════════════ */
+/* DATA */
 async function loadData(){
   try{
-    const r = await fetch(
-      `${SB_URL}/rest/v1/companies?select=*&order=created_at.desc`,
-      {headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}}
-    );
-    companies = r.ok ? await r.json() : [];
+    const r=await fetch(`${SB_URL}/rest/v1/companies?select=*&order=created_at.desc`,
+      {headers:{'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`}});
+    companies=r.ok?await r.json():[];
     render();
-    g('pgSub').textContent = `Updated ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
-  }catch(e){ console.error(e); }
+    g('pgSub').textContent=`Updated ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
+  }catch(e){console.error(e);}
 }
 
 function render(){
-  const co = companies;
-  const totalRev = co.reduce((s,c)=>s+(PRICES[c.plan]||0),0);
-  const founders = co.filter(c=>c.plan==='founding_member').length;
-  const active   = co.filter(c=>c.status==='active').length;
-  const avg      = co.length ? Math.round(totalRev/co.length) : 0;
-
-  g('kRev').innerHTML  = `NOK <small>${fmt(totalRev)}</small>`;
-  g('kMRR').innerHTML  = `NOK <small>${fmt(Math.round(totalRev/12))}</small>`;
-  g('kActive').innerHTML = `<small>${active}</small>`;
-  g('kTotal').textContent  = co.length;
-  g('kFound').innerHTML = `${founders} <small>/ 50</small>`;
-  g('kSpots').textContent  = Math.max(0,50-founders);
-  g('foundBadge').textContent  = `${founders}/50`;
-  g('foundBadge2').textContent = `${founders}/50`;
-  g('mAvg').textContent = `NOK ${fmt(avg)}`;
-  g('coSub').textContent = `${co.length} companies registered`;
-
-  // top plan
-  const pc={};
-  co.forEach(c=>{pc[c.plan]=(pc[c.plan]||0)+1;});
-  const tp = Object.entries(pc).sort((a,b)=>b[1]-a[1])[0];
-  g('mTop').textContent = tp ? cap(tp[0].replace('_',' ')) : '—';
-
-  renderRevChart();
-  renderPlanChart();
-  renderTable();
-  renderFeed();
+  const co=companies;
+  const totalRev=co.reduce((s,c)=>s+(PRICES[c.plan]||0),0);
+  const founders=co.filter(c=>c.plan==='founding_member').length;
+  const active=co.filter(c=>c.status==='active').length;
+  const avg=co.length?Math.round(totalRev/co.length):0;
+  g('kRev').innerHTML=`NOK <small>${fmt(totalRev)}</small>`;
+  g('kMRR').innerHTML=`NOK <small>${fmt(Math.round(totalRev/12))}</small>`;
+  g('kActive').innerHTML=`<small>${active}</small>`;
+  g('kTotal').textContent=co.length;
+  g('kFound').innerHTML=`${founders} <small>/ 50</small>`;
+  g('kSpots').textContent=Math.max(0,50-founders);
+  g('foundBadge').textContent=`${founders}/50`;
+  g('mAvg').textContent=`NOK ${fmt(avg)}`;
+  g('coSub').textContent=`${co.length} companies registered`;
+  const pc={};co.forEach(c=>{pc[c.plan]=(pc[c.plan]||0)+1;});
+  const tp=Object.entries(pc).sort((a,b)=>b[1]-a[1])[0];
+  g('mTop').textContent=tp?cap(tp[0].replace('_',' ')):'—';
+  renderRevChart();renderPlanChart();renderTable();renderFeed();
 }
 
-/* ═══════════════════════════════
-   CHARTS
-═══════════════════════════════ */
+/* CHARTS */
 function renderRevChart(){
-  const ctx = g('chartRev').getContext('2d');
-  if(cRev) cRev.destroy();
+  const ctx=g('chartRev').getContext('2d');
+  if(cRev)cRev.destroy();
   const sorted=[...companies].sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
   const labels=[],data=[];
   for(let i=period-1;i>=0;i--){
-    const d=new Date(); d.setDate(d.getDate()-i*7);
+    const d=new Date();d.setDate(d.getDate()-i*7);
     labels.push(`W${period-i}`);
     data.push(sorted.filter(c=>new Date(c.created_at)<=d).reduce((s,c)=>s+(PRICES[c.plan]||0),0));
   }
-  cRev=new Chart(ctx,{
-    type:'line',
-    data:{labels,datasets:[{
-      data,borderColor:'#3b82f6',
-      backgroundColor:c=>{const g2=c.chart.ctx.createLinearGradient(0,0,0,220);g2.addColorStop(0,'rgba(59,130,246,.18)');g2.addColorStop(1,'rgba(59,130,246,0)');return g2;},
-      fill:true,tension:.4,pointRadius:3,pointHoverRadius:5,pointBackgroundColor:'#3b82f6',borderWidth:2,
-    }]},
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      interaction:{mode:'index',intersect:false},
+  cRev=new Chart(ctx,{type:'line',data:{labels,datasets:[{data,borderColor:'#3b82f6',
+    backgroundColor:c=>{const g2=c.chart.ctx.createLinearGradient(0,0,0,220);g2.addColorStop(0,'rgba(59,130,246,.18)');g2.addColorStop(1,'rgba(59,130,246,0)');return g2;},
+    fill:true,tension:.4,pointRadius:3,pointHoverRadius:5,pointBackgroundColor:'#3b82f6',borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},tooltip:{backgroundColor:'#161d2e',borderColor:'#1e2d45',borderWidth:1,titleColor:'#7a8fac',bodyColor:'#e2e8f4',padding:10,callbacks:{label:c=>`  NOK ${fmt(c.parsed.y)}`}}},
-      scales:{
-        y:{beginAtZero:true,grid:{color:'rgba(30,45,69,.5)'},ticks:{color:'#3d5068',font:{size:10},callback:v=>`NOK ${fmt(v)}`}},
-        x:{grid:{display:false},ticks:{color:'#3d5068',font:{size:10}}},
-      },
-    },
-  });
+      scales:{y:{beginAtZero:true,grid:{color:'rgba(30,45,69,.5)'},ticks:{color:'#3d5068',font:{size:10},callback:v=>`NOK ${fmt(v)}`}},x:{grid:{display:false},ticks:{color:'#3d5068',font:{size:10}}}}}});
 }
 
 function renderPlanChart(){
   const ctx=g('chartPlan').getContext('2d');
-  if(cPlan) cPlan.destroy();
+  if(cPlan)cPlan.destroy();
   const cnt={Founding:0,Business:0,Partner:0,Starter:0};
-  companies.forEach(c=>{
-    if(c.plan==='founding_member')cnt.Founding++;
-    else if(c.plan==='business')cnt.Business++;
-    else if(c.plan==='partner')cnt.Partner++;
-    else cnt.Starter++;
-  });
+  companies.forEach(c=>{if(c.plan==='founding_member')cnt.Founding++;else if(c.plan==='business')cnt.Business++;else if(c.plan==='partner')cnt.Partner++;else cnt.Starter++;});
   const total=companies.length||1;
-  cPlan=new Chart(ctx,{
-    type:'doughnut',
+  cPlan=new Chart(ctx,{type:'doughnut',
     data:{labels:Object.keys(cnt),datasets:[{data:Object.values(cnt),backgroundColor:companies.length?Object.keys(PCOLS).map(k=>PCOLS[k]):['#1e2d45'],borderWidth:2,borderColor:'#161d2e',hoverOffset:5}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#161d2e',borderColor:'#1e2d45',borderWidth:1,titleColor:'#7a8fac',bodyColor:'#e2e8f4',callbacks:{label:c=>`  ${c.label}: ${c.parsed} (${Math.round(c.parsed/total*100)}%)`}}}},
-  });
+    options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{display:false},tooltip:{backgroundColor:'#161d2e',borderColor:'#1e2d45',borderWidth:1,titleColor:'#7a8fac',bodyColor:'#e2e8f4',callbacks:{label:c=>`  ${c.label}: ${c.parsed} (${Math.round(c.parsed/total*100)}%)`}}}}});
   g('planLeg').innerHTML=Object.entries(cnt).map(([k,v])=>`
     <div class="leg-row">
       <span class="leg-lbl"><span class="leg-dot" style="background:${PCOLS[k]}"></span>${k}</span>
@@ -593,23 +521,18 @@ function renderPlanChart(){
     </div>`).join('');
 }
 
-/* ═══════════════════════════════
-   TABLE & FEED
-═══════════════════════════════ */
+/* TABLE & FEED */
 function renderTable(){
   const tb=g('tBody');
   if(!companies.length){tb.innerHTML=`<tr><td colspan="5"><div class="empty">No companies registered yet</div></td></tr>`;return;}
   tb.innerHTML=companies.slice(0,12).map(c=>{
     const[cls,lbl]=CHIP[c.plan]||['ch-g',c.plan||'starter'];
-    const price=fmt(PRICES[c.plan]||0);
     const date=c.created_at?new Date(c.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'-';
-    return`<tr>
-      <td><div class="co-name">${x(c.name||'Unnamed')}</div><div class="co-mail">${x(c.email||'')}</div></td>
+    return`<tr><td><div class="co-name">${x(c.name||'Unnamed')}</div><div class="co-mail">${x(c.email||'')}</div></td>
       <td><span class="chip ${cls}">${lbl}</span></td>
       <td><span class="chip ${c.status==='active'?'ch-g':'ch-a'}">${c.status||'pending'}</span></td>
-      <td style="font-variant-numeric:tabular-nums">NOK ${price}</td>
-      <td style="color:var(--sub)">${date}</td>
-    </tr>`;
+      <td style="font-variant-numeric:tabular-nums">NOK ${fmt(PRICES[c.plan]||0)}</td>
+      <td style="color:var(--sub)">${date}</td></tr>`;
   }).join('');
 }
 
@@ -618,19 +541,13 @@ function renderFeed(){
   if(!companies.length){el.innerHTML=`<div class="empty">No recent activity</div>`;return;}
   el.innerHTML=companies.slice(0,7).map(c=>{
     const t=c.created_at?new Date(c.created_at).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'';
-    return`<div class="feed-item">
-      <div class="feed-dot"><i class="fas fa-user-plus"></i></div>
-      <div>
-        <div class="feed-txt"><strong>${x(c.name||'New company')}</strong> · <span style="color:var(--sub)">${cap((c.plan||'starter').replace('_',' '))}</span></div>
-        <div class="feed-time">${t}</div>
-      </div>
-    </div>`;
+    return`<div class="feed-item"><div class="feed-dot"><i class="fas fa-user-plus"></i></div>
+      <div><div class="feed-txt"><strong>${x(c.name||'New company')}</strong> · <span style="color:var(--sub)">${cap((c.plan||'starter').replace('_',' '))}</span></div>
+      <div class="feed-time">${t}</div></div></div>`;
   }).join('');
 }
 
-/* ═══════════════════════════════
-   UTILS
-═══════════════════════════════ */
+/* UTILS */
 function g(id){return document.getElementById(id)}
 function show(id){const e=g(id);if(e)e.style.display='flex'}
 function hide(id){const e=g(id);if(e)e.style.display='none'}
@@ -638,38 +555,27 @@ function fmt(n){return Number(n).toLocaleString()}
 function x(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function cap(s){return s.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ')}
 
-function setSection(btn,sec){
-  document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('on'));
-  // highlight both desktop and mobile instances
-  document.querySelectorAll('.nav-link').forEach(b=>{
-    if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(`'${sec}'`)) b.classList.add('on');
-  });
+function setNav(btn){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  if(window.innerWidth<=768)closeSidebar();
 }
-
 function setPeriod(btn,n){
   document.querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  period=n;
-  renderRevChart();
+  btn.classList.add('on');period=n;renderRevChart();
 }
-
-function toggleDrawer(){
-  g('mobDrawer').classList.toggle('open');
+function openSidebar(){
+  g('sidebar').classList.add('open');
+  g('overlay').classList.add('on');
+  document.body.style.overflow='hidden';
 }
-function closeDrawer(){
-  g('mobDrawer').classList.remove('open');
+function closeSidebar(){
+  g('sidebar').classList.remove('open');
+  g('overlay').classList.remove('on');
+  document.body.style.overflow='';
 }
-
-// Close drawer on outside click
-document.addEventListener('click',e=>{
-  const drawer=g('mobDrawer'),burger=g('burgerBtn');
-  if(drawer&&burger&&!drawer.contains(e.target)&&!burger.contains(e.target)){
-    drawer.classList.remove('open');
-  }
-});
-
 function logout(){sb.auth.signOut().then(()=>location.href='/login.html')}
-
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar()});
 document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
