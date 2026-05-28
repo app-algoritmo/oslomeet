@@ -7,14 +7,12 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
     <meta name="apple-mobile-web-app-title" content="Oslo Meet"/>
     <link rel="manifest" href="/site.webmanifest"/>
-    <meta name="theme-color" content="#3b82f6"/>
+    <meta name="theme-color" content="#8b5cf6"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard — Oslo Meet</title>
     <meta name="description" content="View your AI-powered business matches and connections.">
     <meta property="og:image" content="https://oslomeet.org/web.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Oslo Meet">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://oslomeet.org/web.png">
@@ -22,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta name="google-site-verification" content="CRM-dMkWd--H5ZUbXfcT6P4OILoxyN9HrYl3ZJ7EDrk"/>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5E3B7CKET"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX',{'anonymize_ip':true,'cookie_flags':'SameSite=None;Secure'});</script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX',{'anonymize_ip':true});</script>
     <link rel="alternate" hreflang="en" href="https://oslomeet.org/"/>
     <link rel="alternate" hreflang="no" href="https://oslomeet.org/?lang=no"/>
     <link rel="alternate" hreflang="pt" href="https://oslomeet.org/?lang=pt"/>
@@ -31,105 +29,142 @@
 
 <style>
 :root{
-  --bg:#0b0f1a;
-  --nav:#0d1221;
-  --surface:#111827;
-  --card:#161d2e;
-  --border:#1e2d45;
-  --border2:#2a3a56;
-  --text:#e2e8f4;
-  --sub:#7a8fac;
-  --muted:#3d5068;
-  --accent:#3b82f6;
-  --accent2:#6366f1;
+  /* Oslo Meet brand — purple/blue */
+  --bg:#0a0d18;
+  --nav:#0d1024;
+  --surface:#10152a;
+  --card:#141a2e;
+  --card2:#182038;
+  --border:#1f2d4a;
+  --border2:#2a3d65;
+  --text:#e8ecf8;
+  --sub:#7b8db8;
+  --muted:#3a4d70;
+  --accent:#8b5cf6;       /* Oslo purple */
+  --accent2:#3b82f6;      /* Oslo blue */
   --green:#10b981;
   --red:#f43f5e;
   --amber:#f59e0b;
   --cyan:#06b6d4;
-  --purple:#8b5cf6;
-  --a-dim:rgba(59,130,246,.12);
+  --p-dim:rgba(139,92,246,.12);
+  --b-dim:rgba(59,130,246,.12);
   --g-dim:rgba(16,185,129,.12);
+  --r-dim:rgba(244,63,94,.1);
   --am-dim:rgba(245,158,11,.1);
   --c-dim:rgba(6,182,212,.1);
-  --p-dim:rgba(139,92,246,.12);
-  --r-dim:rgba(244,63,94,.1);
-  --grad:linear-gradient(135deg,#3b82f6,#6366f1);
-  --grad2:linear-gradient(135deg,#10b981,#06b6d4);
-  --max:1100px;
+  /* Oslo gradient */
+  --grad:linear-gradient(135deg,#8b5cf6,#3b82f6);
+  --grad2:linear-gradient(135deg,#6366f1,#06b6d4);
+  --sw:228px;
   --r:12px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;overflow-x:hidden}
 
-/* ── TOPNAV ── */
-.topnav{
-  position:sticky;top:0;z-index:200;
-  background:var(--nav);border-bottom:1px solid var(--border);
-  padding:0 1.25rem;height:56px;
-  display:flex;align-items:center;
+/* ── LOADING ── */
+#loadingScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;z-index:9999}
+.spin{width:38px;height:38px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+#loadingScreen p{color:var(--sub);font-size:13px;letter-spacing:.04em}
+
+/* ── LAYOUT ── */
+#dashboard{display:none;min-height:100vh}
+
+/* ── OVERLAY ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;backdrop-filter:blur(2px)}
+.overlay.on{display:block}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sw);
+  background:var(--nav);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;padding:1.25rem .875rem;
+  overflow-y:auto;z-index:100;
+  transition:transform .25s cubic-bezier(.4,0,.2,1);
 }
-.topnav-inner{max-width:var(--max);width:100%;margin:0 auto;display:flex;align-items:center;gap:.875rem}
-.nav-logo{display:flex;align-items:center;gap:8px;flex-shrink:0;text-decoration:none}
-.nav-logo img{height:24px;width:auto}
-.nav-sep{width:1px;height:18px;background:var(--border);flex-shrink:0}
-.nav-spacer{flex:1}
-.nav-right{display:flex;align-items:center;gap:.5rem}
 
-.lang-pill{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px}
-.lang-pill i{color:var(--accent);font-size:.75rem}
-.lang-pill select{background:transparent;border:none;color:var(--sub);font-family:'Inter',sans-serif;font-size:.73rem;font-weight:600;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none}
-.lang-pill select option{background:var(--nav)}
+.logo-wrap{display:flex;align-items:center;gap:9px;padding:.25rem .5rem 1.25rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
+.logo-img{height:26px;width:auto;object-fit:contain}
+.logo-sep{width:1px;height:18px;background:var(--border);flex-shrink:0}
+.logo-tag{font-size:.63rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--sub)}
 
-.nav-icon-btn{width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--sub);cursor:pointer;font-size:.85rem;transition:.2s;position:relative;flex-shrink:0}
-.nav-icon-btn:hover{border-color:var(--border2);color:var(--text)}
-.msg-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;background:var(--red);border-radius:50%;border:1px solid var(--nav);display:none}
-.msg-dot.on{display:block;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
-.msg-count{position:absolute;top:-2px;right:-2px;background:var(--red);color:#fff;font-size:.55rem;font-weight:700;padding:1px 4px;border-radius:10px;min-width:16px;text-align:center;display:none}
-.msg-count.on{display:block}
+.nav-sec{margin-bottom:1.5rem}
+.nav-lbl{font-size:.63rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:0 .5rem;margin-bottom:.35rem}
+.nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;border-radius:8px;background:none;border:none;color:var(--sub);font-size:.8rem;font-family:'Inter',sans-serif;cursor:pointer;text-align:left;transition:.15s;margin-bottom:2px;text-decoration:none;position:relative}
+.nav-btn i{width:14px;font-size:.78rem;text-align:center;flex-shrink:0}
+.nav-btn:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.nav-btn.on{background:var(--p-dim);color:var(--text)}
+.nav-btn.on i{color:var(--accent)}
+/* unread dot */
+.nav-dot{width:7px;height:7px;background:var(--red);border-radius:50%;margin-left:auto;display:none}
+.nav-dot.on{display:block;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+/* msg badge */
+.nav-chip-msg{margin-left:auto;padding:2px 7px;background:var(--r-dim);color:var(--red);border-radius:20px;font-size:.62rem;font-weight:700;display:none}
+.nav-chip-msg.on{display:block}
 
-.nav-user{display:flex;align-items:center;gap:7px;padding:5px 10px;background:var(--card);border:1px solid var(--border);border-radius:8px;max-width:180px}
-.nav-av{width:26px;height:26px;background:var(--grad);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.72rem;flex-shrink:0}
-.nav-email{font-size:.72rem;color:var(--sub);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.nav-logout{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px 6px;border-radius:5px;font-size:.78rem;transition:.2s;flex-shrink:0;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:4px}
-.nav-logout:hover{color:var(--text)}
+/* Lang selector in sidebar */
+.lang-wrap{display:flex;align-items:center;gap:7px;padding:8px 10px;border-radius:8px;background:none;border:none;cursor:pointer;margin-bottom:2px;width:100%}
+.lang-wrap i{width:14px;font-size:.78rem;color:var(--sub);flex-shrink:0}
+.lang-wrap select{background:transparent;border:none;color:var(--sub);font-family:'Inter',sans-serif;font-size:.8rem;cursor:pointer;outline:none;-webkit-appearance:none;appearance:none;flex:1}
+.lang-wrap select option{background:var(--nav)}
+.lang-wrap:hover{background:rgba(255,255,255,.04)}
+.lang-wrap:hover i,.lang-wrap:hover select{color:var(--text)}
 
-.nav-burger{display:none;width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:.875rem;flex-shrink:0}
+.sidebar-foot{margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)}
+.user-row{display:flex;align-items:center;gap:9px;padding:9px 10px;background:var(--card);border-radius:10px;border:1px solid var(--border)}
+.user-av{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.78rem;flex-shrink:0}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:.75rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:.63rem;color:var(--accent)}
+.logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:5px;font-size:.8rem;transition:.2s;flex-shrink:0}
+.logout-btn:hover{color:var(--text)}
 
-/* ── MOB DRAWER ── */
-.mob-drawer{display:none;position:fixed;top:56px;left:0;right:0;background:var(--nav);border-bottom:1px solid var(--border);padding:.875rem 1.25rem;flex-direction:column;gap:8px;z-index:199}
-.mob-drawer.open{display:flex}
-.mob-row{display:flex;align-items:center;gap:10px}
-.mob-email{font-size:.8rem;color:var(--sub);overflow:hidden;text-overflow:ellipsis}
+/* ── MOBILE TOP BAR ── */
+.mob-bar{display:none;position:sticky;top:0;z-index:98;background:var(--nav);border-bottom:1px solid var(--border);padding:0 1rem;height:52px;align-items:center;justify-content:space-between}
+.mob-logo{display:flex;align-items:center;gap:8px}
+.mob-logo img{height:22px;width:auto}
+.mob-logo-sep{width:1px;height:16px;background:var(--border)}
+.mob-logo-tag{font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+.mob-right{display:flex;align-items:center;gap:.5rem}
+.mob-btn{width:34px;height:34px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:.85rem;position:relative;transition:.2s}
+.mob-btn:hover{border-color:var(--border2);color:var(--text)}
+.mob-badge{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;font-size:.55rem;font-weight:700;padding:1px 4px;border-radius:10px;min-width:16px;text-align:center;display:none}
+.mob-badge.on{display:block}
 
 /* ── MAIN ── */
-.content{max-width:var(--max);margin:0 auto;padding:1.75rem 1.25rem 3rem}
+.main{margin-left:var(--sw);padding:1.75rem 2rem;min-height:100vh}
 
-.pg-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
 .pg-title{font-size:1.2rem;font-weight:700}
 .pg-sub{font-size:.75rem;color:var(--sub);margin-top:3px}
+.topbar-right{display:flex;align-items:center;gap:.625rem}
+.refresh-btn{padding:7px 13px;background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--sub);cursor:pointer;font-size:.75rem;display:flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;transition:.2s}
+.refresh-btn:hover{border-color:var(--border2);color:var(--text)}
 
 /* ── KPI CARDS ── */
 .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;margin-bottom:1.375rem}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.125rem;position:relative;overflow:hidden;transition:border-color .2s,transform .18s;cursor:default}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.125rem;position:relative;overflow:hidden;transition:border-color .2s,transform .18s}
 .kpi:hover{border-color:var(--border2);transform:translateY(-2px)}
 .kpi.clickable{cursor:pointer}
 .kpi.clickable:hover{border-color:var(--accent)}
-.kpi-bar{position:absolute;bottom:0;left:0;right:0;height:2px;opacity:.5}
+.kpi-bar{position:absolute;bottom:0;left:0;right:0;height:2px;opacity:.6}
 .kpi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.875rem}
 .kpi-lbl{font-size:.67rem;color:var(--sub);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
 .kpi-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
 .kpi-val{font-size:1.5rem;font-weight:700;letter-spacing:-.025em;line-height:1;margin-bottom:.35rem}
+.kpi-val.sm{font-size:1rem;letter-spacing:0;font-weight:700}
 .kpi-note{font-size:.7rem;color:var(--sub);display:flex;align-items:center;gap:4px}
 .kpi-note.up{color:var(--green)}
-.kpi-arrow{position:absolute;top:1rem;right:1rem;color:var(--accent);font-size:.8rem;opacity:0;transition:.2s}
+.kpi-note.alert{color:var(--red)}
+.kpi-arrow{position:absolute;top:1rem;right:1rem;color:var(--accent);font-size:.78rem;opacity:0;transition:.2s}
 .kpi.clickable:hover .kpi-arrow{opacity:1}
 
 /* ── SECTION HEAD ── */
 .sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
 .sec-title{font-size:.95rem;font-weight:600}
 .sec-sub{font-size:.72rem;color:var(--sub);margin-top:2px}
-.sec-badge{padding:3px 10px;background:var(--a-dim);color:var(--accent);border-radius:20px;font-size:.7rem;font-weight:600}
+.sec-badge{padding:3px 10px;background:var(--p-dim);color:var(--accent);border-radius:20px;font-size:.7rem;font-weight:600}
 
 /* ── MATCHES GRID ── */
 .matches-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.875rem}
@@ -137,257 +172,263 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .match-card:hover{border-color:var(--border2);transform:translateY(-2px)}
 .mc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.625rem;gap:.625rem}
 .mc-name{font-size:.9rem;font-weight:600;line-height:1.3}
-.mc-score{flex-shrink:0;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;background:var(--g-dim);color:var(--green)}
+.mc-score{flex-shrink:0;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700}
 .mc-industry{color:var(--sub);font-size:.78rem;margin-bottom:.875rem;display:flex;align-items:center;gap:5px}
+.mc-bar-wrap{width:100%;height:4px;background:var(--border);border-radius:4px;margin-bottom:.875rem;overflow:hidden}
+.mc-bar-fill{height:100%;border-radius:4px;background:var(--grad);transition:width .6s ease}
 .mc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem}
-.mc-tag{background:var(--a-dim);color:#93c5fd;padding:3px 9px;border-radius:16px;font-size:.7rem}
-.mc-bar{width:100%;height:4px;background:var(--border);border-radius:4px;margin-bottom:1rem;overflow:hidden}
-.mc-bar-fill{height:100%;border-radius:4px;background:var(--grad2);transition:width .6s ease}
+.mc-tag{background:var(--p-dim);color:#c4b5fd;padding:3px 9px;border-radius:16px;font-size:.7rem}
 .btn-connect{width:100%;padding:9px;background:var(--grad);color:#fff;border:none;border-radius:9px;font-weight:600;font-size:.8rem;cursor:pointer;font-family:'Inter',sans-serif;transition:opacity .2s;display:flex;align-items:center;justify-content:center;gap:6px}
 .btn-connect:hover{opacity:.88}
 
 /* ── EMPTY / LOADING ── */
-.empty-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3.5rem 2rem;text-align:center;color:var(--sub)}
+.empty-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3.5rem 2rem;text-align:center;color:var(--sub);grid-column:1/-1}
 .empty-panel i{font-size:2.5rem;margin-bottom:1.25rem;color:var(--muted);display:block}
 .empty-panel h3{font-size:.95rem;margin-bottom:.5rem;color:var(--text)}
 .empty-panel p{font-size:.82rem;line-height:1.6;margin-bottom:1.25rem}
 .empty-panel a{color:var(--accent);font-size:.82rem;text-decoration:none}
-.empty-panel a:hover{text-decoration:underline}
-.loading-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3rem;text-align:center;color:var(--sub);font-size:.82rem}
+.loading-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:3rem;text-align:center;color:var(--sub);font-size:.82rem;grid-column:1/-1}
 .loading-panel i{display:block;font-size:1.5rem;margin-bottom:.875rem;color:var(--accent)}
 
 /* ── FOOTER ── */
-.footer{background:#060a14;border-top:1px solid var(--border);margin-top:3rem;padding:2.5rem 1.25rem 1.5rem}
-.footer-inner{max-width:var(--max);margin:0 auto}
-.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:1.5rem}
-.footer-brand h2{font-size:1.2rem;font-weight:800;margin-bottom:.75rem;background:linear-gradient(135deg,#fff,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.footer{background:#07091a;border-top:1px solid var(--border);padding:2.5rem 2rem 1.5rem;margin-top:3rem}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;max-width:100%;margin-bottom:1.5rem}
+.footer-brand h2{font-size:1.2rem;font-weight:800;margin-bottom:.75rem;background:linear-gradient(135deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .footer-brand p{color:var(--sub);font-size:.8rem;line-height:1.6}
-.footer-col-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;color:var(--text)}
+.footer-col-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;color:var(--text)}
 .footer-links{list-style:none}
 .footer-links li{margin-bottom:.4rem}
 .footer-links a{color:var(--sub);text-decoration:none;font-size:.8rem;transition:color .2s}
 .footer-links a:hover{color:var(--accent)}
-.footer-bottom{padding-top:1.25rem;border-top:1px solid var(--border);display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.78rem}
+.footer-bottom{padding-top:1.25rem;border-top:1px solid var(--border);display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.78rem}
 .footer-bottom a{color:var(--muted);text-decoration:none}
-.footer-bottom a:hover{color:var(--sub)}
 .dev-credit{color:#f59e0b!important}
 
 /* ── RESPONSIVE ── */
-@media(max-width:900px){
-  .kpi-row{grid-template-columns:repeat(2,1fr)}
-  .matches-grid{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:640px){
-  .nav-user .nav-email{display:none}
-  .lang-pill{display:none}
-  .nav-burger{display:flex}
-  .content{padding:1rem .875rem 3rem}
+@media(max-width:1200px){.kpi-row{grid-template-columns:repeat(2,1fr)}.matches-grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .mob-bar{display:flex}
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0);z-index:101}
+  .main{margin-left:0;padding:.875rem .875rem 3rem}
+  .topbar{margin-bottom:1.125rem}
+  .pg-title{font-size:1.05rem}
   .kpi-row{grid-template-columns:1fr 1fr;gap:.625rem}
   .kpi{padding:.875rem}
   .kpi-val{font-size:1.2rem}
   .kpi-lbl{font-size:.62rem}
   .kpi-ico{width:28px;height:28px;font-size:.78rem}
-  .pg-title{font-size:1.05rem}
+  .footer{padding:2rem 1rem 1.5rem}
   .footer-grid{grid-template-columns:1fr}
 }
-@media(max-width:400px){
-  .kpi-row{grid-template-columns:1fr}
-  .nav-user{display:none}
-}
+@media(max-width:400px){.kpi-row{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- TOP NAV -->
-<nav class="topnav">
-  <div class="topnav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="https://oslomeet.org/omlogo.png" alt="Oslo Meet"
-           onerror="this.style.display='none';document.getElementById('lFb').style.display='flex'">
-      <div id="lFb" style="display:none;width:24px;height:24px;background:var(--grad);border-radius:6px;align-items:center;justify-content:center;font-size:.65rem;font-weight:700">OM</div>
-    </a>
-
-    <div class="nav-spacer"></div>
-
-    <div class="nav-right">
-      <!-- Language -->
-      <div class="lang-pill">
-        <i class="fas fa-globe"></i>
-        <select id="languageSelect" onchange="changeLanguage(this.value)">
-          <option value="en">EN</option>
-          <option value="no">NO</option>
-          <option value="pt">PT</option>
-          <option value="es">ES</option>
-        </select>
-      </div>
-
-      <!-- Messages -->
-      <button class="nav-icon-btn" onclick="openMessages()" title="Messages">
-        <i class="fas fa-envelope" style="font-size:.8rem"></i>
-        <span id="msgCount" class="msg-count"></span>
-        <span id="msgDot" class="msg-dot"></span>
-      </button>
-
-      <!-- User -->
-      <div class="nav-user">
-        <div class="nav-av" id="navAv">?</div>
-        <span class="nav-email" id="userEmail">Loading…</span>
-        <button class="nav-logout" onclick="doLogout()" title="Logout" data-i18n-title="btnLogout">
-          <i class="fas fa-sign-out-alt"></i>
-        </button>
-      </div>
-
-      <!-- Burger (mobile) -->
-      <button class="nav-burger" id="burgerBtn" onclick="toggleDrawer()">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </div>
-</nav>
-
-<!-- MOBILE DRAWER -->
-<div class="mob-drawer" id="mobDrawer">
-  <div class="mob-row">
-    <div class="nav-av" id="navAv2">?</div>
-    <span class="mob-email" id="mobEmail">Loading…</span>
-  </div>
-  <div class="mob-row">
-    <div class="lang-pill" style="display:flex">
-      <i class="fas fa-globe"></i>
-      <select id="languageSelect2" onchange="changeLanguage(this.value)">
-        <option value="en">English</option>
-        <option value="no">Norsk</option>
-        <option value="pt">Português</option>
-        <option value="es">Español</option>
-      </select>
-    </div>
-    <button class="nav-icon-btn" onclick="openMessages();closeDrawer()">
-      <i class="fas fa-envelope" style="font-size:.8rem"></i>
-      <span id="msgCount2" class="msg-count"></span>
-    </button>
-  </div>
-  <button class="btn-connect" onclick="doLogout()" style="background:var(--card);border:1px solid var(--border);color:var(--sub);font-weight:500;margin-top:4px" data-i18n="btnLogout">
-    <i class="fas fa-sign-out-alt"></i> Logout
-  </button>
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="spin"></div>
+  <p>Loading your dashboard…</p>
 </div>
 
-<!-- CONTENT -->
-<div class="content">
+<!-- DASHBOARD -->
+<div id="dashboard">
 
-  <div class="pg-head">
-    <div>
-      <div class="pg-title" id="pgTitle" data-i18n="dashTitle">👋 Welcome to Oslo Meet</div>
-      <div class="pg-sub" id="pgSub">Your AI-powered business dashboard</div>
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <!-- Mobile top bar -->
+  <div class="mob-bar">
+    <div class="mob-logo">
+      <img src="https://oslomeet.org/omlogo.png" alt="Oslo Meet" onerror="this.style.display='none'">
+      <div class="mob-logo-sep"></div>
+      <span class="mob-logo-tag">Dashboard</span>
+    </div>
+    <div class="mob-right">
+      <button class="mob-btn" onclick="openMessages()" title="Messages">
+        <i class="fas fa-envelope" style="font-size:.78rem"></i>
+        <span id="mobBadge" class="mob-badge"></span>
+      </button>
+      <button class="mob-btn" onclick="openSidebar()"><i class="fas fa-bars"></i></button>
     </div>
   </div>
 
-  <!-- KPI Cards -->
-  <div class="kpi-row">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
 
-    <div class="kpi">
-      <div class="kpi-bar" style="background:var(--grad)"></div>
-      <div class="kpi-top">
-        <div class="kpi-lbl" data-i18n="statCompany">Your Company</div>
-        <div class="kpi-ico" style="background:var(--p-dim);color:var(--purple)"><i class="fas fa-building"></i></div>
+    <div class="logo-wrap">
+      <img src="https://oslomeet.org/omlogo.png" class="logo-img" alt="Oslo Meet"
+           onerror="this.style.display='none';document.getElementById('lFb').style.display='flex'">
+      <div id="lFb" style="display:none;width:26px;height:26px;background:var(--grad);border-radius:6px;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0">OM</div>
+      <div class="logo-sep"></div>
+      <span class="logo-tag">Dashboard</span>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl" data-i18n="navPlatform">Platform</div>
+      <button class="nav-btn on" onclick="setNav(this)"><i class="fas fa-chart-line"></i> <span data-i18n="navDashboard">Overview</span></button>
+      <button class="nav-btn" onclick="openMessages();setNav(this)">
+        <i class="fas fa-envelope"></i> <span data-i18n="navMessages">Messages</span>
+        <span id="navMsgBadge" class="nav-chip-msg"></span>
+        <span id="navMsgDot" class="nav-dot"></span>
+      </button>
+      <button class="nav-btn" onclick="setNav(this)"><i class="fas fa-handshake"></i> <span data-i18n="navMatchesNav">Matches</span></button>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">Account</div>
+      <a href="index.html" class="nav-btn"><i class="fas fa-home"></i> <span data-i18n="navHome">Home</span></a>
+      <a href="join.html" class="nav-btn"><i class="fas fa-building-circle-arrow-right"></i> <span data-i18n="navRegCompany">Register Company</span></a>
+      <a href="pricing.html" class="nav-btn"><i class="fas fa-tags"></i> <span data-i18n="navPricing">Pricing</span></a>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">Settings</div>
+      <!-- Language inside sidebar -->
+      <div class="lang-wrap">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="no">Norsk</option>
+          <option value="pt">Português</option>
+          <option value="es">Español</option>
+        </select>
       </div>
-      <div class="kpi-val" id="companyName" style="font-size:1rem;letter-spacing:0;font-weight:700">—</div>
-      <div class="kpi-note"><i class="fas fa-circle-check"></i> Registered</div>
+      <button class="nav-btn" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> <span data-i18n="btnLogout">Logout</span></button>
     </div>
 
-    <div class="kpi">
-      <div class="kpi-bar" style="background:var(--grad2)"></div>
-      <div class="kpi-top">
-        <div class="kpi-lbl" data-i18n="statMatches">Matches Found</div>
-        <div class="kpi-ico" style="background:var(--g-dim);color:var(--green)"><i class="fas fa-handshake"></i></div>
+    <div class="sidebar-foot">
+      <div class="user-row">
+        <div class="user-av" id="sideAv">?</div>
+        <div class="user-info">
+          <div class="user-name" id="sideEmail">Loading…</div>
+          <div class="user-role" id="sideCompany">—</div>
+        </div>
+        <button class="logout-btn" onclick="doLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
       </div>
-      <div class="kpi-val" id="matchCount">0</div>
-      <div class="kpi-note up" id="matchNote"><i class="fas fa-arrow-trend-up"></i> Compatible partners</div>
     </div>
 
-    <div class="kpi">
-      <div class="kpi-bar" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
-      <div class="kpi-top">
-        <div class="kpi-lbl" data-i18n="statTopScore">Top Match Score</div>
-        <div class="kpi-ico" style="background:var(--am-dim);color:var(--amber)"><i class="fas fa-star"></i></div>
-      </div>
-      <div class="kpi-val" id="topScore">0%</div>
-      <div class="kpi-note"><i class="fas fa-chart-bar"></i> Compatibility</div>
-    </div>
+  </aside>
 
-    <div class="kpi clickable" onclick="openMessages()">
-      <div class="kpi-bar" style="background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
-      <div class="kpi-arrow"><i class="fas fa-arrow-right"></i></div>
-      <div class="kpi-top">
-        <div class="kpi-lbl" data-i18n="statMessages">Messages</div>
-        <div class="kpi-ico" style="background:var(--c-dim);color:var(--cyan)"><i class="fas fa-comments"></i></div>
-      </div>
-      <div class="kpi-val" id="messageCount">0</div>
-      <div class="kpi-note" id="msgNote"><i class="fas fa-inbox"></i> Active conversations</div>
-    </div>
+  <!-- MAIN -->
+  <main class="main">
 
-  </div>
-
-  <!-- Matches section -->
-  <div class="sec-head">
-    <div>
-      <div class="sec-title" data-i18n="sectionMatches">🎯 Recommended Matches</div>
-      <div class="sec-sub" data-i18n="sectionMatchesSub">AI-powered compatibility ranking</div>
-    </div>
-    <span class="sec-badge" id="matchBadge" style="display:none"></span>
-  </div>
-
-  <div id="matchesContainer">
-    <div class="loading-panel">
-      <i class="fas fa-spinner fa-spin"></i>
-      <span data-i18n="loadingText">Finding your best matches…</span>
-    </div>
-  </div>
-
-</div><!-- /content -->
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <h2>OSLO MEET</h2>
-        <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
-      </div>
+    <div class="topbar">
       <div>
-        <div class="footer-col-title" data-i18n="navPlatform">Platform</div>
-        <ul class="footer-links">
-          <li><a href="index.html" data-i18n="navHome">Home</a></li>
-          <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
-          <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
-          <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
-        </ul>
+        <div class="pg-title" data-i18n="dashTitle">👋 Welcome to Oslo Meet</div>
+        <div class="pg-sub" id="pgSub">Your AI-powered business dashboard</div>
       </div>
-      <div>
-        <div class="footer-col-title" data-i18n="navCompany">Company</div>
-        <ul class="footer-links">
-          <li><a href="about.html" data-i18n="navAbout">About</a></li>
-          <li><a href="insights.html" data-i18n="navBlog">Insights</a></li>
-          <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
-          <li><a href="support.html" data-i18n="navSupport">Support</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="footer-col-title" data-i18n="navLegal">Legal</div>
-        <ul class="footer-links">
-          <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
-          <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
-          <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
-          <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
-        </ul>
+      <div class="topbar-right">
+        <button class="refresh-btn" onclick="loadDashboard()"><i class="fas fa-sync-alt"></i> Refresh</button>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>&copy; 2026 Oslo Meet</span>
-      <a href="https://app-algoritmo.github.io/digital-solutions" class="dev-credit"><i class="fas fa-code"></i> Digital Solutions</a>
+
+    <!-- KPI Cards -->
+    <div class="kpi-row">
+
+      <div class="kpi">
+        <div class="kpi-bar" style="background:var(--grad)"></div>
+        <div class="kpi-top">
+          <div class="kpi-lbl" data-i18n="statCompany">Your Company</div>
+          <div class="kpi-ico" style="background:var(--p-dim);color:var(--accent)"><i class="fas fa-building"></i></div>
+        </div>
+        <div class="kpi-val sm" id="companyName">—</div>
+        <div class="kpi-note"><i class="fas fa-circle-check" style="color:var(--green)"></i> <span data-i18n="statRegistered">Registered</span></div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-bar" style="background:var(--grad2)"></div>
+        <div class="kpi-top">
+          <div class="kpi-lbl" data-i18n="statMatches">Matches Found</div>
+          <div class="kpi-ico" style="background:var(--g-dim);color:var(--green)"><i class="fas fa-handshake"></i></div>
+        </div>
+        <div class="kpi-val" id="matchCount">0</div>
+        <div class="kpi-note up"><i class="fas fa-arrow-trend-up"></i> <span data-i18n="statMatchNote">Compatible partners</span></div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#f59e0b,#f97316)"></div>
+        <div class="kpi-top">
+          <div class="kpi-lbl" data-i18n="statTopScore">Top Match Score</div>
+          <div class="kpi-ico" style="background:var(--am-dim);color:var(--amber)"><i class="fas fa-star"></i></div>
+        </div>
+        <div class="kpi-val" id="topScore">0%</div>
+        <div class="kpi-note"><i class="fas fa-chart-bar"></i> <span data-i18n="statScoreNote">Compatibility</span></div>
+      </div>
+
+      <div class="kpi clickable" onclick="openMessages()">
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
+        <div class="kpi-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="kpi-top">
+          <div class="kpi-lbl" data-i18n="statMessages">Messages</div>
+          <div class="kpi-ico" style="background:var(--c-dim);color:var(--cyan)"><i class="fas fa-comments"></i></div>
+        </div>
+        <div class="kpi-val" id="messageCount">0</div>
+        <div class="kpi-note" id="msgNote"><i class="fas fa-inbox"></i> <span data-i18n="statMsgNote">Conversations</span></div>
+      </div>
+
     </div>
-  </div>
-</footer>
+
+    <!-- Matches -->
+    <div class="sec-head">
+      <div>
+        <div class="sec-title" data-i18n="sectionMatches">🎯 Recommended Matches</div>
+        <div class="sec-sub" data-i18n="sectionMatchesSub">AI-powered compatibility ranking</div>
+      </div>
+      <span class="sec-badge" id="matchBadge" style="display:none"></span>
+    </div>
+
+    <div class="matches-grid" id="matchesContainer">
+      <div class="loading-panel">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span data-i18n="loadingText">Finding your best matches…</span>
+      </div>
+    </div>
+
+    <!-- Footer inside main -->
+    <footer class="footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h2>OSLO MEET</h2>
+          <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
+        </div>
+        <div>
+          <div class="footer-col-title" data-i18n="navPlatform">Platform</div>
+          <ul class="footer-links">
+            <li><a href="index.html" data-i18n="navHome">Home</a></li>
+            <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+            <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+            <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title" data-i18n="navCompany">Company</div>
+          <ul class="footer-links">
+            <li><a href="about.html" data-i18n="navAbout">About</a></li>
+            <li><a href="insights.html" data-i18n="navBlog">Insights</a></li>
+            <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+            <li><a href="support.html" data-i18n="navSupport">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title" data-i18n="navLegal">Legal</div>
+          <ul class="footer-links">
+            <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+            <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+            <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+            <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Oslo Meet</span>
+        <a href="https://app-algoritmo.github.io/digital-solutions" class="dev-credit"><i class="fas fa-code"></i> Digital Solutions</a>
+      </div>
+    </footer>
+
+  </main>
+</div>
 
 <script>
 const SUPABASE_URL='https://mrparduxlvyflasgefpt.supabase.co';
@@ -395,15 +436,13 @@ const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm
 const{createClient}=window.supabase;
 const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-let currentCompany=null;
-let messagesSubscription=null;
+let currentCompany=null, messagesSubscription=null;
 
 /* ── LOGOUT ── */
 async function doLogout(){
   if(!confirm('Are you sure you want to logout?'))return;
-  try{await db.auth.signOut({scope:'global'});
-  if(messagesSubscription)db.removeChannel(messagesSubscription);}
-  catch(e){console.warn('signOut:',e);}
+  try{await db.auth.signOut({scope:'global'});if(messagesSubscription)db.removeChannel(messagesSubscription);}
+  catch(e){console.warn(e);}
   Object.keys(localStorage).forEach(k=>{if(k.startsWith('sb-'))localStorage.removeItem(k);});
   localStorage.clear();sessionStorage.clear();
   window.location.replace('login.html');
@@ -411,9 +450,9 @@ async function doLogout(){
 
 function openMessages(){window.location.href='messages.html';}
 
-/* ── START CONVERSATION ── */
+/* ── CONVERSATION ── */
 async function startConversation(matchedCompanyId,matchedCompanyName){
-  if(!currentCompany){alert('Loading company data...');return;}
+  if(!currentCompany){alert('Loading...');return;}
   try{
     const idA=currentCompany.id<matchedCompanyId?currentCompany.id:matchedCompanyId;
     const idB=currentCompany.id>matchedCompanyId?currentCompany.id:matchedCompanyId;
@@ -421,100 +460,84 @@ async function startConversation(matchedCompanyId,matchedCompanyName){
     let convId;
     if(existing){convId=existing.id;}
     else{
-      const{data:newConv,error:convError}=await db.from('conversations').insert({company_a_id:idA,company_b_id:idB}).select('id').single();
-      if(convError)throw convError;
+      const{data:newConv,error}=await db.from('conversations').insert({company_a_id:idA,company_b_id:idB}).select('id').single();
+      if(error)throw error;
       convId=newConv.id;
     }
     window.location.href=`messages.html?conv=${convId}`;
-  }catch(err){console.error('Conversation error:',err);alert('Error connecting. Please try again.');}
+  }catch(err){console.error(err);alert('Error connecting. Please try again.');}
 }
 
-/* ── MESSAGE BADGE ── */
+/* ── BADGE ── */
 async function updateMessageBadge(){
   if(!currentCompany)return;
   try{
-    const{data:conversations}=await db.from('conversations').select('id')
-      .or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`);
-    const total=conversations?conversations.length:0;
+    const{data:convs}=await db.from('conversations').select('id').or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`);
+    const total=convs?convs.length:0;
     const{count}=await db.from('messages').select('*',{count:'exact',head:true})
       .in('conversation_id',db.from('conversations').select('id').or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`))
       .eq('is_read',false).neq('sender_company_id',currentCompany.id);
 
-    // Update KPI card
-    const el=document.getElementById('messageCount');
-    if(el)el.textContent=total;
-    const noteEl=document.getElementById('msgNote');
-    if(noteEl)noteEl.innerHTML=count>0
-      ?`<i class="fas fa-circle" style="color:var(--red);font-size:.5rem"></i> ${count} unread`
-      :`<i class="fas fa-inbox"></i> ${total} conversation${total!==1?'s':''}`;
+    // KPI card
+    g('messageCount').textContent=total;
+    const lang=localStorage.getItem('preferredLanguage')||'en';
+    const t=translations[lang]||translations.en;
+    g('msgNote').innerHTML=count>0
+      ?`<i class="fas fa-circle" style="color:var(--red);font-size:.5rem"></i> ${count} ${t.unread||'unread'}`
+      :`<i class="fas fa-inbox"></i> ${total} ${t.statMsgNote||'conversations'}`;
 
-    // Nav badge
-    const mc=document.getElementById('msgCount');
-    const mc2=document.getElementById('msgCount2');
-    const md=document.getElementById('msgDot');
+    // Sidebar badge
+    const txt=count>0?(count>99?'99+':String(count)):'';
+    const nb=g('navMsgBadge');const nd=g('navMsgDot');const mb=g('mobBadge');
     if(count>0){
-      const txt=count>99?'99+':count;
-      if(mc){mc.textContent=txt;mc.classList.add('on');}
-      if(mc2){mc2.textContent=txt;mc2.classList.add('on');}
-      if(md)md.classList.add('on');
-    }else{
-      if(mc)mc.classList.remove('on');
-      if(mc2)mc2.classList.remove('on');
-      if(md)md.classList.remove('on');
-    }
-  }catch(err){console.warn('Badge error:',err);}
+      nb.textContent=txt;nb.classList.add('on');
+      nd.classList.add('on');
+      mb.textContent=txt;mb.classList.add('on');
+    }else{nb.classList.remove('on');nd.classList.remove('on');mb.classList.remove('on');}
+  }catch(e){console.warn(e);}
 }
 
 /* ── REALTIME ── */
-function setupMessagesRealtime(){
-  messagesSubscription=db.channel('dashboard_messages')
+function setupRealtime(){
+  messagesSubscription=db.channel('dash_msgs')
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:`sender_company_id.neq.${currentCompany?.id||''}`},()=>updateMessageBadge())
     .on('postgres_changes',{event:'UPDATE',schema:'public',table:'messages',filter:`is_read=eq.true`},()=>updateMessageBadge())
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'conversations'},()=>updateMessageBadge())
     .subscribe();
 }
 
-/* ── MATCHES RENDER ── */
+/* ── RENDER MATCHES ── */
 function renderMatches(matches){
   const lang=localStorage.getItem('preferredLanguage')||'en';
   const t=translations[lang]||translations.en;
+  const container=g('matchesContainer');
 
   if(!matches||matches.length===0){
-    document.getElementById('matchesContainer').innerHTML=`
-      <div class="empty-panel">
-        <i class="fas fa-search"></i>
-        <h3>${t.noMatchesTitle}</h3>
-        <p>${t.noMatchesDesc}</p>
-      </div>`;
+    container.innerHTML=`<div class="empty-panel"><i class="fas fa-search"></i><h3>${t.noMatchesTitle}</h3><p>${t.noMatchesDesc}</p></div>`;
     return;
   }
-
-  const badge=document.getElementById('matchBadge');
+  const badge=g('matchBadge');
   if(badge){badge.textContent=`${matches.length} matches`;badge.style.display='';}
 
-  document.getElementById('matchesContainer').innerHTML=`
-    <div class="matches-grid">
-      ${matches.map(m=>{
-        const score=Math.round(m.compatibility_score*100);
-        const scoreColor=score>=70?'var(--green)':score>=50?'var(--amber)':'var(--sub)';
-        const scoreBg=score>=70?'var(--g-dim)':score>=50?'var(--am-dim)':'rgba(255,255,255,.05)';
-        return`<div class="match-card">
-          <div class="mc-top">
-            <div class="mc-name">${esc(m.matched_name)}</div>
-            <span class="mc-score" style="background:${scoreBg};color:${scoreColor}">${score}% Match</span>
-          </div>
-          <div class="mc-industry"><i class="fas fa-industry" style="font-size:.7rem"></i> ${esc(m.matched_industry||'Industry not specified')}</div>
-          <div class="mc-bar"><div class="mc-bar-fill" style="width:${score}%"></div></div>
-          <div class="mc-tags">
-            <span class="mc-tag"><i class="fas fa-handshake"></i> Partnership</span>
-            <span class="mc-tag"><i class="fas fa-globe"></i> Cross-border</span>
-          </div>
-          <button class="btn-connect" onclick="startConversation('${m.matched_id}','${esc(m.matched_name).replace(/'/g,"\\'")}')">
-            <i class="fas fa-envelope"></i> <span data-i18n="btnConnect">${t.btnConnect}</span>
-          </button>
-        </div>`;
-      }).join('')}
+  container.innerHTML=matches.map(m=>{
+    const score=Math.round(m.compatibility_score*100);
+    const sc=score>=70?{bg:'var(--g-dim)',cl:'var(--green)'}:score>=50?{bg:'var(--am-dim)',cl:'var(--amber)'}:{bg:'var(--p-dim)',cl:'var(--accent)'};
+    return`<div class="match-card">
+      <div class="mc-top">
+        <div class="mc-name">${esc(m.matched_name)}</div>
+        <span class="mc-score" style="background:${sc.bg};color:${sc.cl}">${score}% Match</span>
+      </div>
+      <div class="mc-industry"><i class="fas fa-industry" style="font-size:.7rem"></i> ${esc(m.matched_industry||'Industry not specified')}</div>
+      <div class="mc-bar-wrap"><div class="mc-bar-fill" style="width:${score}%"></div></div>
+      <div class="mc-tags">
+        <span class="mc-tag"><i class="fas fa-handshake"></i> Partnership</span>
+        <span class="mc-tag"><i class="fas fa-globe"></i> Cross-border</span>
+      </div>
+      <button class="btn-connect" onclick="startConversation('${m.matched_id}','${esc(m.matched_name).replace(/'/g,"\\'")}')">
+        <i class="fas fa-envelope"></i> ${t.btnConnect}
+      </button>
     </div>`;
+  }).join('');
 }
 
 /* ── LOAD DASHBOARD ── */
@@ -523,121 +546,122 @@ async function loadDashboard(){
   if(!session){window.location.replace('login.html');return;}
 
   const email=session.user.email||'';
-  document.getElementById('userEmail').textContent=email;
-  document.getElementById('mobEmail').textContent=email;
   const initials=email.charAt(0).toUpperCase();
-  document.getElementById('navAv').textContent=initials;
-  document.getElementById('navAv2').textContent=initials;
-  document.getElementById('pgSub').textContent=`${email} · AI-powered dashboard`;
+  g('sideAv').textContent=initials;
+  g('sideEmail').textContent=email;
+  g('pgSub').textContent=`${email}`;
 
   let company=await db.from('companies').select('id,name,contact_email').eq('user_id',session.user.id).maybeSingle().then(r=>r.data);
   if(!company)company=await db.from('companies').select('id,name,contact_email').eq('contact_email',email).maybeSingle().then(r=>r.data);
 
+  const lang=localStorage.getItem('preferredLanguage')||'en';
+  const t=translations[lang]||translations.en;
+
   if(!company){
-    const lang=localStorage.getItem('preferredLanguage')||'en';
-    const t=translations[lang]||translations.en;
-    document.getElementById('companyName').textContent='—';
-    document.getElementById('matchesContainer').innerHTML=`
-      <div class="empty-panel">
-        <i class="fas fa-inbox"></i>
-        <h3>${t.emptyTitle}</h3>
-        <p>${t.emptyDesc}</p>
-        <a href="join.html">${t.btnGoRegister}</a>
-      </div>`;
+    g('matchesContainer').innerHTML=`<div class="empty-panel"><i class="fas fa-inbox"></i><h3>${t.emptyTitle}</h3><p>${t.emptyDesc}</p><a href="join.html">${t.btnGoRegister}</a></div>`;
+    document.getElementById('loadingScreen').style.display='none';
+    g('dashboard').style.display='block';
     return;
   }
 
   currentCompany=company;
-  document.getElementById('companyName').textContent=company.name;
+  g('companyName').textContent=company.name;
+  g('sideCompany').textContent=company.name;
 
-  const{data:matches}=await db.rpc('get_company_matches',{
-    target_company_id:company.id,match_limit:10,min_score:0.3
-  });
+  const{data:matches}=await db.rpc('get_company_matches',{target_company_id:company.id,match_limit:10,min_score:0.3});
 
   if(matches&&matches.length>0){
-    document.getElementById('matchCount').textContent=matches.length;
-    document.getElementById('topScore').textContent=Math.round(matches[0].compatibility_score*100)+'%';
+    g('matchCount').textContent=matches.length;
+    g('topScore').textContent=Math.round(matches[0].compatibility_score*100)+'%';
   }
 
   renderMatches(matches);
+  document.getElementById('loadingScreen').style.display='none';
+  g('dashboard').style.display='block';
+
   await updateMessageBadge();
-  setupMessagesRealtime();
+  setupRealtime();
 }
 
-/* ── MOBILE DRAWER ── */
-function toggleDrawer(){document.getElementById('mobDrawer').classList.toggle('open');}
-function closeDrawer(){document.getElementById('mobDrawer').classList.remove('open');}
-document.addEventListener('click',e=>{
-  const d=document.getElementById('mobDrawer'),b=document.getElementById('burgerBtn');
-  if(d&&b&&!d.contains(e.target)&&!b.contains(e.target))d.classList.remove('open');
-});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer();});
+/* ── SIDEBAR UTILS ── */
+function openSidebar(){g('sidebar').classList.add('open');g('overlay').classList.add('on');document.body.style.overflow='hidden';}
+function closeSidebar(){g('sidebar').classList.remove('open');g('overlay').classList.remove('on');document.body.style.overflow='';}
+function setNav(btn){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');if(window.innerWidth<=768)closeSidebar();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar();});
 
-/* ── UTILS ── */
+function g(id){return document.getElementById(id);}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded',()=>{
   const saved=localStorage.getItem('preferredLanguage')||'en';
-  document.getElementById('languageSelect').value=saved;
-  document.getElementById('languageSelect2').value=saved;
+  g('languageSelect').value=saved;
   changeLanguage(saved);
   loadDashboard();
 });
-
-window.addEventListener('beforeunload',()=>{
-  if(messagesSubscription)db.removeChannel(messagesSubscription);
-});
+window.addEventListener('beforeunload',()=>{if(messagesSubscription)db.removeChannel(messagesSubscription);});
 </script>
 
 <script>
 const translations={
   en:{
     dashTitle:"👋 Welcome to Oslo Meet",btnLogout:"Logout",btnConnect:"Connect",
-    statCompany:"Your Company",statMatches:"Matches Found",statTopScore:"Top Match Score",statMessages:"Messages",
+    statCompany:"Your Company",statRegistered:"Registered",statMatches:"Matches Found",statMatchNote:"Compatible partners",
+    statTopScore:"Top Match Score",statScoreNote:"Compatibility",statMessages:"Messages",statMsgNote:"Conversations",unread:"unread",
     sectionMatches:"🎯 Recommended Matches",sectionMatchesSub:"AI-powered compatibility ranking",
     loadingText:"Finding your best matches…",
     emptyTitle:"No company found",emptyDesc:"Register your company first to see matches.",btnGoRegister:"Go to Registration →",
     noMatchesTitle:"No matches yet",noMatchesDesc:"As more companies join, you'll see compatible matches here.",
     footerSlogan:"AI-powered global business connections across Europe, Brazil, China and Nordics.",
-    navHome:"Home",navPlatform:"Platform",navHow:"How Matching Works",navJoin:"Join Now",navPricing:"Pricing",
-    navCompany:"Company",navAbout:"About",navBlog:"Insights",navContact:"Contact",navSupport:"Support",
+    navPlatform:"Platform",navDashboard:"Overview",navMessages:"Messages",navMatchesNav:"Matches",
+    navHome:"Home",navRegCompany:"Register Company",navPricing:"Pricing",
+    navHow:"How Matching Works",navJoin:"Join Now",navCompany:"Company",navAbout:"About",
+    navBlog:"Insights",navContact:"Contact",navSupport:"Support",
     navLegal:"Legal",navTerms:"Terms",navPrivacy:"Privacy",navCookies:"Cookies",navGDPR:"GDPR Rights"
   },
   no:{
     dashTitle:"👋 Velkommen til Oslo Meet",btnLogout:"Logg ut",btnConnect:"Koble til",
-    statCompany:"Din bedrift",statMatches:"Matcher funnet",statTopScore:"Topp match-score",statMessages:"Meldinger",
+    statCompany:"Din bedrift",statRegistered:"Registrert",statMatches:"Matcher funnet",statMatchNote:"Kompatible partnere",
+    statTopScore:"Topp match-score",statScoreNote:"Kompatibilitet",statMessages:"Meldinger",statMsgNote:"Samtaler",unread:"ulest",
     sectionMatches:"🎯 Anbefalte matcher",sectionMatchesSub:"AI-drevet kompatibilitetsrangering",
     loadingText:"Finner dine beste matcher…",
     emptyTitle:"Ingen bedrift funnet",emptyDesc:"Registrer din bedrift først for å se matcher.",btnGoRegister:"Gå til registrering →",
     noMatchesTitle:"Ingen matcher ennå",noMatchesDesc:"Etter hvert som flere bedrifter blir med, vil du se matcher her.",
     footerSlogan:"AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
-    navHome:"Hjem",navPlatform:"Plattform",navHow:"Hvordan matching virker",navJoin:"Bli med nå",navPricing:"Priser",
-    navCompany:"Selskap",navAbout:"Om",navBlog:"Innsikt",navContact:"Kontakt",navSupport:"Støtte",
+    navPlatform:"Plattform",navDashboard:"Oversikt",navMessages:"Meldinger",navMatchesNav:"Matcher",
+    navHome:"Hjem",navRegCompany:"Registrer Bedrift",navPricing:"Priser",
+    navHow:"Hvordan matching virker",navJoin:"Bli med nå",navCompany:"Selskap",navAbout:"Om",
+    navBlog:"Innsikt",navContact:"Kontakt",navSupport:"Støtte",
     navLegal:"Juridisk",navTerms:"Vilkår",navPrivacy:"Personvern",navCookies:"Cookies",navGDPR:"GDPR-rettigheter"
   },
   pt:{
     dashTitle:"👋 Bem-vindo ao Oslo Meet",btnLogout:"Sair",btnConnect:"Conectar",
-    statCompany:"Sua Empresa",statMatches:"Matches Encontrados",statTopScore:"Melhor Score",statMessages:"Mensagens",
+    statCompany:"Sua Empresa",statRegistered:"Cadastrada",statMatches:"Matches Encontrados",statMatchNote:"Parceiros compatíveis",
+    statTopScore:"Melhor Score",statScoreNote:"Compatibilidade",statMessages:"Mensagens",statMsgNote:"Conversas",unread:"não lidas",
     sectionMatches:"🎯 Matches Recomendados",sectionMatchesSub:"Ranking de compatibilidade por IA",
     loadingText:"Encontrando seus melhores matches…",
     emptyTitle:"Nenhuma empresa encontrada",emptyDesc:"Cadastre sua empresa primeiro para ver matches.",btnGoRegister:"Ir para Cadastro →",
     noMatchesTitle:"Nenhum match ainda",noMatchesDesc:"À medida que mais empresas entram, você verá matches aqui.",
     footerSlogan:"Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
-    navHome:"Início",navPlatform:"Plataforma",navHow:"Como Funciona",navJoin:"Entrar Agora",navPricing:"Preços",
-    navCompany:"Empresa",navAbout:"Sobre",navBlog:"Insights",navContact:"Contato",navSupport:"Suporte",
+    navPlatform:"Plataforma",navDashboard:"Visão Geral",navMessages:"Mensagens",navMatchesNav:"Matches",
+    navHome:"Início",navRegCompany:"Cadastrar Empresa",navPricing:"Preços",
+    navHow:"Como Funciona",navJoin:"Entrar Agora",navCompany:"Empresa",navAbout:"Sobre",
+    navBlog:"Insights",navContact:"Contato",navSupport:"Suporte",
     navLegal:"Legal",navTerms:"Termos",navPrivacy:"Privacidade",navCookies:"Cookies",navGDPR:"Direitos GDPR"
   },
   es:{
     dashTitle:"👋 Bienvenido a Oslo Meet",btnLogout:"Salir",btnConnect:"Conectar",
-    statCompany:"Tu Empresa",statMatches:"Matches Encontrados",statTopScore:"Mejor Puntuación",statMessages:"Mensajes",
+    statCompany:"Tu Empresa",statRegistered:"Registrada",statMatches:"Matches Encontrados",statMatchNote:"Socios compatibles",
+    statTopScore:"Mejor Puntuación",statScoreNote:"Compatibilidad",statMessages:"Mensajes",statMsgNote:"Conversaciones",unread:"no leídos",
     sectionMatches:"🎯 Matches Recomendados",sectionMatchesSub:"Ranking de compatibilidad por IA",
     loadingText:"Encontrando tus mejores matches…",
     emptyTitle:"Ninguna empresa encontrada",emptyDesc:"Registra tu empresa primero para ver matches.",btnGoRegister:"Ir a Registro →",
     noMatchesTitle:"Sin matches aún",noMatchesDesc:"A medida que más empresas se unan, verás matches compatibles aquí.",
     footerSlogan:"Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
-    navHome:"Inicio",navPlatform:"Plataforma",navHow:"Cómo Funciona",navJoin:"Unirse Ahora",navPricing:"Precios",
-    navCompany:"Empresa",navAbout:"Sobre",navBlog:"Insights",navContact:"Contacto",navSupport:"Soporte",
+    navPlatform:"Plataforma",navDashboard:"Resumen",navMessages:"Mensajes",navMatchesNav:"Matches",
+    navHome:"Inicio",navRegCompany:"Registrar Empresa",navPricing:"Precios",
+    navHow:"Cómo Funciona",navJoin:"Unirse Ahora",navCompany:"Empresa",navAbout:"Sobre",
+    navBlog:"Insights",navContact:"Contacto",navSupport:"Soporte",
     navLegal:"Legal",navTerms:"Términos",navPrivacy:"Privacidad",navCookies:"Cookies",navGDPR:"Derechos GDPR"
   }
 };
@@ -649,10 +673,8 @@ function changeLanguage(lang){
   });
   document.documentElement.lang=lang;
   localStorage.setItem('preferredLanguage',lang);
-  document.getElementById('languageSelect').value=lang;
-  document.getElementById('languageSelect2').value=lang;
-  // Re-render matches with new language if loaded
-  if(window._matchesCache)renderMatches(window._matchesCache);
+  const sel=document.getElementById('languageSelect');
+  if(sel)sel.value=lang;
 }
 </script>
 </body>
