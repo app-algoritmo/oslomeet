@@ -1,876 +1,683 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin — Oslo Meet</title>
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Oslo Meet</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#0b0f1a;
+  --nav:#0e1320;
+  --surface:#111827;
+  --card:#161d2e;
+  --card2:#1a2235;
+  --border:#1e2d45;
+  --border2:#243352;
+  --text:#e2e8f4;
+  --sub:#8494b0;
+  --muted:#4a5878;
+  --accent:#3b82f6;
+  --accent2:#6366f1;
+  --green:#10b981;
+  --red:#f43f5e;
+  --amber:#f59e0b;
+  --cyan:#06b6d4;
+  --purple:#8b5cf6;
+  --a-dim:rgba(59,130,246,.12);
+  --g-dim:rgba(16,185,129,.12);
+  --r-dim:rgba(244,63,94,.1);
+  --am-dim:rgba(245,158,11,.1);
+  --c-dim:rgba(6,182,212,.1);
+  --p-dim:rgba(139,92,246,.12);
+  --grad:linear-gradient(135deg,#3b82f6,#6366f1);
+  --grad2:linear-gradient(135deg,#10b981,#06b6d4);
+  --nav-w:220px;
+  --r:12px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;font-size:14px}
 
-    <style>
-        :root {
-            --bg: #07090f;
-            --surface: #0e1118;
-            --card: #141720;
-            --border: #1e2433;
-            --border-hover: #2d3548;
-            --text: #e8eaf0;
-            --muted: #5a6278;
-            --purple: #7c6af7;
-            --purple-dim: rgba(124,106,247,0.12);
-            --cyan: #22d3ee;
-            --cyan-dim: rgba(34,211,238,0.1);
-            --green: #22c55e;
-            --green-dim: rgba(34,197,94,0.1);
-            --amber: #f59e0b;
-            --amber-dim: rgba(245,158,11,0.1);
-            --red: #f43f5e;
-            --grad: linear-gradient(135deg, #7c6af7, #22d3ee);
-        }
+/* ── LOADING ── */
+#loadingScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;z-index:9999}
+.spin{width:38px;height:38px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:rot .8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+#loadingScreen p{color:var(--sub);font-size:13px;letter-spacing:.04em}
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* ── DENIED ── */
+#deniedScreen{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:9998}
+.denied-box{text-align:center;max-width:340px;padding:2rem}
+.denied-ico{width:60px;height:60px;background:var(--r-dim);border:1px solid rgba(244,63,94,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--red);margin:0 auto 1.2rem}
+.denied-box h2{font-size:1.2rem;margin-bottom:.5rem}
+.denied-box p{color:var(--sub);font-size:.875rem;margin-bottom:1.5rem;line-height:1.6}
+.btn-back{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border:1px solid var(--border);border-radius:9px;color:var(--sub);background:none;font-size:.875rem;cursor:pointer;text-decoration:none;transition:.2s}
+.btn-back:hover{border-color:var(--border2);color:var(--text)}
 
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+/* ── LAYOUT ── */
+#dashboard{display:none;min-height:100vh}
 
-        /* ── LOADING SCREEN ── */
-        #loadingScreen {
-            position: fixed; inset: 0;
-            background: var(--bg);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 9999;
-            flex-direction: column; gap: 1.5rem;
-        }
+/* SIDEBAR */
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--nav-w);
+  background:var(--nav);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;padding:1.25rem .875rem;
+  overflow-y:auto;z-index:100;
+}
+.logo-wrap{display:flex;align-items:center;gap:10px;padding:.5rem .5rem 1.25rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
+.logo-img{height:28px;width:auto;object-fit:contain;flex-shrink:0}
+.logo-sep{width:1px;height:20px;background:var(--border)}
+.logo-tag{font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
 
-        .spinner {
-            width: 40px; height: 40px;
-            border: 2px solid var(--border);
-            border-top-color: var(--purple);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
+.nav-sec{margin-bottom:1.5rem}
+.nav-lbl{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:0 .625rem;margin-bottom:.4rem}
+.nav-btn{display:flex;align-items:center;gap:9px;width:100%;padding:8px 10px;border-radius:8px;background:none;border:none;color:var(--sub);font-size:.8rem;font-family:'Inter',sans-serif;cursor:pointer;text-align:left;transition:.15s;margin-bottom:2px}
+.nav-btn i{width:15px;font-size:.8rem;text-align:center;flex-shrink:0}
+.nav-btn:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.nav-btn.on{background:var(--a-dim);color:var(--text)}
+.nav-btn.on i{color:var(--accent)}
+.nav-chip{margin-left:auto;padding:2px 7px;background:var(--am-dim);color:var(--amber);border-radius:20px;font-size:.65rem;font-weight:600}
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+.sidebar-foot{margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)}
+.user-row{display:flex;align-items:center;gap:9px;padding:9px 10px;background:var(--card);border-radius:10px;border:1px solid var(--border)}
+.user-av{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;flex-shrink:0}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:.75rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:.65rem;color:var(--accent)}
+.logout-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:3px;border-radius:5px;transition:.2s;flex-shrink:0}
+.logout-btn:hover{color:var(--text)}
 
-        #loadingScreen p {
-            color: var(--muted);
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-        }
+/* MAIN */
+.main{margin-left:var(--nav-w);padding:1.75rem 2rem;min-height:100vh}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.75rem}
+.page-h{font-size:1.3rem;font-weight:700;line-height:1.2}
+.page-sub{font-size:.78rem;color:var(--sub);margin-top:3px}
+.topbar-right{display:flex;align-items:center;gap:.625rem}
+.icon-btn{padding:7px 12px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--sub);cursor:pointer;font-size:.78rem;display:flex;align-items:center;gap:6px;transition:.2s;font-family:'Inter',sans-serif}
+.icon-btn:hover{border-color:var(--border2);color:var(--text)}
+.date-badge{padding:6px 12px;background:var(--card);border:1px solid var(--border);border-radius:9px;color:var(--sub);font-size:.75rem}
 
-        /* ── ACCESS DENIED ── */
-        #deniedScreen {
-            position: fixed; inset: 0;
-            background: var(--bg);
-            display: none; align-items: center; justify-content: center;
-            z-index: 9998;
-        }
+/* KPI CARDS */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.25rem}
+.kpi{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;position:relative;overflow:hidden;transition:border-color .2s,transform .2s}
+.kpi:hover{border-color:var(--border2);transform:translateY(-2px)}
+.kpi-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+.kpi-lbl{font-size:.72rem;color:var(--sub);font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.kpi-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.kpi-val{font-size:1.55rem;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-bottom:.4rem}
+.kpi-val small{font-size:.9rem;font-weight:400;color:var(--sub)}
+.kpi-trend{display:flex;align-items:center;gap:5px;font-size:.72rem}
+.up{color:var(--green)}.dn{color:var(--red)}.neu{color:var(--sub)}
+.kpi-bar{position:absolute;bottom:0;left:0;right:0;height:2px;opacity:.5}
 
-        .denied-box {
-            text-align: center;
-            max-width: 360px;
-            padding: 2rem;
-        }
+/* CHART SECTION */
+.chart-row{display:grid;grid-template-columns:1.7fr 1fr;gap:1rem;margin-bottom:1.25rem}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem}
+.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem}
+.panel-title{font-size:.875rem;font-weight:600}
+.panel-sub{font-size:.72rem;color:var(--sub);margin-top:2px}
+.chart-h{position:relative;height:240px}
 
-        .denied-icon {
-            width: 64px; height: 64px;
-            background: rgba(244,63,94,0.1);
-            border: 1px solid rgba(244,63,94,0.2);
-            border-radius: 16px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem; color: var(--red);
-            margin: 0 auto 1.5rem;
-        }
+.seg{display:flex;gap:4px;background:var(--surface);border-radius:7px;padding:3px}
+.seg-btn{padding:4px 10px;border-radius:5px;border:none;background:none;color:var(--sub);font-size:.72rem;cursor:pointer;font-family:'Inter',sans-serif;transition:.15s}
+.seg-btn.on{background:var(--card2);color:var(--text)}
 
-        .denied-box h2 { font-size: 1.3rem; margin-bottom: 0.5rem; }
-        .denied-box p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; }
+/* MINI STATS in panel */
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem}
+.mini-s{background:var(--surface);border-radius:9px;padding:.875rem}
+.mini-lbl{font-size:.68rem;color:var(--sub);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.3rem}
+.mini-val{font-size:1.1rem;font-weight:700;letter-spacing:-.01em}
 
-        .btn-outline {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 10px 20px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--muted);
-            background: transparent;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-        }
+/* BOTTOM ROW */
+.bot-row{display:grid;grid-template-columns:1.5fr 1fr;gap:1rem}
 
-        .btn-outline:hover { border-color: var(--border-hover); color: var(--text); }
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin-top:.25rem}
+table{width:100%;border-collapse:collapse}
+thead th{font-size:.67rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:500;padding:.5rem 1rem .75rem;text-align:left;border-bottom:1px solid var(--border)}
+tbody td{padding:.75rem 1rem;border-bottom:1px solid var(--border);font-size:.8rem}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.015);cursor:pointer}
+.co-name{font-weight:600;font-size:.82rem}
+.co-mail{font-size:.72rem;color:var(--sub);margin-top:1px}
 
-        /* ── DASHBOARD ── */
-        #dashboard { display: none; min-height: 100vh; }
+/* CHIPS */
+.chip{display:inline-flex;padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:500}
+.ch-b{background:var(--a-dim);color:var(--accent)}
+.ch-g{background:var(--g-dim);color:var(--green)}
+.ch-a{background:var(--am-dim);color:var(--amber)}
+.ch-c{background:var(--c-dim);color:var(--cyan)}
+.ch-p{background:var(--p-dim);color:var(--purple)}
+.ch-r{background:var(--r-dim);color:var(--red)}
 
-        /* Sidebar */
-        .sidebar {
-            position: fixed; left: 0; top: 0; bottom: 0;
-            width: 240px;
-            background: var(--surface);
-            border-right: 1px solid var(--border);
-            padding: 1.5rem 1rem;
-            overflow-y: auto;
-            z-index: 100;
-            display: flex; flex-direction: column;
-        }
+/* ACTIVITY FEED */
+.feed-item{display:flex;align-items:flex-start;gap:10px;padding:.75rem;border-radius:9px;background:var(--surface);margin-bottom:6px;border-left:2px solid var(--accent)}
+.feed-dot{width:30px;height:30px;border-radius:7px;background:var(--a-dim);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:.75rem;flex-shrink:0}
+.feed-text{font-size:.78rem;line-height:1.5}
+.feed-text strong{font-weight:600}
+.feed-time{font-size:.68rem;color:var(--muted);margin-top:2px}
 
-        .logo {
-            display: flex; align-items: center; gap: 10px;
-            padding: 0.5rem 0.8rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 1.5rem;
-        }
+/* PLAN LEGEND */
+.plan-legend{display:flex;flex-direction:column;gap:8px;margin-top:1rem}
+.legend-row{display:flex;align-items:center;justify-content:space-between;font-size:.78rem}
+.legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.legend-lbl{display:flex;align-items:center;gap:7px;color:var(--sub)}
+.legend-val{font-weight:600}
 
-        .logo-mark {
-            width: 32px; height: 32px;
-            background: var(--grad);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem;
-        }
+/* EMPTY */
+.empty{text-align:center;padding:2.5rem;color:var(--muted);font-size:.82rem}
 
-        .logo-name {
-            font-size: 0.95rem; font-weight: 700;
-            letter-spacing: 0.08em;
-            background: var(--grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-label {
-            font-size: 0.68rem; text-transform: uppercase;
-            letter-spacing: 0.12em; color: var(--muted);
-            padding: 0 0.8rem; margin-bottom: 0.4rem;
-        }
-
-        .nav-group { margin-bottom: 1.8rem; }
-
-        .nav-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 9px 12px;
-            border-radius: 8px;
-            color: var(--muted);
-            cursor: pointer;
-            transition: all 0.15s;
-            margin-bottom: 2px;
-            font-size: 0.875rem;
-            border: none; background: none; width: 100%; text-align: left;
-        }
-
-        .nav-item:hover { background: var(--card); color: var(--text); }
-        .nav-item.active { background: var(--purple-dim); color: var(--text); }
-        .nav-item.active i { color: var(--purple); }
-        .nav-item i { width: 16px; font-size: 0.9rem; }
-
-        .nav-badge {
-            margin-left: auto;
-            padding: 2px 8px;
-            background: var(--amber-dim);
-            color: var(--amber);
-            border-radius: 20px;
-            font-size: 0.7rem; font-weight: 600;
-        }
-
-        .sidebar-footer {
-            margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .admin-badge {
-            display: flex; align-items: center; gap: 10px;
-            padding: 10px 12px;
-            background: var(--card);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-
-        .admin-avatar {
-            width: 32px; height: 32px;
-            background: var(--grad);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .admin-info { flex: 1; min-width: 0; }
-        .admin-name { font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .admin-role { font-size: 0.7rem; color: var(--purple); }
-
-        /* Main content */
-        .main {
-            margin-left: 240px;
-            padding: 2rem;
-            min-height: 100vh;
-        }
-
-        .topbar {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .page-title { font-size: 1.4rem; font-weight: 700; }
-        .page-sub { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
-
-        .refresh-btn {
-            padding: 8px 14px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--muted);
-            cursor: pointer;
-            font-size: 0.82rem;
-            display: flex; align-items: center; gap: 6px;
-            transition: all 0.2s;
-        }
-
-        .refresh-btn:hover { border-color: var(--border-hover); color: var(--text); }
-
-        /* Stats grid */
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-
-        .stat-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.25rem;
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.2s;
-        }
-
-        .stat-card:hover { border-color: var(--border-hover); }
-
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            inset: 0; top: auto;
-            height: 2px;
-            background: var(--grad);
-            opacity: 0.4;
-        }
-
-        .stat-card.c { --grad: linear-gradient(90deg, #22d3ee, #3b82f6); }
-        .stat-card.b { --grad: linear-gradient(90deg, #f59e0b, #ef4444); }
-        .stat-card.d { --grad: linear-gradient(90deg, #22c55e, #06b6d4); }
-
-        .stat-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
-        .stat-ico { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
-        .stat-lbl { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.25rem; }
-        .stat-val { font-size: 1.6rem; font-weight: 700; font-family: 'DM Mono', monospace; letter-spacing: -0.02em; }
-        .stat-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
-        .stat-up { color: var(--green); }
-
-        /* Charts */
-        .charts { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.25rem;
-        }
-
-        .card-head {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 1.25rem;
-        }
-
-        .card-title { font-size: 0.9rem; font-weight: 600; }
-
-        .chart-wrap { position: relative; height: 260px; }
-
-        /* Table */
-        .table-wrap { overflow-x: auto; }
-
-        table { width: 100%; border-collapse: collapse; }
-
-        th {
-            font-size: 0.72rem; text-transform: uppercase;
-            letter-spacing: 0.08em; color: var(--muted);
-            font-weight: 500; padding: 0 1rem 0.75rem;
-            text-align: left;
-        }
-
-        td {
-            padding: 0.875rem 1rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.875rem;
-        }
-
-        tr:hover td { background: rgba(255,255,255,0.01); }
-
-        .chip {
-            display: inline-flex;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem; font-weight: 500;
-        }
-
-        .chip-purple { background: var(--purple-dim); color: var(--purple); }
-        .chip-green  { background: var(--green-dim);  color: var(--green); }
-        .chip-amber  { background: var(--amber-dim);  color: var(--amber); }
-        .chip-cyan   { background: var(--cyan-dim);   color: var(--cyan); }
-
-        .company-name { font-weight: 600; font-size: 0.875rem; }
-        .company-email { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
-
-        /* Activity */
-        .activity-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 0.875rem;
-            border-radius: 10px;
-            background: var(--surface);
-            margin-bottom: 8px;
-            border-left: 2px solid var(--purple);
-        }
-
-        .act-ico {
-            width: 34px; height: 34px;
-            background: var(--purple-dim);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--purple); font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .act-text { font-size: 0.85rem; }
-        .act-time { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-
-        /* Bottom row */
-        .bottom { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-top: 1rem; }
-
-        /* Empty state */
-        .empty {
-            text-align: center; padding: 3rem; color: var(--muted);
-            font-size: 0.875rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 1200px) {
-            .stats { grid-template-columns: repeat(2, 1fr); }
-            .charts { grid-template-columns: 1fr; }
-            .bottom { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .sidebar { transform: translateX(-100%); transition: 0.3s; }
-            .sidebar.open { transform: none; }
-            .main { margin-left: 0; padding: 1rem; }
-            .stats { grid-template-columns: 1fr 1fr; }
-            .fab {
-                display: flex !important;
-                position: fixed; bottom: 1.5rem; right: 1.5rem;
-                width: 50px; height: 50px;
-                background: var(--grad);
-                border: none; border-radius: 50%;
-                color: #fff; font-size: 1.2rem;
-                cursor: pointer; z-index: 99;
-                align-items: center; justify-content: center;
-            }
-        }
-
-        @media (min-width: 769px) { .fab { display: none !important; } }
-    </style>
+/* RESPONSIVE */
+@media(max-width:1300px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-row,.bot-row{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:none}
+  .main{margin-left:0;padding:1rem}
+  .kpi-row{grid-template-columns:1fr 1fr}
+  .fab{display:flex!important;position:fixed;bottom:1.25rem;right:1.25rem;width:48px;height:48px;background:var(--grad);border:none;border-radius:50%;color:#fff;font-size:1.1rem;cursor:pointer;z-index:99;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(59,130,246,.4)}
+}
+@media(min-width:769px){.fab{display:none!important}}
+</style>
 </head>
 <body>
 
-<!-- Loading -->
+<!-- LOADING -->
 <div id="loadingScreen">
-    <div class="spinner"></div>
-    <p>Verifying access…</p>
+  <div class="spin"></div>
+  <p>Verifying access…</p>
 </div>
 
-<!-- Denied -->
-<div id="deniedScreen" style="display:none; position:fixed; inset:0; background:var(--bg); align-items:center; justify-content:center; z-index:9998;">
-    <div class="denied-box">
-        <div class="denied-icon"><i class="fas fa-ban"></i></div>
-        <h2>Access Restricted</h2>
-        <p id="deniedMsg">Your account does not have admin access.</p>
-        <a href="/login.html" class="btn-outline">
-            <i class="fas fa-arrow-left"></i> Back to Login
-        </a>
-    </div>
+<!-- DENIED -->
+<div id="deniedScreen">
+  <div class="denied-box">
+    <div class="denied-ico"><i class="fas fa-ban"></i></div>
+    <h2>Access Restricted</h2>
+    <p id="deniedMsg">Your account does not have admin access.</p>
+    <a href="/login.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Login</a>
+  </div>
 </div>
 
-<!-- Dashboard -->
+<!-- DASHBOARD -->
 <div id="dashboard">
-    <aside class="sidebar" id="sidebar">
-        <div class="logo">
-            <div class="logo-mark">🚀</div>
-            <div class="logo-name">OSLO MEET</div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo-wrap">
+      <img src="https://oslomeet.org/omlogo.png" class="logo-img" alt="Oslo Meet" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div style="display:none;width:28px;height:28px;background:var(--grad);border-radius:7px;align-items:center;justify-content:center;font-size:.75rem;font-weight:700">OM</div>
+      <div class="logo-sep"></div>
+      <span class="logo-tag">Admin</span>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">Overview</div>
+      <button class="nav-btn on" onclick="setNav(this,'overview')"><i class="fas fa-chart-line"></i> Dashboard</button>
+      <button class="nav-btn" onclick="setNav(this,'companies')"><i class="fas fa-building"></i> Companies</button>
+      <button class="nav-btn" onclick="setNav(this,'founding')">
+        <i class="fas fa-crown"></i> Founding Members
+        <span class="nav-chip" id="foundBadge">0/50</span>
+      </button>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">Financial</div>
+      <button class="nav-btn" onclick="setNav(this,'revenue')"><i class="fas fa-wallet"></i> Revenue</button>
+      <button class="nav-btn" onclick="setNav(this,'coupons')"><i class="fas fa-tags"></i> Coupons</button>
+    </div>
+
+    <div class="nav-sec">
+      <div class="nav-lbl">Platform</div>
+      <button class="nav-btn" onclick="setNav(this,'matches')"><i class="fas fa-handshake"></i> Matches</button>
+      <button class="nav-btn" onclick="setNav(this,'messages')"><i class="fas fa-comment-dots"></i> Messages</button>
+    </div>
+
+    <div class="sidebar-foot">
+      <div class="user-row">
+        <div class="user-av" id="adminAv">A</div>
+        <div class="user-info">
+          <div class="user-name" id="adminName">Admin</div>
+          <div class="user-role" id="adminRole">super_admin</div>
         </div>
+        <button class="logout-btn" onclick="logout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+    </div>
+  </aside>
 
-        <div class="nav-group">
-            <div class="nav-label">Overview</div>
-            <button class="nav-item active" onclick="setNav(this,'overview')">
-                <i class="fas fa-chart-line"></i> Dashboard
-            </button>
-            <button class="nav-item" onclick="setNav(this,'companies')">
-                <i class="fas fa-building"></i> Companies
-            </button>
-            <button class="nav-item" onclick="setNav(this,'founding')">
-                <i class="fas fa-crown"></i> Founding Members
-                <span class="nav-badge" id="foundBadge">0/50</span>
-            </button>
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <div>
+        <div class="page-h">Dashboard Overview</div>
+        <div class="page-sub" id="dateStr">Real-time platform analytics</div>
+      </div>
+      <div class="topbar-right">
+        <div class="date-badge" id="todayBadge">—</div>
+        <button class="icon-btn" onclick="loadData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+      </div>
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-row">
+
+      <div class="kpi">
+        <div class="kpi-top">
+          <div class="kpi-lbl">Total Revenue</div>
+          <div class="kpi-ico" style="background:var(--a-dim);color:var(--accent)"><i class="fas fa-coins"></i></div>
         </div>
+        <div class="kpi-val" id="kRevenue">NOK <small>0</small></div>
+        <div class="kpi-trend up" id="kRevTrend"><i class="fas fa-arrow-trend-up"></i> Lifetime value</div>
+        <div class="kpi-bar" style="background:var(--grad)"></div>
+      </div>
 
-        <div class="nav-group">
-            <div class="nav-label">Financial</div>
-            <button class="nav-item" onclick="setNav(this,'revenue')">
-                <i class="fas fa-wallet"></i> Revenue
-            </button>
-            <button class="nav-item" onclick="setNav(this,'coupons')">
-                <i class="fas fa-tags"></i> Coupons
-            </button>
+      <div class="kpi">
+        <div class="kpi-top">
+          <div class="kpi-lbl">Monthly Recurring (MRR)</div>
+          <div class="kpi-ico" style="background:var(--g-dim);color:var(--green)"><i class="fas fa-chart-line"></i></div>
         </div>
+        <div class="kpi-val" id="kMRR">NOK <small>0</small></div>
+        <div class="kpi-trend up"><i class="fas fa-arrow-up"></i> Per month avg</div>
+        <div class="kpi-bar" style="background:var(--grad2)"></div>
+      </div>
 
-        <div class="sidebar-footer">
-            <div class="admin-badge">
-                <div class="admin-avatar" id="adminAv">A</div>
-                <div class="admin-info">
-                    <div class="admin-name" id="adminName">Admin</div>
-                    <div class="admin-role" id="adminRole">super_admin</div>
-                </div>
-                <button onclick="logout()" title="Logout"
-                    style="background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:6px;transition:color .2s;"
-                    onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">
-                    <i class="fas fa-sign-out-alt"></i>
-                </button>
-            </div>
+      <div class="kpi">
+        <div class="kpi-top">
+          <div class="kpi-lbl">Active Companies</div>
+          <div class="kpi-ico" style="background:var(--c-dim);color:var(--cyan)"><i class="fas fa-building"></i></div>
         </div>
-    </aside>
+        <div class="kpi-val" id="kActive"><small>0</small></div>
+        <div class="kpi-trend neu" id="kActiveTrend"><i class="fas fa-circle-dot"></i> <span id="kTotalCo">0</span> total registered</div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
+      </div>
 
-    <main class="main">
-        <div class="topbar">
-            <div>
-                <div class="page-title">Dashboard Overview</div>
-                <div class="page-sub">Real-time analytics · Oslo Meet</div>
-            </div>
-            <button class="refresh-btn" onclick="loadData()">
-                <i class="fas fa-sync-alt"></i> Refresh
-            </button>
+      <div class="kpi">
+        <div class="kpi-top">
+          <div class="kpi-lbl">Founding Members</div>
+          <div class="kpi-ico" style="background:var(--am-dim);color:var(--amber)"><i class="fas fa-crown"></i></div>
         </div>
+        <div class="kpi-val" id="kFounders">0 <small style="font-size:.9rem;color:var(--sub)">/ 50</small></div>
+        <div class="kpi-trend" id="kFoundTrend"><span class="neu"><i class="fas fa-hourglass-half"></i> <span id="kSpotsLeft">50</span> spots remaining</span></div>
+        <div class="kpi-bar" style="background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
+      </div>
 
-        <!-- Stats -->
-        <div class="stats">
-            <div class="stat-card">
-                <div class="stat-top">
-                    <div>
-                        <div class="stat-lbl">Total Revenue</div>
-                        <div class="stat-val" id="sRevenue">NOK 0</div>
-                        <div class="stat-sub stat-up"><i class="fas fa-arrow-up"></i> MRR tracked</div>
-                    </div>
-                    <div class="stat-ico" style="background:var(--purple-dim);color:var(--purple)">
-                        <i class="fas fa-wallet"></i>
-                    </div>
-                </div>
-            </div>
+    </div><!-- /kpi-row -->
 
-            <div class="stat-card b">
-                <div class="stat-top">
-                    <div>
-                        <div class="stat-lbl">Founding Members</div>
-                        <div class="stat-val" id="sFounders">0<span style="font-size:1rem;color:var(--muted)">/50</span></div>
-                        <div class="stat-sub" id="sFoundersSub">50 spots left</div>
-                    </div>
-                    <div class="stat-ico" style="background:var(--amber-dim);color:var(--amber)">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                </div>
-            </div>
+    <!-- CHART ROW -->
+    <div class="chart-row">
 
-            <div class="stat-card c">
-                <div class="stat-top">
-                    <div>
-                        <div class="stat-lbl">Active Companies</div>
-                        <div class="stat-val" id="sActive">0</div>
-                        <div class="stat-sub stat-up"><i class="fas fa-arrow-up"></i> Registered</div>
-                    </div>
-                    <div class="stat-ico" style="background:var(--cyan-dim);color:var(--cyan)">
-                        <i class="fas fa-building"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stat-card d">
-                <div class="stat-top">
-                    <div>
-                        <div class="stat-lbl">Monthly Recurring</div>
-                        <div class="stat-val" id="sMRR">NOK 0</div>
-                        <div class="stat-sub stat-up"><i class="fas fa-chart-line"></i> MRR</div>
-                    </div>
-                    <div class="stat-ico" style="background:var(--green-dim);color:var(--green)">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                </div>
-            </div>
+      <!-- Revenue chart -->
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Revenue Growth</div>
+            <div class="panel-sub">Cumulative revenue by week</div>
+          </div>
+          <div class="seg" id="periodSeg">
+            <button class="seg-btn" onclick="setPeriod(this,8)">8W</button>
+            <button class="seg-btn on" onclick="setPeriod(this,12)">12W</button>
+            <button class="seg-btn" onclick="setPeriod(this,24)">24W</button>
+          </div>
         </div>
-
-        <!-- Charts -->
-        <div class="charts">
-            <div class="card">
-                <div class="card-head">
-                    <div class="card-title">Revenue Overview</div>
-                    <select id="periodSel" onchange="loadData()"
-                        style="background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:0.8rem;cursor:pointer;">
-                        <option value="7">Last 7 days</option>
-                        <option value="30" selected>Last 30 days</option>
-                        <option value="90">Last 90 days</option>
-                    </select>
-                </div>
-                <div class="chart-wrap"><canvas id="chartRev"></canvas></div>
-            </div>
-
-            <div class="card">
-                <div class="card-head"><div class="card-title">Plan Distribution</div></div>
-                <div class="chart-wrap"><canvas id="chartPlan"></canvas></div>
-            </div>
+        <div class="chart-h"><canvas id="chartRev"></canvas></div>
+        <div class="mini-stats">
+          <div class="mini-s">
+            <div class="mini-lbl">Avg per Company</div>
+            <div class="mini-val" id="avgRev">NOK 0</div>
+          </div>
+          <div class="mini-s">
+            <div class="mini-lbl">Highest Plan</div>
+            <div class="mini-val" id="topPlan">—</div>
+          </div>
         </div>
+      </div>
 
-        <!-- Bottom row -->
-        <div class="bottom">
-            <div class="card">
-                <div class="card-head">
-                    <div class="card-title">Recent Companies</div>
-                </div>
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Company</th>
-                                <th>Plan</th>
-                                <th>Status</th>
-                                <th>Value</th>
-                                <th>Joined</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-head"><div class="card-title">Recent Activity</div></div>
-                <div id="actList"></div>
-            </div>
+      <!-- Plan Distribution -->
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Plan Distribution</div>
+            <div class="panel-sub">Breakdown by subscription</div>
+          </div>
         </div>
-    </main>
+        <div class="chart-h"><canvas id="chartPlan"></canvas></div>
+        <div class="plan-legend" id="planLegend"></div>
+      </div>
 
-    <button class="fab" onclick="document.getElementById('sidebar').classList.toggle('open')">
-        <i class="fas fa-bars"></i>
-    </button>
-</div>
+    </div><!-- /chart-row -->
+
+    <!-- BOTTOM ROW -->
+    <div class="bot-row">
+
+      <!-- Companies table -->
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Recent Companies</div>
+            <div class="panel-sub" id="tableSubtitle">Latest registrations</div>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th>Company</th>
+              <th>Plan</th>
+              <th>Status</th>
+              <th>Value</th>
+              <th>Joined</th>
+            </tr></thead>
+            <tbody id="tBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Activity feed -->
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">Recent Activity</div>
+            <div class="panel-sub">Latest sign-ups</div>
+          </div>
+        </div>
+        <div id="actFeed"></div>
+      </div>
+
+    </div><!-- /bot-row -->
+
+  </main><!-- /main -->
+
+  <button class="fab" onclick="document.getElementById('sidebar').classList.toggle('open')">
+    <i class="fas fa-bars"></i>
+  </button>
+
+</div><!-- /dashboard -->
 
 <script>
-// ════════════════════════════════════════
-//  CONFIG
-// ════════════════════════════════════════
+/* ══════════════════════════════════
+   CONFIG
+══════════════════════════════════ */
 const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
 
-const PLAN_PRICES = {
-    founding_member: 1290,
-    starter: 1890,
-    business: 4900,
-    partner: 15000,
+const PRICES = { founding_member:1290, starter:1890, business:4900, partner:15000 };
+
+const CHIP = {
+  founding_member:['ch-a','Founding'],
+  business:['ch-p','Business'],
+  partner:['ch-c','Partner'],
+  starter:['ch-g','Starter'],
 };
 
-// ════════════════════════════════════════
-//  AUTH — JWT do usuário valida no servidor
-//  Nenhum email exposto no código
-// ════════════════════════════════════════
+const PLAN_COLORS = { Founding:'#f59e0b', Business:'#8b5cf6', Partner:'#06b6d4', Starter:'#10b981' };
+
+/* ══════════════════════════════════
+   AUTH — JWT only, no email in code
+══════════════════════════════════ */
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let cRev=null, cPlan=null, currentPeriod=12, allCompanies=[];
 
-let chartRev = null, chartPlan = null;
+async function init(){
+  try{
+    const {data:{session}} = await sb.auth.getSession();
+    if(!session?.user){ location.href='/login.html'; return; }
 
-async function init() {
-    try {
-        const { data: { session } } = await sb.auth.getSession();
+    // Validate with user JWT — no email hardcoded
+    const r = await fetch(
+      `${SUPABASE_URL}/rest/v1/admin_roles?select=role,active&active=eq.true&limit=1`,
+      { headers:{ 'apikey':SUPABASE_KEY, 'Authorization':`Bearer ${session.access_token}` }}
+    );
+    const rows = r.ok ? await r.json() : [];
 
-        if (!session?.user) {
-            window.location.href = '/login.html';
-            return;
+    if(!rows.length){
+      el('deniedMsg').textContent = `${session.user.email} does not have admin access.`;
+      show('deniedScreen'); hide('loadingScreen'); return;
+    }
+
+    const name = (session.user.email||'Admin').split('@')[0];
+    el('adminAv').textContent  = name.charAt(0).toUpperCase();
+    el('adminName').textContent= name;
+    el('adminRole').textContent= rows[0].role||'admin';
+
+    const now = new Date();
+    el('todayBadge').textContent = now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    el('dateStr').textContent = `Updated ${now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
+
+    hide('loadingScreen'); show('dashboard');
+    await loadData();
+
+  }catch(e){ console.error(e); location.href='/login.html'; }
+}
+
+/* ══════════════════════════════════
+   DATA
+══════════════════════════════════ */
+async function loadData(){
+  try{
+    const r = await fetch(
+      `${SUPABASE_URL}/rest/v1/companies?select=*&order=created_at.desc`,
+      { headers:{ 'apikey':SUPABASE_KEY, 'Authorization':`Bearer ${SUPABASE_KEY}` }}
+    );
+    allCompanies = r.ok ? await r.json() : [];
+    renderAll();
+  }catch(e){ console.error(e); }
+}
+
+function renderAll(){
+  const co = allCompanies;
+  const totalRev = co.reduce((s,c)=>s+(PRICES[c.plan]||0),0);
+  const founders = co.filter(c=>c.plan==='founding_member').length;
+  const active   = co.filter(c=>c.status==='active').length;
+  const mrr      = Math.round(totalRev/Math.max(co.length,1)*12/12);
+  const mrrTotal = Math.round(totalRev/12);
+  const avg      = co.length ? Math.round(totalRev/co.length) : 0;
+
+  // KPIs
+  el('kRevenue').innerHTML = `NOK <small>${fmt(totalRev)}</small>`;
+  el('kMRR').innerHTML     = `NOK <small>${fmt(mrrTotal)}</small>`;
+  el('kActive').innerHTML  = `<small>${active}</small>`;
+  el('kTotalCo').textContent = co.length;
+  el('kFounders').innerHTML  = `${founders} <small style="font-size:.9rem;color:var(--sub)">/ 50</small>`;
+  el('kSpotsLeft').textContent = Math.max(0,50-founders);
+  el('foundBadge').textContent = `${founders}/50`;
+  el('avgRev').textContent   = `NOK ${fmt(avg)}`;
+
+  // Top plan
+  const planCount = {};
+  co.forEach(c=>{ planCount[c.plan]=(planCount[c.plan]||0)+1; });
+  const topP = Object.entries(planCount).sort((a,b)=>b[1]-a[1])[0];
+  el('topPlan').textContent = topP ? capitalize(topP[0].replace('_',' ')) : '—';
+
+  el('tableSubtitle').textContent = `${co.length} companies registered`;
+  el('dateStr').textContent = `Updated ${new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}`;
+
+  renderRevChart(co, currentPeriod);
+  renderPlanChart(co);
+  renderTable(co);
+  renderFeed(co);
+}
+
+/* ══════════════════════════════════
+   CHARTS
+══════════════════════════════════ */
+function renderRevChart(co, weeks){
+  const ctx = el('chartRev').getContext('2d');
+  if(cRev) cRev.destroy();
+
+  const sorted = [...co].sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+  const labels=[], data=[];
+  for(let i=weeks-1;i>=0;i--){
+    const d=new Date(); d.setDate(d.getDate()-i*7);
+    labels.push(`W${weeks-i}`);
+    data.push(sorted.filter(c=>new Date(c.created_at)<=d).reduce((s,c)=>s+(PRICES[c.plan]||0),0));
+  }
+
+  cRev = new Chart(ctx,{
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        data,
+        borderColor:'#3b82f6',
+        backgroundColor: c=>{
+          const g=c.chart.ctx.createLinearGradient(0,0,0,240);
+          g.addColorStop(0,'rgba(59,130,246,.2)');
+          g.addColorStop(1,'rgba(59,130,246,0)');
+          return g;
+        },
+        fill:true, tension:.4,
+        pointRadius:3, pointHoverRadius:5,
+        pointBackgroundColor:'#3b82f6',
+        borderWidth:2,
+      }],
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#161d2e',
+          borderColor:'#1e2d45',
+          borderWidth:1,
+          titleColor:'#8494b0',
+          bodyColor:'#e2e8f4',
+          padding:10,
+          callbacks:{label:c=>`  NOK ${fmt(c.parsed.y)}`}
         }
+      },
+      scales:{
+        y:{
+          beginAtZero:true,
+          grid:{color:'rgba(30,45,69,.6)'},
+          ticks:{color:'#4a5878',font:{size:10},callback:v=>`NOK ${fmt(v)}`}
+        },
+        x:{grid:{display:false},ticks:{color:'#4a5878',font:{size:10}}}
+      }
+    }
+  });
+}
 
-        // Usa o JWT do usuário (access_token) — não a anon key.
-        // O Supabase valida o token no servidor e aplica RLS/grants
-        // com o role "authenticated". Nenhum email fica no código HTML.
-        const resp = await fetch(
-            `${SUPABASE_URL}/rest/v1/admin_roles?select=role,active&active=eq.true&limit=1`,
-            {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${session.access_token}`,
-                }
-            }
-        );
+function renderPlanChart(co){
+  const ctx = el('chartPlan').getContext('2d');
+  if(cPlan) cPlan.destroy();
 
-        const rows = resp.ok ? await resp.json() : [];
+  const counts={Founding:0,Business:0,Partner:0,Starter:0};
+  co.forEach(c=>{
+    if(c.plan==='founding_member') counts.Founding++;
+    else if(c.plan==='business') counts.Business++;
+    else if(c.plan==='partner') counts.Partner++;
+    else counts.Starter++;
+  });
+  const total=co.length||1;
+  const colors=Object.keys(PLAN_COLORS).map(k=>PLAN_COLORS[k]);
 
-        if (!rows.length) {
-            document.getElementById('deniedMsg').textContent =
-                `${session.user.email} does not have admin access.`;
-            show('deniedScreen');
-            hide('loadingScreen');
-            return;
+  cPlan = new Chart(ctx,{
+    type:'doughnut',
+    data:{
+      labels:Object.keys(counts),
+      datasets:[{
+        data:Object.values(counts),
+        backgroundColor: co.length ? colors : ['#1e2d45'],
+        borderWidth:2,
+        borderColor:'#161d2e',
+        hoverOffset:6,
+      }],
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      cutout:'72%',
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#161d2e',
+          borderColor:'#1e2d45',
+          borderWidth:1,
+          titleColor:'#8494b0',
+          bodyColor:'#e2e8f4',
+          callbacks:{label:c=>`  ${c.label}: ${c.parsed} (${Math.round(c.parsed/total*100)}%)`}
         }
-
-        // ✅ Acesso liberado
-        const role = rows[0].role || 'admin';
-        const name = (session.user.email || 'Admin').split('@')[0];
-
-        document.getElementById('adminAv').textContent    = name.charAt(0).toUpperCase();
-        document.getElementById('adminName').textContent  = name;
-        document.getElementById('adminRole').textContent  = role;
-
-        hide('loadingScreen');
-        show('dashboard');
-
-        await loadData();
-
-    } catch (err) {
-        console.error('Auth error:', err);
-        window.location.href = '/login.html';
+      }
     }
+  });
+
+  // Legend
+  el('planLegend').innerHTML = Object.entries(counts).map(([k,v])=>`
+    <div class="legend-row">
+      <span class="legend-lbl">
+        <span class="legend-dot" style="background:${PLAN_COLORS[k]}"></span>${k}
+      </span>
+      <span class="legend-val">${v} <span style="color:var(--muted);font-weight:400">(${Math.round(v/total*100)}%)</span></span>
+    </div>`).join('');
 }
 
-// ════════════════════════════════════════
-//  DATA
-// ════════════════════════════════════════
-async function loadData() {
-    try {
-        const resp = await fetch(
-            `${SUPABASE_URL}/rest/v1/companies?select=*&order=created_at.desc`,
-            {
-                headers: {
-                    'apikey': SUPABASE_KEY,
-                    'Authorization': `Bearer ${SUPABASE_KEY}`,
-                },
-            }
-        );
-
-        const companies = resp.ok ? await resp.json() : [];
-
-        // ── Metrics
-        const totalRev  = companies.reduce((s, c) => s + (PLAN_PRICES[c.plan] || 0), 0);
-        const founders  = companies.filter(c => c.plan === 'founding_member').length;
-        const active    = companies.filter(c => c.status === 'active').length;
-        const mrr       = Math.round(totalRev / 12);
-
-        document.getElementById('sRevenue').textContent  = `NOK ${totalRev.toLocaleString()}`;
-        document.getElementById('sActive').textContent   = active;
-        document.getElementById('sMRR').textContent      = `NOK ${mrr.toLocaleString()}`;
-        document.getElementById('sFounders').innerHTML   =
-            `${founders}<span style="font-size:1rem;color:var(--muted)">/50</span>`;
-        document.getElementById('sFoundersSub').textContent =
-            `${Math.max(0, 50 - founders)} spots remaining`;
-        document.getElementById('foundBadge').textContent = `${founders}/50`;
-
-        // ── Charts
-        renderCharts(companies);
-
-        // ── Table
-        renderTable(companies);
-
-        // ── Activity
-        renderActivity(companies);
-
-    } catch (err) {
-        console.error('Data error:', err);
-    }
+/* ══════════════════════════════════
+   TABLE
+══════════════════════════════════ */
+function renderTable(co){
+  const tb=el('tBody');
+  if(!co.length){ tb.innerHTML=`<tr><td colspan="5"><div class="empty">No companies registered yet</div></td></tr>`; return; }
+  tb.innerHTML=co.slice(0,12).map(c=>{
+    const [cls,lbl]=CHIP[c.plan]||['ch-g',c.plan||'starter'];
+    const price=fmt(PRICES[c.plan]||0);
+    const date=c.created_at?new Date(c.created_at).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'-';
+    const sCls=c.status==='active'?'ch-g':'ch-a';
+    return `<tr>
+      <td><div class="co-name">${x(c.name||'Unnamed')}</div><div class="co-mail">${x(c.email||'')}</div></td>
+      <td><span class="chip ${cls}">${lbl}</span></td>
+      <td><span class="chip ${sCls}">${c.status||'pending'}</span></td>
+      <td style="font-variant-numeric:tabular-nums">NOK ${price}</td>
+      <td style="color:var(--sub)">${date}</td>
+    </tr>`;
+  }).join('');
 }
 
-// ════════════════════════════════════════
-//  CHARTS
-// ════════════════════════════════════════
-function renderCharts(companies) {
-    // Revenue line chart (cumulative by week)
-    const ctx1 = document.getElementById('chartRev').getContext('2d');
-    if (chartRev) chartRev.destroy();
-
-    // Build weekly cumulative from real data
-    const sorted = [...companies].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-    const labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'];
-    const dataRev = labels.map((_, i) => {
-        const cutoff = new Date();
-        cutoff.setDate(cutoff.getDate() - (7 * (labels.length - 1 - i)));
-        return sorted
-            .filter(c => new Date(c.created_at) <= cutoff)
-            .reduce((s, c) => s + (PLAN_PRICES[c.plan] || 0), 0);
-    });
-
-    chartRev = new Chart(ctx1, {
-        type: 'line',
-        data: {
-            labels,
-            datasets: [{
-                data: dataRev,
-                borderColor: '#7c6af7',
-                backgroundColor: ctx => {
-                    const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 260);
-                    g.addColorStop(0, 'rgba(124,106,247,0.25)');
-                    g.addColorStop(1, 'rgba(124,106,247,0)');
-                    return g;
-                },
-                fill: true, tension: 0.4,
-                pointBackgroundColor: '#7c6af7',
-                pointRadius: 4, pointHoverRadius: 6,
-            }],
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false }, tooltip: {
-                callbacks: { label: ctx => ` NOK ${ctx.parsed.y.toLocaleString()}` }
-            }},
-            scales: {
-                y: { beginAtZero: true, grid: { color: 'rgba(30,36,51,0.8)' }, ticks: { color: '#5a6278', font: { family: 'DM Mono', size: 11 } } },
-                x: { grid: { display: false }, ticks: { color: '#5a6278', font: { size: 11 } } },
-            },
-        },
-    });
-
-    // Doughnut
-    const ctx2 = document.getElementById('chartPlan').getContext('2d');
-    if (chartPlan) chartPlan.destroy();
-
-    const planCounts = {
-        Founding: companies.filter(c => c.plan === 'founding_member').length,
-        Business: companies.filter(c => c.plan === 'business').length,
-        Partner:  companies.filter(c => c.plan === 'partner').length,
-        Starter:  companies.filter(c => c.plan === 'starter').length,
-    };
-
-    const total = Object.values(planCounts).reduce((a, b) => a + b, 0);
-
-    chartPlan = new Chart(ctx2, {
-        type: 'doughnut',
-        data: {
-            labels: Object.keys(planCounts),
-            datasets: [{
-                data: total ? Object.values(planCounts) : [1],
-                backgroundColor: total
-                    ? ['#f59e0b', '#7c6af7', '#22d3ee', '#3b82f6']
-                    : ['#1e2433'],
-                borderWidth: 0,
-                hoverOffset: 6,
-            }],
-        },
-        options: {
-            responsive: true, maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: {
-                legend: { position: 'bottom', labels: { color: '#5a6278', padding: 14, font: { size: 11 } } },
-                tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}` } },
-            },
-        },
-    });
+/* ══════════════════════════════════
+   ACTIVITY FEED
+══════════════════════════════════ */
+function renderFeed(co){
+  const el2=el('actFeed');
+  if(!co.length){ el2.innerHTML=`<div class="empty">No recent activity</div>`; return; }
+  el2.innerHTML=co.slice(0,7).map(c=>{
+    const t=c.created_at?new Date(c.created_at).toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+    const plan=c.plan?capitalize(c.plan.replace('_',' ')):'starter';
+    return `<div class="feed-item">
+      <div class="feed-dot"><i class="fas fa-user-plus"></i></div>
+      <div>
+        <div class="feed-text"><strong>${x(c.name||'New company')}</strong> joined · <span style="color:var(--sub)">${plan}</span></div>
+        <div class="feed-time">${t}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// ════════════════════════════════════════
-//  TABLE
-// ════════════════════════════════════════
-const CHIP_MAP = {
-    founding_member: ['chip-amber',  'Founding'],
-    business:        ['chip-purple', 'Business'],
-    partner:         ['chip-cyan',   'Partner'],
-    starter:         ['chip-green',  'Starter'],
-};
+/* ══════════════════════════════════
+   UTILS
+══════════════════════════════════ */
+function el(id){ return document.getElementById(id); }
+function show(id){ const e=el(id); if(e) e.style.display='flex'; }
+function hide(id){ const e=el(id); if(e) e.style.display='none'; }
+function fmt(n){ return Number(n).toLocaleString(); }
+function x(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function capitalize(s){ return s.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' '); }
 
-function renderTable(companies) {
-    const tb = document.getElementById('tBody');
-
-    if (!companies.length) {
-        tb.innerHTML = `<tr><td colspan="5"><div class="empty">No companies yet</div></td></tr>`;
-        return;
-    }
-
-    tb.innerHTML = companies.slice(0, 12).map(c => {
-        const [chipCls, chipLabel] = CHIP_MAP[c.plan] || ['chip-green', c.plan || 'starter'];
-        const price = (PLAN_PRICES[c.plan] || 0).toLocaleString();
-        const date  = c.created_at ? new Date(c.created_at).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : '-';
-        return `
-        <tr>
-            <td>
-                <div class="company-name">${esc(c.name || 'Unnamed')}</div>
-                <div class="company-email">${esc(c.email || '')}</div>
-            </td>
-            <td><span class="chip ${chipCls}">${chipLabel}</span></td>
-            <td><span class="chip ${c.status === 'active' ? 'chip-green' : 'chip-amber'}">${c.status || 'pending'}</span></td>
-            <td style="font-family:'DM Mono',monospace;font-size:0.82rem">NOK ${price}</td>
-            <td style="color:var(--muted);font-size:0.8rem">${date}</td>
-        </tr>`;
-    }).join('');
+function setNav(btn,sec){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
 }
 
-// ════════════════════════════════════════
-//  ACTIVITY
-// ════════════════════════════════════════
-function renderActivity(companies) {
-    const el = document.getElementById('actList');
-    const recent = companies.slice(0, 6);
-
-    if (!recent.length) {
-        el.innerHTML = `<div class="empty">No recent activity</div>`;
-        return;
-    }
-
-    el.innerHTML = recent.map(c => {
-        const time = c.created_at
-            ? new Date(c.created_at).toLocaleString('en-GB', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
-            : '';
-        return `
-        <div class="activity-item">
-            <div class="act-ico"><i class="fas fa-user-plus"></i></div>
-            <div>
-                <div class="act-text"><strong>${esc(c.name || 'New company')}</strong> joined as <strong>${c.plan || 'starter'}</strong></div>
-                <div class="act-time">${time}</div>
-            </div>
-        </div>`;
-    }).join('');
+function setPeriod(btn,n){
+  document.querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  currentPeriod=n;
+  renderRevChart(allCompanies,n);
 }
 
-// ════════════════════════════════════════
-//  UTILS
-// ════════════════════════════════════════
-function show(id) {
-    const el = document.getElementById(id);
-    el.style.display = 'flex';
-}
+function logout(){ sb.auth.signOut().then(()=>location.href='/login.html'); }
 
-function hide(id) {
-    document.getElementById(id).style.display = 'none';
-}
-
-function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function logout() {
-    sb.auth.signOut().then(() => window.location.href = '/login.html');
-}
-
-function setNav(btn, section) {
-    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    // Extend here to show/hide sections as needed
-}
-
-// Boot
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
 </html>
