@@ -171,15 +171,73 @@ tbody tr:hover td{background:rgba(255,255,255,.015);cursor:pointer}
 /* EMPTY */
 .empty{text-align:center;padding:2.5rem;color:var(--muted);font-size:.82rem}
 
-/* RESPONSIVE */
-@media(max-width:1300px){.kpi-row{grid-template-columns:repeat(2,1fr)}.chart-row,.bot-row{grid-template-columns:1fr}}
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:none}
-  .main{margin-left:0;padding:1rem}
-  .kpi-row{grid-template-columns:1fr 1fr}
-  .fab{display:flex!important;position:fixed;bottom:1.25rem;right:1.25rem;width:48px;height:48px;background:var(--grad);border:none;border-radius:50%;color:#fff;font-size:1.1rem;cursor:pointer;z-index:99;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(59,130,246,.4)}
+/* ── SIDEBAR OVERLAY ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99;backdrop-filter:blur(2px);transition:opacity .25s}
+.overlay.on{display:block}
+
+/* ── MOBILE TOP BAR ── */
+.mob-bar{display:none;position:sticky;top:0;z-index:98;background:var(--nav);border-bottom:1px solid var(--border);padding:.75rem 1rem;align-items:center;justify-content:space-between}
+.mob-bar-left{display:flex;align-items:center;gap:8px}
+.mob-bar-left img{height:22px;width:auto}
+.mob-bar-sep{width:1px;height:18px;background:var(--border)}
+.mob-bar-tag{font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--sub)}
+.mob-menu{width:36px;height:36px;background:var(--card);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--sub);cursor:pointer;font-size:.875rem}
+
+/* ── TABLET (≤1300px) ── */
+@media(max-width:1300px){
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .chart-row,.bot-row{grid-template-columns:1fr}
 }
-@media(min-width:769px){.fab{display:none!important}}
+
+/* ── MOBILE (≤768px) ── */
+@media(max-width:768px){
+  :root{--r:10px}
+  .sidebar{transform:translateX(-100%);transition:transform .25s cubic-bezier(.4,0,.2,1);z-index:101;width:260px}
+  .sidebar.open{transform:translateX(0)}
+  .mob-bar{display:flex}
+  .main{margin-left:0;padding:.875rem .875rem 4rem}
+  .topbar{flex-direction:column;align-items:flex-start;gap:.625rem;margin-bottom:1.25rem}
+  .topbar-right{width:100%;justify-content:space-between}
+  .date-badge{font-size:.7rem;padding:5px 10px}
+  .page-h{font-size:1.1rem}
+  .page-sub{font-size:.72rem}
+  .kpi-row{grid-template-columns:1fr 1fr;gap:.625rem}
+  .kpi{padding:.875rem}
+  .kpi-val{font-size:1.15rem}
+  .kpi-lbl{font-size:.65rem}
+  .kpi-ico{width:28px;height:28px;font-size:.75rem;border-radius:7px}
+  .chart-h{height:180px}
+  .mini-stats{grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.75rem}
+  .mini-s{padding:.625rem}
+  .mini-val{font-size:.9rem}
+  .mini-lbl{font-size:.62rem}
+  .seg-btn{padding:3px 8px;font-size:.68rem}
+  .panel{padding:.875rem}
+  .panel-head{margin-bottom:.875rem;flex-wrap:wrap;gap:.5rem}
+  .panel-title{font-size:.82rem}
+  .tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{min-width:480px}
+  thead th{font-size:.62rem;padding:.4rem .75rem .6rem}
+  tbody td{padding:.6rem .75rem;font-size:.75rem}
+  .co-name{font-size:.78rem}
+  .co-mail{font-size:.67rem}
+  .chip{font-size:.65rem;padding:2px 7px}
+  .feed-item{padding:.625rem}
+  .feed-dot{width:26px;height:26px;font-size:.7rem}
+  .feed-text{font-size:.75rem}
+  .plan-legend{gap:5px}
+  .legend-row{font-size:.73rem}
+  .icon-btn span{display:none}
+}
+
+/* ── SMALL PHONES (≤390px) ── */
+@media(max-width:390px){
+  .kpi-row{grid-template-columns:1fr}
+  .kpi-val{font-size:1.35rem}
+  .date-badge{display:none}
+}
+
+@media(min-width:769px){.mob-bar{display:none!important}}
 </style>
 </head>
 <body>
@@ -202,6 +260,19 @@ tbody tr:hover td{background:rgba(255,255,255,.015);cursor:pointer}
 
 <!-- DASHBOARD -->
 <div id="dashboard">
+
+  <!-- MOBILE OVERLAY -->
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+  <!-- MOBILE TOP BAR -->
+  <div class="mob-bar">
+    <div class="mob-bar-left">
+      <img src="https://oslomeet.org/omlogo.png" alt="Oslo Meet" onerror="this.style.display='none'">
+      <div class="mob-bar-sep"></div>
+      <span class="mob-bar-tag">Admin</span>
+    </div>
+    <button class="mob-menu" onclick="openSidebar()"><i class="fas fa-bars"></i></button>
+  </div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
@@ -666,6 +737,8 @@ function capitalize(s){ return s.split(' ').map(w=>w.charAt(0).toUpperCase()+w.s
 function setNav(btn,sec){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
+  // Close sidebar on mobile after nav click
+  if(window.innerWidth<=768) closeSidebar();
 }
 
 function setPeriod(btn,n){
@@ -675,7 +748,22 @@ function setPeriod(btn,n){
   renderRevChart(allCompanies,n);
 }
 
+function openSidebar(){
+  el('sidebar').classList.add('open');
+  el('overlay').classList.add('on');
+  document.body.style.overflow='hidden';
+}
+
+function closeSidebar(){
+  el('sidebar').classList.remove('open');
+  el('overlay').classList.remove('on');
+  document.body.style.overflow='';
+}
+
 function logout(){ sb.auth.signOut().then(()=>location.href='/login.html'); }
+
+// Close sidebar on Escape key
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSidebar(); });
 
 document.addEventListener('DOMContentLoaded',init);
 </script>
