@@ -764,46 +764,46 @@
 
     // 🔍 VERIFICAÇÃO DE ACESSO OTIMIZADA
 async function checkAuth() {
-    console.log('🔍 Verificando admin...');
+    console.log('🔍 Iniciando verificação...');
     
-    // 1. Verifica sessão
     const { data: { session } } = await sb.auth.getSession();
     
-    // 2. SE NÃO ESTIVER LOGADO, MANDA PARA O LOGIN AUTOMATICAMENTE
     if (!session) {
-        console.log(' Não logado. Redirecionando...');
-        window.location.href = '/login.html?redirect=/admin.html';
+        window.location.href = '/login.html';
         return;
     }
 
     const userEmail = session.user.email;
-    console.log('✅ Logado como:', userEmail);
+    console.log('✅ Logado:', userEmail);
     
-    // 3. Consulta admin_roles (agora sem bloqueios de RLS)
-   const { data: adminRole, error } = await sb
-    .from('admin_roles')
-    .select('role')
-    .eq('email', userEmail)
-    // .eq('active', true)  // Comentado pois a coluna não existe
-    .maybeSingle();
+    // Consulta SIMPLES sem filtros extras
+    const { data: adminData, error } = await sb
+        .from('admin_roles')
+        .select('*')
+        .eq('email', userEmail);
     
-    // 4. Se não achar o cargo, é acesso negado
-    if (!adminRole) {
-        console.log('🚫 Acesso Negado: Usuário não é admin');
+    console.log('📊 Dados retornados:', adminData);
+    console.log('❌ Erro:', error);
+    
+    // Verifica se encontrou e se tem role
+    if (!adminData || adminData.length === 0) {
+        console.log('❌ Nenhum registro encontrado');
         document.getElementById('authStatus').innerHTML = `
             <i class="fas fa-ban fa-2x" style="color: var(--danger-red); margin-bottom: 1rem;"></i>
-            <p style="color: var(--text-secondary);">Acesso restrito. Apenas administradores.</p>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">Acesso restrito.</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Email: ${userEmail}</p>
             <button onclick="logout()" class="login-btn secondary" style="margin-top:1rem">Sair</button>
         `;
         return;
     }
-
-    // 5. SUCESSO! Mostra o dashboard
-    console.log('✅ Admin autorizado!');
-    currentAdminRole = adminRole.role;
     
+    // Pegue o primeiro registro
+    const adminRole = adminData[0].role;
+    console.log('✅ Role encontrada:', adminRole);
+    
+    currentAdminRole = adminRole;
     document.getElementById('adminEmail').textContent = userEmail.split('@')[0];
-    document.getElementById('adminRole').textContent = adminRole.role === 'super_admin' ? 'Super Admin' : 'Admin';
+    document.getElementById('adminRole').textContent = adminRole;
     document.getElementById('adminAvatar').textContent = userEmail.charAt(0).toUpperCase();
     
     showDashboard();
