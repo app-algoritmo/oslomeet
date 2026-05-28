@@ -751,265 +751,270 @@
         </button>
     </div>
 
-       <script>
-        // 🔐 CONFIGURAÇÃO SUPABASE
-        // ⚠️ Substitua pela sua chave ANON real (Project Settings > API)
-        const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0'; 
+      <script>
+    // 🔐 CONFIGURAÇÃO SUPABASE
+    const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+    
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let revenueChartInstance = null;
+    let plansChartInstance = null;
+    let currentAdminRole = null;
+
+    // 🔍 VERIFICAÇÃO COM DEBUG COMPLETO
+    async function checkAuth() {
+        console.log('🔍 Iniciando verificação de auth...');
         
-        // ✅ FIX: Inicializa o cliente corretamente usando a CDN global 'supabase'
-        // Usamos 'sb' para não conflitar com a variável global da biblioteca
-        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // Estado
-        let revenueChartInstance = null;
-        let plansChartInstance = null;
-        let currentAdminRole = null;
-
-        // 🔍 VERIFICAÇÃO DE ACESSO SEGURA
-        async function checkAuth() {
-            // Usa 'sb' ao invés de 'supabase' direto
-            const { data: { session }, error: sessionError } = await sb.auth.getSession();
-            
-            if (sessionError || !session) {
-                showLoginScreen('Não autenticado. <a href="/login.html" style="color:var(--accent-blue)">Faça login</a>.');
-                return;
-            }
-
-            const userEmail = session.user.email;
-            
-            // Consulta dinâmica à tabela admin_roles (zero emails hardcoded)
-            const { data: adminRole, error: roleError } = await sb
-                .from('admin_roles')
-                .select('role, active')
-                .eq('email', userEmail)
-                .eq('active', true)
-                .maybeSingle();
-            
-            if (roleError || !adminRole) {
-                showLoginScreen('🔒 Acesso negado. Você não tem permissão de administrador.');
-                await sb.auth.signOut();
-                return;
-            }
-
-            // Autenticação bem-sucedida
-            console.log('✅ Admin autenticado:', userEmail, 'Role:', adminRole.role);
-            currentAdminRole = adminRole.role;
-            
-            // Atualiza UI do usuário
-            document.getElementById('adminEmail').textContent = userEmail.split('@')[0];
-            document.getElementById('adminRole').textContent = adminRole.role === 'super_admin' ? 'Super Admin' : 'Admin';
-            document.getElementById('adminAvatar').textContent = userEmail.charAt(0).toUpperCase();
-            
-            showDashboard();
-            loadDashboardData();
-            applyRolePermissions(adminRole.role);
+        // 1. Verifica sessão
+        const { data: { session }, error: sessionError } = await sb.auth.getSession();
+        
+        console.log('📧 Sessão:', session);
+        console.log('❌ Erro sessão:', sessionError);
+        
+        if (sessionError || !session) {
+            console.error('❌ Sem sessão válida');
+            showLoginScreen('Não autenticado. <a href="/login.html" style="color:var(--accent-blue)">Faça login</a>.');
+            return;
         }
 
-        function showLoginScreen(message) {
-            document.getElementById('authStatus').innerHTML = `
-                <i class="fas fa-lock fa-2x" style="color: var(--danger-red); margin-bottom: 1rem;"></i>
-                <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">${message}</p>
-                <a href="/login.html" class="login-btn secondary">
-                    <i class="fas fa-sign-in-alt"></i> Fazer Login
-                </a>
-            `;
+        const userEmail = session.user.email;
+        console.log('✅ Email detectado:', userEmail);
+        
+        // 2. Consulta admin_roles COM DEBUG
+        console.log('🔍 Consultando admin_roles para:', userEmail);
+        
+        const { data: adminRole, error: roleError } = await sb
+            .from('admin_roles')
+            .select('role, active')
+            .eq('email', userEmail)
+            .eq('active', true)
+            .maybeSingle();
+        
+        console.log('📊 Resultado da consulta:', adminRole);
+        console.log('❌ Erro na consulta:', roleError);
+        
+        if (roleError) {
+            console.error('❌ Erro ao consultar admin_roles:', roleError.message);
+            showLoginScreen(`Erro: ${roleError.message}. <br><br>Verifique se:<br>1. A tabela admin_roles existe<br>2. As políticas RLS estão corretas<br>3. Seu email está cadastrado`);
+            return;
         }
-
-        function showDashboard() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-        }
-
-        async function logout() {
+        
+        if (!adminRole) {
+            console.error('❌ Email não encontrado em admin_roles');
+            showLoginScreen('🔒 Acesso negado. Seu email não está cadastrado como admin.<br><br>Email verificado: ' + userEmail);
             await sb.auth.signOut();
-            location.reload();
+            return;
         }
 
-        // Aplica permissões baseado no role
-        function applyRolePermissions(role) {
-            if (role !== 'super_admin') {
-                document.querySelectorAll('[data-requires="super_admin"]').forEach(el => {
-                    el.style.display = 'none';
-                });
-            }
-        }
+        // 3. Sucesso!
+        console.log('✅ Admin autenticado:', userEmail, 'Role:', adminRole.role);
+        currentAdminRole = adminRole.role;
+        
+        document.getElementById('adminEmail').textContent = userEmail.split('@')[0];
+        document.getElementById('adminRole').textContent = adminRole.role === 'super_admin' ? 'Super Admin' : 'Admin';
+        document.getElementById('adminAvatar').textContent = userEmail.charAt(0).toUpperCase();
+        
+        showDashboard();
+        loadDashboardData();
+        applyRolePermissions(adminRole.role);
+    }
 
-        // Carrega dados do dashboard
-        async function loadDashboardData() {
-            try {
-                // Fetch companies com RLS do Supabase
-                const { data: companies, error } = await sb
-                    .from('companies')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-                
-                if (error) throw error;
-                
-                // Calcula métricas
-                const totalRevenue = (companies || []).reduce((sum, c) => {
-                    const planPrices = {
-                        'founding_member': 1290,
-                        'business': 4900,
-                        'partner': 15000,
-                        'starter': 1890
-                    };
-                    return sum + (planPrices[c.plan] || 0);
-                }, 0);
-                
-                const foundingMembers = (companies || []).filter(c => c.plan === 'founding_member').length;
-                const activeCompanies = (companies || []).filter(c => c.status === 'active').length;
-                
-                // Atualiza stats na UI
-                document.getElementById('totalRevenue').textContent = `NOK ${totalRevenue.toLocaleString()}`;
-                document.getElementById('foundingCount').innerHTML = `${foundingMembers}<span style="font-size: 1rem; color: var(--text-secondary);">/50</span>`;
-                document.getElementById('foundingRemaining').textContent = `${Math.max(0, 50 - foundingMembers)} spots remaining`;
-                document.getElementById('foundingBadge').textContent = `${foundingMembers}/50`;
-                document.getElementById('activeCompanies').textContent = activeCompanies;
-                document.getElementById('mrrValue').textContent = `NOK ${Math.round(totalRevenue / 12).toLocaleString()}`;
-                
-                // Atualiza gráficos e tabelas
-                updateCharts(companies || []);
-                updateCompaniesTable(companies || []);
-                updateActivity(companies || []);
-                
-            } catch (error) {
-                console.error('❌ Error loading dashboard data:', error);
-                // Fallback com dados mockados para desenvolvimento
-                updateCharts([]);
-                updateCompaniesTable([]);
-                updateActivity([]);
-            }
-        }
+    function showLoginScreen(message) {
+        document.getElementById('authStatus').innerHTML = `
+            <i class="fas fa-lock fa-2x" style="color: var(--danger-red); margin-bottom: 1rem;"></i>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6;">${message}</p>
+            <a href="/login.html" class="login-btn secondary">
+                <i class="fas fa-sign-in-alt"></i> Fazer Login
+            </a>
+        `;
+    }
 
-        function updateCharts(companies) {
-            // Revenue Chart
-            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-            if (revenueChartInstance) revenueChartInstance.destroy();
-            
-            revenueChartInstance = new Chart(revenueCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                    datasets: [{
-                        label: 'Revenue (NOK)',
-                        data: [0, 4900, 9800, 14700],
-                        borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: 'rgba(55, 65, 81, 0.5)' },
-                            ticks: { color: '#9ca3af' }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#9ca3af' }
-                        }
-                    }
-                }
-            });
-            
-            // Plans Chart
-            const plansCtx = document.getElementById('plansChart').getContext('2d');
-            if (plansChartInstance) plansChartInstance.destroy();
-            
-            const planCounts = {
-                'Starter': companies.filter(c => c.plan === 'starter').length,
-                'Business': companies.filter(c => c.plan === 'business').length,
-                'Partner': companies.filter(c => c.plan === 'partner').length,
-                'Founding': companies.filter(c => c.plan === 'founding_member').length
-            };
-            
-            plansChartInstance = new Chart(plansCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(planCounts),
-                    datasets: [{
-                        data: Object.values(planCounts),
-                        backgroundColor: ['#3b82f6', '#8b5cf6', '#f59e0b', '#10b981'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { color: '#9ca3af', padding: 15 } }
-                    }
-                }
+    function showDashboard() {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+    }
+
+    async function logout() {
+        await sb.auth.signOut();
+        location.reload();
+    }
+
+    function applyRolePermissions(role) {
+        if (role !== 'super_admin') {
+            document.querySelectorAll('[data-requires="super_admin"]').forEach(el => {
+                el.style.display = 'none';
             });
         }
+    }
 
-        function updateCompaniesTable(companies) {
-            const tbody = document.getElementById('companiesTable');
-            if (!companies.length) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text-secondary);padding:2rem">Nenhuma empresa cadastrada ainda</td></tr>`;
-                return;
-            }
+    async function loadDashboardData() {
+        try {
+            const { data: companies, error } = await sb
+                .from('companies')
+                .select('*')
+                .order('created_at', { ascending: false });
             
-            tbody.innerHTML = companies.slice(0, 10).map(company => `
-                <tr>
-                    <td>
-                        <div style="font-weight: 600;">${company.name || 'Company'}</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">${company.email || 'email@company.com'}</div>
-                    </td>
-                    <td><span class="badge badge-purple">${company.plan || 'starter'}</span></td>
-                    <td><span class="badge ${company.status === 'active' ? 'badge-success' : 'badge-warning'}">${company.status || 'pending'}</span></td>
-                    <td>NOK ${company.plan === 'founding_member' ? '1,290' : company.plan === 'business' ? '4,900' : company.plan === 'partner' ? '15,000' : '1,890'}</td>
-                    <td>${company.created_at ? new Date(company.created_at).toLocaleDateString() : '-'}</td>
-                    <td>
-                        <button style="background: transparent; border: none; color: var(--accent-blue); cursor: pointer; padding: 4px 8px;" data-requires="super_admin">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
+            if (error) throw error;
+            
+            const totalRevenue = (companies || []).reduce((sum, c) => {
+                const planPrices = {
+                    'founding_member': 1290,
+                    'business': 4900,
+                    'partner': 15000,
+                    'starter': 1890
+                };
+                return sum + (planPrices[c.plan] || 0);
+            }, 0);
+            
+            const foundingMembers = (companies || []).filter(c => c.plan === 'founding_member').length;
+            const activeCompanies = (companies || []).filter(c => c.status === 'active').length;
+            
+            document.getElementById('totalRevenue').textContent = `NOK ${totalRevenue.toLocaleString()}`;
+            document.getElementById('foundingCount').innerHTML = `${foundingMembers}<span style="font-size: 1rem; color: var(--text-secondary);">/50</span>`;
+            document.getElementById('foundingRemaining').textContent = `${Math.max(0, 50 - foundingMembers)} spots remaining`;
+            document.getElementById('foundingBadge').textContent = `${foundingMembers}/50`;
+            document.getElementById('activeCompanies').textContent = activeCompanies;
+            document.getElementById('mrrValue').textContent = `NOK ${Math.round(totalRevenue / 12).toLocaleString()}`;
+            
+            updateCharts(companies || []);
+            updateCompaniesTable(companies || []);
+            updateActivity(companies || []);
+            
+        } catch (error) {
+            console.error('❌ Error loading dashboard data:', error);
+            updateCharts([]);
+            updateCompaniesTable([]);
+            updateActivity([]);
         }
+    }
 
-        function updateActivity(companies) {
-            const activityList = document.getElementById('activityList');
-            const recent = companies.slice(0, 5);
-            
-            if (!recent.length) {
-                activityList.innerHTML = `<div style="text-align:center;color:var(--text-secondary);padding:1rem">Nenhuma atividade recente</div>`;
-                return;
+    function updateCharts(companies) {
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        if (revenueChartInstance) revenueChartInstance.destroy();
+        
+        revenueChartInstance = new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Revenue (NOK)',
+                    data: [0, 4900, 9800, 14700],
+                    borderColor: '#8b5cf6',
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(55, 65, 81, 0.5)' },
+                        ticks: { color: '#9ca3af' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#9ca3af' }
+                    }
+                }
             }
-            
-            activityList.innerHTML = recent.map(company => `
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <div class="activity-content">
-                        <div class="activity-text">
-                            <strong>${company.name || 'New company'}</strong> joined as <strong>${company.plan || 'Starter'}</strong> member
-                        </div>
-                        <div class="activity-time">${company.created_at ? new Date(company.created_at).toLocaleString() : 'Recently'}</div>
-                    </div>
+        });
+        
+        const plansCtx = document.getElementById('plansChart').getContext('2d');
+        if (plansChartInstance) plansChartInstance.destroy();
+        
+        const planCounts = {
+            'Starter': companies.filter(c => c.plan === 'starter').length,
+            'Business': companies.filter(c => c.plan === 'business').length,
+            'Partner': companies.filter(c => c.plan === 'partner').length,
+            'Founding': companies.filter(c => c.plan === 'founding_member').length
+        };
+        
+        plansChartInstance = new Chart(plansCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(planCounts),
+                datasets: [{
+                    data: Object.values(planCounts),
+                    backgroundColor: ['#3b82f6', '#8b5cf6', '#f59e0b', '#10b981'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#9ca3af', padding: 15 } }
+                }
+            }
+        });
+    }
+
+    function updateCompaniesTable(companies) {
+        const tbody = document.getElementById('companiesTable');
+        if (!companies.length) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text-secondary);padding:2rem">Nenhuma empresa cadastrada ainda</td></tr>`;
+            return;
+        }
+        
+        tbody.innerHTML = companies.slice(0, 10).map(company => `
+            <tr>
+                <td>
+                    <div style="font-weight: 600;">${company.name || 'Company'}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary);">${company.email || 'email@company.com'}</div>
+                </td>
+                <td><span class="badge badge-purple">${company.plan || 'starter'}</span></td>
+                <td><span class="badge ${company.status === 'active' ? 'badge-success' : 'badge-warning'}">${company.status || 'pending'}</span></td>
+                <td>NOK ${company.plan === 'founding_member' ? '1,290' : company.plan === 'business' ? '4,900' : company.plan === 'partner' ? '15,000' : '1,890'}</td>
+                <td>${company.created_at ? new Date(company.created_at).toLocaleDateString() : '-'}</td>
+                <td>
+                    <button style="background: transparent; border: none; color: var(--accent-blue); cursor: pointer; padding: 4px 8px;" data-requires="super_admin">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function updateActivity(companies) {
+        const activityList = document.getElementById('activityList');
+        const recent = companies.slice(0, 5);
+        
+        if (!recent.length) {
+            activityList.innerHTML = `<div style="text-align:center;color:var(--text-secondary);padding:1rem">Nenhuma atividade recente</div>`;
+            return;
+        }
+        
+        activityList.innerHTML = recent.map(company => `
+            <div class="activity-item">
+                <div class="activity-icon">
+                    <i class="fas fa-user-plus"></i>
                 </div>
-            `).join('');
-        }
+                <div class="activity-content">
+                    <div class="activity-text">
+                        <strong>${company.name || 'New company'}</strong> joined as <strong>${company.plan || 'Starter'}</strong> member
+                    </div>
+                    <div class="activity-time">${company.created_at ? new Date(company.created_at).toLocaleString() : 'Recently'}</div>
+                </div>
+            </div>
+        `).join('');
+    }
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-        }
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
 
-        function showSection(section) {
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            event.target.closest('.nav-item').classList.add('active');
-        }
+    function showSection(section) {
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        event.target.closest('.nav-item').classList.add('active');
+    }
 
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', checkAuth);
-    </script>
+    document.addEventListener('DOMContentLoaded', checkAuth);
+</script>
+    
 </body>
 </html>
