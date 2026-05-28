@@ -3,962 +3,867 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard — Oslo Meet</title>
+    <title>Admin — Oslo Meet</title>
     <meta name="robots" content="noindex, nofollow">
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
         :root {
-            --bg-primary: #0a0e1a;
-            --bg-secondary: #111827;
-            --bg-card: #1f2937;
-            --border-color: #374151;
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
-            --accent-purple: #8b5cf6;
-            --accent-blue: #3b82f6;
-            --accent-cyan: #06b6d4;
-            --success-green: #10b981;
-            --warning-orange: #f59e0b;
-            --danger-red: #ef4444;
-            --gradient-1: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
-            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-            --gradient-3: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --shadow-glow: 0 0 40px rgba(139, 92, 246, 0.15);
+            --bg: #07090f;
+            --surface: #0e1118;
+            --card: #141720;
+            --border: #1e2433;
+            --border-hover: #2d3548;
+            --text: #e8eaf0;
+            --muted: #5a6278;
+            --purple: #7c6af7;
+            --purple-dim: rgba(124,106,247,0.12);
+            --cyan: #22d3ee;
+            --cyan-dim: rgba(34,211,238,0.1);
+            --green: #22c55e;
+            --green-dim: rgba(34,197,94,0.1);
+            --amber: #f59e0b;
+            --amber-dim: rgba(245,158,11,0.1);
+            --red: #f43f5e;
+            --grad: linear-gradient(135deg, #7c6af7, #22d3ee);
         }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
             overflow-x: hidden;
         }
-        
-        /* Login Screen */
-        .login-screen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #0a0e1a 0%, #1e1b4b 50%, #0f172a 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        /* ── LOADING SCREEN ── */
+        #loadingScreen {
+            position: fixed; inset: 0;
+            background: var(--bg);
+            display: flex; align-items: center; justify-content: center;
             z-index: 9999;
+            flex-direction: column; gap: 1.5rem;
         }
-        
-        .login-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 3rem;
-            width: 90%;
-            max-width: 420px;
-            box-shadow: var(--shadow-glow);
+
+        .spinner {
+            width: 40px; height: 40px;
+            border: 2px solid var(--border);
+            border-top-color: var(--purple);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
-        
-        .login-header {
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #loadingScreen p {
+            color: var(--muted);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── ACCESS DENIED ── */
+        #deniedScreen {
+            position: fixed; inset: 0;
+            background: var(--bg);
+            display: none; align-items: center; justify-content: center;
+            z-index: 9998;
+        }
+
+        .denied-box {
             text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .login-header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .login-header p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .login-input {
-            width: 100%;
-            padding: 14px 18px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .login-input:focus {
-            outline: none;
-            border-color: var(--accent-purple);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
-        }
-        
-        /* Main Dashboard */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-        }
-        
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 280px;
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border-color);
-            padding: 2rem 1.5rem;
-            overflow-y: auto;
-            z-index: 100;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 3rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .logo-icon {
-            width: 42px;
-            height: 42px;
-            background: var(--gradient-1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-        }
-        
-        .logo-text {
-            font-size: 1.3rem;
-            font-weight: 800;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-section {
-            margin-bottom: 2rem;
-        }
-        
-        .nav-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            margin-bottom: 0.8rem;
-            padding-left: 0.8rem;
-        }
-        
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 10px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s;
-            margin-bottom: 4px;
-            cursor: pointer;
-        }
-        
-        .nav-item:hover, .nav-item.active {
-            background: rgba(139, 92, 246, 0.1);
-            color: var(--text-primary);
-        }
-        
-        .nav-item i {
-            width: 20px;
-            font-size: 1.1rem;
-        }
-        
-        /* Main Content */
-        .main-content {
-            margin-left: 280px;
+            max-width: 360px;
             padding: 2rem;
         }
-        
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
+
+        .denied-icon {
+            width: 64px; height: 64px;
+            background: rgba(244,63,94,0.1);
+            border: 1px solid rgba(244,63,94,0.2);
+            border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.8rem; color: var(--red);
+            margin: 0 auto 1.5rem;
         }
-        
-        .page-title h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .page-title p {
-            color: var(--text-secondary);
+
+        .denied-box h2 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .denied-box p { color: var(--muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.6; }
+
+        .btn-outline {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--muted);
+            background: transparent;
             font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
         }
-        
-        .user-menu {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+
+        .btn-outline:hover { border-color: var(--border-hover); color: var(--text); }
+
+        /* ── DASHBOARD ── */
+        #dashboard { display: none; min-height: 100vh; }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0;
+            width: 240px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            z-index: 100;
+            display: flex; flex-direction: column;
         }
-        
-        .user-avatar {
-            width: 42px;
-            height: 42px;
-            background: var(--gradient-1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-        
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-glow);
-            border-color: var(--accent-purple);
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: var(--gradient-1);
-        }
-        
-        .stat-card.revenue::before { background: var(--gradient-2); }
-        .stat-card.founding::before { background: var(--gradient-3); }
-        
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.3rem;
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 800;
-        }
-        
-        .stat-change {
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .stat-change.positive { color: var(--success-green); }
-        .stat-change.negative { color: var(--danger-red); }
-        
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(139, 92, 246, 0.15);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: var(--accent-purple);
-        }
-        
-        .stat-card.revenue .stat-icon {
-            background: rgba(6, 182, 212, 0.15);
-            color: var(--accent-cyan);
-        }
-        
-        .stat-card.founding .stat-icon {
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--warning-orange);
-        }
-        
-        /* Charts Grid */
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .chart-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-        }
-        
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+
+        .logo {
+            display: flex; align-items: center; gap: 10px;
+            padding: 0.5rem 0.8rem 1.5rem;
+            border-bottom: 1px solid var(--border);
             margin-bottom: 1.5rem;
         }
-        
-        .chart-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 300px;
-        }
-        
-        /* Recent Activity */
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .activity-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            border-left: 3px solid var(--accent-purple);
-        }
-        
-        .activity-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(139, 92, 246, 0.15);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-purple);
-        }
-        
-        .activity-content {
-            flex: 1;
-        }
-        
-        .activity-text {
-            font-size: 0.9rem;
-            margin-bottom: 0.2rem;
-        }
-        
-        .activity-time {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        
-        /* Table */
-        .table-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            overflow-x: auto;
-        }
-        
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        .data-table th,
-        .data-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-        
-        .data-table th {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-        
-        .data-table tr:hover {
-            background: rgba(139, 92, 246, 0.05);
-        }
-        
-        .badge {
-            display: inline-flex;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .badge-success {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--success-green);
-        }
-        
-        .badge-warning {
-            background: rgba(245, 158, 11, 0.15);
-            color: var(--warning-orange);
-        }
-        
-        .badge-purple {
-            background: rgba(139, 92, 246, 0.15);
-            color: var(--accent-purple);
-        }
-        
-        /* Mobile Responsive */
-        @media (max-width: 1024px) {
-            .charts-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s;
-            }
-            
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            
-            .main-content {
-                margin-left: 0;
-                padding: 1rem;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .mobile-menu-btn {
-                display: block;
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                width: 56px;
-                height: 56px;
-                background: var(--gradient-1);
-                border: none;
-                border-radius: 50%;
-                color: white;
-                font-size: 1.5rem;
-                cursor: pointer;
-                z-index: 99;
-                box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-            }
-        }
-        
-        @media (min-width: 769px) {
-            .mobile-menu-btn {
-                display: none;
-            }
-        }
-        
-        /* Loading Animation */
-        .skeleton {
-            background: linear-gradient(90deg, var(--bg-card) 25%, var(--border-color) 50%, var(--bg-card) 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
+
+        .logo-mark {
+            width: 32px; height: 32px;
+            background: var(--grad);
             border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
         }
-        
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+
+        .logo-name {
+            font-size: 0.95rem; font-weight: 700;
+            letter-spacing: 0.08em;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
+        .nav-label {
+            font-size: 0.68rem; text-transform: uppercase;
+            letter-spacing: 0.12em; color: var(--muted);
+            padding: 0 0.8rem; margin-bottom: 0.4rem;
+        }
+
+        .nav-group { margin-bottom: 1.8rem; }
+
+        .nav-item {
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 12px;
+            border-radius: 8px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.15s;
+            margin-bottom: 2px;
+            font-size: 0.875rem;
+            border: none; background: none; width: 100%; text-align: left;
+        }
+
+        .nav-item:hover { background: var(--card); color: var(--text); }
+        .nav-item.active { background: var(--purple-dim); color: var(--text); }
+        .nav-item.active i { color: var(--purple); }
+        .nav-item i { width: 16px; font-size: 0.9rem; }
+
+        .nav-badge {
+            margin-left: auto;
+            padding: 2px 8px;
+            background: var(--amber-dim);
+            color: var(--amber);
+            border-radius: 20px;
+            font-size: 0.7rem; font-weight: 600;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .admin-badge {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 12px;
+            background: var(--card);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .admin-avatar {
+            width: 32px; height: 32px;
+            background: var(--grad);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .admin-info { flex: 1; min-width: 0; }
+        .admin-name { font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .admin-role { font-size: 0.7rem; color: var(--purple); }
+
+        /* Main content */
+        .main {
+            margin-left: 240px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .page-title { font-size: 1.4rem; font-weight: 700; }
+        .page-sub { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+
+        .refresh-btn {
+            padding: 8px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 0.82rem;
+            display: flex; align-items: center; gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .refresh-btn:hover { border-color: var(--border-hover); color: var(--text); }
+
+        /* Stats grid */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.25rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .stat-card:hover { border-color: var(--border-hover); }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            inset: 0; top: auto;
+            height: 2px;
+            background: var(--grad);
+            opacity: 0.4;
+        }
+
+        .stat-card.c { --grad: linear-gradient(90deg, #22d3ee, #3b82f6); }
+        .stat-card.b { --grad: linear-gradient(90deg, #f59e0b, #ef4444); }
+        .stat-card.d { --grad: linear-gradient(90deg, #22c55e, #06b6d4); }
+
+        .stat-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+        .stat-ico { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .stat-lbl { font-size: 0.75rem; color: var(--muted); margin-bottom: 0.25rem; }
+        .stat-val { font-size: 1.6rem; font-weight: 700; font-family: 'DM Mono', monospace; letter-spacing: -0.02em; }
+        .stat-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.3rem; }
+        .stat-up { color: var(--green); }
+
+        /* Charts */
+        .charts { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.25rem;
+        }
+
+        .card-head {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-title { font-size: 0.9rem; font-weight: 600; }
+
+        .chart-wrap { position: relative; height: 260px; }
+
+        /* Table */
+        .table-wrap { overflow-x: auto; }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        th {
+            font-size: 0.72rem; text-transform: uppercase;
+            letter-spacing: 0.08em; color: var(--muted);
+            font-weight: 500; padding: 0 1rem 0.75rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 0.875rem 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+
+        tr:hover td { background: rgba(255,255,255,0.01); }
+
+        .chip {
+            display: inline-flex;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem; font-weight: 500;
+        }
+
+        .chip-purple { background: var(--purple-dim); color: var(--purple); }
+        .chip-green  { background: var(--green-dim);  color: var(--green); }
+        .chip-amber  { background: var(--amber-dim);  color: var(--amber); }
+        .chip-cyan   { background: var(--cyan-dim);   color: var(--cyan); }
+
+        .company-name { font-weight: 600; font-size: 0.875rem; }
+        .company-email { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+
+        /* Activity */
+        .activity-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 0.875rem;
+            border-radius: 10px;
+            background: var(--surface);
+            margin-bottom: 8px;
+            border-left: 2px solid var(--purple);
+        }
+
+        .act-ico {
+            width: 34px; height: 34px;
+            background: var(--purple-dim);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--purple); font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .act-text { font-size: 0.85rem; }
+        .act-time { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+        /* Bottom row */
+        .bottom { display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-top: 1rem; }
+
+        /* Empty state */
+        .empty {
+            text-align: center; padding: 3rem; color: var(--muted);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .charts { grid-template-columns: 1fr; }
+            .bottom { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); transition: 0.3s; }
+            .sidebar.open { transform: none; }
+            .main { margin-left: 0; padding: 1rem; }
+            .stats { grid-template-columns: 1fr 1fr; }
+            .fab {
+                display: flex !important;
+                position: fixed; bottom: 1.5rem; right: 1.5rem;
+                width: 50px; height: 50px;
+                background: var(--grad);
+                border: none; border-radius: 50%;
+                color: #fff; font-size: 1.2rem;
+                cursor: pointer; z-index: 99;
+                align-items: center; justify-content: center;
+            }
+        }
+
+        @media (min-width: 769px) { .fab { display: none !important; } }
     </style>
 </head>
 <body>
 
-    <!-- Login Screen -->
-    <div class="login-screen" id="loginScreen">
-        <div class="login-box">
-            <div class="login-header">
-                <h1><i class="fas fa-shield-alt"></i> Admin Access</h1>
-                <p>Oslo Meet Control Panel</p>
-            </div>
-            <form id="loginForm">
-                <input type="password" class="login-input" id="adminPassword" placeholder="Enter admin password" required>
-                <button type="submit" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> Access Dashboard
-                </button>
-            </form>
-            <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--text-secondary); text-align: center;">
-                <i class="fas fa-lock"></i> Secure admin area
-            </p>
+<!-- Loading -->
+<div id="loadingScreen">
+    <div class="spinner"></div>
+    <p>Verifying access…</p>
+</div>
+
+<!-- Denied -->
+<div id="deniedScreen" style="display:none; position:fixed; inset:0; background:var(--bg); align-items:center; justify-content:center; z-index:9998;">
+    <div class="denied-box">
+        <div class="denied-icon"><i class="fas fa-ban"></i></div>
+        <h2>Access Restricted</h2>
+        <p id="deniedMsg">Your account does not have admin access.</p>
+        <a href="/login.html" class="btn-outline">
+            <i class="fas fa-arrow-left"></i> Back to Login
+        </a>
+    </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard">
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <div class="logo-mark">🚀</div>
+            <div class="logo-name">OSLO MEET</div>
         </div>
-    </div>
 
-    <!-- Main Dashboard -->
-    <div class="dashboard" id="dashboard">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="logo">
-                <div class="logo-icon"><i class="fas fa-rocket"></i></div>
-                <div class="logo-text">OSLO MEET</div>
+        <div class="nav-group">
+            <div class="nav-label">Overview</div>
+            <button class="nav-item active" onclick="setNav(this,'overview')">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </button>
+            <button class="nav-item" onclick="setNav(this,'companies')">
+                <i class="fas fa-building"></i> Companies
+            </button>
+            <button class="nav-item" onclick="setNav(this,'founding')">
+                <i class="fas fa-crown"></i> Founding Members
+                <span class="nav-badge" id="foundBadge">0/50</span>
+            </button>
+        </div>
+
+        <div class="nav-group">
+            <div class="nav-label">Financial</div>
+            <button class="nav-item" onclick="setNav(this,'revenue')">
+                <i class="fas fa-wallet"></i> Revenue
+            </button>
+            <button class="nav-item" onclick="setNav(this,'coupons')">
+                <i class="fas fa-tags"></i> Coupons
+            </button>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="admin-badge">
+                <div class="admin-avatar" id="adminAv">A</div>
+                <div class="admin-info">
+                    <div class="admin-name" id="adminName">Admin</div>
+                    <div class="admin-role" id="adminRole">super_admin</div>
+                </div>
+                <button onclick="logout()" title="Logout"
+                    style="background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:6px;transition:color .2s;"
+                    onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
             </div>
-            
-            <nav>
-                <div class="nav-section">
-                    <div class="nav-title">Overview</div>
-                    <a class="nav-item active" onclick="showSection('overview')">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    <a class="nav-item" onclick="showSection('companies')">
-                        <i class="fas fa-building"></i>
-                        <span>Companies</span>
-                    </a>
-                    <a class="nav-item" onclick="showSection('founding')">
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div>
+                <div class="page-title">Dashboard Overview</div>
+                <div class="page-sub">Real-time analytics · Oslo Meet</div>
+            </div>
+            <button class="refresh-btn" onclick="loadData()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-top">
+                    <div>
+                        <div class="stat-lbl">Total Revenue</div>
+                        <div class="stat-val" id="sRevenue">NOK 0</div>
+                        <div class="stat-sub stat-up"><i class="fas fa-arrow-up"></i> MRR tracked</div>
+                    </div>
+                    <div class="stat-ico" style="background:var(--purple-dim);color:var(--purple)">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card b">
+                <div class="stat-top">
+                    <div>
+                        <div class="stat-lbl">Founding Members</div>
+                        <div class="stat-val" id="sFounders">0<span style="font-size:1rem;color:var(--muted)">/50</span></div>
+                        <div class="stat-sub" id="sFoundersSub">50 spots left</div>
+                    </div>
+                    <div class="stat-ico" style="background:var(--amber-dim);color:var(--amber)">
                         <i class="fas fa-crown"></i>
-                        <span>Founding Members</span>
-                        <span class="badge badge-warning" style="margin-left: auto;" id="foundingBadge">0/50</span>
-                    </a>
-                </div>
-                
-                <div class="nav-section">
-                    <div class="nav-title">Financial</div>
-                    <a class="nav-item" onclick="showSection('revenue')">
-                        <i class="fas fa-dollar-sign"></i>
-                        <span>Revenue</span>
-                    </a>
-                    <a class="nav-item" onclick="showSection('coupons')">
-                        <i class="fas fa-tags"></i>
-                        <span>Coupons</span>
-                    </a>
-                </div>
-                
-                <div class="nav-section">
-                    <div class="nav-title">System</div>
-                    <a class="nav-item" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Logout</span>
-                    </a>
-                </div>
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <div class="top-bar">
-                <div class="page-title">
-                    <h1>Dashboard Overview</h1>
-                    <p>Real-time analytics and platform metrics</p>
-                </div>
-                <div class="user-menu">
-                    <div style="text-align: right;">
-                        <div style="font-weight: 600;">Admin User</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">Super Admin</div>
-                    </div>
-                    <div class="user-avatar">A</div>
-                </div>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-label">Total Revenue</div>
-                            <div class="stat-value" id="totalRevenue">NOK 0</div>
-                            <div class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span id="revenueGrowth">0%</span> this month
-                            </div>
-                        </div>
-                        <div class="stat-icon">
-                            <i class="fas fa-wallet"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stat-card founding">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-label">Founding Members</div>
-                            <div class="stat-value" id="foundingCount">0<span style="font-size: 1rem; color: var(--text-secondary);">/50</span></div>
-                            <div class="stat-change">
-                                <span id="foundingRemaining">50 spots remaining</span>
-                            </div>
-                        </div>
-                        <div class="stat-icon">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-label">Active Companies</div>
-                            <div class="stat-value" id="activeCompanies">0</div>
-                            <div class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span id="companiesGrowth">0%</span> this week
-                            </div>
-                        </div>
-                        <div class="stat-icon">
-                            <i class="fas fa-building"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stat-card revenue">
-                    <div class="stat-header">
-                        <div>
-                            <div class="stat-label">Monthly Recurring</div>
-                            <div class="stat-value" id="mrrValue">NOK 0</div>
-                            <div class="stat-change positive">
-                                <i class="fas fa-arrow-up"></i>
-                                <span>MRR</span>
-                            </div>
-                        </div>
-                        <div class="stat-icon">
-                            <i class="fas fa-chart-pie"></i>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Charts Grid -->
-            <div class="charts-grid">
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <div class="chart-title">Revenue Overview</div>
-                        <select style="background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); padding: 6px 12px; border-radius: 8px;">
-                            <option>Last 7 days</option>
-                            <option>Last 30 days</option>
-                            <option>Last 90 days</option>
-                        </select>
+            <div class="stat-card c">
+                <div class="stat-top">
+                    <div>
+                        <div class="stat-lbl">Active Companies</div>
+                        <div class="stat-val" id="sActive">0</div>
+                        <div class="stat-sub stat-up"><i class="fas fa-arrow-up"></i> Registered</div>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="revenueChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <div class="chart-title">Plan Distribution</div>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="plansChart"></canvas>
+                    <div class="stat-ico" style="background:var(--cyan-dim);color:var(--cyan)">
+                        <i class="fas fa-building"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Recent Activity -->
-            <div class="chart-card" style="margin-bottom: 2rem;">
-                <div class="chart-header">
-                    <div class="chart-title">Recent Activity</div>
-                    <button style="background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); padding: 6px 12px; border-radius: 8px; cursor: pointer;">
-                        View All
-                    </button>
+            <div class="stat-card d">
+                <div class="stat-top">
+                    <div>
+                        <div class="stat-lbl">Monthly Recurring</div>
+                        <div class="stat-val" id="sMRR">NOK 0</div>
+                        <div class="stat-sub stat-up"><i class="fas fa-chart-line"></i> MRR</div>
+                    </div>
+                    <div class="stat-ico" style="background:var(--green-dim);color:var(--green)">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
                 </div>
-                <div class="activity-list" id="activityList">
-                    <!-- Activity items will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts">
+            <div class="card">
+                <div class="card-head">
+                    <div class="card-title">Revenue Overview</div>
+                    <select id="periodSel" onchange="loadData()"
+                        style="background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:8px;font-size:0.8rem;cursor:pointer;">
+                        <option value="7">Last 7 days</option>
+                        <option value="30" selected>Last 30 days</option>
+                        <option value="90">Last 90 days</option>
+                    </select>
+                </div>
+                <div class="chart-wrap"><canvas id="chartRev"></canvas></div>
+            </div>
+
+            <div class="card">
+                <div class="card-head"><div class="card-title">Plan Distribution</div></div>
+                <div class="chart-wrap"><canvas id="chartPlan"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Bottom row -->
+        <div class="bottom">
+            <div class="card">
+                <div class="card-head">
+                    <div class="card-title">Recent Companies</div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Plan</th>
+                                <th>Status</th>
+                                <th>Value</th>
+                                <th>Joined</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tBody"></tbody>
+                    </table>
                 </div>
             </div>
 
-            <!-- Companies Table -->
-            <div class="table-card">
-                <div class="chart-header">
-                    <div class="chart-title">Recent Companies</div>
-                    <button style="background: var(--gradient-1); border: none; color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600;">
-                        <i class="fas fa-plus"></i> Add Company
-                    </button>
-                </div>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Plan</th>
-                            <th>Status</th>
-                            <th>Revenue</th>
-                            <th>Joined</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="companiesTable">
-                        <!-- Companies will be loaded here -->
-                    </tbody>
-                </table>
+            <div class="card">
+                <div class="card-head"><div class="card-title">Recent Activity</div></div>
+                <div id="actList"></div>
             </div>
-        </main>
+        </div>
+    </main>
 
-        <button class="mobile-menu-btn" onclick="toggleSidebar()">
-            <i class="fas fa-bars"></i>
-        </button>
-    </div>
+    <button class="fab" onclick="document.getElementById('sidebar').classList.toggle('open')">
+        <i class="fas fa-bars"></i>
+    </button>
+</div>
 
-    <script>
-        // Configuration
-        const ADMIN_PASSWORD = 'OsloMeet2026!'; // Change this!
-        const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+<script>
+// ════════════════════════════════════════
+//  CONFIG — edite aqui
+// ════════════════════════════════════════
+const SUPABASE_URL  = 'https://mrparduxlvyflasgefpt.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
 
-        // State
-        let revenueChartInstance = null;
-        let plansChartInstance = null;
+// ✅ Lista de emails admin — adicione mais conforme necessário
+const ADMIN_EMAILS = [
+    'paulofernandodebarros@gmail.com',
+];
 
-        // Login
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const password = document.getElementById('adminPassword').value;
-            
-            if (password === ADMIN_PASSWORD) {
-                sessionStorage.setItem('adminAuthenticated', 'true');
-                showDashboard();
-                await loadDashboardData();
-            } else {
-                alert('Invalid password!');
-            }
-        });
+const PLAN_PRICES = {
+    founding_member: 1290,
+    starter: 1890,
+    business: 4900,
+    partner: 15000,
+};
 
-        // Check auth
-        function checkAuth() {
-            if (sessionStorage.getItem('adminAuthenticated') === 'true') {
-                showDashboard();
-                loadDashboardData();
-            }
+// ════════════════════════════════════════
+//  AUTH — robusto, sem depender de tabela
+// ════════════════════════════════════════
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let chartRev = null, chartPlan = null;
+
+async function init() {
+    try {
+        const { data: { session } } = await sb.auth.getSession();
+
+        if (!session || !session.user) {
+            // Não logado → redireciona para login
+            window.location.href = '/login.html';
+            return;
         }
 
-        function showDashboard() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
+        const email = (session.user.email || '').trim().toLowerCase();
+
+        // Verifica se o email está na lista de admins
+        const isAdmin = ADMIN_EMAILS.some(e => e.trim().toLowerCase() === email);
+
+        if (!isAdmin) {
+            document.getElementById('deniedMsg').textContent =
+                `${email} does not have admin access.`;
+            show('deniedScreen');
+            hide('loadingScreen');
+            return;
         }
 
-        function logout() {
-            sessionStorage.removeItem('adminAuthenticated');
-            location.reload();
-        }
+        // ✅ Acesso liberado
+        const name = email.split('@')[0];
+        document.getElementById('adminAv').textContent   = name.charAt(0).toUpperCase();
+        document.getElementById('adminName').textContent = name;
 
-        // Load Data
-        async function loadDashboardData() {
-            try {
-                // Fetch companies from Supabase
-                const response = await fetch(`${SUPABASE_URL}/rest/v1/companies?select=*`, {
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                        'Prefer': 'count=exact'
-                    }
-                });
-                
-                const companies = await response.json();
-                
-                // Calculate metrics
-                const totalRevenue = companies.reduce((sum, c) => sum + (c.plan === 'founding_member' ? 1290 : c.plan === 'business' ? 4900 : c.plan === 'partner' ? 15000 : 1890), 0);
-                const foundingMembers = companies.filter(c => c.plan === 'founding_member').length;
-                const activeCompanies = companies.filter(c => c.status === 'active').length;
-                
-                // Update stats
-                document.getElementById('totalRevenue').textContent = `NOK ${totalRevenue.toLocaleString()}`;
-                document.getElementById('foundingCount').innerHTML = `${foundingMembers}<span style="font-size: 1rem; color: var(--text-secondary);">/50</span>`;
-                document.getElementById('foundingRemaining').textContent = `${50 - foundingMembers} spots remaining`;
-                document.getElementById('foundingBadge').textContent = `${foundingMembers}/50`;
-                document.getElementById('activeCompanies').textContent = activeCompanies;
-                document.getElementById('mrrValue').textContent = `NOK ${Math.round(totalRevenue / 12).toLocaleString()}`;
-                
-                // Update charts
-                updateCharts(companies);
-                
-                // Update table
-                updateCompaniesTable(companies);
-                
-                // Update activity
-                updateActivity(companies);
-                
-            } catch (error) {
-                console.error('Error loading data:', error);
-            }
-        }
+        hide('loadingScreen');
+        show('dashboard');
 
-        function updateCharts(companies) {
-            // Revenue Chart
-            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-            if (revenueChartInstance) revenueChartInstance.destroy();
-            
-            revenueChartInstance = new Chart(revenueCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                    datasets: [{
-                        label: 'Revenue (NOK)',
-                        data: [0, 4900, 9800, 14700],
-                        borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        fill: true,
-                        tension: 0.4
-                    }]
+        await loadData();
+
+    } catch (err) {
+        console.error('Auth error:', err);
+        // Fallback: sem sessão → vai para login
+        window.location.href = '/login.html';
+    }
+}
+
+// ════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════
+async function loadData() {
+    try {
+        const resp = await fetch(
+            `${SUPABASE_URL}/rest/v1/companies?select=*&order=created_at.desc`,
+            {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: 'rgba(55, 65, 81, 0.5)' },
-                            ticks: { color: '#9ca3af' }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#9ca3af' }
-                        }
-                    }
-                }
-            });
-            
-            // Plans Chart
-            const plansCtx = document.getElementById('plansChart').getContext('2d');
-            if (plansChartInstance) plansChartInstance.destroy();
-            
-            const planCounts = {
-                'Starter': companies.filter(c => c.plan === 'starter').length,
-                'Business': companies.filter(c => c.plan === 'business').length,
-                'Partner': companies.filter(c => c.plan === 'partner').length,
-                'Founding': companies.filter(c => c.plan === 'founding_member').length
-            };
-            
-            plansChartInstance = new Chart(plansCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(planCounts),
-                    datasets: [{
-                        data: Object.values(planCounts),
-                        backgroundColor: ['#3b82f6', '#8b5cf6', '#f59e0b', '#10b981'],
-                        borderWidth: 0
-                    }]
+            }
+        );
+
+        const companies = resp.ok ? await resp.json() : [];
+
+        // ── Metrics
+        const totalRev  = companies.reduce((s, c) => s + (PLAN_PRICES[c.plan] || 0), 0);
+        const founders  = companies.filter(c => c.plan === 'founding_member').length;
+        const active    = companies.filter(c => c.status === 'active').length;
+        const mrr       = Math.round(totalRev / 12);
+
+        document.getElementById('sRevenue').textContent  = `NOK ${totalRev.toLocaleString()}`;
+        document.getElementById('sActive').textContent   = active;
+        document.getElementById('sMRR').textContent      = `NOK ${mrr.toLocaleString()}`;
+        document.getElementById('sFounders').innerHTML   =
+            `${founders}<span style="font-size:1rem;color:var(--muted)">/50</span>`;
+        document.getElementById('sFoundersSub').textContent =
+            `${Math.max(0, 50 - founders)} spots remaining`;
+        document.getElementById('foundBadge').textContent = `${founders}/50`;
+
+        // ── Charts
+        renderCharts(companies);
+
+        // ── Table
+        renderTable(companies);
+
+        // ── Activity
+        renderActivity(companies);
+
+    } catch (err) {
+        console.error('Data error:', err);
+    }
+}
+
+// ════════════════════════════════════════
+//  CHARTS
+// ════════════════════════════════════════
+function renderCharts(companies) {
+    // Revenue line chart (cumulative by week)
+    const ctx1 = document.getElementById('chartRev').getContext('2d');
+    if (chartRev) chartRev.destroy();
+
+    // Build weekly cumulative from real data
+    const sorted = [...companies].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    const labels = ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8'];
+    const dataRev = labels.map((_, i) => {
+        const cutoff = new Date();
+        cutoff.setDate(cutoff.getDate() - (7 * (labels.length - 1 - i)));
+        return sorted
+            .filter(c => new Date(c.created_at) <= cutoff)
+            .reduce((s, c) => s + (PLAN_PRICES[c.plan] || 0), 0);
+    });
+
+    chartRev = new Chart(ctx1, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                data: dataRev,
+                borderColor: '#7c6af7',
+                backgroundColor: ctx => {
+                    const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 260);
+                    g.addColorStop(0, 'rgba(124,106,247,0.25)');
+                    g.addColorStop(1, 'rgba(124,106,247,0)');
+                    return g;
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { color: '#9ca3af', padding: 15 }
-                        }
-                    }
-                }
-            });
-        }
+                fill: true, tension: 0.4,
+                pointBackgroundColor: '#7c6af7',
+                pointRadius: 4, pointHoverRadius: 6,
+            }],
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: {
+                callbacks: { label: ctx => ` NOK ${ctx.parsed.y.toLocaleString()}` }
+            }},
+            scales: {
+                y: { beginAtZero: true, grid: { color: 'rgba(30,36,51,0.8)' }, ticks: { color: '#5a6278', font: { family: 'DM Mono', size: 11 } } },
+                x: { grid: { display: false }, ticks: { color: '#5a6278', font: { size: 11 } } },
+            },
+        },
+    });
 
-        function updateCompaniesTable(companies) {
-            const tbody = document.getElementById('companiesTable');
-            tbody.innerHTML = companies.slice(0, 10).map(company => `
-                <tr>
-                    <td>
-                        <div style="font-weight: 600;">${company.name || 'Company'}</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary);">${company.email || 'email@company.com'}</div>
-                    </td>
-                    <td><span class="badge badge-purple">${company.plan || 'starter'}</span></td>
-                    <td><span class="badge badge-success">${company.status || 'active'}</span></td>
-                    <td>NOK ${company.plan === 'founding_member' ? '1,290' : company.plan === 'business' ? '4,900' : '15,000'}</td>
-                    <td>${new Date(company.created_at).toLocaleDateString()}</td>
-                    <td>
-                        <button style="background: transparent; border: none; color: var(--accent-blue); cursor: pointer; padding: 4px 8px;">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
+    // Doughnut
+    const ctx2 = document.getElementById('chartPlan').getContext('2d');
+    if (chartPlan) chartPlan.destroy();
 
-        function updateActivity(companies) {
-            const activityList = document.getElementById('activityList');
-            const recentCompanies = companies.slice(0, 5);
-            
-            activityList.innerHTML = recentCompanies.map(company => `
-                <div class="activity-item">
-                    <div class="activity-icon">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <div class="activity-content">
-                        <div class="activity-text">
-                            <strong>${company.name || 'New company'}</strong> joined as <strong>${company.plan || 'Starter'}</strong> member
-                        </div>
-                        <div class="activity-time">${new Date(company.created_at).toLocaleString()}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
+    const planCounts = {
+        Founding: companies.filter(c => c.plan === 'founding_member').length,
+        Business: companies.filter(c => c.plan === 'business').length,
+        Partner:  companies.filter(c => c.plan === 'partner').length,
+        Starter:  companies.filter(c => c.plan === 'starter').length,
+    };
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-        }
+    const total = Object.values(planCounts).reduce((a, b) => a + b, 0);
 
-        function showSection(section) {
-            // Navigation logic here
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            event.target.closest('.nav-item').classList.add('active');
-        }
+    chartPlan = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(planCounts),
+            datasets: [{
+                data: total ? Object.values(planCounts) : [1],
+                backgroundColor: total
+                    ? ['#f59e0b', '#7c6af7', '#22d3ee', '#3b82f6']
+                    : ['#1e2433'],
+                borderWidth: 0,
+                hoverOffset: 6,
+            }],
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+                legend: { position: 'bottom', labels: { color: '#5a6278', padding: 14, font: { size: 11 } } },
+                tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}` } },
+            },
+        },
+    });
+}
 
-        // Initialize
-        checkAuth();
-    </script>
+// ════════════════════════════════════════
+//  TABLE
+// ════════════════════════════════════════
+const CHIP_MAP = {
+    founding_member: ['chip-amber',  'Founding'],
+    business:        ['chip-purple', 'Business'],
+    partner:         ['chip-cyan',   'Partner'],
+    starter:         ['chip-green',  'Starter'],
+};
+
+function renderTable(companies) {
+    const tb = document.getElementById('tBody');
+
+    if (!companies.length) {
+        tb.innerHTML = `<tr><td colspan="5"><div class="empty">No companies yet</div></td></tr>`;
+        return;
+    }
+
+    tb.innerHTML = companies.slice(0, 12).map(c => {
+        const [chipCls, chipLabel] = CHIP_MAP[c.plan] || ['chip-green', c.plan || 'starter'];
+        const price = (PLAN_PRICES[c.plan] || 0).toLocaleString();
+        const date  = c.created_at ? new Date(c.created_at).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }) : '-';
+        return `
+        <tr>
+            <td>
+                <div class="company-name">${esc(c.name || 'Unnamed')}</div>
+                <div class="company-email">${esc(c.email || '')}</div>
+            </td>
+            <td><span class="chip ${chipCls}">${chipLabel}</span></td>
+            <td><span class="chip ${c.status === 'active' ? 'chip-green' : 'chip-amber'}">${c.status || 'pending'}</span></td>
+            <td style="font-family:'DM Mono',monospace;font-size:0.82rem">NOK ${price}</td>
+            <td style="color:var(--muted);font-size:0.8rem">${date}</td>
+        </tr>`;
+    }).join('');
+}
+
+// ════════════════════════════════════════
+//  ACTIVITY
+// ════════════════════════════════════════
+function renderActivity(companies) {
+    const el = document.getElementById('actList');
+    const recent = companies.slice(0, 6);
+
+    if (!recent.length) {
+        el.innerHTML = `<div class="empty">No recent activity</div>`;
+        return;
+    }
+
+    el.innerHTML = recent.map(c => {
+        const time = c.created_at
+            ? new Date(c.created_at).toLocaleString('en-GB', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
+            : '';
+        return `
+        <div class="activity-item">
+            <div class="act-ico"><i class="fas fa-user-plus"></i></div>
+            <div>
+                <div class="act-text"><strong>${esc(c.name || 'New company')}</strong> joined as <strong>${c.plan || 'starter'}</strong></div>
+                <div class="act-time">${time}</div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+// ════════════════════════════════════════
+//  UTILS
+// ════════════════════════════════════════
+function show(id) {
+    const el = document.getElementById(id);
+    el.style.display = 'flex';
+}
+
+function hide(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function logout() {
+    sb.auth.signOut().then(() => window.location.href = '/login.html');
+}
+
+function setNav(btn, section) {
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // Extend here to show/hide sections as needed
+}
+
+// Boot
+document.addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
