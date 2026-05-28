@@ -773,21 +773,25 @@ async function checkAuth() {
         return;
     }
 
-    const userEmail = session.user.email;
-    console.log('✅ Logado:', userEmail);
+    const userEmail = session.user.email.trim().toLowerCase();
+    console.log('✅ Logado:', userEmail, '| length:', userEmail.length);
     
-    // Consulta SIMPLES sem filtros extras
-    const { data: adminData, error } = await sb
+    // Busca TODOS os registros para diagnóstico
+    const { data: allAdmins, error } = await sb
         .from('admin_roles')
-        .select('*')
-        .eq('email', userEmail);
+        .select('*');
     
-    console.log('📊 Dados retornados:', adminData);
+    console.log('📊 Todos os admins:', allAdmins);
     console.log('❌ Erro:', error);
+
+    // Compara em JavaScript para evitar problema de encoding no DB
+    const adminData = (allAdmins || []).find(a => 
+        a.email.trim().toLowerCase() === userEmail
+    );
     
-    // Verifica se encontrou e se tem role
-    if (!adminData || adminData.length === 0) {
-        console.log('❌ Nenhum registro encontrado');
+    console.log('🔎 Match encontrado:', adminData);
+
+    if (!adminData) {
         document.getElementById('authStatus').innerHTML = `
             <i class="fas fa-ban fa-2x" style="color: var(--danger-red); margin-bottom: 1rem;"></i>
             <p style="color: var(--text-secondary); margin-bottom: 1rem;">Acesso restrito.</p>
@@ -797,13 +801,9 @@ async function checkAuth() {
         return;
     }
     
-    // Pegue o primeiro registro
-    const adminRole = adminData[0].role;
-    console.log('✅ Role encontrada:', adminRole);
-    
-    currentAdminRole = adminRole;
+    currentAdminRole = adminData.role;
     document.getElementById('adminEmail').textContent = userEmail.split('@')[0];
-    document.getElementById('adminRole').textContent = adminRole;
+    document.getElementById('adminRole').textContent = adminData.role;
     document.getElementById('adminAvatar').textContent = userEmail.charAt(0).toUpperCase();
     
     showDashboard();
