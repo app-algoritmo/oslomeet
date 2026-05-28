@@ -780,12 +780,12 @@ async function checkAuth() {
     console.log('✅ Logado como:', userEmail);
     
     // 3. Consulta admin_roles (agora sem bloqueios de RLS)
-    const { data: adminRole, error } = await sb
-        .from('admin_roles')
-        .select('role')
-        .eq('email', userEmail)
-        .eq('active', true)
-        .maybeSingle();
+   const { data: adminRole, error } = await sb
+    .from('admin_roles')
+    .select('role')
+    .eq('email', userEmail)
+    // .eq('active', true)  // Comentado pois a coluna não existe
+    .maybeSingle();
     
     // 4. Se não achar o cargo, é acesso negado
     if (!adminRole) {
