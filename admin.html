@@ -577,15 +577,10 @@
 
 <script>
 // ════════════════════════════════════════
-//  CONFIG — edite aqui
+//  CONFIG
 // ════════════════════════════════════════
-const SUPABASE_URL  = 'https://mrparduxlvyflasgefpt.supabase.co';
-const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
-
-// ✅ Lista de emails admin — adicione mais conforme necessário
-const ADMIN_EMAILS = [
-    'paulofernandodebarros@gmail.com',
-];
+const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
 
 const PLAN_PRICES = {
     founding_member: 1290,
@@ -595,7 +590,8 @@ const PLAN_PRICES = {
 };
 
 // ════════════════════════════════════════
-//  AUTH — robusto, sem depender de tabela
+//  AUTH — JWT do usuário valida no servidor
+//  Nenhum email exposto no código
 // ════════════════════════════════════════
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -605,29 +601,41 @@ async function init() {
     try {
         const { data: { session } } = await sb.auth.getSession();
 
-        if (!session || !session.user) {
-            // Não logado → redireciona para login
+        if (!session?.user) {
             window.location.href = '/login.html';
             return;
         }
 
-        const email = (session.user.email || '').trim().toLowerCase();
+        // Usa o JWT do usuário (access_token) — não a anon key.
+        // O Supabase valida o token no servidor e aplica RLS/grants
+        // com o role "authenticated". Nenhum email fica no código HTML.
+        const resp = await fetch(
+            `${SUPABASE_URL}/rest/v1/admin_roles?select=role,active&active=eq.true&limit=1`,
+            {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${session.access_token}`,
+                }
+            }
+        );
 
-        // Verifica se o email está na lista de admins
-        const isAdmin = ADMIN_EMAILS.some(e => e.trim().toLowerCase() === email);
+        const rows = resp.ok ? await resp.json() : [];
 
-        if (!isAdmin) {
+        if (!rows.length) {
             document.getElementById('deniedMsg').textContent =
-                `${email} does not have admin access.`;
+                `${session.user.email} does not have admin access.`;
             show('deniedScreen');
             hide('loadingScreen');
             return;
         }
 
         // ✅ Acesso liberado
-        const name = email.split('@')[0];
-        document.getElementById('adminAv').textContent   = name.charAt(0).toUpperCase();
-        document.getElementById('adminName').textContent = name;
+        const role = rows[0].role || 'admin';
+        const name = (session.user.email || 'Admin').split('@')[0];
+
+        document.getElementById('adminAv').textContent    = name.charAt(0).toUpperCase();
+        document.getElementById('adminName').textContent  = name;
+        document.getElementById('adminRole').textContent  = role;
 
         hide('loadingScreen');
         show('dashboard');
@@ -636,7 +644,6 @@ async function init() {
 
     } catch (err) {
         console.error('Auth error:', err);
-        // Fallback: sem sessão → vai para login
         window.location.href = '/login.html';
     }
 }
