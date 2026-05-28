@@ -751,14 +751,16 @@
         </button>
     </div>
 
-    <script>
-        // 🔐
+       <script>
+        // 🔐 CONFIGURAÇÃO SUPABASE
+        // ⚠️ Substitua pela sua chave ANON real (Project Settings > API)
         const SUPABASE_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0'; 
         
-        // Inicializa cliente Supabase
-        const supabase = window.supabase || createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
+        // ✅ FIX: Inicializa o cliente corretamente usando a CDN global 'supabase'
+        // Usamos 'sb' para não conflitar com a variável global da biblioteca
+        const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         // Estado
         let revenueChartInstance = null;
         let plansChartInstance = null;
@@ -766,7 +768,8 @@
 
         // 🔍 VERIFICAÇÃO DE ACESSO SEGURA
         async function checkAuth() {
-            const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+            // Usa 'sb' ao invés de 'supabase' direto
+            const { data: { session }, error: sessionError } = await sb.auth.getSession();
             
             if (sessionError || !session) {
                 showLoginScreen('Não autenticado. <a href="/login.html" style="color:var(--accent-blue)">Faça login</a>.');
@@ -776,7 +779,7 @@
             const userEmail = session.user.email;
             
             // Consulta dinâmica à tabela admin_roles (zero emails hardcoded)
-            const { data: adminRole, error: roleError } = await supabase
+            const { data: adminRole, error: roleError } = await sb
                 .from('admin_roles')
                 .select('role, active')
                 .eq('email', userEmail)
@@ -785,7 +788,7 @@
             
             if (roleError || !adminRole) {
                 showLoginScreen('🔒 Acesso negado. Você não tem permissão de administrador.');
-                await supabase.auth.signOut();
+                await sb.auth.signOut();
                 return;
             }
 
@@ -819,7 +822,7 @@
         }
 
         async function logout() {
-            await supabase.auth.signOut();
+            await sb.auth.signOut();
             location.reload();
         }
 
@@ -836,7 +839,7 @@
         async function loadDashboardData() {
             try {
                 // Fetch companies com RLS do Supabase
-                const { data: companies, error } = await supabase
+                const { data: companies, error } = await sb
                     .from('companies')
                     .select('*')
                     .order('created_at', { ascending: false });
@@ -1003,7 +1006,6 @@
         function showSection(section) {
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             event.target.closest('.nav-item').classList.add('active');
-            // Lógica de navegação pode ser expandida aqui
         }
 
         // Inicialização
