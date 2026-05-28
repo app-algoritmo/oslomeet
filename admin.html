@@ -762,79 +762,53 @@
     let plansChartInstance = null;
     let currentAdminRole = null;
 
-    // 🔍 VERIFICAÇÃO COM DEBUG COMPLETO
-    async function checkAuth() {
-        console.log('🔍 Iniciando verificação de auth...');
-        
-        // 1. Verifica sessão
-        const { data: { session }, error: sessionError } = await sb.auth.getSession();
-        
-        console.log('📧 Sessão:', session);
-        console.log('❌ Erro sessão:', sessionError);
-        
-        if (sessionError || !session) {
-            console.error('❌ Sem sessão válida');
-            showLoginScreen('Não autenticado. <a href="/login.html" style="color:var(--accent-blue)">Faça login</a>.');
-            return;
-        }
+    // 🔍 VERIFICAÇÃO DE ACESSO OTIMIZADA
+async function checkAuth() {
+    console.log('🔍 Verificando admin...');
+    
+    // 1. Verifica sessão
+    const { data: { session } } = await sb.auth.getSession();
+    
+    // 2. SE NÃO ESTIVER LOGADO, MANDA PARA O LOGIN AUTOMATICAMENTE
+    if (!session) {
+        console.log(' Não logado. Redirecionando...');
+        window.location.href = '/login.html?redirect=/admin.html';
+        return;
+    }
 
-        const userEmail = session.user.email;
-        console.log('✅ Email detectado:', userEmail);
-        
-        // 2. Consulta admin_roles COM DEBUG
-        console.log('🔍 Consultando admin_roles para:', userEmail);
-        
-        // Consulta dinâmica à tabela admin_roles
-const { data: adminRole, error: roleError } = await sb
-    .from('admin_roles')
-    .select('role, active')
-    .eq('email', userEmail)
-    // .eq('active', true)  // Comentado para testar
-    .maybeSingle();
-
-// Se não achou, tenta sem filtrar por active
-if (!adminRole && !roleError) {
-    console.log('⚠️ Tentando sem filtro active...');
-    const { data: fallbackData } = await sb
+    const userEmail = session.user.email;
+    console.log('✅ Logado como:', userEmail);
+    
+    // 3. Consulta admin_roles (agora sem bloqueios de RLS)
+    const { data: adminRole, error } = await sb
         .from('admin_roles')
-        .select('role, active')
+        .select('role')
         .eq('email', userEmail)
+        .eq('active', true)
         .maybeSingle();
     
-    if (fallbackData) {
-        adminRole = fallbackData;
-        console.log('✅ Achou sem filtro active:', adminRole);
+    // 4. Se não achar o cargo, é acesso negado
+    if (!adminRole) {
+        console.log('🚫 Acesso Negado: Usuário não é admin');
+        document.getElementById('authStatus').innerHTML = `
+            <i class="fas fa-ban fa-2x" style="color: var(--danger-red); margin-bottom: 1rem;"></i>
+            <p style="color: var(--text-secondary);">Acesso restrito. Apenas administradores.</p>
+            <button onclick="logout()" class="login-btn secondary" style="margin-top:1rem">Sair</button>
+        `;
+        return;
     }
-}
-        
-        console.log('📊 Resultado da consulta:', adminRole);
-        console.log('❌ Erro na consulta:', roleError);
-        
-        if (roleError) {
-            console.error('❌ Erro ao consultar admin_roles:', roleError.message);
-            showLoginScreen(`Erro: ${roleError.message}. <br><br>Verifique se:<br>1. A tabela admin_roles existe<br>2. As políticas RLS estão corretas<br>3. Seu email está cadastrado`);
-            return;
-        }
-        
-        if (!adminRole) {
-            console.error('❌ Email não encontrado em admin_roles');
-            showLoginScreen('🔒 Acesso negado. Seu email não está cadastrado como admin.<br><br>Email verificado: ' + userEmail);
-            await sb.auth.signOut();
-            return;
-        }
 
-        // 3. Sucesso!
-        console.log('✅ Admin autenticado:', userEmail, 'Role:', adminRole.role);
-        currentAdminRole = adminRole.role;
-        
-        document.getElementById('adminEmail').textContent = userEmail.split('@')[0];
-        document.getElementById('adminRole').textContent = adminRole.role === 'super_admin' ? 'Super Admin' : 'Admin';
-        document.getElementById('adminAvatar').textContent = userEmail.charAt(0).toUpperCase();
-        
-        showDashboard();
-        loadDashboardData();
-        applyRolePermissions(adminRole.role);
-    }
+    // 5. SUCESSO! Mostra o dashboard
+    console.log('✅ Admin autorizado!');
+    currentAdminRole = adminRole.role;
+    
+    document.getElementById('adminEmail').textContent = userEmail.split('@')[0];
+    document.getElementById('adminRole').textContent = adminRole.role === 'super_admin' ? 'Super Admin' : 'Admin';
+    document.getElementById('adminAvatar').textContent = userEmail.charAt(0).toUpperCase();
+    
+    showDashboard();
+    loadDashboardData();
+}
 
     function showLoginScreen(message) {
         document.getElementById('authStatus').innerHTML = `
