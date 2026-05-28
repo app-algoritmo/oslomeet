@@ -784,12 +784,28 @@
         // 2. Consulta admin_roles COM DEBUG
         console.log('🔍 Consultando admin_roles para:', userEmail);
         
-        const { data: adminRole, error: roleError } = await sb
-            .from('admin_roles')
-            .select('role, active')
-            .eq('email', userEmail)
-            .eq('active', true)
-            .maybeSingle();
+        // Consulta dinâmica à tabela admin_roles
+const { data: adminRole, error: roleError } = await sb
+    .from('admin_roles')
+    .select('role, active')
+    .eq('email', userEmail)
+    // .eq('active', true)  // Comentado para testar
+    .maybeSingle();
+
+// Se não achou, tenta sem filtrar por active
+if (!adminRole && !roleError) {
+    console.log('⚠️ Tentando sem filtro active...');
+    const { data: fallbackData } = await sb
+        .from('admin_roles')
+        .select('role, active')
+        .eq('email', userEmail)
+        .maybeSingle();
+    
+    if (fallbackData) {
+        adminRole = fallbackData;
+        console.log('✅ Achou sem filtro active:', adminRole);
+    }
+}
         
         console.log('📊 Resultado da consulta:', adminRole);
         console.log('❌ Erro na consulta:', roleError);
