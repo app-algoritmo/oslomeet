@@ -846,7 +846,7 @@
         setupTagsInput('techTags');
         setupTagsInput('marketTags');
 
-        // ── FORM SUBMIT — FIXED: signUp first, then insert company ──
+        // ── FORM SUBMIT — FIXED: signUp + signInWithPassword ──
         document.getElementById('smartForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -894,8 +894,16 @@
                     throw new Error(signUpError.message);
                 }
 
-                const user = authData.user;
-                if (!user) throw new Error('Account creation failed. Please try again.');
+                // ── STEP 1.5: SIGN IN IMMEDIATELY TO FIX RLS POLICIES ──
+                const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+                    email: data.email,
+                    password: data.password
+                });
+
+                if (signInError) throw new Error(signInError.message);
+
+                const user = signInData.user || authData.user;
+                if (!user) throw new Error('Account creation & session establishment failed.');
 
                 // ── STEP 2: INSERT COMPANY INTO SUPABASE ──
                 const companyData = {
