@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- FAVICON Oslo Meet -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#8b5cf6" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started — Oslo Meet</title>
+    <meta name="description" content="Start your Oslo Meet journey. Create your free account, build your company profile, and see your AI-powered B2B matches — no credit card required.">
+    <meta property="og:title" content="Get Started — Oslo Meet">
+    <meta property="og:description" content="Create your free account and see your AI-powered B2B matches.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://oslomeet.org/start.html">
+    <meta property="og:image" content="https://oslomeet.org/web.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Oslo Meet">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Get Started — Oslo Meet">
+    <meta name="twitter:description" content="Create your free account and see your AI-powered B2B matches.">
+    <meta name="twitter:image" content="https://oslomeet.org/web.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <meta name="google-site-verification" content="CRM-dMkWd--H5ZUbXfcT6P4OILoxyN9HrYl3ZJ7EDrk" />
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5E3B7CKET"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-C5E3B7CKET', { 'anonymize_ip': true, 'cookie_flags': 'SameSite=None;Secure' });
+    </script>
+
+    <link rel="alternate" hreflang="en" href="https://oslomeet.org/start.html" />
+    <link rel="alternate" hreflang="no" href="https://oslomeet.org/start.html?lang=no" />
+    <link rel="alternate" hreflang="pt" href="https://oslomeet.org/start.html?lang=pt" />
+    <link rel="alternate" hreflang="es" href="https://oslomeet.org/start.html?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://oslomeet.org/start.html" />
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --dark-bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --ai-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+            --cb-bg: #0f172a;
+            --cb-border: #8b5cf6;
+            --cb-title: #a5b4fc;
+            --cb-text: #94a3b8;
+            --cb-link: #60a5fa;
+            --cb-link-hover: #93c5fd;
+            --cb-btn-primary: #8b5cf6;
+            --cb-btn-primary-hover: #7c3aed;
+            --cb-btn-secondary: #6366f1;
+            --cb-btn-reject: #64748b;
+            --cb-toggle-bg: #334155;
+            --cb-toggle-active: #8b5cf6;
+            --cb-icon: #fbbf24;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--dark-bg);
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        /* ── LANGUAGE SELECTOR ── */
+        .language-selector {
+            position: fixed; top: 12px; right: 12px; z-index: 1000;
+            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .language-selector select {
+            background: transparent; border: none; color: white;
+            font-family: 'Inter', sans-serif; font-weight: 600; font-size: 0.85rem;
+            cursor: pointer; outline: none; padding: 4px;
+            -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        }
+        .language-selector select option { background: var(--dark-bg); color: white; }
+        .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
+
+        /* ── HERO ── */
+        .hero {
+            background: linear-gradient(135deg, #0f172a, #1e1b4b, #312e81);
+            padding: 100px 16px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 20% 80%, rgba(139,92,246,0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-content { max-width: 700px; margin: 0 auto; position: relative; z-index: 2; }
+
+        .badge-free {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.2));
+            border: 1px solid rgba(16,185,129,0.4);
+            padding: 6px 16px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 600; color: #6ee7b7;
+            margin-bottom: 1.2rem;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .hero h1 {
+            font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            line-height: 1.15;
+            animation: fadeIn 0.7s ease 0.1s backwards;
+        }
+        @media (min-width: 768px) { .hero h1 { font-size: 3rem; } }
+
+        .hero p {
+            font-size: 1rem; color: var(--text-secondary);
+            max-width: 560px; margin: 0 auto 2rem;
+            animation: fadeIn 0.7s ease 0.2s backwards;
+        }
+        @media (min-width: 768px) { .hero p { font-size: 1.1rem; } }
+
+        /* ── PROGRESS BAR ── */
+        .progress-wrap {
+            max-width: 480px; margin: 0 auto 2.5rem;
+            animation: fadeIn 0.7s ease 0.3s backwards;
+        }
+        .progress-label {
+            display: flex; justify-content: space-between;
+            font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 8px;
+        }
+        .progress-track {
+            height: 6px; background: var(--border-color);
+            border-radius: 10px; overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%; width: 25%;
+            background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
+
+        /* ── MAIN CONTAINER ── */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+        /* ── STEPS SECTION ── */
+        .steps-section { padding: 60px 16px 80px; }
+
+        .section-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(139,92,246,0.15); color: var(--accent-purple);
+            padding: 5px 14px; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: 1.8rem; font-weight: 700; margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #fff, #818cf8);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        @media (min-width: 768px) { .section-title { font-size: 2.2rem; } }
+        .section-subtitle { color: var(--text-secondary); font-size: 0.95rem; max-width: 560px; }
+
+        .section-header { text-align: center; max-width: 700px; margin: 0 auto 3rem; }
+
+        /* ── STEP CARDS ── */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        @media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .step-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 1.8rem;
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .step-card.visible { opacity: 1; transform: translateY(0); }
+        .step-card:hover { border-color: var(--accent-purple); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+
+        /* Card de destaque — passo unlock */
+        .step-card.highlight {
+            border-color: rgba(139,92,246,0.4);
+            background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(59,130,246,0.05));
+        }
+        .step-card.highlight:hover { box-shadow: 0 0 30px rgba(139,92,246,0.2); }
+
+        .step-num {
+            position: absolute; top: -12px; left: 20px;
+            width: 28px; height: 28px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem; color: white;
+            box-shadow: 0 4px 12px rgba(139,92,246,0.4);
+        }
+
+        .step-icon {
+            font-size: 2rem; color: var(--accent-purple);
+            margin: 0.8rem 0 0.6rem; display: block;
+        }
+        .step-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: white; }
+        .step-card p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem; }
+
+        .step-cta {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white; padding: 10px 20px; border-radius: 50px;
+            text-decoration: none; font-size: 0.9rem; font-weight: 600;
+            transition: all 0.3s; border: none; cursor: pointer;
+            min-height: 40px;
+        }
+        .step-cta:hover { transform: translateY(-2px); box-shadow: var(--ai-glow); }
+        .step-cta.secondary {
+            background: transparent; color: var(--accent-purple);
+            border: 1.5px solid var(--accent-purple);
+        }
+        .step-cta.secondary:hover { background: rgba(139,92,246,0.1); }
+        .step-cta.locked {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+            border: 1.5px solid var(--border-color);
+            cursor: default;
+        }
+        .step-cta.locked:hover { transform: none; box-shadow: none; }
+
+        /* ── LOCK BADGE ── */
+        .lock-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(245,158,11,0.12);
+            border: 1px solid rgba(245,158,11,0.3);
+            color: var(--warning-orange);
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        /* ── FREE BADGE on card ── */
+        .free-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: rgba(16,185,129,0.12);
+            border: 1px solid rgba(16,185,129,0.3);
+            color: var(--success-green);
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        /* ── UNLOCK SECTION ── */
+        .unlock-section {
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 60px 16px;
+            text-align: center;
+        }
+        .unlock-section .section-header { margin-bottom: 2rem; }
+
+        .plans-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            max-width: 780px;
+            margin: 0 auto 2rem;
+        }
+        @media (min-width: 600px) { .plans-row { grid-template-columns: repeat(3, 1fr); } }
+
+        .plan-mini {
+            background: var(--dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.4rem 1.2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+        .plan-mini:hover { border-color: var(--accent-purple); transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); }
+        .plan-mini.popular { border-color: var(--accent-purple); box-shadow: 0 0 0 2px rgba(139,92,246,0.2); position: relative; }
+        .plan-mini.popular::before {
+            content: 'POPULAR'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+        }
+        .plan-mini h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .plan-mini .plan-price {
+            font-size: 1.4rem; font-weight: 800;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 0.3rem;
+        }
+        .plan-mini .plan-desc { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1rem; }
+        .plan-mini .plan-btn {
+            display: block; width: 100%;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            color: white; padding: 8px 0; border-radius: 30px;
+            font-size: 0.85rem; font-weight: 600; text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .plan-mini .plan-btn:hover { opacity: 0.88; }
+        .plan-mini.popular .plan-btn {
+            background: linear-gradient(135deg, var(--accent-purple), #6366f1);
+        }
+
+        .unlock-note {
+            font-size: 0.85rem; color: var(--text-secondary); margin-top: 1rem;
+        }
+        .unlock-note a { color: var(--accent-purple); text-decoration: none; }
+        .unlock-note a:hover { text-decoration: underline; }
+
+        /* ── FAQ STRIP ── */
+        .faq-section { padding: 60px 16px 80px; }
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            max-width: 800px;
+            margin: 2rem auto 0;
+        }
+        @media (min-width: 600px) { .faq-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            transition: border-color 0.3s;
+        }
+        .faq-item:hover { border-color: var(--accent-purple); }
+        .faq-item h4 {
+            font-size: 0.95rem; font-weight: 600;
+            color: white; margin-bottom: 0.4rem;
+            display: flex; align-items: flex-start; gap: 8px;
+        }
+        .faq-item h4 i { color: var(--accent-purple); margin-top: 2px; flex-shrink: 0; }
+        .faq-item p { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.55; }
+
+        /* ── FOOTER ── */
+        .footer { background: #020617; padding: 2rem 16px 1.5rem; border-top: 1px solid var(--border-color); }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
+        @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1.5fr; } }
+        .footer-brand h2 { font-size: 1.5rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, #fff, #a5b4fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-brand p { color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; }
+        .footer-social { display: flex; gap: 12px; margin-top: 1rem; }
+        .footer-social a {
+            width: 36px; height: 36px; background: var(--card-bg); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); text-decoration: none; transition: all 0.3s;
+        }
+        .footer-social a:hover { background: var(--accent-purple); color: white; transform: translateY(-3px); }
+        .footer-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.8rem; color: white; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.5rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; font-size: 0.9rem; }
+        .footer-links a:hover { color: var(--accent-blue); }
+        .footer-bottom {
+            max-width: 1200px; margin: 1.5rem auto 0; padding: 1rem 0 0;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 1rem;
+            color: var(--text-secondary); font-size: 0.85rem; text-align: center;
+        }
+        .footer-bottom a { color: var(--text-secondary); text-decoration: none; margin: 0 0.5rem; }
+        .footer-bottom a:hover { color: var(--accent-blue); }
+        .developer-credit { color: #fbbf24 !important; }
+
+        /* ── COOKIE BANNER ── */
+        #cookie-banner {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+            background: var(--cb-bg); border-top: 2px solid var(--cb-border);
+            padding: 16px 28px 14px; font-family: 'Inter', sans-serif;
+            transform: translateY(100%); transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+        }
+        #cookie-banner.show { transform: translateY(0); }
+        #cookie-banner.hidden { display: none; }
+        .cb-top { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+        .cb-left { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .cb-icon { font-size: 18px; color: var(--cb-icon); }
+        .cb-title { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; color: var(--cb-title); text-transform: uppercase; }
+        .cb-desc { font-size: 12px; color: var(--cb-text); line-height: 1.55; max-width: 420px; flex: 1; min-width: 200px; }
+        .cb-desc a { color: var(--cb-link); text-decoration: underline; text-underline-offset: 2px; }
+        .cb-desc a:hover { color: var(--cb-link-hover); }
+        .cb-btns { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+        .cb-btn-accept { background: var(--cb-btn-primary); color: #fff; border: none; padding: 8px 20px; border-radius: 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: background 0.2s, transform 0.15s; }
+        .cb-btn-accept:hover { background: var(--cb-btn-primary-hover); transform: translateY(-1px); }
+        .cb-btn-save { background: transparent; color: var(--cb-btn-secondary); border: 1.5px solid var(--cb-btn-primary); padding: 7px 18px; border-radius: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+        .cb-btn-save:hover { background: rgba(139,92,246,0.1); }
+        .cb-btn-reject { background: transparent; color: var(--cb-btn-reject); border: none; padding: 7px 10px; font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; font-family: inherit; transition: color 0.2s; }
+        .cb-btn-reject:hover { color: #94a3b8; }
+        .cb-bottom { max-width: 1120px; margin: 10px auto 0; display: flex; gap: 24px; align-items: center; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap; }
+        .cb-toggle-item { display: flex; align-items: center; gap: 8px; }
+        .cb-toggle-label { font-size: 12px; color: var(--cb-text); font-weight: 500; }
+        .cb-toggle { position: relative; display: inline-block; width: 36px; height: 20px; flex-shrink: 0; }
+        .cb-toggle input { display: none; }
+        .cb-track { position: absolute; inset: 0; border-radius: 20px; background: var(--cb-toggle-bg); cursor: pointer; transition: background 0.2s; }
+        .cb-track::after { content: ''; position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .cb-toggle input:checked + .cb-track { background: var(--cb-toggle-active); }
+        .cb-toggle input:checked + .cb-track::after { transform: translateX(16px); }
+        .cb-toggle input:disabled + .cb-track { opacity: 0.6; cursor: not-allowed; }
+
+        @media (max-width: 640px) {
+            .cb-top { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .cb-btns { width: 100%; justify-content: flex-end; }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <i class="fas fa-globe"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="badge-free">
+                <i class="fas fa-check-circle"></i>
+                <span data-i18n="heroBadge">Free to start — no credit card required</span>
+            </div>
+            <h1 data-i18n="heroTitle">Your first B2B match<br>is 3 steps away</h1>
+            <p data-i18n="heroSubtitle">Create your account, build your company profile, and let our AI find your best cross-border matches — for free. Unlock full contact when you're ready.</p>
+            <div class="progress-wrap">
+                <div class="progress-label">
+                    <span data-i18n="progressLabel">Your journey</span>
+                    <span data-i18n="progressStep">Step 1 of 4</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEPS -->
+    <section class="steps-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag"><i class="fas fa-map-signs"></i> <span data-i18n="stepsTag">How to get started</span></div>
+                <h2 class="section-title" data-i18n="stepsTitle">From zero to your first match</h2>
+                <p class="section-subtitle" data-i18n="stepsSubtitle">Follow these steps and see real companies compatible with yours — before spending anything.</p>
+            </div>
+
+            <div class="steps-grid">
+
+                <!-- Step 1 -->
+                <div class="step-card">
+                    <span class="step-num">1</span>
+                    <div class="free-badge"><i class="fas fa-unlock"></i> <span data-i18n="free">Free</span></div>
+                    <i class="fas fa-user-plus step-icon"></i>
+                    <h3 data-i18n="step1Title">Create your free account</h3>
+                    <p data-i18n="step1Desc">Sign up with your company email. Takes less than 2 minutes. No credit card, no commitment — just your business information.</p>
+                    <a href="join.html" class="step-cta">
+                        <i class="fas fa-rocket"></i>
+                        <span data-i18n="step1Cta">Create account now</span>
+                    </a>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-card">
+                    <span class="step-num">2</span>
+                    <div class="free-badge"><i class="fas fa-unlock"></i> <span data-i18n="free">Free</span></div>
+                    <i class="fas fa-building step-icon"></i>
+                    <h3 data-i18n="step2Title">Build your company profile</h3>
+                    <p data-i18n="step2Desc">Tell our AI about your sector, goals, target markets and ideal partner. The more detail you add, the better your matches will be.</p>
+                    <a href="join.html" class="step-cta secondary">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span data-i18n="step2Cta">Start your profile</span>
+                    </a>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-card">
+                    <span class="step-num">3</span>
+                    <div class="free-badge"><i class="fas fa-unlock"></i> <span data-i18n="free">Free</span></div>
+                    <i class="fas fa-magic step-icon"></i>
+                    <h3 data-i18n="step3Title">See your AI matches</h3>
+                    <p data-i18n="step3Desc">Our AI analyzes 50+ compatibility signals and shows your best matches — company name, country, sector, and compatibility score. All visible for free.</p>
+                    <a href="join.html" class="step-cta secondary">
+                        <i class="fas fa-eye"></i>
+                        <span data-i18n="step3Cta">See your matches</span>
+                    </a>
+                </div>
+
+                <!-- Step 4 — UNLOCK -->
+                <div class="step-card highlight">
+                    <span class="step-num">4</span>
+                    <div class="lock-badge"><i class="fas fa-lock"></i> <span data-i18n="unlockRequired">Requires a plan</span></div>
+                    <i class="fas fa-comments step-icon"></i>
+                    <h3 data-i18n="step4Title">Contact your matches</h3>
+                    <p data-i18n="step4Desc">When you find a match you want to connect with, choose a plan to unlock direct messaging, full company details, and AI Concierge introductions.</p>
+                    <a href="pricing.html" class="step-cta">
+                        <i class="fas fa-unlock"></i>
+                        <span data-i18n="step4Cta">View plans & unlock</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- UNLOCK SECTION -->
+    <section class="unlock-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag"><i class="fas fa-gem"></i> <span data-i18n="unlockTag">Ready to connect?</span></div>
+                <h2 class="section-title" data-i18n="unlockTitle">Choose your plan when you're ready</h2>
+                <p class="section-subtitle" data-i18n="unlockSubtitle">You only pay when you want to contact a match. Start free, upgrade anytime.</p>
+            </div>
+
+            <div class="plans-row">
+                <a href="join.html?plan=starter" class="plan-mini">
+                    <h4 data-i18n="planStarter">Starter</h4>
+                    <div class="plan-price">NOK 1.890<span style="font-size:0.7rem;font-weight:400">/yr</span></div>
+                    <p class="plan-desc" data-i18n="planStarterDesc">5 matches/month · Events · Basic feed</p>
+                    <span class="plan-btn" data-i18n="planStarterBtn">Get Started</span>
+                </a>
+                <a href="join.html?plan=business" class="plan-mini popular">
+                    <h4 data-i18n="planBusiness">Business</h4>
+                    <div class="plan-price">NOK 4.900<span style="font-size:0.7rem;font-weight:400">/yr</span></div>
+                    <p class="plan-desc" data-i18n="planBusinessDesc">Unlimited matches · AI Concierge · Priority</p>
+                    <span class="plan-btn" data-i18n="planBusinessBtn">Join Business</span>
+                </a>
+                <a href="join.html?plan=partner" class="plan-mini">
+                    <h4 data-i18n="planPartner">Partner</h4>
+                    <div class="plan-price">NOK 15k+<span style="font-size:0.7rem;font-weight:400">/yr</span></div>
+                    <p class="plan-desc" data-i18n="planPartnerDesc">Custom criteria · Brand visibility · Manager</p>
+                    <span class="plan-btn" data-i18n="planPartnerBtn">Contact Sales</span>
+                </a>
+            </div>
+
+            <p class="unlock-note" data-i18n="foundingNote">
+                🏆 First 50 members get <strong>lifetime pricing at 50% off</strong> — 
+                <a href="join.html?founding=true" data-i18n="foundingLink">reserve your Founding Member spot →</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag"><i class="fas fa-question-circle"></i> <span data-i18n="faqTag">Common questions</span></div>
+                <h2 class="section-title" data-i18n="faqTitle">What people ask before starting</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4><i class="fas fa-circle-check"></i> <span data-i18n="faq1Q">Is it really free to start?</span></h4>
+                    <p data-i18n="faq1A">Yes. Creating an account, building your profile, and seeing your matches is completely free. You only pay when you want to contact a match.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fas fa-circle-check"></i> <span data-i18n="faq2Q">How does the AI matching work?</span></h4>
+                    <p data-i18n="faq2A">Our algorithm analyzes 50+ signals including industry fit, growth stage, business culture, geographic goals, and strategic objectives to find true compatibility.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fas fa-circle-check"></i> <span data-i18n="faq3Q">What can I see before paying?</span></h4>
+                    <p data-i18n="faq3A">You can see the company name, country, sector, compatibility score, and a brief description of each match. Full contact details require a plan.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fas fa-circle-check"></i> <span data-i18n="faq4Q">Is my data safe and GDPR compliant?</span></h4>
+                    <p data-i18n="faq4A">Yes. All profiles are verified and data is handled in full compliance with GDPR. Your information is never shared without your explicit consent.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fas fa-circle-check"></i> <span data-i18n="faq5Q">Which countries are on the platform?</span></h4>
+                    <p data-i18n="faq5A">Oslo Meet connects companies across Europe, Brazil, China, and the Nordic countries. New regions are added as we grow.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fas fa-circle-check"></i> <span data-i18n="faq6Q">Can I cancel anytime?</span></h4>
+                    <p data-i18n="faq6A">Yes. All plans can be cancelled at any time. Founding Member pricing is locked for life as long as you stay active.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h2>OSLO MEET</h2>
+                <p data-i18n="footerSlogan">AI-powered global business connections across Europe, Brazil, China and Nordics.</p>
+                <div class="footer-social">
+                    <a href="https://www.youtube.com/@OsloMeet" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.linkedin.com/showcase/oslomeet" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navPlatform">Platform</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                    <li><a href="how-it-works.html" data-i18n="navHow">How Matching Works</a></li>
+                    <li><a href="join.html" data-i18n="navJoin">Join Now</a></li>
+                    <li><a href="pricing.html" data-i18n="navPricing">Pricing</a></li>
+                    <li><a href="dashboard.html" data-i18n="navDashboard">Dashboard</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navCompany">Company</h3>
+                <ul class="footer-links">
+                    <li><a href="about.html" data-i18n="navAbout">About</a></li>
+                    <li><a href="insights.html" data-i18n="navBlog">Insights</a></li>
+                    <li><a href="contact.html" data-i18n="navContact">Contact</a></li>
+                    <li><a href="support.html" data-i18n="navSupport">Support</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="footer-title" data-i18n="navLegal">Legal</h3>
+                <ul class="footer-links">
+                    <li><a href="terms-of-use.html" data-i18n="navTerms">Terms</a></li>
+                    <li><a href="privacy-policy.html" data-i18n="navPrivacy">Privacy</a></li>
+                    <li><a href="cookie-notice.html" data-i18n="navCookies">Cookies</a></li>
+                    <li><a href="https://www.datatilsynet.no" target="_blank" rel="noopener" data-i18n="navGDPR">GDPR Rights</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 Oslo Meet</div>
+            <div><a href="https://app-algoritmo.github.io/digital-solutions" class="developer-credit"><i class="fas fa-code"></i> Digital Solutions</a></div>
+        </div>
+    </footer>
+
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner">
+        <div class="cb-top">
+            <div class="cb-left">
+                <i class="fas fa-cookie-bite cb-icon"></i>
+                <span class="cb-title" data-i18n="cookieTitle">PRIVACY & COOKIES</span>
+            </div>
+            <p class="cb-desc">
+                <span data-i18n="cookieText">We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our</span>
+                <a href="privacy-policy.html" data-i18n="cookiePolicy">Privacy Policy</a>.
+            </p>
+            <div class="cb-btns">
+                <button class="cb-btn-save" id="cb-save" data-i18n="saveChoice">SAVE CHOICE</button>
+                <button class="cb-btn-accept" id="cb-accept" data-i18n="acceptAll">ACCEPT ALL</button>
+                <button class="cb-btn-reject" id="cb-reject" data-i18n="reject">REJECT</button>
+            </div>
+        </div>
+        <div class="cb-bottom">
+            <div class="cb-toggle-item">
+                <label class="cb-toggle"><input type="checkbox" id="cb-necessary" checked disabled><span class="cb-track"></span></label>
+                <span class="cb-toggle-label" data-i18n="necessary">Necessary</span>
+            </div>
+            <div class="cb-toggle-item">
+                <label class="cb-toggle"><input type="checkbox" id="cb-analytics" checked><span class="cb-track"></span></label>
+                <span class="cb-toggle-label" data-i18n="analytics">Analytics</span>
+            </div>
+            <div class="cb-toggle-item">
+                <label class="cb-toggle"><input type="checkbox" id="cb-marketing" checked><span class="cb-track"></span></label>
+                <span class="cb-toggle-label" data-i18n="marketing">Marketing</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const translations = {
+        en: {
+            heroBadge: "Free to start — no credit card required",
+            heroTitle: "Your first B2B match<br>is 3 steps away",
+            heroSubtitle: "Create your account, build your company profile, and let our AI find your best cross-border matches — for free. Unlock full contact when you're ready.",
+            progressLabel: "Your journey", progressStep: "Step 1 of 4",
+            stepsTag: "How to get started", stepsTitle: "From zero to your first match",
+            stepsSubtitle: "Follow these steps and see real companies compatible with yours — before spending anything.",
+            free: "Free",
+            step1Title: "Create your free account", step1Desc: "Sign up with your company email. Takes less than 2 minutes. No credit card, no commitment — just your business information.", step1Cta: "Create account now",
+            step2Title: "Build your company profile", step2Desc: "Tell our AI about your sector, goals, target markets and ideal partner. The more detail you add, the better your matches will be.", step2Cta: "Start your profile",
+            step3Title: "See your AI matches", step3Desc: "Our AI analyzes 50+ compatibility signals and shows your best matches — company name, country, sector, and compatibility score. All visible for free.", step3Cta: "See your matches",
+            step4Title: "Contact your matches", step4Desc: "When you find a match you want to connect with, choose a plan to unlock direct messaging, full company details, and AI Concierge introductions.", step4Cta: "View plans & unlock",
+            unlockRequired: "Requires a plan",
+            unlockTag: "Ready to connect?", unlockTitle: "Choose your plan when you're ready", unlockSubtitle: "You only pay when you want to contact a match. Start free, upgrade anytime.",
+            planStarter: "Starter", planStarterDesc: "5 matches/month · Events · Basic feed", planStarterBtn: "Get Started",
+            planBusiness: "Business", planBusinessDesc: "Unlimited matches · AI Concierge · Priority", planBusinessBtn: "Join Business",
+            planPartner: "Partner", planPartnerDesc: "Custom criteria · Brand visibility · Manager", planPartnerBtn: "Contact Sales",
+            foundingNote: "🏆 First 50 members get <strong>lifetime pricing at 50% off</strong> — ", foundingLink: "reserve your Founding Member spot →",
+            faqTag: "Common questions", faqTitle: "What people ask before starting",
+            faq1Q: "Is it really free to start?", faq1A: "Yes. Creating an account, building your profile, and seeing your matches is completely free. You only pay when you want to contact a match.",
+            faq2Q: "How does the AI matching work?", faq2A: "Our algorithm analyzes 50+ signals including industry fit, growth stage, business culture, geographic goals, and strategic objectives to find true compatibility.",
+            faq3Q: "What can I see before paying?", faq3A: "You can see the company name, country, sector, compatibility score, and a brief description of each match. Full contact details require a plan.",
+            faq4Q: "Is my data safe and GDPR compliant?", faq4A: "Yes. All profiles are verified and data is handled in full compliance with GDPR. Your information is never shared without your explicit consent.",
+            faq5Q: "Which countries are on the platform?", faq5A: "Oslo Meet connects companies across Europe, Brazil, China, and the Nordic countries. New regions are added as we grow.",
+            faq6Q: "Can I cancel anytime?", faq6A: "Yes. All plans can be cancelled at any time. Founding Member pricing is locked for life as long as you stay active.",
+            footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics.",
+            navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing", navDashboard: "Dashboard",
+            navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact", navSupport: "Support",
+            navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights",
+            cookieTitle: "PRIVACY & COOKIES", cookieText: "We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our", cookiePolicy: "Privacy Policy",
+            necessary: "Necessary", analytics: "Analytics", marketing: "Marketing",
+            saveChoice: "SAVE CHOICE", acceptAll: "ACCEPT ALL", reject: "REJECT"
+        },
+        pt: {
+            heroBadge: "Gratuito para começar — sem cartão de crédito",
+            heroTitle: "Seu primeiro match B2B<br>está a 3 passos",
+            heroSubtitle: "Crie sua conta, monte o perfil da empresa e deixe nossa IA encontrar seus melhores matches internacionais — de graça. Desbloqueie o contato quando estiver pronto.",
+            progressLabel: "Sua jornada", progressStep: "Passo 1 de 4",
+            stepsTag: "Como começar", stepsTitle: "Do zero ao seu primeiro match",
+            stepsSubtitle: "Siga esses passos e veja empresas compatíveis com a sua — antes de pagar qualquer coisa.",
+            free: "Grátis",
+            step1Title: "Crie sua conta gratuita", step1Desc: "Cadastre-se com o e-mail da empresa. Leva menos de 2 minutos. Sem cartão de crédito, sem compromisso — só suas informações empresariais.", step1Cta: "Criar conta agora",
+            step2Title: "Monte o perfil da empresa", step2Desc: "Conte à nossa IA sobre seu setor, objetivos, mercados-alvo e parceiro ideal. Quanto mais detalhes, melhores serão seus matches.", step2Cta: "Começar o perfil",
+            step3Title: "Veja seus matches com IA", step3Desc: "Nossa IA analisa 50+ sinais de compatibilidade e mostra seus melhores matches — nome da empresa, país, setor e score. Tudo visível gratuitamente.", step3Cta: "Ver meus matches",
+            step4Title: "Entre em contato com seus matches", step4Desc: "Quando encontrar um match que queira conectar, escolha um plano para desbloquear mensagens diretas, dados completos da empresa e introduções por IA.", step4Cta: "Ver planos e desbloquear",
+            unlockRequired: "Requer um plano",
+            unlockTag: "Pronto para conectar?", unlockTitle: "Escolha seu plano quando estiver pronto", unlockSubtitle: "Você só paga quando quiser contatar um match. Comece grátis, faça upgrade quando quiser.",
+            planStarter: "Starter", planStarterDesc: "5 matches/mês · Eventos · Feed básico", planStarterBtn: "Começar",
+            planBusiness: "Business", planBusinessDesc: "Matches ilimitados · IA Concierge · Prioridade", planBusinessBtn: "Entrar Business",
+            planPartner: "Partner", planPartnerDesc: "Critérios personalizados · Marca · Gestor", planPartnerBtn: "Falar com Vendas",
+            foundingNote: "🏆 Os primeiros 50 membros ganham <strong>preço vitalício com 50% de desconto</strong> — ", foundingLink: "reserve sua vaga de Founding Member →",
+            faqTag: "Dúvidas frequentes", faqTitle: "O que as pessoas perguntam antes de começar",
+            faq1Q: "É realmente grátis para começar?", faq1A: "Sim. Criar conta, montar o perfil e ver seus matches é completamente gratuito. Você só paga quando quiser entrar em contato com um match.",
+            faq2Q: "Como funciona o matching com IA?", faq2A: "Nosso algoritmo analisa 50+ sinais como fit de indústria, estágio de crescimento, cultura empresarial, objetivos geográficos e estratégicos para encontrar compatibilidade real.",
+            faq3Q: "O que posso ver antes de pagar?", faq3A: "Você vê o nome da empresa, país, setor, score de compatibilidade e uma breve descrição de cada match. Os dados completos de contato requerem um plano.",
+            faq4Q: "Meus dados estão seguros e em conformidade com a LGPD?", faq4A: "Sim. Todos os perfis são verificados e os dados são tratados em total conformidade com LGPD e GDPR. Sua informação nunca é compartilhada sem seu consentimento explícito.",
+            faq5Q: "Quais países estão na plataforma?", faq5A: "A Oslo Meet conecta empresas da Europa, Brasil, China e países nórdicos. Novas regiões são adicionadas conforme crescemos.",
+            faq6Q: "Posso cancelar a qualquer momento?", faq6A: "Sim. Todos os planos podem ser cancelados a qualquer momento. O preço de Founding Member é garantido para sempre enquanto você permanecer ativo.",
+            footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos.",
+            navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços", navDashboard: "Painel",
+            navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato", navSupport: "Suporte",
+            navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR",
+            cookieTitle: "PRIVACIDADE & COOKIES", cookieText: "Utilizamos cookies para analisar o tráfego e personalizar anúncios. Você pode escolher quais aceitar. Leia nossa", cookiePolicy: "Política de Privacidade",
+            necessary: "Necessários", analytics: "Analytics", marketing: "Marketing",
+            saveChoice: "SALVAR ESCOLHA", acceptAll: "ACEITAR TUDO", reject: "RECUSAR"
+        },
+        no: {
+            heroBadge: "Gratis å starte — ingen kredittkort nødvendig",
+            heroTitle: "Din første B2B-match<br>er 3 trinn unna",
+            heroSubtitle: "Opprett kontoen din, bygg bedriftsprofilen din og la vår AI finne dine beste grenseoverskridende matcher — gratis. Lås opp full kontakt når du er klar.",
+            progressLabel: "Din reise", progressStep: "Trinn 1 av 4",
+            stepsTag: "Slik kommer du i gang", stepsTitle: "Fra null til din første match",
+            stepsSubtitle: "Følg disse trinnene og se ekte selskaper som er kompatible med ditt — uten å betale noe.",
+            free: "Gratis",
+            step1Title: "Opprett din gratis konto", step1Desc: "Registrer deg med bedriftens e-post. Tar mindre enn 2 minutter. Ingen kredittkort, ingen forpliktelse — bare bedriftsinformasjonen din.", step1Cta: "Opprett konto nå",
+            step2Title: "Bygg bedriftsprofilen din", step2Desc: "Fortell vår AI om sektor, mål, målmarkeder og ideell partner. Jo mer detaljer du legger til, desto bedre matcher får du.", step2Cta: "Start profilen din",
+            step3Title: "Se dine AI-matcher", step3Desc: "Vår AI analyserer 50+ kompatibilitetssignaler og viser dine beste matcher — selskapsnavn, land, sektor og score. Alt synlig gratis.", step3Cta: "Se matchene dine",
+            step4Title: "Kontakt matchene dine", step4Desc: "Når du finner en match du vil koble deg med, velg en plan for å låse opp direktemeldinger, full bedriftsinformasjon og AI Concierge-introduksjoner.", step4Cta: "Se planer og lås opp",
+            unlockRequired: "Krever en plan",
+            unlockTag: "Klar til å koble deg?", unlockTitle: "Velg planen din når du er klar", unlockSubtitle: "Du betaler kun når du vil kontakte en match. Start gratis, oppgrader når som helst.",
+            planStarter: "Starter", planStarterDesc: "5 matcher/mnd · Arrangementer · Grunnleggende feed", planStarterBtn: "Kom i gang",
+            planBusiness: "Business", planBusinessDesc: "Ubegrensede matcher · AI Concierge · Prioritet", planBusinessBtn: "Bli med Business",
+            planPartner: "Partner", planPartnerDesc: "Tilpassede kriterier · Merkevare · Manager", planPartnerBtn: "Kontakt salg",
+            foundingNote: "🏆 Første 50 medlemmer får <strong>livstidsprising med 50% rabatt</strong> — ", foundingLink: "reserver din grunnleggerplass →",
+            faqTag: "Vanlige spørsmål", faqTitle: "Hva folk spør om før de starter",
+            faq1Q: "Er det virkelig gratis å starte?", faq1A: "Ja. Å opprette en konto, bygge profilen din og se matchene dine er helt gratis. Du betaler kun når du vil kontakte en match.",
+            faq2Q: "Hvordan fungerer AI-matching?", faq2A: "Algoritmen vår analyserer 50+ signaler inkludert bransjefitness, vekstfase, bedriftskultur, geografiske mål og strategiske mål for å finne ekte kompatibilitet.",
+            faq3Q: "Hva kan jeg se før jeg betaler?", faq3A: "Du kan se selskapsnavn, land, sektor, kompatibilitetspoeng og en kort beskrivelse av hver match. Fullstendige kontaktdetaljer krever en plan.",
+            faq4Q: "Er dataene mine trygge og GDPR-kompatible?", faq4A: "Ja. Alle profiler er verifisert og data håndteres i full samsvar med GDPR. Informasjonen din deles aldri uten ditt eksplisitte samtykke.",
+            faq5Q: "Hvilke land er på plattformen?", faq5A: "Oslo Meet kobler selskaper i Europa, Brasil, Kina og de nordiske landene. Nye regioner legges til etter hvert som vi vokser.",
+            faq6Q: "Kan jeg avbestille når som helst?", faq6A: "Ja. Alle planer kan avbestilles når som helst. Grunnleggerprising er låst for alltid så lenge du er aktiv.",
+            footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden.",
+            navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser", navDashboard: "Dashbord",
+            navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt", navSupport: "Støtte",
+            navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter",
+            cookieTitle: "PERSONVERN & COOKIES", cookieText: "Vi bruker cookies for å analysere trafikk og tilpasse annonser. Du kan velge hvilke du vil godta. Les vår", cookiePolicy: "Personvernerklæring",
+            necessary: "Nødvendige", analytics: "Analyse", marketing: "Markedsføring",
+            saveChoice: "LAGRE VALG", acceptAll: "ACCEPTER ALLE", reject: "AVVIS"
+        },
+        es: {
+            heroBadge: "Gratis para empezar — sin tarjeta de crédito",
+            heroTitle: "Tu primer match B2B<br>está a 3 pasos",
+            heroSubtitle: "Crea tu cuenta, construye el perfil de tu empresa y deja que nuestra IA encuentre tus mejores matches transfronterizos — gratis. Desbloquea el contacto cuando estés listo.",
+            progressLabel: "Tu viaje", progressStep: "Paso 1 de 4",
+            stepsTag: "Cómo empezar", stepsTitle: "De cero a tu primer match",
+            stepsSubtitle: "Sigue estos pasos y ve empresas reales compatibles con la tuya — antes de pagar nada.",
+            free: "Gratis",
+            step1Title: "Crea tu cuenta gratuita", step1Desc: "Regístrate con el correo de tu empresa. Tarda menos de 2 minutos. Sin tarjeta de crédito, sin compromiso — solo tu información empresarial.", step1Cta: "Crear cuenta ahora",
+            step2Title: "Construye el perfil de tu empresa", step2Desc: "Cuéntale a nuestra IA sobre tu sector, objetivos, mercados objetivo y socio ideal. Cuantos más detalles agregues, mejores serán tus matches.", step2Cta: "Empezar el perfil",
+            step3Title: "Ve tus matches con IA", step3Desc: "Nuestra IA analiza 50+ señales de compatibilidad y muestra tus mejores matches — nombre de empresa, país, sector y puntuación. Todo visible gratis.", step3Cta: "Ver mis matches",
+            step4Title: "Contacta tus matches", step4Desc: "Cuando encuentres un match con el que quieras conectar, elige un plan para desbloquear mensajes directos, datos completos de la empresa e introducciones por IA.", step4Cta: "Ver planes y desbloquear",
+            unlockRequired: "Requiere un plan",
+            unlockTag: "¿Listo para conectar?", unlockTitle: "Elige tu plan cuando estés listo", unlockSubtitle: "Solo pagas cuando quieres contactar a un match. Empieza gratis, actualiza cuando quieras.",
+            planStarter: "Starter", planStarterDesc: "5 matches/mes · Eventos · Feed básico", planStarterBtn: "Comenzar",
+            planBusiness: "Business", planBusinessDesc: "Matches ilimitados · IA Concierge · Prioridad", planBusinessBtn: "Unirse Business",
+            planPartner: "Partner", planPartnerDesc: "Criterios personalizados · Marca · Manager", planPartnerBtn: "Hablar con Ventas",
+            foundingNote: "🏆 Los primeros 50 miembros obtienen <strong>precio vitalicio con 50% de descuento</strong> — ", foundingLink: "reserva tu plaza de Founding Member →",
+            faqTag: "Preguntas frecuentes", faqTitle: "Lo que la gente pregunta antes de empezar",
+            faq1Q: "¿Es realmente gratis empezar?", faq1A: "Sí. Crear una cuenta, construir tu perfil y ver tus matches es completamente gratis. Solo pagas cuando quieres contactar a un match.",
+            faq2Q: "¿Cómo funciona el matching con IA?", faq2A: "Nuestro algoritmo analiza 50+ señales como encaje de industria, etapa de crecimiento, cultura empresarial, objetivos geográficos y estratégicos para encontrar compatibilidad real.",
+            faq3Q: "¿Qué puedo ver antes de pagar?", faq3A: "Puedes ver el nombre de la empresa, país, sector, puntuación de compatibilidad y una breve descripción de cada match. Los datos completos de contacto requieren un plan.",
+            faq4Q: "¿Mis datos están seguros y cumplen con GDPR?", faq4A: "Sí. Todos los perfiles son verificados y los datos se manejan en pleno cumplimiento del GDPR. Tu información nunca se comparte sin tu consentimiento explícito.",
+            faq5Q: "¿Qué países están en la plataforma?", faq5A: "Oslo Meet conecta empresas de Europa, Brasil, China y los países nórdicos. Se añaden nuevas regiones a medida que crecemos.",
+            faq6Q: "¿Puedo cancelar en cualquier momento?", faq6A: "Sí. Todos los planes se pueden cancelar en cualquier momento. El precio de Founding Member está bloqueado de por vida mientras permanezcas activo.",
+            footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos.",
+            navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona", navJoin: "Unirse Ahora", navPricing: "Precios", navDashboard: "Panel",
+            navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto", navSupport: "Soporte",
+            navLegal: "Legal", navTerms: "Términos", navPrivacy: "Privacidad", navCookies: "Cookies", navGDPR: "Derechos GDPR",
+            cookieTitle: "PRIVACIDAD & COOKIES", cookieText: "Utilizamos cookies para analizar el tráfico y personalizar anuncios. Puedes elegir cuáles aceptar. Lee nuestra", cookiePolicy: "Política de Privacidad",
+            necessary: "Necesarios", analytics: "Analytics", marketing: "Marketing",
+            saveChoice: "GUARDAR ELECCIÓN", acceptAll: "ACEPTAR TODO", reject: "RECHAZAR"
+        }
+    };
+
+    function changeLanguage(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang]?.[key]) el.innerHTML = translations[lang][key];
+        });
+        document.documentElement.lang = lang;
+        localStorage.setItem('preferredLanguage', lang);
+        if (window.cookieBannerAPI) window.cookieBannerAPI.updateLanguage(lang);
+    }
+
+    function initCookieBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (!banner) return;
+        const consentKey = 'oslomeet_cookieConsent';
+        const cbAccept = document.getElementById('cb-accept');
+        const cbSave = document.getElementById('cb-save');
+        const cbReject = document.getElementById('cb-reject');
+        const cbAnalytics = document.getElementById('cb-analytics');
+        const cbMarketing = document.getElementById('cb-marketing');
+
+        function getPrefs() { return { necessary: true, analytics: cbAnalytics?.checked||false, marketing: cbMarketing?.checked||false, timestamp: new Date().toISOString() }; }
+        function savePrefs(p) {
+            localStorage.setItem(consentKey, JSON.stringify(p));
+            banner.classList.remove('show');
+            setTimeout(() => banner.classList.add('hidden'), 400);
+        }
+
+        if (!localStorage.getItem(consentKey)) {
+            setTimeout(() => { banner.classList.remove('hidden'); banner.classList.add('show'); }, 1500);
+        } else {
+            banner.classList.add('hidden');
+        }
+
+        cbAccept?.addEventListener('click', () => { if(cbAnalytics) cbAnalytics.checked=true; if(cbMarketing) cbMarketing.checked=true; savePrefs(getPrefs()); });
+        cbSave?.addEventListener('click', () => savePrefs(getPrefs()));
+        cbReject?.addEventListener('click', () => { if(cbAnalytics) cbAnalytics.checked=false; if(cbMarketing) cbMarketing.checked=false; savePrefs(getPrefs()); });
+
+        return { updateLanguage: (lang) => changeLanguage(lang) };
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const saved = localStorage.getItem('preferredLanguage') || 'en';
+        document.getElementById('languageSelect').value = saved;
+        changeLanguage(saved);
+
+        window.cookieBannerAPI = initCookieBanner();
+
+        // Scroll animations
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.step-card, .faq-item, .plan-mini').forEach(el => observer.observe(el));
+    });
+    </script>
+
+</body>
+</html>
