@@ -288,10 +288,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="kpi-val" id="topScore">0%</div>
         <div class="kpi-note"><i class="fas fa-chart-bar"></i> <span data-i18n="statScoreNote">Compatibility</span></div>
       </div>
-      <div class="kpi clickable" onclick="openMessages()">
+      <div class="kpi clickable" id="msgKpi" onclick="openMessages()">
         <div class="kpi-bar" style="background:linear-gradient(90deg,#06b6d4,#3b82f6)"></div>
-        <div class="kpi-arrow"><i class="fas fa-arrow-right"></i></div>
-        <div class="kpi-top"><div class="kpi-lbl" data-i18n="statMessages">Messages</div><div class="kpi-ico" style="background:var(--c-dim);color:var(--cyan)"><i class="fas fa-comments"></i></div></div>
+        <div class="kpi-arrow" id="msgKpiArrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="kpi-top"><div class="kpi-lbl" data-i18n="statMessages">Messages</div><div class="kpi-ico" style="background:var(--c-dim);color:var(--cyan)" id="msgKpiIco"><i class="fas fa-comments"></i></div></div>
         <div class="kpi-val" id="messageCount">0</div>
         <div class="kpi-note" id="msgNote"><i class="fas fa-inbox"></i> <span data-i18n="statMsgNote">Conversations</span></div>
       </div>
@@ -383,16 +383,22 @@ const PAID_PLANS=['starter','business','partner'];
 
 /* ── PLAN GATE ── */
 async function checkPlan(company){
-  // Check subscriptions table first
-  const{data:sub}=await db.from('subscriptions').select('plan,status')
-    .eq('company_id',company.id).eq('status','active').maybeSingle();
-  if(sub&&PAID_PLANS.includes(sub.plan)){
-    await db.from('companies').update({plan:sub.plan}).eq('id',company.id);
-    return true;
+  try{
+    // Check subscriptions table first
+    const{data:sub,error:subErr}=await db.from('subscriptions').select('plan,status')
+      .eq('company_id',company.id).eq('status','active').maybeSingle();
+    if(!subErr&&sub&&PAID_PLANS.includes(sub.plan)){
+      await db.from('companies').update({plan:sub.plan}).eq('id',company.id);
+      return true;
+    }
+    // Fallback: check plan field on companies
+    const{data:co,error:coErr}=await db.from('companies').select('plan').eq('id',company.id).maybeSingle();
+    if(!coErr&&co&&co.plan&&PAID_PLANS.includes(co.plan)) return true;
+    return false;
+  }catch(e){
+    console.warn('checkPlan error:',e);
+    return false;
   }
-  // Fallback: check plan field on companies
-  const{data:co}=await db.from('companies').select('plan').eq('id',company.id).maybeSingle();
-  return co?.plan&&PAID_PLANS.includes(co.plan);
 }
 
 function showUpgradeWall(lang){
@@ -416,7 +422,13 @@ async function doLogout(){
   window.location.replace('login.html');
 }
 
-function openMessages(){window.location.href='messages.html';}
+async function openMessages(){
+  if(!currentCompany){window.location.href='messages.html';return;}
+  const lang=localStorage.getItem('preferredLanguage')||'en';
+  const hasPlan=await checkPlan(currentCompany);
+  if(!hasPlan){showUpgradeWall(lang);return;}
+  window.location.href='messages.html';
+}
 
 /* ── CONVERSATION ── */
 async function startConversation(matchedCompanyId,matchedCompanyName){
@@ -548,8 +560,16 @@ async function loadDashboard(){
   document.getElementById('loadingScreen').style.display='none';
   g('dashboard').style.display='block';
 
-  // If no plan: show upgrade wall on top
+  // If no plan: show upgrade wall on top + lock messages KPI
   if(!hasPlan){
+    // Lock the messages KPI card visually
+    const msgIco=g('msgKpiIco');
+    if(msgIco)msgIco.innerHTML='<i class="fas fa-lock"></i>';
+    const msgArrow=g('msgKpiArrow');
+    if(msgArrow)msgArrow.innerHTML='<i class="fas fa-lock" style="opacity:.5"></i>';
+    // Also lock sidebar messages button
+    const navMsgDot=g('navMsgDot');
+    if(navMsgDot){navMsgDot.style.background='var(--amber)';}
     showUpgradeWall(lang);
   }
 
