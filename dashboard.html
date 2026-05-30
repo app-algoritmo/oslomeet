@@ -397,29 +397,18 @@ const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentCompany=null, messagesSubscription=null;
 const PAID_PLANS=['starter','business','partner'];
 
-/* ── PLAN GATE ── */
+/* ── PLAN GATE — always show modal for unpaid users ──
+   To unlock: set company.plan = 'starter'|'business'|'partner' in Supabase
+   after Stripe payment via webhook */
 async function checkPlan(company){
   try{
-    // Get current session user_id
     const{data:{session}}=await db.auth.getSession();
     const userId=session?.user?.id;
     if(!userId) return false;
-
-    // 1. Check subscriptions table
-    const{data:sub,error:subErr}=await db.from('subscriptions').select('plan,status')
-      .eq('company_id',company.id).eq('status','active').maybeSingle();
-    if(!subErr&&sub&&PAID_PLANS.includes(sub.plan)) return true;
-
-    // 2. Check plan on companies — use user_id (RLS-safe)
-    const{data:co,error:coErr}=await db.from('companies').select('plan')
+    const{data:co}=await db.from('companies').select('plan')
       .eq('user_id',userId).maybeSingle();
-    if(!coErr&&co&&co.plan&&PAID_PLANS.includes(co.plan)) return true;
-
-    return false;
-  }catch(e){
-    console.warn('checkPlan error:',e);
-    return false;
-  }
+    return !!(co?.plan && PAID_PLANS.includes(co.plan));
+  }catch(e){ return false; }
 }
 
 function showPlanModal(lang){
@@ -452,10 +441,10 @@ async function doLogout(){
 }
 
 async function openMessages(){
-  if(!currentCompany){window.location.href='messages.html';return;}
+  if(!currentCompany){showPlanModal();return;}
   const lang=localStorage.getItem('preferredLanguage')||'en';
   const hasPlan=await checkPlan(currentCompany);
-  if(!hasPlan){showUpgradeWall(lang);return;}
+  if(!hasPlan){showPlanModal(lang);return;}
   window.location.href='messages.html';
 }
 
@@ -584,19 +573,17 @@ async function loadDashboard(){
   }
 
   // Render matches — with or without connect button depending on plan
-  renderMatches(matches, hasPlan);
+  renderMatches(matches, hasPlan); // hasPlan controls lock button
 
   document.getElementById('loadingScreen').style.display='none';
   g('dashboard').style.display='block';
 
-  // If no plan: show lock indicators on UI (no auto-popup)
+  // Show lock indicators when no plan
   if(!hasPlan){
-    // Lock icon on messages KPI
     const msgIco=g('msgKpiIco');
     if(msgIco)msgIco.innerHTML='<i class="fas fa-lock" style="color:var(--amber)"></i>';
     const msgArrow=g('msgKpiArrow');
     if(msgArrow)msgArrow.innerHTML='';
-    // Lock chip on sidebar messages nav
     const planChip=g('navPlanChip');
     if(planChip)planChip.style.display='';
   }
