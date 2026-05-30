@@ -400,27 +400,24 @@ const PAID_PLANS=['starter','business','partner'];
 /* ── PLAN GATE ── */
 async function checkPlan(company){
   try{
-    console.log('[checkPlan] checking company:', company.id);
-    // Check subscriptions table first
+    // Get current session user_id
+    const{data:{session}}=await db.auth.getSession();
+    const userId=session?.user?.id;
+    if(!userId) return false;
+
+    // 1. Check subscriptions table
     const{data:sub,error:subErr}=await db.from('subscriptions').select('plan,status')
       .eq('company_id',company.id).eq('status','active').maybeSingle();
-    console.log('[checkPlan] sub result:', sub, 'error:', subErr?.message);
-    if(!subErr&&sub&&PAID_PLANS.includes(sub.plan)){
-      await db.from('companies').update({plan:sub.plan}).eq('id',company.id);
-      console.log('[checkPlan] → true (subscription)');
-      return true;
-    }
-    // Fallback: check plan field on companies
-    const{data:co,error:coErr}=await db.from('companies').select('plan').eq('id',company.id).maybeSingle();
-    console.log('[checkPlan] company plan:', co?.plan, 'error:', coErr?.message);
-    if(!coErr&&co&&co.plan&&PAID_PLANS.includes(co.plan)){
-      console.log('[checkPlan] → true (company.plan)');
-      return true;
-    }
-    console.log('[checkPlan] → false (no active plan)');
+    if(!subErr&&sub&&PAID_PLANS.includes(sub.plan)) return true;
+
+    // 2. Check plan on companies — use user_id (RLS-safe)
+    const{data:co,error:coErr}=await db.from('companies').select('plan')
+      .eq('user_id',userId).maybeSingle();
+    if(!coErr&&co&&co.plan&&PAID_PLANS.includes(co.plan)) return true;
+
     return false;
   }catch(e){
-    console.warn('[checkPlan] exception:', e);
+    console.warn('checkPlan error:',e);
     return false;
   }
 }
@@ -586,7 +583,6 @@ async function loadDashboard(){
     g('topScore').textContent=Math.round(matches[0].compatibility_score*100)+'%';
   }
 
-  console.log('[loadDashboard] hasPlan:', hasPlan, '| company:', company.name);
   // Render matches — with or without connect button depending on plan
   renderMatches(matches, hasPlan);
 
