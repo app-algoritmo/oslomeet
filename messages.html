@@ -18,52 +18,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-
 <style>
 :root{
-  --bg:#0a0d18;
-  --nav:#0d1024;
-  --surface:#10152a;
-  --card:#141a2e;
-  --card2:#182038;
-  --border:#1f2d4a;
-  --border2:#2a3d65;
-  --text:#e8ecf8;
-  --sub:#7b8db8;
-  --muted:#3a4d70;
-  --accent:#8b5cf6;
-  --accent2:#3b82f6;
-  --green:#10b981;
-  --red:#f43f5e;
-  --amber:#f59e0b;
-  --p-dim:rgba(139,92,246,.12);
-  --b-dim:rgba(59,130,246,.12);
-  --g-dim:rgba(16,185,129,.1);
-  --r-dim:rgba(244,63,94,.1);
-  --grad:linear-gradient(135deg,#8b5cf6,#3b82f6);
-  --grad-msg:linear-gradient(135deg,#6d28d9,#2563eb);
-  --r:12px;
-  --conv-w:300px;
+  --bg:#0a0d18;--nav:#0d1024;--surface:#10152a;--card:#141a2e;--card2:#182038;
+  --border:#1f2d4a;--border2:#2a3d65;--text:#e8ecf8;--sub:#7b8db8;--muted:#3a4d70;
+  --accent:#8b5cf6;--accent2:#3b82f6;--green:#10b981;--red:#f43f5e;--amber:#f59e0b;
+  --p-dim:rgba(139,92,246,.12);--b-dim:rgba(59,130,246,.12);--g-dim:rgba(16,185,129,.1);
+  --r-dim:rgba(244,63,94,.1);--grad:linear-gradient(135deg,#8b5cf6,#3b82f6);
+  --grad-msg:linear-gradient(135deg,#6d28d9,#2563eb);--r:12px;--conv-w:300px;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
-
-/* ── LOADING ── */
 #loadingScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;z-index:9999}
 .spin{width:36px;height:36px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:rot .8s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
 #loadingScreen p{color:var(--sub);font-size:13px;letter-spacing:.04em}
-
-/* ── APP SHELL ── */
 #app{display:none;height:100vh;flex-direction:column}
-
-/* ── TOP BAR ── */
-.topbar{
-  flex-shrink:0;height:52px;
-  background:var(--nav);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;padding:0 1rem;gap:.875rem;
-}
+.topbar{flex-shrink:0;height:52px;background:var(--nav);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1rem;gap:.875rem}
 .tb-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
 .tb-logo img{height:22px;width:auto}
 .tb-logo-sep{width:1px;height:16px;background:var(--border)}
@@ -76,80 +48,36 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .tb-email{font-size:.72rem;color:var(--sub);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tb-logout{background:none;border:none;color:var(--muted);cursor:pointer;padding:3px 5px;border-radius:5px;font-size:.75rem;transition:.15s}
 .tb-logout:hover{color:var(--text)}
-
-/* ── BODY ROW ── */
 .body-row{flex:1;display:flex;overflow:hidden;min-height:0}
-
-/* ── CONVERSATIONS PANEL ── */
-.conv-panel{
-  width:var(--conv-w);flex-shrink:0;
-  display:flex;flex-direction:column;
-  background:var(--nav);border-right:1px solid var(--border);
-}
-.conv-head{
-  flex-shrink:0;padding:.875rem 1rem;
-  border-bottom:1px solid var(--border);
-  display:flex;flex-direction:column;gap:.625rem;
-}
+.conv-panel{width:var(--conv-w);flex-shrink:0;display:flex;flex-direction:column;background:var(--nav);border-right:1px solid var(--border)}
+.conv-head{flex-shrink:0;padding:.875rem 1rem;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:.625rem}
 .conv-head-top{display:flex;align-items:center;justify-content:space-between}
 .conv-title{font-size:.85rem;font-weight:700}
 .conv-count{font-size:.7rem;color:var(--sub);padding:2px 7px;background:var(--p-dim);color:var(--accent);border-radius:20px}
-
-/* Search */
 .search-wrap{position:relative}
 .search-wrap i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.75rem;pointer-events:none}
 .conv-search{width:100%;padding:7px 10px 7px 28px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:.78rem;outline:none;transition:.15s}
 .conv-search:focus{border-color:var(--accent)}
 .conv-search::placeholder{color:var(--muted)}
-
-/* List */
 .conv-list{flex:1;overflow-y:auto;padding:.5rem}
 .conv-list::-webkit-scrollbar{width:4px}
-.conv-list::-webkit-scrollbar-track{background:transparent}
 .conv-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
-.conv-item{
-  display:flex;align-items:center;gap:.75rem;
-  padding:.75rem .875rem;border-radius:10px;cursor:pointer;
-  transition:background .15s;margin-bottom:2px;
-  border:1px solid transparent;
-  position:relative;
-}
+.conv-item{display:flex;align-items:center;gap:.75rem;padding:.75rem .875rem;border-radius:10px;cursor:pointer;transition:background .15s;margin-bottom:2px;border:1px solid transparent;position:relative}
 .conv-item:hover{background:rgba(255,255,255,.04)}
 .conv-item.active{background:var(--p-dim);border-color:rgba(139,92,246,.2)}
 .conv-item.active .ci-name{color:var(--text)}
 .conv-item.unread .ci-name{color:var(--text);font-weight:600}
-.conv-item.unread .ci-preview{color:var(--sub)}
-
-.ci-av{
-  width:38px;height:38px;border-radius:10px;
-  background:var(--grad);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:.9rem;flex-shrink:0;
-  position:relative;
-}
-.ci-av-online{position:absolute;bottom:-1px;right:-1px;width:9px;height:9px;background:var(--green);border:2px solid var(--nav);border-radius:50%}
-
+.ci-av{width:38px;height:38px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0;position:relative}
 .ci-body{flex:1;min-width:0}
 .ci-name{font-size:.82rem;font-weight:500;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--sub)}
 .ci-preview{font-size:.73rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3}
-
 .ci-meta{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
 .ci-time{font-size:.65rem;color:var(--muted)}
 .ci-badge{background:var(--accent);color:#fff;font-size:.62rem;font-weight:700;padding:2px 6px;border-radius:20px;min-width:18px;text-align:center}
-
 .conv-empty{padding:2rem;text-align:center;color:var(--muted);font-size:.8rem}
 .conv-empty i{display:block;font-size:1.5rem;margin-bottom:.75rem;color:var(--border2)}
-
-/* ── CHAT PANEL ── */
 .chat-panel{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--bg)}
-
-/* Chat header */
-.chat-head{
-  flex-shrink:0;padding:.875rem 1.25rem;
-  background:var(--nav);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:.875rem;
-}
+.chat-head{flex-shrink:0;padding:.875rem 1.25rem;background:var(--nav);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.875rem}
 .ch-av{width:36px;height:36px;border-radius:9px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
 .ch-name{font-size:.9rem;font-weight:600}
 .ch-status{font-size:.7rem;color:var(--sub);margin-top:1px;display:flex;align-items:center;gap:4px}
@@ -157,58 +85,28 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .ch-spacer{flex:1}
 .ch-action{width:30px;height:30px;background:none;border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--sub);font-size:.75rem;transition:.15s}
 .ch-action:hover{border-color:var(--border2);color:var(--text)}
-
-/* Empty state */
-.chat-empty{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  color:var(--sub);text-align:center;padding:2rem;
-}
-.chat-empty-icon{
-  width:72px;height:72px;background:var(--p-dim);border:1px solid rgba(139,92,246,.15);
-  border-radius:20px;display:flex;align-items:center;justify-content:center;
-  font-size:1.8rem;color:var(--accent);margin-bottom:1.25rem;
-}
+.chat-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--sub);text-align:center;padding:2rem}
+.chat-empty-icon{width:72px;height:72px;background:var(--p-dim);border:1px solid rgba(139,92,246,.15);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:var(--accent);margin-bottom:1.25rem}
 .chat-empty h3{font-size:1rem;font-weight:600;margin-bottom:.5rem}
 .chat-empty p{font-size:.82rem;color:var(--muted);line-height:1.6;max-width:280px}
-
-/* Messages area */
 .msgs-wrap{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}
 .msgs-wrap::-webkit-scrollbar{width:4px}
-.msgs-wrap::-webkit-scrollbar-track{background:transparent}
 .msgs-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-
-/* Date divider */
 .date-div{display:flex;align-items:center;gap:.75rem;margin:.75rem 0;color:var(--muted);font-size:.68rem}
 .date-div::before,.date-div::after{content:'';flex:1;height:1px;background:var(--border)}
-
-/* Message bubbles */
 .msg-row{display:flex;align-items:flex-end;gap:.5rem;max-width:72%}
 .msg-row.sent{align-self:flex-end;flex-direction:row-reverse}
 .msg-row.recv{align-self:flex-start}
-
 .msg-av-sm{width:26px;height:26px;border-radius:7px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.65rem;flex-shrink:0;margin-bottom:2px}
 .msg-av-sm.sent-av{background:var(--grad-msg)}
-
-.msg-bubble{
-  padding:.625rem .875rem;border-radius:14px;
-  font-size:.82rem;line-height:1.5;word-break:break-word;
-  position:relative;
-}
-.msg-row.recv .msg-bubble{
-  background:var(--card2);border:1px solid var(--border);
-  border-bottom-left-radius:4px;color:var(--text);
-}
-.msg-row.sent .msg-bubble{
-  background:var(--grad-msg);border:none;
-  border-bottom-right-radius:4px;color:#fff;
-}
+.msg-bubble{padding:.625rem .875rem;border-radius:14px;font-size:.82rem;line-height:1.5;word-break:break-word;position:relative}
+.msg-row.recv .msg-bubble{background:var(--card2);border:1px solid var(--border);border-bottom-left-radius:4px;color:var(--text)}
+.msg-row.sent .msg-bubble{background:var(--grad-msg);border:none;border-bottom-right-radius:4px;color:#fff}
 .msg-meta{display:flex;align-items:center;gap:4px;margin-top:3px;justify-content:flex-end}
 .msg-time{font-size:.62rem;color:rgba(255,255,255,.5)}
 .msg-row.recv .msg-time{color:var(--muted)}
 .msg-status{font-size:.65rem;color:rgba(255,255,255,.5)}
 .msg-status.read{color:#a78bfa}
-
-/* Typing indicator */
 .typing-row{display:flex;align-items:center;gap:.5rem;align-self:flex-start;display:none}
 .typing-row.show{display:flex}
 .typing-dots{display:flex;align-items:center;gap:3px;padding:.5rem .75rem;background:var(--card2);border:1px solid var(--border);border-radius:14px;border-bottom-left-radius:4px}
@@ -216,85 +114,76 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .typing-dot:nth-child(2){animation-delay:.15s}
 .typing-dot:nth-child(3){animation-delay:.3s}
 @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
-
-/* ── INPUT AREA ── */
-.input-area{
-  flex-shrink:0;
-  padding:.875rem 1.25rem;
-  background:var(--nav);
-  border-top:1px solid var(--border);
-}
+.input-area{flex-shrink:0;padding:.875rem 1.25rem;background:var(--nav);border-top:1px solid var(--border)}
 .input-row{display:flex;align-items:flex-end;gap:.75rem}
-.input-box{
-  flex:1;display:flex;align-items:flex-end;gap:.5rem;
-  background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:.5rem .875rem;transition:border-color .2s;
-}
+.input-box{flex:1;display:flex;align-items:flex-end;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.5rem .875rem;transition:border-color .2s}
 .input-box:focus-within{border-color:var(--accent)}
-.msg-textarea{
-  flex:1;background:none;border:none;color:var(--text);
-  font-family:'Inter',sans-serif;font-size:.85rem;outline:none;
-  resize:none;max-height:120px;min-height:22px;line-height:1.5;
-  padding:3px 0;
-}
+.msg-textarea{flex:1;background:none;border:none;color:var(--text);font-family:'Inter',sans-serif;font-size:.85rem;outline:none;resize:none;max-height:120px;min-height:22px;line-height:1.5;padding:3px 0}
 .msg-textarea::placeholder{color:var(--muted)}
-.send-btn{
-  width:38px;height:38px;flex-shrink:0;
-  background:var(--grad);border:none;border-radius:10px;
-  color:#fff;cursor:pointer;font-size:.875rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .2s,transform .15s;flex-shrink:0;
-}
+.send-btn{width:38px;height:38px;flex-shrink:0;background:var(--grad);border:none;border-radius:10px;color:#fff;cursor:pointer;font-size:.875rem;display:flex;align-items:center;justify-content:center;transition:opacity .2s,transform .15s}
 .send-btn:hover{opacity:.88;transform:scale(1.05)}
 .send-btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
 .send-btn.sending{animation:pulse-btn .6s infinite}
 @keyframes pulse-btn{0%,100%{opacity:1}50%{opacity:.5}}
-
 .input-hint{font-size:.65rem;color:var(--muted);margin-top:.375rem;padding:0 .25rem}
-
-/* ── MOBILE OVERLAY ── */
 .mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:49;backdrop-filter:blur(2px)}
 .mob-overlay.on{display:block}
-
-/* ── BACK BTN (mobile chat) ── */
 .ch-back{display:none;background:none;border:none;color:var(--sub);cursor:pointer;font-size:.9rem;padding:4px;flex-shrink:0}
-
-/* ── RESPONSIVE ── */
 @media(max-width:768px){
   :root{--conv-w:100vw}
-  .conv-panel{
-    position:fixed;top:52px;left:0;bottom:0;
-    width:var(--conv-w);z-index:50;
-    transform:translateX(0);transition:transform .25s cubic-bezier(.4,0,.2,1);
-  }
+  .conv-panel{position:fixed;top:52px;left:0;bottom:0;width:var(--conv-w);z-index:50;transform:translateX(0);transition:transform .25s cubic-bezier(.4,0,.2,1)}
   .conv-panel.hidden{transform:translateX(-100%)}
-  .ch-back{display:block}
-  .tb-email{display:none}
-  .tb-user{padding:4px 7px}
+  .ch-back{display:block}.tb-email{display:none}.tb-user{padding:4px 7px}
 }
 
-/* ── SCROLLBAR GLOBAL ── */
-*::-webkit-scrollbar{width:4px;height:4px}
-*::-webkit-scrollbar-track{background:transparent}
-*::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+/* ── UPGRADE WALL ── */
+#upgradeWall{
+  display:none;position:fixed;inset:0;z-index:9998;
+  background:var(--bg);
+  align-items:center;justify-content:center;flex-direction:column;
+  text-align:center;padding:2rem;
+}
+#upgradeWall.on{display:flex;}
+.uw-card{
+  background:var(--card);border:1px solid rgba(139,92,246,.3);
+  border-radius:20px;padding:2.5rem 2rem;max-width:480px;width:100%;
+  box-shadow:0 0 40px rgba(139,92,246,.15);
+}
+.uw-icon{
+  width:72px;height:72px;background:var(--p-dim);border-radius:20px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;color:var(--accent);margin:0 auto 1.25rem;
+}
+.uw-title{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.uw-desc{color:var(--sub);font-size:.875rem;line-height:1.6;margin-bottom:1.5rem}
+.uw-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:.625rem;margin-bottom:1.5rem}
+.uw-plan{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:.875rem .5rem;cursor:pointer;
+  transition:all .2s;text-decoration:none;display:block;
+}
+.uw-plan:hover,.uw-plan.pop{border-color:var(--accent);background:var(--p-dim);}
+.uw-plan.pop{position:relative;}
+.uw-plan.pop::before{
+  content:'POPULAR';position:absolute;top:-9px;left:50%;transform:translateX(-50%);
+  background:var(--grad);color:#fff;padding:2px 10px;border-radius:20px;
+  font-size:.6rem;font-weight:700;white-space:nowrap;
+}
+.uw-plan-name{font-size:.78rem;font-weight:700;margin-bottom:.25rem}
+.uw-plan-price{font-size:.95rem;font-weight:800;color:var(--accent)}
+.uw-plan-per{font-size:.65rem;color:var(--muted)}
+.uw-note{font-size:.75rem;color:var(--muted)}
+.uw-note a{color:var(--accent);text-decoration:none}
+.uw-note a:hover{text-decoration:underline}
+
 </style>
 </head>
 <body>
-
-<!-- LOADING -->
-<div id="loadingScreen">
-  <div class="spin"></div>
-  <p>Loading messages…</p>
-</div>
-
-<!-- APP -->
+<div id="loadingScreen"><div class="spin"></div><p>Loading messages…</p></div>
 <div id="app">
-
-  <!-- TOP BAR -->
   <div class="topbar">
     <a href="dashboard.html" class="tb-logo">
-      <img src="https://oslomeet.org/omlogo.png" alt="Oslo Meet"
-           onerror="this.style.display='none'">
+      <img src="https://oslomeet.org/omlogo.png" alt="Oslo Meet" onerror="this.style.display='none'">
       <div class="tb-logo-sep"></div>
       <span class="tb-logo-tag" id="tbTag">Messages</span>
     </a>
@@ -306,11 +195,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <button class="tb-logout" onclick="doLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
     </div>
   </div>
-
-  <!-- BODY -->
   <div class="body-row">
-
-    <!-- CONVERSATIONS PANEL -->
     <div class="conv-panel" id="convPanel">
       <div class="conv-head">
         <div class="conv-head-top">
@@ -322,126 +207,151 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
           <input class="conv-search" id="convSearch" placeholder="Search…" oninput="filterConvs(this.value)">
         </div>
       </div>
-      <div class="conv-list" id="convList">
-        <div class="conv-empty"><i class="fas fa-spinner fa-spin"></i></div>
-      </div>
+      <div class="conv-list" id="convList"><div class="conv-empty"><i class="fas fa-spinner fa-spin"></i></div></div>
     </div>
-
-    <!-- MOB OVERLAY -->
     <div class="mob-overlay" id="mobOverlay" onclick="showConvPanel()"></div>
-
-    <!-- CHAT PANEL -->
     <div class="chat-panel" id="chatPanel">
-
-      <!-- Empty state -->
       <div class="chat-empty" id="chatEmpty">
         <div class="chat-empty-icon"><i class="fas fa-comments"></i></div>
         <h3 id="emptyTitle">Select a conversation</h3>
         <p id="emptyDesc">Choose a conversation from the list to start chatting with your business partners.</p>
       </div>
-
-      <!-- Chat header (hidden until conv selected) -->
       <div class="chat-head" id="chatHead" style="display:none">
         <button class="ch-back" onclick="showConvPanel()"><i class="fas fa-chevron-left"></i></button>
         <div class="ch-av" id="chAv">?</div>
-        <div>
-          <div class="ch-name" id="chName">—</div>
-          <div class="ch-status"><span class="ch-status-dot"></span><span id="chStatus">Active partner</span></div>
-        </div>
+        <div><div class="ch-name" id="chName">—</div><div class="ch-status"><span class="ch-status-dot"></span><span id="chStatus">Active partner</span></div></div>
         <div class="ch-spacer"></div>
         <button class="ch-action" onclick="window.location.href='dashboard.html'" title="Back"><i class="fas fa-home"></i></button>
       </div>
-
-      <!-- Messages -->
       <div class="msgs-wrap" id="msgsWrap" style="display:none">
-        <!-- injected by JS -->
         <div class="typing-row" id="typingRow">
           <div class="msg-av-sm" id="typingAv">?</div>
-          <div class="typing-dots">
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-          </div>
+          <div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
         </div>
       </div>
-
-      <!-- Input -->
       <div class="input-area" id="inputArea" style="display:none">
         <div class="input-row">
           <div class="input-box">
-            <textarea class="msg-textarea" id="msgInput" rows="1"
-              placeholder="Type your message…"
-              onkeydown="handleKey(event)"
-              oninput="autoResize(this)"></textarea>
+            <textarea class="msg-textarea" id="msgInput" rows="1" placeholder="Type your message…" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
           </div>
-          <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-            <i class="fas fa-paper-plane"></i>
-          </button>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
         </div>
         <div class="input-hint" id="inputHint">Press Enter to send · Shift+Enter for new line</div>
       </div>
+    </div>
+  </div>
+</div>
 
-    </div><!-- /chat-panel -->
-  </div><!-- /body-row -->
-</div><!-- /app -->
+<!-- UPGRADE WALL -->
+<div id="upgradeWall">
+  <div class="uw-card">
+    <div class="uw-icon"><i class="fas fa-lock"></i></div>
+    <div class="uw-title" id="uwTitle">Unlock Full Access</div>
+    <p class="uw-desc" id="uwDesc">Choose a plan to access your AI matches, contact companies, and start building partnerships.</p>
+    <div class="uw-plans">
+      <a href="https://buy.stripe.com/eVq8wQfvIdjV8fkdC10Ny00" class="uw-plan">
+        <div class="uw-plan-name">Starter</div>
+        <div class="uw-plan-price">NOK 1.490</div>
+        <div class="uw-plan-per">/year</div>
+      </a>
+      <a href="https://buy.stripe.com/aFa5kE4R40x9anseG50Ny01" class="uw-plan pop">
+        <div class="uw-plan-name">Business</div>
+        <div class="uw-plan-price">NOK 3.900</div>
+        <div class="uw-plan-per">/year</div>
+      </a>
+      <a href="https://buy.stripe.com/3cI14odnA7ZB2V0eG50Ny02" class="uw-plan">
+        <div class="uw-plan-name">Partner</div>
+        <div class="uw-plan-price">NOK 12k+</div>
+        <div class="uw-plan-per">/year</div>
+      </a>
+    </div>
+    <p class="uw-note" id="uwNote">🏆 First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
+  </div>
+</div>
 
 <script>
 const SB_URL='https://mrparduxlvyflasgefpt.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
 const sb=window.supabase.createClient(SB_URL,SB_KEY);
+let user=null,company=null,currentConv=null,allConvs=[],msgSub=null;
+const PAID_PLANS=['starter','business','partner'];
 
-let user=null, company=null, currentConv=null, allConvs=[], msgSub=null;
+/* ── PLAN GATE ── */
+async function checkPlan(co){
+  const{data:sub}=await sb.from('subscriptions').select('plan,status')
+    .eq('company_id',co.id).eq('status','active').maybeSingle();
+  if(sub&&PAID_PLANS.includes(sub.plan))return true;
+  const{data:c}=await sb.from('companies').select('plan').eq('id',co.id).maybeSingle();
+  return c?.plan&&PAID_PLANS.includes(c.plan);
+}
+
+function showUpgradeWall(lang){
+  const msgs={
+    en:{title:'Unlock Full Access',desc:'Choose a plan to send messages and contact your business matches.'},
+    no:{title:'Lås opp full tilgang',desc:'Velg en plan for å sende meldinger og kontakte matches.'},
+    pt:{title:'Desbloqueie o Acesso Completo',desc:'Escolha um plano para enviar mensagens e contatar seus matches.'},
+    es:{title:'Desbloquea el Acceso Completo',desc:'Elige un plan para enviar mensajes y contactar tus matches.'}
+  };
+  const t=msgs[lang||'en']||msgs.en;
+  const el=document.getElementById('upgradeWall');
+  const title=document.getElementById('uwTitle');
+  const desc=document.getElementById('uwDesc');
+  if(title)title.textContent=t.title;
+  if(desc)desc.textContent=t.desc;
+  if(el)el.classList.add('on');
+}
 
 /* ── INIT ── */
 async function init(){
   const{data:{session}}=await sb.auth.getSession();
   if(!session){location.replace('login.html');return;}
   user=session.user;
-
   g('tbAv').textContent=user.email.charAt(0).toUpperCase();
   g('tbEmail').textContent=user.email;
-
-  // Load company
   let co=await sb.from('companies').select('id,name').eq('user_id',user.id).maybeSingle().then(r=>r.data);
   if(!co)co=await sb.from('companies').select('id,name').eq('contact_email',user.email).maybeSingle().then(r=>r.data);
   if(!co){alert('Company not found. Please register first.');location.href='join.html';return;}
   company=co;
 
+  // ── PLAN GATE: block messages for free users ──
+  const hasPlan=await checkPlan(company);
+  const lang=localStorage.getItem('preferredLanguage')||'en';
+
+  if(!hasPlan){
+    g('loadingScreen').style.display='none';
+    g('app').style.display='flex';
+    showUpgradeWall(lang);
+    // Show empty conv list with lock message
+    g('convList').innerHTML=`<div class="conv-empty"><i class="fas fa-lock" style="color:var(--accent)"></i><div style="margin-top:.5rem">Unlock a plan to start conversations</div></div>`;
+    g('convCount').textContent='0';
+    applyLang();
+    return;
+  }
+
   applyLang();
   await loadConversations();
   setupRealtime();
-
-  // Auto-open from URL param
   const convId=new URLSearchParams(location.search).get('conv');
-  if(convId){
-    const found=allConvs.find(c=>c.id===convId);
-    if(found)openConversation(found);
-  }
-
+  if(convId){const found=allConvs.find(c=>c.id===convId);if(found)openConversation(found);}
   g('loadingScreen').style.display='none';
   g('app').style.display='flex';
 }
 
 /* ── CONVERSATIONS ── */
 async function loadConversations(){
-  const{data,error}=await sb
-    .from('conversations')
+  const{data,error}=await sb.from('conversations')
     .select(`id,company_a_id,company_b_id,last_message,last_message_at,
       ca:companies!conversations_company_a_id_fkey(id,name),
       cb:companies!conversations_company_b_id_fkey(id,name)`)
     .or(`company_a_id.eq.${company.id},company_b_id.eq.${company.id}`)
     .order('last_message_at',{ascending:false,nullsFirst:false});
-
   if(error){console.error(error);return;}
   allConvs=data||[];
-
-  // Count unread per conv
   for(const c of allConvs){
     const{count}=await sb.from('messages').select('*',{count:'exact',head:true})
       .eq('conversation_id',c.id).eq('is_read',false).neq('sender_company_id',company.id);
     c._unread=count||0;
   }
-
   g('convCount').textContent=allConvs.length;
   renderConvList(allConvs);
 }
@@ -458,13 +368,10 @@ function renderConvList(list){
     const initials=other.name.substring(0,2).toUpperCase();
     const preview=c.last_message?trunc(c.last_message,38):'New conversation';
     const timeStr=c.last_message_at?fmtTime(c.last_message_at):'';
-    return`<div class="conv-item${isActive?' active':''}${c._unread?' unread':''}" 
+    return`<div class="conv-item${isActive?' active':''}" 
                onclick="openConversation(${JSON.stringify(c).replace(/"/g,'&quot;')})">
       <div class="ci-av">${initials}</div>
-      <div class="ci-body">
-        <div class="ci-name">${esc(other.name)}</div>
-        <div class="ci-preview">${esc(preview)}</div>
-      </div>
+      <div class="ci-body"><div class="ci-name">${esc(other.name)}</div><div class="ci-preview">${esc(preview)}</div></div>
       <div class="ci-meta">
         ${timeStr?`<span class="ci-time">${timeStr}</span>`:''}
         ${c._unread?`<span class="ci-badge">${c._unread>99?'99+':c._unread}</span>`:''}
@@ -474,213 +381,113 @@ function renderConvList(list){
 }
 
 function filterConvs(q){
-  const filtered=q.trim()
-    ?allConvs.filter(c=>{const o=c.company_a_id===company.id?c.cb:c.ca;return o.name.toLowerCase().includes(q.toLowerCase());})
-    :allConvs;
+  const filtered=q.trim()?allConvs.filter(c=>{const o=c.company_a_id===company.id?c.cb:c.ca;return o.name.toLowerCase().includes(q.toLowerCase());}):allConvs;
   renderConvList(filtered);
 }
 
-/* ── OPEN CONVERSATION ── */
 async function openConversation(conv){
-  // conv may come as stringified from onclick
   if(typeof conv==='string')conv=JSON.parse(conv);
   currentConv=conv;
-
   const other=conv.company_a_id===company.id?conv.cb:conv.ca;
   const initials=other.name.substring(0,2).toUpperCase();
-
   g('chAv').textContent=initials;
   g('chName').textContent=other.name;
-
-  // Show chat UI
   g('chatEmpty').style.display='none';
   g('chatHead').style.display='flex';
   g('msgsWrap').style.display='flex';
   g('msgsWrap').style.flexDirection='column';
   g('inputArea').style.display='block';
   g('msgInput').focus();
-
-  // Mobile: hide conv panel
-  if(window.innerWidth<=768){
-    g('convPanel').classList.add('hidden');
-    g('mobOverlay').classList.remove('on');
-  }
-
-  // Highlight active
+  if(window.innerWidth<=768){g('convPanel').classList.add('hidden');g('mobOverlay').classList.remove('on');}
   renderConvList(allConvs);
-
   await loadMessages(conv.id);
   await markRead(conv.id);
 }
 
-/* ── LOAD MESSAGES ── */
 async function loadMessages(convId){
   const wrap=g('msgsWrap');
   wrap.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:center;color:var(--muted)"><i class="fas fa-spinner fa-spin" style="font-size:1.2rem"></i></div>
     <div class="typing-row" id="typingRow"><div class="msg-av-sm" id="typingAv">?</div><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
-
-  const{data:msgs,error}=await sb.from('messages')
-    .select('id,content,sender_company_id,created_at,is_read')
-    .eq('conversation_id',convId)
-    .order('created_at',{ascending:true});
-
+  const{data:msgs,error}=await sb.from('messages').select('id,content,sender_company_id,created_at,is_read').eq('conversation_id',convId).order('created_at',{ascending:true});
   if(error){wrap.innerHTML=`<div style="padding:2rem;color:var(--red);text-align:center">Error loading messages</div>`;return;}
-
   if(!msgs||!msgs.length){
-    wrap.innerHTML=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:2rem">
-      <i class="fas fa-comments" style="font-size:2rem;margin-bottom:.875rem;color:var(--border2)"></i>
-      <div style="font-size:.82rem">No messages yet</div>
-      <div style="font-size:.73rem;margin-top:.25rem;color:var(--muted)">Send the first message!</div>
-    </div>
+    wrap.innerHTML=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);text-align:center;padding:2rem"><i class="fas fa-comments" style="font-size:2rem;margin-bottom:.875rem;color:var(--border2)"></i><div style="font-size:.82rem">No messages yet</div><div style="font-size:.73rem;margin-top:.25rem">Send the first message!</div></div>
     <div class="typing-row" id="typingRow"><div class="msg-av-sm" id="typingAv">?</div><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
     return;
   }
-
-  // Group by date
-  let html='';
-  let lastDate='';
+  let html='',lastDate='';
   msgs.forEach(m=>{
     const d=new Date(m.created_at);
     const dateKey=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-    if(dateKey!==lastDate){
-      html+=`<div class="date-div">${dateKey}</div>`;
-      lastDate=dateKey;
-    }
+    if(dateKey!==lastDate){html+=`<div class="date-div">${dateKey}</div>`;lastDate=dateKey;}
     const isSent=m.sender_company_id===company.id;
     const other=currentConv.company_a_id===company.id?currentConv.cb:currentConv.ca;
     const initials=(isSent?company.name:other.name).substring(0,2).toUpperCase();
     const time=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
     const statusIcon=isSent?(m.is_read?'<i class="fas fa-check-double msg-status read"></i>':'<i class="fas fa-check msg-status"></i>'):'';
-    html+=`<div class="msg-row ${isSent?'sent':'recv'}">
-      <div class="msg-av-sm ${isSent?'sent-av':''}">${initials}</div>
-      <div>
-        <div class="msg-bubble">${esc(m.content)}</div>
-        <div class="msg-meta">
-          <span class="${isSent?'msg-time':''}${!isSent?' msg-time':''}" style="${!isSent?'color:var(--muted)':''}">${time}</span>
-          ${statusIcon}
-        </div>
-      </div>
-    </div>`;
+    html+=`<div class="msg-row ${isSent?'sent':'recv'}"><div class="msg-av-sm ${isSent?'sent-av':''}">${initials}</div><div><div class="msg-bubble">${esc(m.content)}</div><div class="msg-meta"><span class="msg-time">${time}</span>${statusIcon}</div></div></div>`;
   });
-
   wrap.innerHTML=html+`<div class="typing-row" id="typingRow"><div class="msg-av-sm" id="typingAv">?</div><div class="typing-dots"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
   scrollBottom();
 }
 
-/* ── SEND ── */
 async function sendMessage(){
   const input=g('msgInput');
   const content=input.value.trim();
   if(!content||!currentConv)return;
-
   const btn=g('sendBtn');
   btn.disabled=true;btn.classList.add('sending');
-  input.value='';
-  autoResize(input);
-
+  input.value='';autoResize(input);
   try{
-    const{error}=await sb.from('messages').insert({
-      conversation_id:currentConv.id,
-      sender_company_id:company.id,
-      content
-    });
+    const{error}=await sb.from('messages').insert({conversation_id:currentConv.id,sender_company_id:company.id,content});
     if(error)throw error;
-
-    await sb.from('conversations').update({
-      last_message:content,
-      last_message_at:new Date().toISOString()
-    }).eq('id',currentConv.id);
-
-    // Optimistic append
+    await sb.from('conversations').update({last_message:content,last_message_at:new Date().toISOString()}).eq('id',currentConv.id);
     appendMsg({sender_company_id:company.id,content,created_at:new Date().toISOString(),is_read:false},true);
-    // Update conv list preview
     const conv=allConvs.find(c=>c.id===currentConv.id);
     if(conv){conv.last_message=content;conv.last_message_at=new Date().toISOString();}
     renderConvList(allConvs);
-
-  }catch(err){
-    console.error(err);
-    input.value=content;
-    alert('Error sending message. Please try again.');
-  }finally{
-    btn.disabled=false;btn.classList.remove('sending');
-    input.focus();
-  }
+  }catch(err){console.error(err);input.value=content;alert('Error sending message. Please try again.');}
+  finally{btn.disabled=false;btn.classList.remove('sending');input.focus();}
 }
 
 function appendMsg(msg,optimistic=false){
-  const wrap=g('msgsWrap');
-  if(!wrap)return;
-
-  // Remove empty state if present
+  const wrap=g('msgsWrap');if(!wrap)return;
   const empty=wrap.querySelector('div[style*="flex-direction:column"]');
   if(empty&&empty.parentNode===wrap)empty.remove();
-
   const typingRow=g('typingRow');
   const isSent=msg.sender_company_id===company.id;
   const other=currentConv.company_a_id===company.id?currentConv.cb:currentConv.ca;
   const initials=(isSent?company.name:other.name).substring(0,2).toUpperCase();
   const time=new Date(msg.created_at).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   const statusIcon=isSent?'<i class="fas fa-check msg-status"></i>':'';
-
   const el=document.createElement('div');
   el.className=`msg-row ${isSent?'sent':'recv'}`;
   if(optimistic)el.style.opacity='.7';
-  el.innerHTML=`<div class="msg-av-sm ${isSent?'sent-av':''}">${initials}</div>
-    <div>
-      <div class="msg-bubble">${esc(msg.content)}</div>
-      <div class="msg-meta"><span class="msg-time">${time}</span>${statusIcon}</div>
-    </div>`;
-
-  if(typingRow)wrap.insertBefore(el,typingRow);
-  else wrap.appendChild(el);
+  el.innerHTML=`<div class="msg-av-sm ${isSent?'sent-av':''}">${initials}</div><div><div class="msg-bubble">${esc(msg.content)}</div><div class="msg-meta"><span class="msg-time">${time}</span>${statusIcon}</div></div>`;
+  if(typingRow)wrap.insertBefore(el,typingRow);else wrap.appendChild(el);
   scrollBottom();
 }
 
-/* ── REALTIME ── */
 function setupRealtime(){
   msgSub=sb.channel('msgs_rt')
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'messages'},async payload=>{
       const msg=payload.new;
-      // If this msg belongs to current conv and NOT sent by me
-      if(currentConv&&msg.conversation_id===currentConv.id&&msg.sender_company_id!==company.id){
-        appendMsg(msg);
-        await markRead(currentConv.id);
-      }
-      // Refresh conv list for badge/preview
+      if(currentConv&&msg.conversation_id===currentConv.id&&msg.sender_company_id!==company.id){appendMsg(msg);await markRead(currentConv.id);}
       await loadConversations();
     })
-    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'conversations'},()=>{
-      loadConversations();
-    })
+    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'conversations'},()=>loadConversations())
     .subscribe();
 }
 
-/* ── MARK READ ── */
 async function markRead(convId){
-  await sb.from('messages').update({is_read:true})
-    .eq('conversation_id',convId).eq('is_read',false).neq('sender_company_id',company.id);
-  // Refresh to clear badge
-  const conv=allConvs.find(c=>c.id===convId);
-  if(conv){conv._unread=0;renderConvList(allConvs);}
+  await sb.from('messages').update({is_read:true}).eq('conversation_id',convId).eq('is_read',false).neq('sender_company_id',company.id);
+  const conv=allConvs.find(c=>c.id===convId);if(conv){conv._unread=0;renderConvList(allConvs);}
 }
 
-/* ── MOBILE ── */
-function showConvPanel(){
-  g('convPanel').classList.remove('hidden');
-  g('mobOverlay').classList.add('on');
-}
+function showConvPanel(){g('convPanel').classList.remove('hidden');g('mobOverlay').classList.add('on');}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}}
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px';}
 
-/* ── KEYBOARD & TEXTAREA ── */
-function handleKey(e){
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMessage();}
-}
-function autoResize(el){
-  el.style.height='auto';
-  el.style.height=Math.min(el.scrollHeight,120)+'px';
-}
-
-/* ── LOGOUT ── */
 async function doLogout(){
   if(!confirm('Logout?'))return;
   try{await sb.auth.signOut({scope:'global'});}catch(e){}
@@ -688,7 +495,6 @@ async function doLogout(){
   location.replace('login.html');
 }
 
-/* ── UTILS ── */
 function g(id){return document.getElementById(id)}
 function esc(s){const d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
 function trunc(s,n){return s.length>n?s.slice(0,n)+'…':s;}
@@ -696,14 +502,12 @@ function scrollBottom(){const w=g('msgsWrap');if(w)w.scrollTop=w.scrollHeight;}
 function fmtTime(iso){
   if(!iso)return'';
   const d=new Date(iso),now=new Date(),diff=now-d;
-  if(diff<60000)return'Just now';
-  if(diff<3600000)return`${Math.floor(diff/60000)}m`;
+  if(diff<60000)return'Just now';if(diff<3600000)return`${Math.floor(diff/60000)}m`;
   if(diff<86400000)return d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   if(diff<604800000)return d.toLocaleDateString('en-GB',{weekday:'short'});
   return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
 }
 
-/* ── I18N ── */
 const i18n={
   en:{convTitle:'Conversations',emptyTitle:'Select a conversation',emptyDesc:'Choose a conversation from the list to start chatting with your business partners.',tbTag:'Messages'},
   no:{convTitle:'Samtaler',emptyTitle:'Velg en samtale',emptyDesc:'Velg en samtale for å begynne å chatte.',tbTag:'Meldinger'},
