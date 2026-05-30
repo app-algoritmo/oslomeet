@@ -154,45 +154,59 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 }
 @media(max-width:400px){.kpi-row{grid-template-columns:1fr}}
 
-/* ── UPGRADE WALL ── */
-#upgradeWall{
+/* ── PLAN MODAL ── */
+#planModal{
   display:none;position:fixed;inset:0;z-index:9998;
-  background:var(--bg);
-  align-items:center;justify-content:center;flex-direction:column;
-  text-align:center;padding:2rem;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
+  align-items:center;justify-content:center;padding:1rem;
 }
-#upgradeWall.on{display:flex;}
-.uw-card{
-  background:var(--card);border:1px solid rgba(139,92,246,.3);
-  border-radius:20px;padding:2.5rem 2rem;max-width:480px;width:100%;
-  box-shadow:0 0 40px rgba(139,92,246,.15);
+#planModal.on{display:flex;}
+.pm-card{
+  background:#141a2e;border:1px solid rgba(139,92,246,.35);
+  border-radius:20px;padding:2rem 1.75rem;max-width:500px;width:100%;
+  box-shadow:0 0 60px rgba(139,92,246,.2);
+  animation:pmIn .25s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
 }
-.uw-icon{
-  width:72px;height:72px;background:var(--p-dim);border-radius:20px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:2rem;color:var(--accent);margin:0 auto 1.25rem;
+@keyframes pmIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.pm-close{
+  position:absolute;top:1rem;right:1rem;
+  background:none;border:none;color:#7b8db8;cursor:pointer;
+  font-size:1rem;padding:4px 8px;border-radius:6px;transition:.15s;
 }
-.uw-title{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
-.uw-desc{color:var(--sub);font-size:.875rem;line-height:1.6;margin-bottom:1.5rem}
-.uw-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:.625rem;margin-bottom:1.5rem}
-.uw-plan{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:.875rem .5rem;cursor:pointer;
-  transition:all .2s;text-decoration:none;display:block;
+.pm-close:hover{color:#e8ecf8;background:rgba(255,255,255,.06)}
+.pm-icon{
+  width:60px;height:60px;background:rgba(139,92,246,.12);
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;color:#8b5cf6;margin:0 auto 1.25rem;
 }
-.uw-plan:hover,.uw-plan.pop{border-color:var(--accent);background:var(--p-dim);}
-.uw-plan.pop{position:relative;}
-.uw-plan.pop::before{
+.pm-title{font-size:1.1rem;font-weight:700;text-align:center;margin-bottom:.4rem;color:#e8ecf8}
+.pm-desc{color:#7b8db8;font-size:.85rem;line-height:1.6;text-align:center;margin-bottom:1.5rem}
+.pm-plans{display:grid;grid-template-columns:repeat(3,1fr);gap:.625rem;margin-bottom:1.25rem}
+.pm-plan{
+  background:#10152a;border:1px solid #1f2d4a;
+  border-radius:12px;padding:.875rem .5rem;text-align:center;
+  cursor:pointer;transition:all .2s;text-decoration:none;display:block;
+}
+.pm-plan:hover,.pm-plan.pop{border-color:#8b5cf6;background:rgba(139,92,246,.08);}
+.pm-plan.pop{position:relative;}
+.pm-plan.pop::before{
   content:'POPULAR';position:absolute;top:-9px;left:50%;transform:translateX(-50%);
-  background:var(--grad);color:#fff;padding:2px 10px;border-radius:20px;
-  font-size:.6rem;font-weight:700;white-space:nowrap;
+  background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;
+  padding:2px 10px;border-radius:20px;font-size:.6rem;font-weight:700;white-space:nowrap;
 }
-.uw-plan-name{font-size:.78rem;font-weight:700;margin-bottom:.25rem}
-.uw-plan-price{font-size:.95rem;font-weight:800;color:var(--accent)}
-.uw-plan-per{font-size:.65rem;color:var(--muted)}
-.uw-note{font-size:.75rem;color:var(--muted)}
-.uw-note a{color:var(--accent);text-decoration:none}
-.uw-note a:hover{text-decoration:underline}
+.pm-plan-name{font-size:.78rem;font-weight:700;margin-bottom:.25rem;color:#e8ecf8}
+.pm-plan-price{font-size:.95rem;font-weight:800;color:#8b5cf6}
+.pm-plan-per{font-size:.65rem;color:#3a4d70}
+.pm-note{font-size:.75rem;color:#3a4d70;text-align:center}
+.pm-note a{color:#8b5cf6;text-decoration:none}
+.pm-note a:hover{text-decoration:underline}
+/* Lock badges on nav */
+.lock-chip{
+  margin-left:auto;padding:2px 7px;
+  background:rgba(245,158,11,.12);color:#f59e0b;
+  border-radius:20px;font-size:.6rem;font-weight:700;
+}
 
 </style>
 </head>
@@ -345,30 +359,31 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </main>
 </div>
 
-<!-- UPGRADE WALL -->
-<div id="upgradeWall">
-  <div class="uw-card">
-    <div class="uw-icon"><i class="fas fa-lock"></i></div>
-    <div class="uw-title" id="uwTitle">Unlock Full Access</div>
-    <p class="uw-desc" id="uwDesc">Choose a plan to access your AI matches, contact companies, and start building partnerships.</p>
-    <div class="uw-plans">
-      <a href="https://buy.stripe.com/eVq8wQfvIdjV8fkdC10Ny00" class="uw-plan">
-        <div class="uw-plan-name">Starter</div>
-        <div class="uw-plan-price">NOK 1.490</div>
-        <div class="uw-plan-per">/year</div>
+<!-- PLAN MODAL -->
+<div id="planModal" onclick="if(event.target===this)closePlanModal()">
+  <div class="pm-card">
+    <button class="pm-close" onclick="closePlanModal()"><i class="fas fa-times"></i></button>
+    <div class="pm-icon"><i class="fas fa-lock"></i></div>
+    <div class="pm-title" id="pmTitle">Unlock Full Access</div>
+    <p class="pm-desc" id="pmDesc">Choose a plan to contact companies, send messages, and start building real partnerships.</p>
+    <div class="pm-plans">
+      <a href="https://buy.stripe.com/eVq8wQfvIdjV8fkdC10Ny00" class="pm-plan" onclick="closePlanModal()">
+        <div class="pm-plan-name">Starter</div>
+        <div class="pm-plan-price">NOK 1.490</div>
+        <div class="pm-plan-per">/year</div>
       </a>
-      <a href="https://buy.stripe.com/aFa5kE4R40x9anseG50Ny01" class="uw-plan pop">
-        <div class="uw-plan-name">Business</div>
-        <div class="uw-plan-price">NOK 3.900</div>
-        <div class="uw-plan-per">/year</div>
+      <a href="https://buy.stripe.com/aFa5kE4R40x9anseG50Ny01" class="pm-plan pop" onclick="closePlanModal()">
+        <div class="pm-plan-name">Business</div>
+        <div class="pm-plan-price">NOK 3.900</div>
+        <div class="pm-plan-per">/year</div>
       </a>
-      <a href="https://buy.stripe.com/3cI14odnA7ZB2V0eG50Ny02" class="uw-plan">
-        <div class="uw-plan-name">Partner</div>
-        <div class="uw-plan-price">NOK 12k+</div>
-        <div class="uw-plan-per">/year</div>
+      <a href="https://buy.stripe.com/3cI14odnA7ZB2V0eG50Ny02" class="pm-plan" onclick="closePlanModal()">
+        <div class="pm-plan-name">Partner</div>
+        <div class="pm-plan-price">NOK 12k+</div>
+        <div class="pm-plan-per">/year</div>
       </a>
     </div>
-    <p class="uw-note" id="uwNote">🏆 First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
+    <p class="pm-note" id="pmNote">🏆 First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
   </div>
 </div>
 
