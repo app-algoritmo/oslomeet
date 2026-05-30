@@ -278,11 +278,17 @@ const PAID_PLANS=['starter','business','partner'];
 
 /* ── PLAN GATE ── */
 async function checkPlan(co){
-  const{data:sub}=await sb.from('subscriptions').select('plan,status')
-    .eq('company_id',co.id).eq('status','active').maybeSingle();
-  if(sub&&PAID_PLANS.includes(sub.plan))return true;
-  const{data:c}=await sb.from('companies').select('plan').eq('id',co.id).maybeSingle();
-  return c?.plan&&PAID_PLANS.includes(c.plan);
+  try{
+    const{data:sub,error:subErr}=await sb.from('subscriptions').select('plan,status')
+      .eq('company_id',co.id).eq('status','active').maybeSingle();
+    if(!subErr&&sub&&PAID_PLANS.includes(sub.plan))return true;
+    const{data:c,error:coErr}=await sb.from('companies').select('plan').eq('id',co.id).maybeSingle();
+    if(!coErr&&c&&c.plan&&PAID_PLANS.includes(c.plan))return true;
+    return false;
+  }catch(e){
+    console.warn('checkPlan error:',e);
+    return false;
+  }
 }
 
 function showUpgradeWall(lang){
