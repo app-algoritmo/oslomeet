@@ -288,11 +288,20 @@ const PAID_PLANS=['starter','business','partner'];
 /* ── PLAN GATE ── */
 async function checkPlan(co){
   try{
+    const{data:{session}}=await sb.auth.getSession();
+    const userId=session?.user?.id;
+    if(!userId) return false;
+
+    // 1. Check subscriptions
     const{data:sub,error:subErr}=await sb.from('subscriptions').select('plan,status')
       .eq('company_id',co.id).eq('status','active').maybeSingle();
     if(!subErr&&sub&&PAID_PLANS.includes(sub.plan))return true;
-    const{data:c,error:coErr}=await sb.from('companies').select('plan').eq('id',co.id).maybeSingle();
+
+    // 2. Check plan on companies — use user_id (RLS-safe)
+    const{data:c,error:coErr}=await sb.from('companies').select('plan')
+      .eq('user_id',userId).maybeSingle();
     if(!coErr&&c&&c.plan&&PAID_PLANS.includes(c.plan))return true;
+
     return false;
   }catch(e){
     console.warn('checkPlan error:',e);
