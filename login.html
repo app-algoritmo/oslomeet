@@ -10,7 +10,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -21,7 +21,7 @@
             background: white;
             padding: 2.5rem;
             border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
             width: 100%;
             max-width: 420px;
         }
@@ -32,13 +32,15 @@
         .tab.active { background: white; color: #3b82f6; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .form-group { margin-bottom: 1.25rem; }
         .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: #334155; font-size: 0.9rem; }
-        .form-group input { width: 100%; padding: 0.875rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; }
+        .form-group input { width: 100%; padding: 0.875rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; }
         .form-group input:focus { outline: none; border-color: #3b82f6; }
-        .btn-submit { width: 100%; padding: 1rem; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
-        .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+        .btn-submit { width: 100%; padding: 1rem; background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, transform 0.15s; }
+        .btn-submit:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
+        .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; transform: none; }
         .error { background: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 0.875rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; display: none; }
         .debug { background: #f0f9ff; border: 1px solid #7dd3fc; color: #0369a1; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; font-size: 0.8rem; font-family: monospace; }
-        .back-link { display: block; text-align: center; margin-top: 1.5rem; color: #64748b; text-decoration: none; }
+        .back-link { display: block; text-align: center; margin-top: 1.5rem; color: #64748b; text-decoration: none; font-size: 0.9rem; }
+        .back-link:hover { color: #3b82f6; }
     </style>
 </head>
 <body>
@@ -46,7 +48,6 @@
         <h1>Oslo Meet</h1>
         <p class="subtitle">AI-powered business connections</p>
         
-        <!-- Debug Info -->
         <div id="debugInfo" class="debug">Loading...</div>
         <div id="errorMsg" class="error"></div>
 
@@ -55,6 +56,7 @@
             <button type="button" class="tab" onclick="window.toggleTab('signup')">Sign Up</button>
         </div>
 
+        <!-- SIGN IN FORM -->
         <form id="loginForm" onsubmit="window.doLogin(event)">
             <div class="form-group">
                 <label>Email</label>
@@ -67,6 +69,7 @@
             <button type="submit" class="btn-submit" id="loginBtn">Sign In</button>
         </form>
 
+        <!-- SIGN UP FORM -->
         <form id="registerForm" style="display:none;" onsubmit="window.doSignup(event)">
             <div class="form-group">
                 <label>Full Name</label>
@@ -86,29 +89,22 @@
         <a href="index.html" class="back-link">← Back to Home</a>
     </div>
 
-    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
-    <!-- App Logic -->
     <script>
-        // Configurações
         const SB_URL = 'https://mrparduxlvyflasgefpt.supabase.co';
         const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1ycGFyZHV4bHZ5Zmxhc2dlZnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk1MzE4NDUsImV4cCI6MjA5NTEwNzg0NX0.JXlq6E4t2iD_tvtlXhwVtE_oQBsgPP3QrIPi2UULji0';
-        
-        // Inicialização
+
         (function() {
             try {
                 const sb = window.supabase.createClient(SB_URL, SB_KEY);
-                window.osloDB = sb; // Guardamos em window.osloDB para não conflitar
+                window.osloDB = sb;
                 document.getElementById('debugInfo').textContent = '✅ System Ready';
-                console.log('✅ Oslo Meet Login System Loaded');
             } catch (e) {
                 document.getElementById('debugInfo').textContent = '❌ Init Error: ' + e.message;
-                console.error('❌ Init Error:', e);
             }
         })();
 
-        // Funções Globais
         window.toggleTab = function(type) {
             const isLogin = type === 'login';
             document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
@@ -119,22 +115,33 @@
             document.getElementById('errorMsg').style.display = 'none';
         };
 
+        // ── SIGN IN: check if company exists → join.html or dashboard.html ──
         window.doLogin = async function(e) {
             e.preventDefault();
             const btn = document.getElementById('loginBtn');
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPassword').value;
-            
+
             btn.disabled = true;
             btn.textContent = 'Signing in...';
-            
+
             try {
                 const { data, error } = await window.osloDB.auth.signInWithPassword({
-                    email: email,
-                    password: pass
+                    email, password: pass
                 });
                 if (error) throw error;
-                window.location.href = 'dashboard.html';
+
+                // Check if user already has a company registered
+                const { data: company } = await window.osloDB
+                    .from('companies')
+                    .select('id')
+                    .eq('user_id', data.user.id)
+                    .maybeSingle();
+
+                // If no company yet → go to join to complete profile
+                // If company exists → go to dashboard
+                window.location.href = company ? 'dashboard.html' : 'join.html';
+
             } catch (err) {
                 const errEl = document.getElementById('errorMsg');
                 errEl.textContent = 'Error: ' + err.message;
@@ -144,24 +151,28 @@
             }
         };
 
+        // ── SIGN UP: emailRedirectTo → join.html ──
         window.doSignup = async function(e) {
             e.preventDefault();
             const btn = document.getElementById('regBtn');
             const name = document.getElementById('regName').value;
             const email = document.getElementById('regEmail').value;
             const pass = document.getElementById('regPassword').value;
-            
+
             btn.disabled = true;
             btn.textContent = 'Creating...';
-            
+
             try {
                 const { data, error } = await window.osloDB.auth.signUp({
-                    email: email,
+                    email,
                     password: pass,
-                    options: { data: { full_name: name } }
+                    options: {
+                        data: { full_name: name },
+                        emailRedirectTo: 'https://oslomeet.org/join.html'
+                    }
                 });
                 if (error) throw error;
-                alert('Account created! Please check your email.');
+                alert('Account created! Please check your email to confirm, then you\'ll be taken to complete your company profile.');
                 window.toggleTab('login');
             } catch (err) {
                 const errEl = document.getElementById('errorMsg');
