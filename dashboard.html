@@ -237,10 +237,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="nav-sec">
       <div class="nav-lbl" data-i18n="navPlatform">Platform</div>
       <button class="nav-btn on" onclick="setNav(this)"><i class="fas fa-chart-line"></i> <span data-i18n="navDashboard">Overview</span></button>
-      <button class="nav-btn" onclick="openMessages();setNav(this)">
+      <button class="nav-btn" id="navMsgBtn" onclick="openMessages();setNav(this)">
         <i class="fas fa-envelope"></i> <span data-i18n="navMessages">Messages</span>
         <span id="navMsgBadge" class="nav-chip-msg"></span>
         <span id="navMsgDot" class="nav-dot"></span>
+        <span id="navPlanChip" class="lock-chip" style="display:none"><i class="fas fa-lock" style="font-size:.55rem"></i> PLAN</span>
       </button>
       <button class="nav-btn" onclick="setNav(this)"><i class="fas fa-handshake"></i> <span data-i18n="navMatchesNav">Matches</span></button>
     </div>
@@ -416,16 +417,24 @@ async function checkPlan(company){
   }
 }
 
-function showUpgradeWall(lang){
-  const t=translations[lang]||translations.en;
-  const el=document.getElementById('upgradeWall');
+function showPlanModal(lang){
+  const t=translations[lang||localStorage.getItem('preferredLanguage')||'en']||translations.en;
+  const el=document.getElementById('planModal');
   if(!el)return;
-  const title=document.getElementById('uwTitle');
-  const desc=document.getElementById('uwDesc');
+  const title=document.getElementById('pmTitle');
+  const desc=document.getElementById('pmDesc');
   if(title)title.textContent=t.uwTitle||'Unlock Full Access';
-  if(desc)desc.textContent=t.uwDesc||'Choose a plan to access your AI matches, contact companies, and start building partnerships.';
+  if(desc)desc.textContent=t.uwDesc||'Choose a plan to contact companies, send messages, and start building partnerships.';
   el.classList.add('on');
+  document.body.style.overflow='hidden';
 }
+function closePlanModal(){
+  const el=document.getElementById('planModal');
+  if(el)el.classList.remove('on');
+  document.body.style.overflow='';
+}
+// Keep old name as alias for compatibility
+function showUpgradeWall(lang){showPlanModal(lang);}
 
 /* ── LOGOUT ── */
 async function doLogout(){
@@ -575,17 +584,16 @@ async function loadDashboard(){
   document.getElementById('loadingScreen').style.display='none';
   g('dashboard').style.display='block';
 
-  // If no plan: show upgrade wall on top + lock messages KPI
+  // If no plan: show lock indicators on UI (no auto-popup)
   if(!hasPlan){
-    // Lock the messages KPI card visually
+    // Lock icon on messages KPI
     const msgIco=g('msgKpiIco');
-    if(msgIco)msgIco.innerHTML='<i class="fas fa-lock"></i>';
+    if(msgIco)msgIco.innerHTML='<i class="fas fa-lock" style="color:var(--amber)"></i>';
     const msgArrow=g('msgKpiArrow');
-    if(msgArrow)msgArrow.innerHTML='<i class="fas fa-lock" style="opacity:.5"></i>';
-    // Also lock sidebar messages button
-    const navMsgDot=g('navMsgDot');
-    if(navMsgDot){navMsgDot.style.background='var(--amber)';}
-    showUpgradeWall(lang);
+    if(msgArrow)msgArrow.innerHTML='';
+    // Lock chip on sidebar messages nav
+    const planChip=g('navPlanChip');
+    if(planChip)planChip.style.display='';
   }
 
   await updateMessageBadge();
@@ -595,7 +603,9 @@ async function loadDashboard(){
 function openSidebar(){g('sidebar').classList.add('open');g('overlay').classList.add('on');document.body.style.overflow='hidden';}
 function closeSidebar(){g('sidebar').classList.remove('open');g('overlay').classList.remove('on');document.body.style.overflow='';}
 function setNav(btn){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');if(window.innerWidth<=768)closeSidebar();}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSidebar();});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeSidebar();closePlanModal();}
+});
 function g(id){return document.getElementById(id);}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 document.addEventListener('DOMContentLoaded',()=>{
