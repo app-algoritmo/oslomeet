@@ -523,7 +523,7 @@
                     </div>
 
                     <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:12px;padding:1rem;margin:1.5rem 0">
-                        <strong style="color:var(--warning-orange, #f59e0b)"><i class="fas fa-crown"></i> <span data-i18n="foundingOffer">Founding Member Offer</span></strong>
+                        <strong style="color:var(--warning-orange)"><i class="fas fa-crown"></i> <span data-i18n="foundingOffer">Founding Member Offer</span></strong>
                         <p style="color:var(--text-secondary);font-size:0.9rem;margin:0.5rem 0 0" data-i18n="foundingDesc">
                             First 50 members: <strong>50% off lifetime pricing</strong> + exclusive badge + priority feature access.
                             <label style="display:flex;align-items:center;gap:8px;margin-top:0.5rem;cursor:pointer">
@@ -533,43 +533,11 @@
                         </p>
                     </div>
 
-                    <!-- ── ACCOUNT CREATION BLOCK (NEW) ── -->
-                    <div class="account-block">
-                        <p class="account-block-title"><i class="fas fa-user-circle"></i> <span data-i18n="accountBlockTitle">Create your account</span></p>
-
-                        <div class="form-group">
-                            <label data-i18n="labelEmail">Contact Email <span class="required">*</span></label>
-                            <input type="email" class="form-control" name="email" id="emailInput" required placeholder="you@company.com" data-i18n-placeholder="placeholderEmail">
-                        </div>
-
-                        <div class="form-group">
-                            <label data-i18n="labelPassword">Password <span class="required">*</span></label>
-                            <div class="password-wrap">
-                                <input type="password" class="form-control" name="password" id="passwordInput" required
-                                    placeholder="Min. 8 characters" data-i18n-placeholder="placeholderPassword"
-                                    oninput="checkPasswordStrength(this.value)">
-                                <button type="button" class="password-toggle" onclick="togglePassword('passwordInput', this)" tabindex="-1">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                            <div class="password-strength">
-                                <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
-                                <span class="strength-label" id="strengthLabel"></span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label data-i18n="labelPasswordConfirm">Confirm Password <span class="required">*</span></label>
-                            <div class="password-wrap">
-                                <input type="password" class="form-control" name="passwordConfirm" id="passwordConfirmInput" required
-                                    placeholder="Repeat password" data-i18n-placeholder="placeholderPasswordConfirm">
-                                <button type="button" class="password-toggle" onclick="togglePassword('passwordConfirmInput', this)" tabindex="-1">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
+                    <!-- ── EMAIL (read-only, auto-filled from session) ── -->
+                    <div class="form-group">
+                        <label data-i18n="labelEmail">Contact Email <span class="required">*</span></label>
+                        <input type="email" class="form-control" name="email" id="emailInput" required placeholder="you@company.com" data-i18n-placeholder="placeholderEmail" readonly style="opacity:0.7;cursor:not-allowed;">
                     </div>
-                    <!-- END ACCOUNT BLOCK -->
 
                     <div class="form-group">
                         <label style="display:flex;align-items:flex-start;gap:10px">
@@ -679,7 +647,6 @@
 
         const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ── COUNTRY CONFIG (unchanged) ──
         const COUNTRY_CONFIG = {
             NO: { name: 'Organisasjonsnummer', placeholder: '999 999 999', maxlength: 9, pattern: '[0-9]{9}', hint: 'Norwegian companies', hasAPI: true },
             BR: { name: 'CNPJ', placeholder: '00.000.000/0001-91', maxlength: 18, pattern: '[0-9./-]+', hint: 'Brazilian companies', hasAPI: true },
@@ -752,7 +719,7 @@
             const originalBtnText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
             btn.disabled = true;
-            statusEl.textContent = `🔍 Querying...`; statusEl.style.color = 'var(--accent-blue)';
+            statusEl.textContent = '🔍 Querying...'; statusEl.style.color = 'var(--accent-blue)';
             try {
                 const response = await fetch(`${SUPABASE_URL}/functions/v1/enrich-company`, {
                     method: 'POST',
@@ -794,7 +761,6 @@
             return 'other';
         }
 
-        // ── FORM NAVIGATION (unchanged) ──
         let currentStep = 1;
 
         function nextStep(step) {
@@ -846,7 +812,7 @@
         setupTagsInput('techTags');
         setupTagsInput('marketTags');
 
-        // ── FORM SUBMIT — FIXED: signUp + signInWithPassword ──
+        // ── FORM SUBMIT ──
         document.getElementById('smartForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -859,14 +825,6 @@
                 const formData = new FormData(e.target);
                 const data = Object.fromEntries(formData.entries());
 
-                // ── VALIDATE PASSWORD MATCH ──
-                if (data.password !== data.passwordConfirm) {
-                    throw new Error('Passwords do not match. Please check and try again.');
-                }
-                if (data.password.length < 8) {
-                    throw new Error('Password must be at least 8 characters.');
-                }
-
                 // ── COLLECT ARRAYS ──
                 data.goals = Array.from(document.querySelectorAll('input[name="goals"]:checked')).map(cb => cb.value);
                 data.connectWith = Array.from(document.querySelectorAll('input[name="connectWith"]:checked')).map(cb => cb.value);
@@ -874,36 +832,14 @@
                 data.technologies = Array.from(document.querySelectorAll('#techTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
                 data.markets = Array.from(document.querySelectorAll('#marketTags .tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(t => t);
 
-                // ── STEP 1: CREATE SUPABASE AUTH ACCOUNT ──
-                const { data: authData, error: signUpError } = await supabase.auth.signUp({
-                    email: data.email,
-                    password: data.password,
-                    options: {
-                        data: {
-                            company_name: data.companyName,
-                            country: data.country
-                        }
-                    }
-                });
-
-                if (signUpError) {
-                    // Handle common Supabase auth errors with friendly messages
-                    if (signUpError.message.includes('already registered') || signUpError.message.includes('User already registered')) {
-                        throw new Error('This email is already registered. Please use a different email or go to login.html to sign in.');
-                    }
-                    throw new Error(signUpError.message);
+                // ── STEP 1: GET LOGGED-IN USER (already authenticated via login.html) ──
+                const { data: sessionData, error: sessionError } = await supabase.auth.getUser();
+                if (sessionError || !sessionData.user) {
+                    window.location.href = 'login.html';
+                    return;
                 }
-
-                // ── STEP 1.5: SIGN IN IMMEDIATELY TO FIX RLS POLICIES ──
-                const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-                    email: data.email,
-                    password: data.password
-                });
-
-                if (signInError) throw new Error(signInError.message);
-
-                const user = signInData.user || authData.user;
-                if (!user) throw new Error('Account creation & session establishment failed.');
+                const user = sessionData.user;
+                if (!data.email) data.email = user.email;
 
                 // ── STEP 2: INSERT COMPANY INTO SUPABASE ──
                 const companyData = {
@@ -911,7 +847,7 @@
                     name: data.companyName,
                     industry: data.industry,
                     size: data.companySize || null,
-                    contact_email: data.email,
+                    contact_email: data.email || user.email,
                     website: data.website || null,
                     description: data.challenges || data.additional || null,
                     goals: data.goals || [],
@@ -929,27 +865,19 @@
 
                 if (insertError) throw new Error(insertError.message);
 
-                // ── STEP 3: REDIRECT TO STRIPE ──
-                const plan = data.plan || new URLSearchParams(window.location.search).get('plan') || 'starter';
-                const stripeCheckoutLinks = {
-                    'starter':  'https://buy.stripe.com/eVq8wQfvIdjV8fkdC10Ny00',
-                    'business': 'https://buy.stripe.com/aFa5kE4R40x9anseG50Ny01',
-                    'partner':  'https://buy.stripe.com/3cI14odnA7ZB2V0eG50Ny02'
-                };
-                const checkoutUrl = stripeCheckoutLinks[plan] || stripeCheckoutLinks['starter'];
-
-                // Show success state
-                document.getElementById('userEmail').textContent = data.email;
+                // ── STEP 3: SHOW SUCCESS → REDIRECT TO DASHBOARD ──
+                document.getElementById('userEmail').textContent = data.email || user.email;
                 document.querySelector('.form-card form').style.display = 'none';
                 document.getElementById('successState').classList.add('active');
                 document.getElementById('successState').style.display = 'block';
-                document.getElementById('payNowBtn').href = checkoutUrl;
+                document.getElementById('payNowBtn').href = 'dashboard.html';
+                document.getElementById('payNowBtn').innerHTML = '<i class="fas fa-chart-line"></i> <span data-i18n="btnGoToDashboard">Go to Dashboard</span>';
 
                 let seconds = 3;
                 const counter = setInterval(() => {
                     seconds--;
                     document.getElementById('countdown').textContent = seconds;
-                    if (seconds <= 0) { clearInterval(counter); window.location.href = checkoutUrl; }
+                    if (seconds <= 0) { clearInterval(counter); window.location.href = 'dashboard.html'; }
                 }, 1000);
 
             } catch (err) {
@@ -961,10 +889,24 @@
         });
 
         // ── INIT ──
-        window.addEventListener('load', () => {
+        window.addEventListener('load', async () => {
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
             changeLanguage(saved);
+
+            // Auto-fill email from session + redirect if not logged in
+            try {
+                const { data: sessionData } = await supabase.auth.getUser();
+                if (!sessionData?.user) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                const emailField = document.getElementById('emailInput');
+                if (emailField) emailField.value = sessionData.user.email;
+            } catch(e) {
+                window.location.href = 'login.html';
+                return;
+            }
 
             const params = new URLSearchParams(window.location.search);
             if (params.get('plan')) {
@@ -978,7 +920,6 @@
             }
         });
 
-        // expose to global
         window.nextStep = nextStep;
         window.prevStep = prevStep;
         window.selectPlan = selectPlan;
@@ -986,9 +927,8 @@
         window.updateIdField = updateIdField;
     </script>
 
-    <!-- TRANSLATIONS + HELPERS (non-module) -->
+    <!-- TRANSLATIONS + HELPERS -->
     <script>
-        // ── PASSWORD HELPERS ──
         function togglePassword(inputId, btn) {
             const input = document.getElementById(inputId);
             const icon = btn.querySelector('i');
@@ -1023,7 +963,6 @@
             label.textContent = lvl.text;
         }
 
-        // ── i18n ──
         const translations = {
             en: {
                 aiOnboarding: "AI-Powered Onboarding", joinTitle: "Register Your Company",
@@ -1042,8 +981,7 @@
                 sizeLarge: "51-200 employees", sizeEnterprise: "200+ employees",
                 labelTech: "Key Technologies / Expertise", placeholderAdd: "Add...",
                 btnContinue: "Continue", btnBack: "Back", btnReview: "Review & Join", btnJoin: "Join Oslo Meet",
-                btnSearch: "Search",
-                labelCountry: "Country of Registration", selectCountry: "Select country",
+                btnSearch: "Search", labelCountry: "Country of Registration", selectCountry: "Select country",
                 step2Title: "What Are You Looking For?", step2Subtitle: "Help our AI understand your strategic priorities",
                 labelGoals: "Primary Goals (select all that apply)",
                 goalPartners: "Find Business Partners", goalClients: "Find New Clients",
@@ -1105,8 +1043,7 @@
                 sizeLarge: "51-200 ansatte", sizeEnterprise: "200+ ansatte",
                 labelTech: "Viktige teknologier / Kompetanse", placeholderAdd: "Legg til...",
                 btnContinue: "Fortsett", btnBack: "Tilbake", btnReview: "Se gjennom og bli med", btnJoin: "Bli med i Oslo Meet",
-                btnSearch: "Søk",
-                labelCountry: "Registreringsland", selectCountry: "Velg land",
+                btnSearch: "Søk", labelCountry: "Registreringsland", selectCountry: "Velg land",
                 step2Title: "Hva søker du?", step2Subtitle: "Hjelp vår AI forstå dine strategiske prioriteter",
                 labelGoals: "Hovedmål (velg alle som passer)",
                 goalPartners: "Finn forretningspartnere", goalClients: "Finn nye kunder",
@@ -1168,8 +1105,7 @@
                 sizeLarge: "51-200 funcionários", sizeEnterprise: "200+ funcionários",
                 labelTech: "Tecnologias / Expertise Principal", placeholderAdd: "Adicionar...",
                 btnContinue: "Continuar", btnBack: "Voltar", btnReview: "Revisar e Entrar", btnJoin: "Entrar no Oslo Meet",
-                btnSearch: "Buscar",
-                labelCountry: "País de Registro", selectCountry: "Selecione o país",
+                btnSearch: "Buscar", labelCountry: "País de Registro", selectCountry: "Selecione o país",
                 step2Title: "O Que Você Busca?", step2Subtitle: "Ajude nossa IA a entender suas prioridades estratégicas",
                 labelGoals: "Objetivos Principais (selecione todos)",
                 goalPartners: "Encontrar Parceiros", goalClients: "Encontrar Novos Clientes",
@@ -1231,8 +1167,7 @@
                 sizeLarge: "51-200 empleados", sizeEnterprise: "200+ empleados",
                 labelTech: "Tecnologías / Expertise Principal", placeholderAdd: "Agregar...",
                 btnContinue: "Continuar", btnBack: "Atrás", btnReview: "Revisar y Unirse", btnJoin: "Unirse a Oslo Meet",
-                btnSearch: "Buscar",
-                labelCountry: "País de Registro", selectCountry: "Selecciona país",
+                btnSearch: "Buscar", labelCountry: "País de Registro", selectCountry: "Selecciona país",
                 step2Title: "¿Qué Buscas?", step2Subtitle: "Ayuda a nuestra IA a entender tus prioridades estratégicas",
                 labelGoals: "Objetivos Principales (selecciona todos)",
                 goalPartners: "Encontrar Socios", goalClients: "Encontrar Nuevos Clientes",
