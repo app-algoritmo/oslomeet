@@ -441,10 +441,10 @@ async function doLogout(){
 }
 
 async function openMessages(){
-  if(!currentCompany){showPlanModal();return;}
+  if(!currentCompany){window.location.href='pricing.html';return;}
   const lang=localStorage.getItem('preferredLanguage')||'en';
   const hasPlan=await checkPlan(currentCompany);
-  if(!hasPlan){showPlanModal(lang);return;}
+  if(!hasPlan){window.location.href='pricing.html';return;}
   window.location.href='messages.html';
 }
 
@@ -457,7 +457,7 @@ async function startConversation(matchedCompanyId,matchedCompanyName){
   // ── PLAN GATE: block if no paid plan ──
   const hasPlan=await checkPlan(currentCompany);
   if(!hasPlan){
-    showUpgradeWall(lang);
+    window.location.href='pricing.html';
     return;
   }
 
@@ -586,6 +586,11 @@ async function loadDashboard(){
     if(msgArrow)msgArrow.innerHTML='';
     const planChip=g('navPlanChip');
     if(planChip)planChip.style.display='';
+    // Update messages KPI note
+    const msgNote=g('msgNote');
+    const lang2=localStorage.getItem('preferredLanguage')||'en';
+    const lockLabels={en:'Requires a plan',no:'Krever en plan',pt:'Requer um plano',es:'Requiere un plan'};
+    if(msgNote)msgNote.innerHTML=`<i class="fas fa-lock" style="color:var(--amber);font-size:.6rem"></i> <span style="color:var(--amber)">${lockLabels[lang2]||lockLabels.en}</span>`;
   }
 
   await updateMessageBadge();
