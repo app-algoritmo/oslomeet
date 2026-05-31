@@ -336,14 +336,8 @@ async function init(){
   const lang=localStorage.getItem('preferredLanguage')||'en';
 
   if(!hasPlan){
-    g('loadingScreen').style.display='none';
-    g('app').style.display='flex';
-    // Show locked conv list
-    g('convList').innerHTML=`<div class="conv-empty"><i class="fas fa-lock" style="color:var(--amber);font-size:1.8rem"></i><div style="margin-top:.75rem;font-size:.82rem;color:var(--sub)">Unlock a plan to start conversations</div><div style="margin-top:.5rem"><a href="pricing.html" style="color:var(--accent);font-size:.78rem;text-decoration:none">See plans →</a></div></div>`;
-    g('convCount').textContent='0';
-    applyLang();
-    // Show plan modal after short delay so user sees the page first
-    setTimeout(()=>showPlanModal(lang), 600);
+    // Redirect directly to pricing — no access to messages without a plan
+    window.location.replace('pricing.html');
     return;
   }
 
