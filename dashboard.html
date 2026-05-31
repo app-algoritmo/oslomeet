@@ -384,7 +384,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="pm-plan-per">/year</div>
       </a>
     </div>
-    <p class="pm-note" id="pmNote">🏆 First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
+    <p class="pm-note" id="pmNote"> First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
   </div>
 </div>
 
@@ -397,9 +397,7 @@ const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentCompany=null, messagesSubscription=null;
 const PAID_PLANS=['starter','business','partner'];
 
-/* ── PLAN GATE — always show modal for unpaid users ──
-   To unlock: set company.plan = 'starter'|'business'|'partner' in Supabase
-   after Stripe payment via webhook */
+/* ── PLAN GATE ── */
 async function checkPlan(company){
   try{
     const{data:{session}}=await db.auth.getSession();
@@ -427,8 +425,6 @@ function closePlanModal(){
   if(el)el.classList.remove('on');
   document.body.style.overflow='';
 }
-// Keep old name as alias for compatibility
-function showUpgradeWall(lang){showPlanModal(lang);}
 
 /* ── LOGOUT ── */
 async function doLogout(){
@@ -440,31 +436,25 @@ async function doLogout(){
   window.location.replace('login.html');
 }
 
+/* ── MESSAGES KPI → VERIFICA PLANO → SEM PLANO: PRICING.HTML ── */
 async function openMessages(){
   if(!currentCompany){window.location.href='pricing.html';return;}
-  const lang=localStorage.getItem('preferredLanguage')||'en';
   const hasPlan=await checkPlan(currentCompany);
   if(!hasPlan){window.location.href='pricing.html';return;}
   window.location.href='messages.html';
 }
 
-/* ── CONVERSATION ── */
+/* ─ CONNECT BUTTON → VERIFICA PLANO → SEM PLANO: PRICING.HTML ── */
 async function startConversation(matchedCompanyId,matchedCompanyName){
-  if(!currentCompany){alert('Loading...');return;}
-  const lang=localStorage.getItem('preferredLanguage')||'en';
-  const t=translations[lang]||translations.en;
-
-  // ── PLAN GATE: block if no paid plan ──
+  if(!currentCompany){return;}
   const hasPlan=await checkPlan(currentCompany);
-  if(!hasPlan){
-    window.location.href='pricing.html';
-    return;
-  }
+  if(!hasPlan){window.location.href='pricing.html';return;}
 
   try{
     const{data:matches}=await db.rpc('get_company_matches',{target_company_id:currentCompany.id,match_limit:100,min_score:0.3});
     const hasMatch=matches?.some(m=>m.matched_id===matchedCompanyId);
     if(!hasMatch){
+      const lang=localStorage.getItem('preferredLanguage')||'en';
       const msgs={en:'No compatible match found with this company.',pt:'Nenhum match compativel encontrado.',no:'Ingen kompatibel match funnet.',es:'No se encontro ninguna coincidencia compatible.'};
       alert(msgs[lang]||msgs.en);return;
     }
@@ -527,10 +517,10 @@ function renderMatches(matches,hasPlan){
   container.innerHTML=matches.map(m=>{
     const score=Math.round(m.compatibility_score*100);
     const sc=score>=70?{bg:'var(--g-dim)',cl:'var(--green)'}:score>=50?{bg:'var(--am-dim)',cl:'var(--amber)'}:{bg:'var(--p-dim)',cl:'var(--accent)'};
-    // If no plan: blur the connect button and show lock
+    // SEM PLANO: botão redireciona para pricing.html
     const btnHtml=hasPlan
       ?`<button class="btn-connect" onclick="startConversation('${m.matched_id}','${esc(m.matched_name).replace(/'/g,"\\'")}')"><i class="fas fa-envelope"></i> ${t.btnConnect}</button>`
-      :`<button class="btn-connect" onclick="showUpgradeWall(localStorage.getItem('preferredLanguage')||'en')" style="background:var(--border);color:var(--sub)"><i class="fas fa-lock"></i> ${t.btnUnlock||'Unlock to Connect'}</button>`;
+      :`<button class="btn-connect" onclick="window.location.href='pricing.html'" style="background:var(--border);color:var(--sub)"><i class="fas fa-lock"></i> ${t.btnUnlock||'Unlock to Connect'}</button>`;
     return`<div class="match-card">
       <div class="mc-top"><div class="mc-name">${esc(m.matched_name)}</div><span class="mc-score" style="background:${sc.bg};color:${sc.cl}">${score}% Match</span></div>
       <div class="mc-industry"><i class="fas fa-industry" style="font-size:.7rem"></i> ${esc(m.matched_industry||'Industry not specified')}</div>
@@ -563,7 +553,7 @@ async function loadDashboard(){
   g('companyName').textContent=company.name;
   g('sideCompany').textContent=company.name;
 
-  // ── PLAN CHECK ──
+  // ── PLAN CHECK ─
   const hasPlan=await checkPlan(company);
 
   const{data:matches}=await db.rpc('get_company_matches',{target_company_id:company.id,match_limit:10,min_score:0.3});
@@ -572,25 +562,23 @@ async function loadDashboard(){
     g('topScore').textContent=Math.round(matches[0].compatibility_score*100)+'%';
   }
 
-  // Render matches — with or without connect button depending on plan
-  renderMatches(matches, hasPlan); // hasPlan controls lock button
+  // Render matches — com ou sem botão de connect dependendo do plano
+  renderMatches(matches, hasPlan);
 
   document.getElementById('loadingScreen').style.display='none';
   g('dashboard').style.display='block';
 
-  // Show lock indicators when no plan
+  // UI quando não há plano pago
   if(!hasPlan){
     const msgIco=g('msgKpiIco');
     if(msgIco)msgIco.innerHTML='<i class="fas fa-lock" style="color:var(--amber)"></i>';
     const msgArrow=g('msgKpiArrow');
-    if(msgArrow)msgArrow.innerHTML='';
+    if(msgArrow)msgArrow.style.display='none';
     const planChip=g('navPlanChip');
     if(planChip)planChip.style.display='';
-    // Update messages KPI note
+    // LABEL DO KPI MESSAGES COM TRADUÇÃO
     const msgNote=g('msgNote');
-    const lang2=localStorage.getItem('preferredLanguage')||'en';
-    const lockLabels={en:'Requires a plan',no:'Krever en plan',pt:'Requer um plano',es:'Requiere un plan'};
-    if(msgNote)msgNote.innerHTML=`<i class="fas fa-lock" style="color:var(--amber);font-size:.6rem"></i> <span style="color:var(--amber)">${lockLabels[lang2]||lockLabels.en}</span>`;
+    if(msgNote) msgNote.innerHTML=`<i class="fas fa-lock" style="color:var(--amber);font-size:.6rem"></i> <span style="color:var(--amber)">${t.msgLockedLabel||'Requires a plan'}</span>`;
   }
 
   await updateMessageBadge();
@@ -617,11 +605,12 @@ window.addEventListener('beforeunload',()=>{if(messagesSubscription)db.removeCha
 <script>
 const translations={
   en:{
-    dashTitle:"👋 Welcome to Oslo Meet",btnLogout:"Logout",btnConnect:"Connect",btnUnlock:"Unlock to Connect",
+    dashTitle:" Welcome to Oslo Meet",btnLogout:"Logout",btnConnect:"Connect",btnUnlock:"Unlock to Connect",
+    msgLockedLabel:"Requires a plan",
     uwTitle:"Unlock Full Access",uwDesc:"Choose a plan to access your AI matches, contact companies, and start building partnerships.",
     statCompany:"Your Company",statRegistered:"Registered",statMatches:"Matches Found",statMatchNote:"Compatible partners",
     statTopScore:"Top Match Score",statScoreNote:"Compatibility",statMessages:"Messages",statMsgNote:"Conversations",unread:"unread",
-    sectionMatches:"🎯 Recommended Matches",sectionMatchesSub:"AI-powered compatibility ranking",
+    sectionMatches:" Recommended Matches",sectionMatchesSub:"AI-powered compatibility ranking",
     loadingText:"Finding your best matches…",
     emptyTitle:"No company found",emptyDesc:"Register your company first to see matches.",btnGoRegister:"Go to Registration →",
     noMatchesTitle:"No matches yet",noMatchesDesc:"As more companies join, you'll see compatible matches here.",
@@ -634,6 +623,7 @@ const translations={
   },
   no:{
     dashTitle:"👋 Velkommen til Oslo Meet",btnLogout:"Logg ut",btnConnect:"Koble til",btnUnlock:"Lås opp for å koble",
+    msgLockedLabel:"Krever en plan",
     uwTitle:"Lås opp full tilgang",uwDesc:"Velg en plan for å få tilgang til AI-matcher, kontakte bedrifter og starte partnerskap.",
     statCompany:"Din bedrift",statRegistered:"Registrert",statMatches:"Matcher funnet",statMatchNote:"Kompatible partnere",
     statTopScore:"Topp match-score",statScoreNote:"Kompatibilitet",statMessages:"Meldinger",statMsgNote:"Samtaler",unread:"ulest",
@@ -650,6 +640,7 @@ const translations={
   },
   pt:{
     dashTitle:"👋 Bem-vindo ao Oslo Meet",btnLogout:"Sair",btnConnect:"Conectar",btnUnlock:"Assinar para Conectar",
+    msgLockedLabel:"Requer um plano",
     uwTitle:"Desbloqueie o Acesso Completo",uwDesc:"Escolha um plano para acessar seus matches com IA, contatar empresas e começar parcerias.",
     statCompany:"Sua Empresa",statRegistered:"Cadastrada",statMatches:"Matches Encontrados",statMatchNote:"Parceiros compatíveis",
     statTopScore:"Melhor Score",statScoreNote:"Compatibilidade",statMessages:"Mensagens",statMsgNote:"Conversas",unread:"não lidas",
@@ -666,6 +657,7 @@ const translations={
   },
   es:{
     dashTitle:"👋 Bienvenido a Oslo Meet",btnLogout:"Salir",btnConnect:"Conectar",btnUnlock:"Suscribirse para Conectar",
+    msgLockedLabel:"Requiere un plan",
     uwTitle:"Desbloquea el Acceso Completo",uwDesc:"Elige un plan para acceder a tus matches con IA, contactar empresas y empezar colaboraciones.",
     statCompany:"Tu Empresa",statRegistered:"Registrada",statMatches:"Matches Encontrados",statMatchNote:"Socios compatibles",
     statTopScore:"Mejor Puntuación",statScoreNote:"Compatibilidad",statMessages:"Mensajes",statMsgNote:"Conversaciones",unread:"no leídos",
