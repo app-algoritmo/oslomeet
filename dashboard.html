@@ -313,7 +313,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
     <div class="sec-head">
       <div>
-        <div class="sec-title" data-i18n="sectionMatches">🎯 Recommended Matches</div>
+        <div class="sec-title" data-i18n="sectionMatches"> Recommended Matches</div>
         <div class="sec-sub" data-i18n="sectionMatchesSub">AI-powered compatibility ranking</div>
       </div>
       <span class="sec-badge" id="matchBadge" style="display:none"></span>
@@ -444,7 +444,7 @@ async function openMessages(){
   window.location.href='messages.html';
 }
 
-/* ─ CONNECT BUTTON → VERIFICA PLANO → SEM PLANO: PRICING.HTML ── */
+/*  CONNECT BUTTON → VERIFICA PLANO → SEM PLANO: PRICING.HTML ── */
 async function startConversation(matchedCompanyId,matchedCompanyName){
   if(!currentCompany){return;}
   const hasPlan=await checkPlan(currentCompany);
@@ -568,21 +568,32 @@ async function loadDashboard(){
   document.getElementById('loadingScreen').style.display='none';
   g('dashboard').style.display='block';
 
-  // UI quando não há plano pago
+  // ── UI LOCK / BADGE: ORDEM CORRETA ──
   if(!hasPlan){
+    // 1. Icone do KPI
     const msgIco=g('msgKpiIco');
     if(msgIco)msgIco.innerHTML='<i class="fas fa-lock" style="color:var(--amber)"></i>';
+    
+    // 2. Seta de clique
     const msgArrow=g('msgKpiArrow');
     if(msgArrow)msgArrow.style.display='none';
+    
+    // 3. Chip na sidebar
     const planChip=g('navPlanChip');
     if(planChip)planChip.style.display='';
-    // LABEL DO KPI MESSAGES COM TRADUÇÃO
+    
+    // 4. LABEL DO KPI MESSAGES COM TRADUÇÃO (FIXO, SEM SOBREESCRITA)
     const msgNote=g('msgNote');
-    if(msgNote) msgNote.innerHTML=`<i class="fas fa-lock" style="color:var(--amber);font-size:.6rem"></i> <span style="color:var(--amber)">${t.msgLockedLabel||'Requires a plan'}</span>`;
+    const lang2=localStorage.getItem('preferredLanguage')||'en';
+    const lockLabels={en:'Requires a plan',no:'Krever en plan',pt:'Requer um plano',es:'Requiere un plan'};
+    if(msgNote)msgNote.innerHTML=`<i class="fas fa-lock" style="color:var(--amber);font-size:.6rem"></i> <span style="color:var(--amber)">${lockLabels[lang2]||lockLabels.en}</span>`;
+    
+    // 5. NÃO CHAMA updateMessageBadge() — o label do lock permanece
+  } else {
+    // Só atualiza badge se TIVER plano pago
+    await updateMessageBadge();
+    setupRealtime();
   }
-
-  await updateMessageBadge();
-  setupRealtime();
 }
 
 function openSidebar(){g('sidebar').classList.add('open');g('overlay').classList.add('on');document.body.style.overflow='hidden';}
@@ -656,7 +667,7 @@ const translations={
     navLegal:"Legal",navTerms:"Termos",navPrivacy:"Privacidade",navCookies:"Cookies",navGDPR:"Direitos GDPR"
   },
   es:{
-    dashTitle:"👋 Bienvenido a Oslo Meet",btnLogout:"Salir",btnConnect:"Conectar",btnUnlock:"Suscribirse para Conectar",
+    dashTitle:" Bienvenido a Oslo Meet",btnLogout:"Salir",btnConnect:"Conectar",btnUnlock:"Suscribirse para Conectar",
     msgLockedLabel:"Requiere un plan",
     uwTitle:"Desbloquea el Acceso Completo",uwDesc:"Elige un plan para acceder a tus matches con IA, contactar empresas y empezar colaboraciones.",
     statCompany:"Tu Empresa",statRegistered:"Registrada",statMatches:"Matches Encontrados",statMatchNote:"Socios compatibles",
