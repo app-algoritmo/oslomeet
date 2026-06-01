@@ -154,7 +154,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 }
 @media(max-width:400px){.kpi-row{grid-template-columns:1fr}}
 
-/* ─ PLAN MODAL ── */
+/* ── PLAN MODAL ── */
 #planModal{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:1rem;}
 #planModal.on{display:flex;}
 .pm-card{background:#141a2e;border:1px solid rgba(139,92,246,.35);border-radius:20px;padding:2rem 1.75rem;max-width:500px;width:100%;box-shadow:0 0 60px rgba(139,92,246,.2);animation:pmIn .25s cubic-bezier(.34,1.56,.64,1);position:relative;}
@@ -245,7 +245,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <main class="main">
     <div class="topbar">
       <div>
-        <div class="pg-title" data-i18n="dashTitle"> Welcome to Oslo Meet</div>
+        <div class="pg-title" data-i18n="dashTitle">👋 Welcome to Oslo Meet</div>
         <div class="pg-sub" id="pgSub">Your AI-powered business dashboard</div>
       </div>
       <div class="topbar-right">
@@ -352,7 +352,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="pm-plan-per">/year</div>
       </a>
     </div>
-    <p class="pm-note" id="pmNote"> First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
+    <p class="pm-note" id="pmNote">🏆 First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
   </div>
 </div>
 
@@ -365,7 +365,7 @@ const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentCompany=null, messagesSubscription=null, userHasPlan=false;
 const PAID_PLANS=['starter','business','partner'];
 
-// ── CHECK PLAN (DEFENSIVO COM LOG) ──
+// ── CHECK PLAN COM LOG EXPLÍCITO ──
 async function checkPlan(){
   try{
     const{data:{session}}=await db.auth.getSession();
@@ -373,17 +373,19 @@ async function checkPlan(){
     
     const{data:co,error}=await db.from('companies').select('plan').eq('user_id',session.user.id).maybeSingle();
     
+    console.log('[PlanCheck] Query result:', {error, co});
+    
     if(error){
       console.warn('Plan check error:', error.message);
-      return false; // Coluna não existe ou erro de rede
+      return false;
     }
     if(!co){
-      console.warn('No company record found');
+      console.warn('No company record found for user:', session.user.id);
       return false;
     }
     
     const has = !!(co.plan && PAID_PLANS.includes(co.plan));
-    console.log(`[Plan Check] user: ${session.user.email}, plan: "${co.plan}", hasPlan: ${has}`);
+    console.log(`[PlanCheck] User: ${session.user.email} | Plan: "${co.plan}" | HasPlan: ${has}`);
     return has;
   }catch(e){ 
     console.error('checkPlan exception:', e);
@@ -413,11 +415,13 @@ async function doLogout(){
 }
 
 async function openMessages(){
+  console.log('[openMessages] currentCompany:', currentCompany, 'userHasPlan:', userHasPlan);
   if(!currentCompany||!userHasPlan){window.location.href='pricing.html';return;}
   window.location.href='messages.html';
 }
 
 async function startConversation(matchedCompanyId,matchedCompanyName){
+  console.log('[startConversation] userHasPlan:', userHasPlan);
   if(!currentCompany||!userHasPlan){window.location.href='pricing.html';return;}
   try{
     const{data:matches}=await db.rpc('get_company_matches',{target_company_id:currentCompany.id,match_limit:100,min_score:0.3});
@@ -440,8 +444,11 @@ async function startConversation(matchedCompanyId,matchedCompanyName){
 async function updateMessageBadge(){
   if(!currentCompany)return;
   
+  console.log('[updateMessageBadge] called, userHasPlan:', userHasPlan);
+  
   // FORÇA LOCK SE NÃO TEM PLANO
   if(!userHasPlan){
+    console.log('[updateMessageBadge] Applying lock state');
     const lang=localStorage.getItem('preferredLanguage')||'en';
     const lockLabels={en:'Requires a plan',no:'Krever en plan',pt:'Requer um plano',es:'Requiere un plan'};
     g('msgNote').innerHTML=`<i class="fas fa-lock" style="color:var(--amber);font-size:.6rem"></i> <span style="color:var(--amber)">${lockLabels[lang]||lockLabels.en}</span>`;
@@ -510,6 +517,8 @@ async function loadDashboard(){
   const{data:{session}}=await db.auth.getSession();
   if(!session){window.location.replace('login.html');return;}
   
+  console.log('[loadDashboard] Session user:', session.user.email);
+  
   const email=session.user.email||'';
   g('sideAv').textContent=email.charAt(0).toUpperCase();
   g('sideEmail').textContent=email;
@@ -522,6 +531,7 @@ async function loadDashboard(){
   const t=translations[lang]||translations.en;
   
   if(!company){
+    console.warn('[loadDashboard] No company found for user');
     g('matchesContainer').innerHTML=`<div class="empty-panel"><i class="fas fa-inbox"></i><h3>${t.emptyTitle}</h3><p>${t.emptyDesc}</p><a href="join.html">${t.btnGoRegister}</a></div>`;
     document.getElementById('loadingScreen').style.display='none';
     g('dashboard').style.display='block';
@@ -534,7 +544,7 @@ async function loadDashboard(){
 
   // ─ VERIFICA PLANO UMA VEZ ──
   userHasPlan=await checkPlan();
-  console.log(`[Dashboard] userHasPlan = ${userHasPlan}`);
+  console.log('[loadDashboard] Final userHasPlan:', userHasPlan);
 
   const{data:matches}=await db.rpc('get_company_matches',{target_company_id:company.id,match_limit:10,min_score:0.3});
   if(matches&&matches.length>0){
@@ -547,9 +557,9 @@ async function loadDashboard(){
   document.getElementById('loadingScreen').style.display='none';
   g('dashboard').style.display='block';
 
-  // ── APLICA LOCK UI SE NÃO TEM PLANO ─
+  // ─ APLICA LOCK UI SE NÃO TEM PLANO ─
   if(!userHasPlan){
-    console.log('[UI] Applying lock state...');
+    console.log('[loadDashboard] Applying lock UI...');
     g('msgKpiIco').innerHTML='<i class="fas fa-lock" style="color:var(--amber)"></i>';
     g('msgKpiArrow').style.display='none';
     g('navPlanChip').style.display='';
@@ -582,7 +592,7 @@ window.addEventListener('beforeunload',()=>{if(messagesSubscription)db.removeCha
 <script>
 const translations={
   en:{
-    dashTitle:" Welcome to Oslo Meet",btnLogout:"Logout",btnConnect:"Connect",btnUnlock:"Unlock to Connect",
+    dashTitle:"👋 Welcome to Oslo Meet",btnLogout:"Logout",btnConnect:"Connect",btnUnlock:"Unlock to Connect",
     uwTitle:"Unlock Full Access",uwDesc:"Choose a plan to access your AI matches, contact companies, and start building partnerships.",
     statCompany:"Your Company",statRegistered:"Registered",statMatches:"Matches Found",statMatchNote:"Compatible partners",
     statTopScore:"Top Match Score",statScoreNote:"Compatibility",statMessages:"Messages",statMsgNote:"Conversations",unread:"unread",
@@ -598,11 +608,11 @@ const translations={
     navLegal:"Legal",navTerms:"Terms",navPrivacy:"Privacy",navCookies:"Cookies",navGDPR:"GDPR Rights"
   },
   no:{
-    dashTitle:" Velkommen til Oslo Meet",btnLogout:"Logg ut",btnConnect:"Koble til",btnUnlock:"Lås opp for å koble",
+    dashTitle:"👋 Velkommen til Oslo Meet",btnLogout:"Logg ut",btnConnect:"Koble til",btnUnlock:"Lås opp for å koble",
     uwTitle:"Lås opp full tilgang",uwDesc:"Velg en plan for å få tilgang til AI-matcher, kontakte bedrifter og starte partnerskap.",
     statCompany:"Din bedrift",statRegistered:"Registrert",statMatches:"Matcher funnet",statMatchNote:"Kompatible partnere",
     statTopScore:"Topp match-score",statScoreNote:"Kompatibilitet",statMessages:"Meldinger",statMsgNote:"Samtaler",unread:"ulest",
-    sectionMatches:"🎯 Anbefalte matcher",sectionMatchesSub:"AI-drevet kompatibilitetsrangering",
+    sectionMatches:" Anbefalte matcher",sectionMatchesSub:"AI-drevet kompatibilitetsrangering",
     loadingText:"Finner dine beste matcher…",
     emptyTitle:"Ingen bedrift funnet",emptyDesc:"Registrer din bedrift først for å se matcher.",btnGoRegister:"Gå til registrering →",
     noMatchesTitle:"Ingen matcher ennå",noMatchesDesc:"Etter hvert som flere bedrifter blir med, vil du se matcher her.",
@@ -630,7 +640,7 @@ const translations={
     navLegal:"Legal",navTerms:"Termos",navPrivacy:"Privacidade",navCookies:"Cookies",navGDPR:"Direitos GDPR"
   },
   es:{
-    dashTitle:" Bienvenido a Oslo Meet",btnLogout:"Salir",btnConnect:"Conectar",btnUnlock:"Suscribirse para Conectar",
+    dashTitle:"👋 Bienvenido a Oslo Meet",btnLogout:"Salir",btnConnect:"Conectar",btnUnlock:"Suscribirse para Conectar",
     uwTitle:"Desbloquea el Acceso Completo",uwDesc:"Elige un plan para acceder a tus matches con IA, contactar empresas y empezar colaboraciones.",
     statCompany:"Tu Empresa",statRegistered:"Registrada",statMatches:"Matches Encontrados",statMatchNote:"Socios compatibles",
     statTopScore:"Mejor Puntuación",statScoreNote:"Compatibilidad",statMessages:"Mensajes",statMsgNote:"Conversaciones",unread:"no leídos",
