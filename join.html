@@ -254,7 +254,7 @@
         }
         .account-block-title i { color: var(--accent-purple); }
 
-        /* ── SUCCESS STATE ── */
+        /* ─ SUCCESS STATE ── */
         .success-state { text-align: center; padding: 2rem 1rem; display: none; }
         .success-state.active { display: block; }
         .success-icon {
@@ -339,7 +339,7 @@
                         <label data-i18n="labelCountry">Country of Registration <span class="required">*</span></label>
                         <select class="form-control" id="countrySelect" name="country" onchange="updateIdField()" required>
                             <option value="" data-i18n="selectCountry">Select country</option>
-                            <option value="NO">🇳🇴 Norway</option>
+                            <option value="NO">🇴 Norway</option>
                             <option value="BR">🇧🇷 Brazil</option>
                             <option value="ES">🇪🇸 Spain</option>
                             <option value="PT">🇵🇹 Portugal</option>
@@ -349,10 +349,10 @@
                             <option value="NL">🇳🇱 Netherlands</option>
                             <option value="BE">🇧🇪 Belgium</option>
                             <option value="DK">🇩🇰 Denmark</option>
-                            <option value="SE">🇸🇪 Sweden</option>
+                            <option value="SE">🇪 Sweden</option>
                             <option value="FI">🇫🇮 Finland</option>
                             <option value="GB">🇬🇧 United Kingdom</option>
-                            <option value="CN">🇨🇳 China</option>
+                            <option value="CN">🇨 China</option>
                             <option value="OTHER">🌍 Other / Manual Entry</option>
                         </select>
                     </div>
@@ -533,7 +533,7 @@
                         </p>
                     </div>
 
-                    <!-- ── EMAIL (read-only, auto-filled from session) ── -->
+                    <!-- ── EMAIL (read-only, auto-filled from session) ─ -->
                     <div class="form-group">
                         <label data-i18n="labelEmail">Contact Email <span class="required">*</span></label>
                         <input type="email" class="form-control" name="email" id="emailInput" required placeholder="you@company.com" data-i18n-placeholder="placeholderEmail" readonly style="opacity:0.7;cursor:not-allowed;">
@@ -687,7 +687,7 @@
                 statusEl.textContent = ''; statusEl.style.color = 'var(--text-secondary)';
             } else {
                 btn.style.display = 'none';
-                statusEl.textContent = '💡 Manual entry - fill company details below';
+                statusEl.textContent = ' Manual entry - fill company details below';
                 statusEl.style.color = 'var(--text-secondary)';
             }
         }
@@ -841,7 +841,7 @@
                 const user = sessionData.user;
                 if (!data.email) data.email = user.email;
 
-                // ── STEP 2: INSERT COMPANY INTO SUPABASE ──
+                // ── STEP 2: INSERT COMPANY INTO SUPABASE (ALWAYS STARTS AS FREE) ──
                 const companyData = {
                     user_id: user.id,
                     name: data.companyName,
@@ -854,7 +854,8 @@
                     tech_stack: data.technologies || [],
                     target_markets: data.markets || [],
                     visibility: 'public',
-                    created_at: new Date().toISOString()
+                    created_at: new Date().toISOString(),
+                    plan: null // <-- FORÇA O PLANO COMO FREE/NULL NA CRIAÇÃO
                 };
 
                 const { error: insertError } = await supabase
