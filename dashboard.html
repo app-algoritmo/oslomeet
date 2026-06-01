@@ -245,7 +245,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <main class="main">
     <div class="topbar">
       <div>
-        <div class="pg-title" data-i18n="dashTitle">👋 Welcome to Oslo Meet</div>
+        <div class="pg-title" data-i18n="dashTitle"> Welcome to Oslo Meet</div>
         <div class="pg-sub" id="pgSub">Your AI-powered business dashboard</div>
       </div>
       <div class="topbar-right">
@@ -281,7 +281,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
     <div class="sec-head">
       <div>
-        <div class="sec-title" data-i18n="sectionMatches">🎯 Recommended Matches</div>
+        <div class="sec-title" data-i18n="sectionMatches"> Recommended Matches</div>
         <div class="sec-sub" data-i18n="sectionMatchesSub">AI-powered compatibility ranking</div>
       </div>
       <span class="sec-badge" id="matchBadge" style="display:none"></span>
@@ -352,7 +352,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="pm-plan-per">/year</div>
       </a>
     </div>
-    <p class="pm-note" id="pmNote">🏆 First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
+    <p class="pm-note" id="pmNote"> First 50 members: <strong>50% off lifetime</strong> — <a href="pricing.html">see all plans →</a></p>
   </div>
 </div>
 
@@ -365,7 +365,6 @@ const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 let currentCompany=null, messagesSubscription=null, userHasPlan=false;
 const PAID_PLANS=['starter','business','partner'];
 
-// ── CHECK PLAN COM LOG EXPLÍCITO ──
 async function checkPlan(){
   try{
     const{data:{session}}=await db.auth.getSession();
@@ -440,13 +439,11 @@ async function startConversation(matchedCompanyId,matchedCompanyName){
   }catch(err){console.error(err);alert('Error connecting.');}
 }
 
-// ─ BADGE: PROTEGIDO CONTRA SEM PLANO ──
 async function updateMessageBadge(){
   if(!currentCompany)return;
   
   console.log('[updateMessageBadge] called, userHasPlan:', userHasPlan);
   
-  // FORÇA LOCK SE NÃO TEM PLANO
   if(!userHasPlan){
     console.log('[updateMessageBadge] Applying lock state');
     const lang=localStorage.getItem('preferredLanguage')||'en';
@@ -456,10 +453,9 @@ async function updateMessageBadge(){
     g('navMsgBadge').classList.remove('on');
     g('navMsgDot').classList.remove('on');
     g('mobBadge').classList.remove('on');
-    return; // SAI AQUI, NÃO SOBRESREVRE NADA
+    return;
   }
 
-  // ATUALIZA NORMALMENTE SE TEM PLANO
   try{
     const{data:convs}=await db.from('conversations').select('id').or(`company_a_id.eq.${currentCompany.id},company_b_id.eq.${currentCompany.id}`);
     const total=convs?convs.length:0;
@@ -542,7 +538,6 @@ async function loadDashboard(){
   g('companyName').textContent=company.name;
   g('sideCompany').textContent=company.name;
 
-  // ─ VERIFICA PLANO UMA VEZ ──
   userHasPlan=await checkPlan();
   console.log('[loadDashboard] Final userHasPlan:', userHasPlan);
 
@@ -557,7 +552,6 @@ async function loadDashboard(){
   document.getElementById('loadingScreen').style.display='none';
   g('dashboard').style.display='block';
 
-  // ─ APLICA LOCK UI SE NÃO TEM PLANO ─
   if(!userHasPlan){
     console.log('[loadDashboard] Applying lock UI...');
     g('msgKpiIco').innerHTML='<i class="fas fa-lock" style="color:var(--amber)"></i>';
@@ -567,7 +561,6 @@ async function loadDashboard(){
     g('msgNote').innerHTML=`<i class="fas fa-lock" style="color:var(--amber);font-size:.6rem"></i> <span style="color:var(--amber)">${lockLabels[lang]||lockLabels.en}</span>`;
   }
 
-  // updateMessageBadge agora é 100% seguro
   await updateMessageBadge();
   setupRealtime();
 }
@@ -612,7 +605,7 @@ const translations={
     uwTitle:"Lås opp full tilgang",uwDesc:"Velg en plan for å få tilgang til AI-matcher, kontakte bedrifter og starte partnerskap.",
     statCompany:"Din bedrift",statRegistered:"Registrert",statMatches:"Matcher funnet",statMatchNote:"Kompatible partnere",
     statTopScore:"Topp match-score",statScoreNote:"Kompatibilitet",statMessages:"Meldinger",statMsgNote:"Samtaler",unread:"ulest",
-    sectionMatches:" Anbefalte matcher",sectionMatchesSub:"AI-drevet kompatibilitetsrangering",
+    sectionMatches:"🎯 Anbefalte matcher",sectionMatchesSub:"AI-drevet kompatibilitetsrangering",
     loadingText:"Finner dine beste matcher…",
     emptyTitle:"Ingen bedrift funnet",emptyDesc:"Registrer din bedrift først for å se matcher.",btnGoRegister:"Gå til registrering →",
     noMatchesTitle:"Ingen matcher ennå",noMatchesDesc:"Etter hvert som flere bedrifter blir med, vil du se matcher her.",
