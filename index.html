@@ -378,6 +378,71 @@
         }
         .language-selector select option { background: var(--dark-bg); color: white; }
         .language-selector i { color: var(--accent-blue); font-size: 0.9rem; }
+
+        /* ═══════════════════════════════════════════
+           VIDEO HERO SECTION
+           ═══════════════════════════════════════════ */
+        .video-hero {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: #000;
+        }
+        .bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            object-fit: cover;
+        }
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 27, 75, 0.85));
+            z-index: 2;
+        }
+        .video-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        .video-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeIn 0.8s ease;
+            line-height: 1.2;
+        }
+        @media (min-width: 768px) {
+            .video-title { font-size: 3.5rem; }
+        }
+        .video-subtitle {
+            font-size: 1.1rem;
+            color: #c7d2fe;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.8s ease 0.2s backwards;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .video-subtitle { font-size: 1.3rem; }
+        }
+
         /* === HERO SECTION - Mobile Optimized === */
         .hero {
             background: linear-gradient(135deg, #0f172a, #1e1b4b, #312e81);
@@ -637,9 +702,25 @@
             <option value="no">Norsk</option>
             <option value="pt">Português</option>
             <option value="es">Español</option>
-            <option value="zh" disabled style="opacity:0.6">🇨🇳 中文 (Soon)</option>
+            <option value="zh" disabled style="opacity:0.6">🇨 中文 (Soon)</option>
         </select>
     </div>
+
+    <!-- New Video Section -->
+    <section class="video-hero">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="video.mp4" type="video/mp4">
+        </video>
+        <div class="video-overlay"></div>
+        <div class="video-content">
+            <h2 class="video-title" data-i18n="videoTitle">Your First B2B Match is 3 Steps Away</h2>
+            <p class="video-subtitle" data-i18n="videoSubtitle">Create your free account, build your profile, and let our AI find your best matches — no credit card required.</p>
+            <a href="https://dunapress.org/start.html" class="cta-button ai">
+                <i class="fas fa-rocket"></i>
+                <span data-i18n="videoCta">Start Free — See Your Matches</span>
+            </a>
+        </div>
+    </section>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -968,6 +1049,11 @@
 
         const translations = {
             en: {
+                // Video Hero Section
+                videoTitle: "Your First B2B Match is 3 Steps Away",
+                videoSubtitle: "Create your free account, build your profile, and let our AI find your best matches — no credit card required.",
+                videoCta: "Start Free — See Your Matches",
+                
                 // Cookie Banner Barros
                 cookieTitle: "PRIVACY & COOKIES",
                 cookieText: "We use cookies to analyze traffic and personalize ads. You can choose which ones to accept. Read our",
@@ -1017,6 +1103,11 @@
                 navLegal: "Legal", navTerms: "Terms", navPrivacy: "Privacy", navCookies: "Cookies", navGDPR: "GDPR Rights"
             },
             no: {
+                // Video Hero Section
+                videoTitle: "Din første B2B-match er 3 steg unna",
+                videoSubtitle: "Opprett din gratis konto, bygg profilen din, og la vår AI finne dine beste matcher — uten kredittkort.",
+                videoCta: "Start gratis — Se dine matcher",
+
                 // Cookie Banner Barros
                 cookieTitle: "PERSONVERN & COOKIES",
                 cookieText: "Vi bruker cookies for å analysere trafikk og tilpasse annonser. Du kan velge hvilke du vil godta. Les vår",
@@ -1066,6 +1157,11 @@
                 navLegal: "Juridisk", navTerms: "Vilkår", navPrivacy: "Personvern", navCookies: "Cookies", navGDPR: "GDPR-rettigheter"
             },
             pt: {
+                // Video Hero Section
+                videoTitle: "Seu Primeiro Match B2B Está a 3 Passos",
+                videoSubtitle: "Crie sua conta gratuita, monte seu perfil e deixe nossa IA encontrar seus melhores matches — sem necessidade de cartão de crédito.",
+                videoCta: "Comece Grátis — Veja Seus Matches",
+
                 // Cookie Banner Barros
                 cookieTitle: "PRIVACIDADE & COOKIES",
                 cookieText: "Utilizamos cookies para analisar o tráfego e personalizar anúncios. Você pode escolher quais aceitar. Leia nossa",
@@ -1115,6 +1211,11 @@
                 navLegal: "Legal", navTerms: "Termos", navPrivacy: "Privacidade", navCookies: "Cookies", navGDPR: "Direitos GDPR"
             },
             es: {
+                // Video Hero Section
+                videoTitle: "Tu Primer Match B2B Está a 3 Pasos",
+                videoSubtitle: "Crea tu cuenta gratis, construye tu perfil y deja que nuestra IA encuentre tus mejores matches — sin tarjeta de crédito.",
+                videoCta: "Comienza Gratis — Ve Tus Matches",
+
                 // Cookie Banner Barros
                 cookieTitle: "PRIVACIDAD & COOKIES",
                 cookieText: "Utilizamos cookies para analizar el tráfico y personalizar anuncios. Puedes elegir cuáles aceptar. Lee nuestra",
