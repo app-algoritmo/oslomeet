@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="MIMBAI" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#8b5cf6" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIMBAI — AI Matching Engine by Oslo Meet</title>
+    <meta name="description" content="MIMBAI is Oslo Meet's proprietary AI B2B matching engine. Semantic embeddings, compatibility scoring, and intelligent business connections across Europe and the Nordics.">
+
+    <meta property="og:title" content="MIMBAI — AI B2B Matching Engine">
+    <meta property="og:description" content="The intelligence behind Oslo Meet's business connections. Powered by semantic embeddings and 50+ compatibility signals.">
+    <meta property="og:image" content="https://oslomeet.org/web.png">
+    <meta property="og:site_name" content="MIMBAI by Oslo Meet">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MIMBAI — AI B2B Matching Engine">
+    <meta name="twitter:description" content="The intelligence behind Oslo Meet's business connections.">
+    <meta name="twitter:image" content="https://oslomeet.org/web.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg: #05080f;
+            --surface: #0c1220;
+            --card: #111827;
+            --border: #1f2d45;
+            --border2: #2a3f60;
+            --text: #e8edf8;
+            --sub: #7b8faa;
+            --muted: #3a4d65;
+            --purple: #8b5cf6;
+            --blue: #3b82f6;
+            --cyan: #06b6d4;
+            --green: #10b981;
+            --grad: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            --grad2: linear-gradient(135deg, #06b6d4, #8b5cf6);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ── NOISE OVERLAY ── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        /* ── GRID BACKGROUND ── */
+        body::after {
+            content: '';
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+                linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1rem 2rem;
+            background: rgba(5,8,15,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(139,92,246,0.1);
+        }
+
+        .nav-brand {
+            display: flex; align-items: center; gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-sep {
+            width: 1px; height: 18px;
+            background: var(--border2);
+        }
+
+        .nav-tag {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--sub);
+        }
+
+        .nav-cta {
+            display: flex; align-items: center; gap: 6px;
+            padding: 7px 16px;
+            background: var(--grad);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+        .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative; z-index: 1;
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 120px 20px 80px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 5px 14px;
+            background: rgba(139,92,246,0.1);
+            border: 1px solid rgba(139,92,246,0.25);
+            border-radius: 50px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--purple);
+            margin-bottom: 1.5rem;
+            animation: fadeUp 0.7s ease backwards;
+        }
+
+        .hero-eyebrow .dot {
+            width: 6px; height: 6px;
+            background: var(--purple);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+            margin-bottom: 1rem;
+            animation: fadeUp 0.7s ease 0.1s backwards;
+        }
+
+        .hero h1 .word-mimbai {
+            display: block;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h1 .word-sub {
+            display: block;
+            font-size: 0.45em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            color: var(--sub);
+            -webkit-text-fill-color: var(--sub);
+            margin-top: 0.3em;
+        }
+
+        .hero-desc {
+            max-width: 600px;
+            font-size: 1.1rem;
+            color: var(--sub);
+            line-height: 1.7;
+            margin: 1.5rem auto 2.5rem;
+            animation: fadeUp 0.7s ease 0.2s backwards;
+        }
+
+        .hero-desc strong { color: var(--text); }
+
+        .hero-actions {
+            display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+            animation: fadeUp 0.7s ease 0.3s backwards;
+        }
+
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px;
+            background: var(--grad);
+            color: white; border-radius: 8px;
+            font-weight: 700; font-size: 0.95rem;
+            text-decoration: none; letter-spacing: 0.02em;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(139,92,246,0.35); }
+
+        .btn-ghost {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 28px;
+            background: transparent;
+            border: 1px solid var(--border2);
+            color: var(--text); border-radius: 8px;
+            font-weight: 600; font-size: 0.95rem;
+            text-decoration: none; letter-spacing: 0.02em;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .btn-ghost:hover { border-color: var(--purple); background: rgba(139,92,246,0.07); }
+
+        /* ── SCROLL INDICATOR ── */
+        .scroll-hint {
+            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            color: var(--muted); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+            animation: fadeUp 1s ease 0.8s backwards;
+        }
+        .scroll-line {
+            width: 1px; height: 32px;
+            background: linear-gradient(to bottom, var(--purple), transparent);
+            animation: scrollLine 1.5s ease infinite;
+        }
+        @keyframes scrollLine {
+            0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+            50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+            100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SECTION WRAPPER ── */
+        .section { position: relative; z-index: 1; padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
+
+        .section-label {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--purple); margin-bottom: 1rem;
+        }
+        .section-label::before {
+            content: '//';
+            opacity: 0.5;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .section-title .accent {
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-sub {
+            color: var(--sub); font-size: 1rem; max-width: 560px; line-height: 1.7;
+            margin-bottom: 3rem;
+        }
+
+        /* ── WHAT IS MIMBAI ── */
+        .what-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        @media (min-width: 768px) {
+            .what-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .what-text p {
+            color: var(--sub); line-height: 1.8; margin-bottom: 1.2rem; font-size: 0.95rem;
+        }
+        .what-text strong { color: var(--text); }
+
+        .what-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .what-card::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: var(--grad);
+        }
+
+        .brand-stack {
+            display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .brand-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem; font-weight: 600;
+        }
+        .brand-item.company { background: rgba(139,92,246,0.08); color: var(--purple); }
+        .brand-item.platform { background: rgba(59,130,246,0.08); color: var(--blue); }
+        .brand-item.engine { background: rgba(6,182,212,0.08); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
+
+        .brand-item i { font-size: 1rem; width: 20px; flex-shrink: 0; }
+        .brand-item .label { font-size: 0.7rem; opacity: 0.7; font-weight: 400; display: block; }
+
+        .arrow-down {
+            text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2px 0;
+        }
+
+        /* ── HOW IT WORKS ── */
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1px;
+            background: var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        @media (min-width: 600px) {
+            .steps { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 900px) {
+            .steps { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .step {
+            background: var(--card);
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .step-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--purple);
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .step-icon {
+            width: 44px; height: 44px;
+            background: rgba(139,92,246,0.1);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; color: var(--purple);
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-size: 0.95rem; font-weight: 700;
+            margin-bottom: 0.5rem; color: var(--text);
+        }
+
+        .step p {
+            font-size: 0.82rem; color: var(--sub); line-height: 1.5;
+        }
+
+        /* ── SIGNALS GRID ── */
+        .signals-intro {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .signals-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 3.5rem; font-weight: 700;
+            background: var(--grad);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .signals-label { color: var(--sub); font-size: 0.95rem; line-height: 1.5; }
+        .signals-label strong { color: var(--text); display: block; font-size: 1.1rem; }
+
+        .signals-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        @media (min-width: 600px) {
+            .signals-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .signal-chip {
+            display: flex; align-items: center; gap: 8px;
+            padding: 10px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.82rem; font-weight: 600;
+            transition: border-color 0.2s;
+        }
+        .signal-chip:hover { border-color: var(--border2); }
+        .signal-chip i { color: var(--purple); font-size: 0.85rem; width: 16px; flex-shrink: 0; }
+        .signal-chip .weight {
+            margin-left: auto;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--cyan);
+            font-weight: 700;
+        }
+
+        /* ── SCORE BAR ── */
+        .score-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .score-title {
+            font-size: 0.85rem; font-weight: 700;
+            color: var(--sub); margin-bottom: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.1em; text-transform: uppercase;
+        }
+
+        .score-bars { display: flex; flex-direction: column; gap: 12px; }
+
+        .score-row {
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .score-label {
+            font-size: 0.8rem; color: var(--sub); width: 200px; flex-shrink: 0;
+        }
+
+        .score-bar-track {
+            flex: 1; height: 6px;
+            background: var(--border);
+            border-radius: 10px; overflow: hidden;
+        }
+
+        .score-bar-fill {
+            height: 100%; border-radius: 10px;
+            background: var(--grad);
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 0%;
+        }
+
+        .score-pct {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem; color: var(--cyan);
+            width: 36px; text-align: right; flex-shrink: 0;
+        }
+
+        /* ── TECH STACK ── */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 600px) {
+            .tech-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 900px) {
+            .tech-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .tech-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.3rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .tech-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+
+        .tech-card-header {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 0.7rem;
+        }
+
+        .tech-icon {
+            width: 36px; height: 36px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        .tech-icon.purple { background: rgba(139,92,246,0.15); color: var(--purple); }
+        .tech-icon.blue { background: rgba(59,130,246,0.15); color: var(--blue); }
+        .tech-icon.cyan { background: rgba(6,182,212,0.15); color: var(--cyan); }
+        .tech-icon.green { background: rgba(16,185,129,0.15); color: var(--green); }
+
+        .tech-card h4 { font-size: 0.9rem; font-weight: 700; }
+        .tech-card .tech-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem; color: var(--sub); font-weight: 400;
+        }
+
+        .tech-card p { font-size: 0.8rem; color: var(--sub); line-height: 1.5; }
+
+        /* ── GDPR BOX ── */
+        .gdpr-box {
+            display: flex; gap: 1rem; align-items: flex-start;
+            background: rgba(16,185,129,0.06);
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: 14px;
+            padding: 1.2rem 1.5rem;
+            margin-top: 2rem;
+        }
+        .gdpr-box i { color: var(--green); font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+        .gdpr-box p { font-size: 0.85rem; color: var(--sub); line-height: 1.6; margin: 0; }
+        .gdpr-box strong { color: var(--text); }
+
+        /* ── DIVIDER ── */
+        .divider {
+            position: relative; z-index: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border), transparent);
+            margin: 0 20px;
+        }
+
+        /* ── CTA FINAL ── */
+        .cta-wrap {
+            position: relative; z-index: 1;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .cta-box {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid rgba(139,92,246,0.25);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-box::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: var(--grad);
+        }
+
+        .cta-box h2 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 800; letter-spacing: -0.03em;
+            margin-bottom: 0.8rem;
+        }
+        .cta-box p { color: var(--sub); margin-bottom: 2rem; font-size: 0.95rem; }
+
+        .cta-btns {
+            display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative; z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 2rem 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+        footer a:hover { color: var(--purple); }
+
+        .footer-brand-sm {
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            background: var(--grad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            nav { padding: 0.8rem 1rem; }
+            .nav-cta span { display: none; }
+            .score-label { width: 120px; font-size: 0.72rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="#" class="nav-brand">
+            <span class="nav-logo">MIMBAI</span>
+            <div class="nav-sep"></div>
+            <span class="nav-tag">by Oslo Meet</span>
+        </a>
+        <a href="https://oslomeet.org/join.html" class="nav-cta">
+            <i class="fas fa-rocket"></i>
+            <span>Try MIMBAI</span>
+        </a>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-eyebrow">
+            <div class="dot"></div>
+            AI Matching Engine · Oslo Meet
+        </div>
+        <h1>
+            <span class="word-mimbai">MIMBAI</span>
+            <span class="word-sub">Matching Intelligence for Modern Business & AI</span>
+        </h1>
+        <p class="hero-desc">
+            The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections.
+            MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies
+            across Europe, Brazil, China and the Nordic ecosystem.
+        </p>
+        <div class="hero-actions">
+            <a href="https://oslomeet.org/how-it-works.html" class="btn-primary">
+                <i class="fas fa-brain"></i> See How It Works
+            </a>
+            <a href="https://oslomeet.org/join.html" class="btn-ghost">
+                <i class="fas fa-building"></i> Register Your Company
+            </a>
+        </div>
+        <div class="scroll-hint">
+            Explore
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- WHAT IS MIMBAI -->
+    <div class="section">
+        <div class="section-label">Definition</div>
+        <h2 class="section-title">What is <span class="accent">MIMBAI?</span></h2>
+        <p class="section-sub">MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.</p>
+
+        <div class="what-grid">
+            <div class="what-text">
+                <p>
+                    MIMBAI is not a directory, a CRM, or a generic recommendation system.
+                    It is an <strong>intelligent matching layer</strong> built specifically for B2B contexts,
+                    designed to surface real strategic compatibility between companies — not just keyword overlap.
+                </p>
+                <p>
+                    Every company that joins Oslo Meet is analyzed by MIMBAI. Its profile is converted into
+                    <strong>high-dimensional semantic vectors</strong>, compared against other companies,
+                    and assigned a <strong>compatibility score</strong> based on industry fit, shared goals,
+                    technology synergies, and market alignment.
+                </p>
+                <p>
+                    MIMBAI runs continuously in the background — learning from interactions,
+                    refining scores, and surfacing new matches as the Oslo Meet network grows.
+                </p>
+            </div>
+
+            <div class="what-card">
+                <div class="brand-stack">
+                    <div class="brand-item company">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <span>Digital Solutions</span>
+                            <span class="label">Parent company</span>
+                        </div>
+                    </div>
+                    <div class="arrow-down">↓</div>
+                    <div class="brand-item platform">
+                        <i class="fas fa-handshake"></i>
+                        <div>
+                            <span>Oslo Meet</span>
+                            <span class="label">B2B platform — oslomeet.org</span>
+                        </div>
+                    </div>
+                    <div class="arrow-down">↓</div>
+                    <div class="brand-item engine">
+                        <i class="fas fa-brain"></i>
+                        <div>
+                            <span>MIMBAI</span>
+                            <span class="label">AI matching engine — mimbai.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+        <div class="section-label">Process</div>
+        <h2 class="section-title">How MIMBAI <span class="accent">Works</span></h2>
+        <p class="section-sub">A 4-step pipeline from raw company data to high-confidence match recommendations.</p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">// 01</div>
+                <div class="step-icon"><i class="fas fa-user-edit"></i></div>
+                <h3>Profile Ingestion</h3>
+                <p>Company data — sector, goals, technologies, markets, collaboration preferences — is structured into semantic tags and normalized business vectors.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">// 02</div>
+                <div class="step-icon"><i class="fas fa-project-diagram"></i></div>
+                <h3>Embedding Generation</h3>
+                <p>Text fields are converted into high-dimensional embeddings using the OpenAI API. Each company becomes a point in a shared semantic space.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">// 03</div>
+                <div class="step-icon"><i class="fas fa-calculator"></i></div>
+                <h3>Compatibility Scoring</h3>
+                <p>MIMBAI computes a 0–100% compatibility score using weighted signals: industry fit, strategic goals, tech synergy, market overlap, and collaboration intent.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">// 04</div>
+                <div class="step-icon"><i class="fas fa-paper-plane"></i></div>
+                <h3>Match Delivery</h3>
+                <p>Top matches are surfaced in each company's dashboard feed. The AI Concierge can draft personalized introductions based on match context.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SIGNALS -->
+    <div class="section">
+        <div class="section-label">Signals</div>
+        <h2 class="section-title">50+ <span class="accent">Compatibility Signals</span></h2>
+        <p class="section-sub">MIMBAI goes far beyond keyword matching. It evaluates strategic, operational, and cultural dimensions of business fit.</p>
+
+        <div class="signals-intro">
+            <div class="signals-number">50+</div>
+            <div class="signals-label">
+                <strong>Business signals analyzed</strong>
+                per company pair, per match cycle
+            </div>
+        </div>
+
+        <div class="signals-grid">
+            <div class="signal-chip"><i class="fas fa-industry"></i> Industry complementarity <span class="weight">30%</span></div>
+            <div class="signal-chip"><i class="fas fa-bullseye"></i> Strategic goals alignment <span class="weight">25%</span></div>
+            <div class="signal-chip"><i class="fas fa-map-marked-alt"></i> Market overlap <span class="weight">20%</span></div>
+            <div class="signal-chip"><i class="fas fa-code"></i> Tech stack synergy <span class="weight">15%</span></div>
+            <div class="signal-chip"><i class="fas fa-handshake"></i> Collaboration preferences <span class="weight">10%</span></div>
+            <div class="signal-chip"><i class="fas fa-globe-europe"></i> Geographic focus</div>
+            <div class="signal-chip"><i class="fas fa-chart-line"></i> Growth stage</div>
+            <div class="signal-chip"><i class="fas fa-users"></i> Company size fit</div>
+            <div class="signal-chip"><i class="fas fa-leaf"></i> Sustainability values</div>
+            <div class="signal-chip"><i class="fas fa-language"></i> Language & culture</div>
+            <div class="signal-chip"><i class="fas fa-network-wired"></i> Ecosystem position</div>
+            <div class="signal-chip"><i class="fas fa-tags"></i> Semantic tag overlap</div>
+        </div>
+
+        <div class="score-section">
+            <div class="score-title">// Sample match score breakdown</div>
+            <div class="score-bars">
+                <div class="score-row">
+                    <div class="score-label">Industry complementarity</div>
+                    <div class="score-bar-track"><div class="score-bar-fill" data-w="92"></div></div>
+                    <div class="score-pct">92%</div>
+                </div>
+                <div class="score-row">
+                    <div class="score-label">Strategic goals alignment</div>
+                    <div class="score-bar-track"><div class="score-bar-fill" data-w="88"></div></div>
+                    <div class="score-pct">88%</div>
+                </div>
+                <div class="score-row">
+                    <div class="score-label">Market overlap</div>
+                    <div class="score-bar-track"><div class="score-bar-fill" data-w="76"></div></div>
+                    <div class="score-pct">76%</div>
+                </div>
+                <div class="score-row">
+                    <div class="score-label">Tech stack synergy</div>
+                    <div class="score-bar-track"><div class="score-bar-fill" data-w="84"></div></div>
+                    <div class="score-pct">84%</div>
+                </div>
+                <div class="score-row">
+                    <div class="score-label">Collaboration preferences</div>
+                    <div class="score-bar-track"><div class="score-bar-fill" data-w="95"></div></div>
+                    <div class="score-pct">95%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TECH STACK -->
+    <div class="section">
+        <div class="section-label">Architecture</div>
+        <h2 class="section-title">Technical <span class="accent">Foundation</span></h2>
+        <p class="section-sub">MIMBAI is built on a modern, GDPR-compliant stack designed for performance, privacy, and scalability.</p>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-card-header">
+                    <div class="tech-icon purple"><i class="fas fa-brain"></i></div>
+                    <div>
+                        <h4>Semantic Embeddings</h4>
+                        <span class="tech-tag">OpenAI API</span>
+                    </div>
+                </div>
+                <p>Company profiles are converted into high-dimensional vector representations using OpenAI's embedding models, enabling deep semantic comparison beyond keyword matching.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-card-header">
+                    <div class="tech-icon blue"><i class="fas fa-database"></i></div>
+                    <div>
+                        <h4>Vector Storage</h4>
+                        <span class="tech-tag">Supabase + pgvector</span>
+                    </div>
+                </div>
+                <p>All embeddings and company data are stored in a GDPR-compliant, EU-hosted Supabase database with Row-Level Security enforcing strict data access policies.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-card-header">
+                    <div class="tech-icon cyan"><i class="fas fa-calculator"></i></div>
+                    <div>
+                        <h4>Scoring Engine</h4>
+                        <span class="tech-tag">Rule-based + ML</span>
+                    </div>
+                </div>
+                <p>A hybrid scoring engine combines cosine similarity on embeddings with rule-based weights for sector-specific signals, producing a single interpretable compatibility score.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-card-header">
+                    <div class="tech-icon green"><i class="fas fa-shield-alt"></i></div>
+                    <div>
+                        <h4>GDPR Compliance</h4>
+                        <span class="tech-tag">EU/EEA standard</span>
+                    </div>
+                </div>
+                <p>Data is encrypted at rest and in transit. Users can opt out of AI processing, request human review of decisions, or export/delete their data at any time.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-card-header">
+                    <div class="tech-icon purple"><i class="fas fa-bolt"></i></div>
+                    <div>
+                        <h4>Realtime Updates</h4>
+                        <span class="tech-tag">Supabase Realtime</span>
+                    </div>
+                </div>
+                <p>Match feeds and messages update in real time via WebSocket subscriptions. New companies trigger automatic re-scoring across the existing member base.</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-card-header">
+                    <div class="tech-icon blue"><i class="fas fa-robot"></i></div>
+                    <div>
+                        <h4>AI Concierge</h4>
+                        <span class="tech-tag">LLM-powered drafts</span>
+                    </div>
+                </div>
+                <p>Once a high-confidence match is found, the AI Concierge generates a personalized introduction draft. Users always approve before any message is sent.</p>
+            </div>
+        </div>
+
+        <div class="gdpr-box">
+            <i class="fas fa-lock"></i>
+            <p>
+                <strong>Privacy by design.</strong> Your business data is processed only for matching within Oslo Meet.
+                MIMBAI never uses company profiles to train public AI models, never sells data to third parties,
+                and is fully auditable by registered members under GDPR Article 22.
+            </p>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CTA -->
+    <div class="cta-wrap">
+        <div class="cta-box">
+            <h2>Your company deserves<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">better matches.</span></h2>
+            <p>Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.</p>
+            <div class="cta-btns">
+                <a href="https://oslomeet.org/join.html" class="btn-primary">
+                    <i class="fas fa-rocket"></i> Register Your Company
+                </a>
+                <a href="https://oslomeet.org/how-it-works.html" class="btn-ghost">
+                    <i class="fas fa-arrow-right"></i> Full Platform Details
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div>
+            <span class="footer-brand-sm">MIMBAI</span>
+            <span style="margin-left:8px">— AI Matching Engine by Oslo Meet</span>
+        </div>
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+            <a href="https://oslomeet.org">oslomeet.org</a>
+            <a href="https://oslomeet.org/privacy-policy.html">Privacy</a>
+            <a href="https://oslomeet.org/terms-of-use.html">Terms</a>
+            <a href="https://oslomeet.org/contact.html">Contact</a>
+        </div>
+        <div>© 2026 Oslo Meet · Digital Solutions</div>
+    </footer>
+
+    <script>
+        // Animate score bars on scroll
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.querySelectorAll('.score-bar-fill').forEach(bar => {
+                        bar.style.width = bar.dataset.w + '%';
+                    });
+                    observer.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const scoreSection = document.querySelector('.score-section');
+        if (scoreSection) observer.observe(scoreSection);
+
+        // Fade in sections on scroll
+        const fadeObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
+                    fadeObs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.step, .tech-card, .signal-chip').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(16px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            fadeObs.observe(el);
+        });
+    </script>
+
+</body>
+</html>
