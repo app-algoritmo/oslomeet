@@ -8,12 +8,10 @@
     <meta name="apple-mobile-web-app-title" content="MIMBAI" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#8b5cf6" />
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MIMBAI — AI Matching Engine by Oslo Meet</title>
     <meta name="description" content="MIMBAI is Oslo Meet's proprietary AI B2B matching engine. Semantic embeddings, compatibility scoring, and intelligent business connections across Europe and the Nordics.">
-
     <meta property="og:title" content="MIMBAI — AI B2B Matching Engine">
     <meta property="og:description" content="The intelligence behind Oslo Meet's business connections. Powered by semantic embeddings and 50+ compatibility signals.">
     <meta property="og:image" content="https://oslomeet.org/web.png">
@@ -23,1046 +21,617 @@
     <meta name="twitter:title" content="MIMBAI — AI B2B Matching Engine">
     <meta name="twitter:description" content="The intelligence behind Oslo Meet's business connections.">
     <meta name="twitter:image" content="https://oslomeet.org/web.png">
-
     <meta name="google-site-verification" content="CRM-dMkWd--H5ZUbXfcT6P4OILoxyN9HrYl3ZJ7EDrk" />
-
-    <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5E3B7CKET"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-C5E3B7CKET', {
-        'anonymize_ip': true,
-        'cookie_flags': 'SameSite=None;Secure'
-      });
+      gtag('config', 'G-C5E3B7CKET', {'anonymize_ip': true,'cookie_flags': 'SameSite=None;Secure'});
     </script>
-
-    <!-- hreflang -->
     <link rel="alternate" hreflang="en" href="https://mimbai.com/" />
     <link rel="alternate" hreflang="no" href="https://mimbai.com/?lang=no" />
     <link rel="alternate" hreflang="pt" href="https://mimbai.com/?lang=pt" />
     <link rel="alternate" hreflang="es" href="https://mimbai.com/?lang=es" />
     <link rel="alternate" hreflang="x-default" href="https://mimbai.com/" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
         :root {
-            --bg: #05080f;
-            --surface: #0c1220;
-            --card: #111827;
-            --border: #1f2d45;
-            --border2: #2a3f60;
-            --text: #e8edf8;
-            --sub: #7b8faa;
-            --muted: #3a4d65;
-            --purple: #8b5cf6;
-            --blue: #3b82f6;
-            --cyan: #06b6d4;
-            --green: #10b981;
-            --grad: linear-gradient(135deg, #8b5cf6, #3b82f6);
-            --grad2: linear-gradient(135deg, #06b6d4, #8b5cf6);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Syne', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ── NOISE OVERLAY ── */
-        body::before {
-            content: '';
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-            opacity: 0.4;
-        }
-
-        /* ── GRID BACKGROUND ── */
-        body::after {
-            content: '';
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background-image:
-                linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        /* ── NAV ── */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 1rem 2rem;
-            background: rgba(5,8,15,0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(139,92,246,0.1);
-        }
-
-        .nav-brand {
-            display: flex; align-items: center; gap: 10px;
-            text-decoration: none;
-        }
-
-        .nav-logo {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.3rem;
-            font-weight: 700;
-            background: var(--grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
-        }
-
-        .nav-sep {
-            width: 1px; height: 18px;
-            background: var(--border2);
-        }
-
-        .nav-tag {
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--sub);
-        }
-
-        .nav-cta {
-            display: flex; align-items: center; gap: 6px;
-            padding: 7px 16px;
-            background: var(--grad);
-            color: white;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-decoration: none;
-            letter-spacing: 0.05em;
-            transition: opacity 0.2s, transform 0.15s;
-        }
-        .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
-
-        /* ── HERO ── */
-        .hero {
-            position: relative; z-index: 1;
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 120px 20px 80px;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .hero-glow {
-            position: absolute;
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(139,92,246,0.15) 0%, transparent 70%);
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            pointer-events: none;
-        }
-
-        .hero-eyebrow {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 5px 14px;
-            background: rgba(139,92,246,0.1);
-            border: 1px solid rgba(139,92,246,0.25);
-            border-radius: 50px;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--purple);
-            margin-bottom: 1.5rem;
-            animation: fadeUp 0.7s ease backwards;
-        }
-
-        .hero-eyebrow .dot {
-            width: 6px; height: 6px;
-            background: var(--purple);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
-        }
-
-        .hero h1 {
-            font-size: clamp(3.5rem, 10vw, 7rem);
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            line-height: 0.95;
-            margin-bottom: 1rem;
-            animation: fadeUp 0.7s ease 0.1s backwards;
-        }
-
-        .hero h1 .word-mimbai {
-            display: block;
-            background: var(--grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero h1 .word-sub {
-            display: block;
-            font-size: 0.45em;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            color: var(--sub);
-            -webkit-text-fill-color: var(--sub);
-            margin-top: 0.3em;
-        }
-
-        .hero-desc {
-            max-width: 600px;
-            font-size: 1.1rem;
-            color: var(--sub);
-            line-height: 1.7;
-            margin: 1.5rem auto 2.5rem;
-            animation: fadeUp 0.7s ease 0.2s backwards;
-        }
-
-        .hero-desc strong { color: var(--text); }
-
-        .hero-actions {
-            display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-            animation: fadeUp 0.7s ease 0.3s backwards;
-        }
-
-        .btn-primary {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 13px 28px;
-            background: var(--grad);
-            color: white; border-radius: 8px;
-            font-weight: 700; font-size: 0.95rem;
-            text-decoration: none; letter-spacing: 0.02em;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(139,92,246,0.35); }
-
-        .btn-ghost {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 13px 28px;
-            background: transparent;
-            border: 1px solid var(--border2);
-            color: var(--text); border-radius: 8px;
-            font-weight: 600; font-size: 0.95rem;
-            text-decoration: none; letter-spacing: 0.02em;
-            transition: border-color 0.2s, background 0.2s;
-        }
-        .btn-ghost:hover { border-color: var(--purple); background: rgba(139,92,246,0.07); }
-
-        /* ── SCROLL INDICATOR ── */
-        .scroll-hint {
-            position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
-            display: flex; flex-direction: column; align-items: center; gap: 6px;
-            color: var(--muted); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-            animation: fadeUp 1s ease 0.8s backwards;
-        }
-        .scroll-line {
-            width: 1px; height: 32px;
-            background: linear-gradient(to bottom, var(--purple), transparent);
-            animation: scrollLine 1.5s ease infinite;
-        }
-        @keyframes scrollLine {
-            0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
-            50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
-            100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── SECTION WRAPPER ── */
-        .section { position: relative; z-index: 1; padding: 80px 20px; max-width: 1100px; margin: 0 auto; }
-
-        .section-label {
-            display: inline-flex; align-items: center; gap: 8px;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem; font-weight: 700;
-            letter-spacing: 0.2em; text-transform: uppercase;
-            color: var(--purple); margin-bottom: 1rem;
-        }
-        .section-label::before {
-            content: '//';
-            opacity: 0.5;
-        }
-
-        .section-title {
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
-            margin-bottom: 1rem;
-        }
-
-        .section-title .accent {
-            background: var(--grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .section-sub {
-            color: var(--sub); font-size: 1rem; max-width: 560px; line-height: 1.7;
-            margin-bottom: 3rem;
-        }
-
-        /* ── WHAT IS MIMBAI ── */
-        .what-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            align-items: center;
-        }
-        @media (min-width: 768px) {
-            .what-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        .what-text p {
-            color: var(--sub); line-height: 1.8; margin-bottom: 1.2rem; font-size: 0.95rem;
-        }
-        .what-text strong { color: var(--text); }
-
-        .what-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .what-card::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: var(--grad);
-        }
-
-        .brand-stack {
-            display: flex; flex-direction: column; gap: 10px;
-        }
-
-        .brand-item {
-            display: flex; align-items: center; gap: 12px;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 0.85rem; font-weight: 600;
-        }
-        .brand-item.company { background: rgba(139,92,246,0.08); color: var(--purple); }
-        .brand-item.platform { background: rgba(59,130,246,0.08); color: var(--blue); }
-        .brand-item.engine { background: rgba(6,182,212,0.08); color: var(--cyan); border: 1px solid rgba(6,182,212,0.2); }
-
-        .brand-item i { font-size: 1rem; width: 20px; flex-shrink: 0; }
-        .brand-item .label { font-size: 0.7rem; opacity: 0.7; font-weight: 400; display: block; }
-
-        .arrow-down {
-            text-align: center; color: var(--muted); font-size: 0.8rem; padding: 2px 0;
-        }
-
-        /* ── HOW IT WORKS ── */
-        .steps {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1px;
-            background: var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-        @media (min-width: 600px) {
-            .steps { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 900px) {
-            .steps { grid-template-columns: repeat(4, 1fr); }
-        }
-
-        .step {
-            background: var(--card);
-            padding: 1.5rem;
-            position: relative;
-        }
-
-        .step-num {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            color: var(--purple);
-            margin-bottom: 1rem;
-            opacity: 0.8;
-        }
-
-        .step-icon {
-            width: 44px; height: 44px;
-            background: rgba(139,92,246,0.1);
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: var(--purple);
-            margin-bottom: 1rem;
-        }
-
-        .step h3 {
-            font-size: 0.95rem; font-weight: 700;
-            margin-bottom: 0.5rem; color: var(--text);
-        }
-
-        .step p {
-            font-size: 0.82rem; color: var(--sub); line-height: 1.5;
-        }
-
-        /* ── SIGNALS GRID ── */
-        .signals-intro {
-            display: flex; align-items: center; gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .signals-number {
-            font-family: 'Space Mono', monospace;
-            font-size: 3.5rem; font-weight: 700;
-            background: var(--grad);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            line-height: 1;
-        }
-
-        .signals-label { color: var(--sub); font-size: 0.95rem; line-height: 1.5; }
-        .signals-label strong { color: var(--text); display: block; font-size: 1.1rem; }
-
-        .signals-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        @media (min-width: 600px) {
-            .signals-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .signal-chip {
-            display: flex; align-items: center; gap: 8px;
-            padding: 10px 14px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            font-size: 0.82rem; font-weight: 600;
-            transition: border-color 0.2s;
-        }
-        .signal-chip:hover { border-color: var(--border2); }
-        .signal-chip i { color: var(--purple); font-size: 0.85rem; width: 16px; flex-shrink: 0; }
-        .signal-chip .weight {
-            margin-left: auto;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--cyan);
-            font-weight: 700;
-        }
-
-        /* ── SCORE BAR ── */
-        .score-section {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-
-        .score-title {
-            font-size: 0.85rem; font-weight: 700;
-            color: var(--sub); margin-bottom: 1.5rem;
-            font-family: 'Space Mono', monospace;
-            letter-spacing: 0.1em; text-transform: uppercase;
-        }
-
-        .score-bars { display: flex; flex-direction: column; gap: 12px; }
-
-        .score-row {
-            display: flex; align-items: center; gap: 12px;
-        }
-
-        .score-label {
-            font-size: 0.8rem; color: var(--sub); width: 200px; flex-shrink: 0;
-        }
-
-        .score-bar-track {
-            flex: 1; height: 6px;
-            background: var(--border);
-            border-radius: 10px; overflow: hidden;
-        }
-
-        .score-bar-fill {
-            height: 100%; border-radius: 10px;
-            background: var(--grad);
-            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-            width: 0%;
-        }
-
-        .score-pct {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem; color: var(--cyan);
-            width: 36px; text-align: right; flex-shrink: 0;
-        }
-
-        /* ── TECH STACK ── */
-        .tech-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        @media (min-width: 600px) {
-            .tech-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (min-width: 900px) {
-            .tech-grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        .tech-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.3rem;
-            transition: border-color 0.2s, transform 0.2s;
-        }
-        .tech-card:hover { border-color: var(--border2); transform: translateY(-3px); }
-
-        .tech-card-header {
-            display: flex; align-items: center; gap: 10px;
-            margin-bottom: 0.7rem;
-        }
-
-        .tech-icon {
-            width: 36px; height: 36px;
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem;
-        }
-
-        .tech-icon.purple { background: rgba(139,92,246,0.15); color: var(--purple); }
-        .tech-icon.blue { background: rgba(59,130,246,0.15); color: var(--blue); }
-        .tech-icon.cyan { background: rgba(6,182,212,0.15); color: var(--cyan); }
-        .tech-icon.green { background: rgba(16,185,129,0.15); color: var(--green); }
-
-        .tech-card h4 { font-size: 0.9rem; font-weight: 700; }
-        .tech-card .tech-tag {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.65rem; color: var(--sub); font-weight: 400;
-        }
-
-        .tech-card p { font-size: 0.8rem; color: var(--sub); line-height: 1.5; }
-
-        /* ── GDPR BOX ── */
-        .gdpr-box {
-            display: flex; gap: 1rem; align-items: flex-start;
-            background: rgba(16,185,129,0.06);
-            border: 1px solid rgba(16,185,129,0.2);
-            border-radius: 14px;
-            padding: 1.2rem 1.5rem;
-            margin-top: 2rem;
-        }
-        .gdpr-box i { color: var(--green); font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-        .gdpr-box p { font-size: 0.85rem; color: var(--sub); line-height: 1.6; margin: 0; }
-        .gdpr-box strong { color: var(--text); }
-
-        /* ── DIVIDER ── */
-        .divider {
-            position: relative; z-index: 1;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--border), transparent);
-            margin: 0 20px;
-        }
-
-        /* ── CTA FINAL ── */
-        .cta-wrap {
-            position: relative; z-index: 1;
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .cta-box {
-            max-width: 700px;
-            margin: 0 auto;
-            background: var(--card);
-            border: 1px solid rgba(139,92,246,0.25);
-            border-radius: 24px;
-            padding: 3rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .cta-box::before {
-            content: '';
-            position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: var(--grad);
-        }
-
-        .cta-box h2 {
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
-            font-weight: 800; letter-spacing: -0.03em;
-            margin-bottom: 0.8rem;
-        }
-        .cta-box p { color: var(--sub); margin-bottom: 2rem; font-size: 0.95rem; }
-
-        .cta-btns {
-            display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            position: relative; z-index: 1;
-            border-top: 1px solid var(--border);
-            padding: 2rem 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            max-width: 1100px;
-            margin: 0 auto;
-            color: var(--muted);
-            font-size: 0.8rem;
-        }
-
-        footer a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
-        footer a:hover { color: var(--purple); }
-
-        .footer-brand-sm {
-            font-family: 'Space Mono', monospace;
-            font-weight: 700;
-            background: var(--grad);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 640px) {
-            nav { padding: 0.8rem 1rem; }
-            .nav-cta span { display: none; }
-            .score-label { width: 120px; font-size: 0.72rem; }
-        }
+            --bg:#05080f;--surface:#0c1220;--card:#111827;--border:#1f2d45;--border2:#2a3f60;
+            --text:#e8edf8;--sub:#7b8faa;--muted:#3a4d65;
+            --purple:#8b5cf6;--blue:#3b82f6;--cyan:#06b6d4;--green:#10b981;
+            --grad:linear-gradient(135deg,#8b5cf6,#3b82f6);
+        }
+        *{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;}
+        body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.4;}
+        body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(139,92,246,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,0.04) 1px,transparent 1px);background-size:60px 60px;}
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(5,8,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(139,92,246,0.1);}
+        .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+        .nav-logo{font-family:'Space Mono',monospace;font-size:1.3rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.02em;}
+        .nav-sep{width:1px;height:18px;background:var(--border2);}
+        .nav-tag{font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--sub);}
+        .nav-right{display:flex;align-items:center;gap:12px;}
+        .nav-cta{display:flex;align-items:center;gap:6px;padding:7px 16px;background:var(--grad);color:white;border-radius:6px;font-size:0.8rem;font-weight:700;text-decoration:none;letter-spacing:0.05em;transition:opacity 0.2s,transform 0.15s;}
+        .nav-cta:hover{opacity:0.88;transform:translateY(-1px);}
+        .lang-sel{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:6px 12px;display:flex;align-items:center;gap:8px;}
+        .lang-sel i{color:#3b82f6;font-size:0.9rem;}
+        .lang-sel select{background:transparent;border:none;color:white;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;}
+        .lang-sel select option{background:var(--bg);}
+        .hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 20px 80px;text-align:center;overflow:hidden;}
+        .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(139,92,246,0.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+        .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.25);border-radius:50px;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:1.5rem;animation:fadeUp 0.7s ease backwards;}
+        .hero-eyebrow .dot{width:6px;height:6px;background:var(--purple);border-radius:50%;animation:blink 2s infinite;}
+        @keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
+        .hero h1{font-size:clamp(3.5rem,10vw,7rem);font-weight:800;letter-spacing:-0.04em;line-height:0.95;margin-bottom:1rem;animation:fadeUp 0.7s ease 0.1s backwards;}
+        .word-mimbai{display:block;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .word-sub{display:block;font-size:0.45em;font-weight:600;letter-spacing:0.05em;color:var(--sub);-webkit-text-fill-color:var(--sub);margin-top:0.3em;}
+        .hero-desc{max-width:600px;font-size:1.1rem;color:var(--sub);line-height:1.7;margin:1.5rem auto 2.5rem;animation:fadeUp 0.7s ease 0.2s backwards;}
+        .hero-desc strong{color:var(--text);}
+        .hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:fadeUp 0.7s ease 0.3s backwards;}
+        .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:var(--grad);color:white;border-radius:8px;font-weight:700;font-size:0.95rem;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(139,92,246,0.35);}
+        .btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:transparent;border:1px solid var(--border2);color:var(--text);border-radius:8px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:border-color 0.2s,background 0.2s;}
+        .btn-ghost:hover{border-color:var(--purple);background:rgba(139,92,246,0.07);}
+        .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;animation:fadeUp 1s ease 0.8s backwards;}
+        .scroll-line{width:1px;height:32px;background:linear-gradient(to bottom,var(--purple),transparent);animation:scrollLine 1.5s ease infinite;}
+        @keyframes scrollLine{0%{opacity:0;transform:scaleY(0);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}100%{opacity:0;transform:scaleY(1);transform-origin:bottom;}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+        .section{position:relative;z-index:1;padding:80px 20px;max-width:1100px;margin:0 auto;}
+        .section-label{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem;}
+        .section-label::before{content:'//';opacity:0.5;}
+        .section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1rem;}
+        .section-title .accent{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .section-sub{color:var(--sub);font-size:1rem;max-width:560px;line-height:1.7;margin-bottom:3rem;}
+        .what-grid{display:grid;grid-template-columns:1fr;gap:2rem;align-items:center;}
+        @media(min-width:768px){.what-grid{grid-template-columns:1fr 1fr;}}
+        .what-text p{color:var(--sub);line-height:1.8;margin-bottom:1.2rem;font-size:0.95rem;}
+        .what-text strong{color:var(--text);}
+        .what-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;position:relative;overflow:hidden;}
+        .what-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);}
+        .brand-stack{display:flex;flex-direction:column;gap:10px;}
+        .brand-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;font-size:0.85rem;font-weight:600;}
+        .brand-item.company{background:rgba(139,92,246,0.08);color:var(--purple);}
+        .brand-item.platform{background:rgba(59,130,246,0.08);color:var(--blue);}
+        .brand-item.engine{background:rgba(6,182,212,0.08);color:var(--cyan);border:1px solid rgba(6,182,212,0.2);}
+        .brand-item i{font-size:1rem;width:20px;flex-shrink:0;}
+        .brand-item .label{font-size:0.7rem;opacity:0.7;font-weight:400;display:block;}
+        .arrow-down{text-align:center;color:var(--muted);font-size:0.8rem;padding:2px 0;}
+        .steps{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border-radius:16px;overflow:hidden;border:1px solid var(--border);}
+        @media(min-width:600px){.steps{grid-template-columns:repeat(2,1fr);}}
+        @media(min-width:900px){.steps{grid-template-columns:repeat(4,1fr);}}
+        .step{background:var(--card);padding:1.5rem;}
+        .step-num{font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;color:var(--purple);margin-bottom:1rem;opacity:0.8;}
+        .step-icon{width:44px;height:44px;background:rgba(139,92,246,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--purple);margin-bottom:1rem;}
+        .step h3{font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;color:var(--text);}
+        .step p{font-size:0.82rem;color:var(--sub);line-height:1.5;}
+        .signals-intro{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;}
+        .signals-number{font-family:'Space Mono',monospace;font-size:3.5rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+        .signals-label{color:var(--sub);font-size:0.95rem;line-height:1.5;}
+        .signals-label strong{color:var(--text);display:block;font-size:1.1rem;}
+        .signals-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+        @media(min-width:600px){.signals-grid{grid-template-columns:repeat(3,1fr);}}
+        .signal-chip{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;font-size:0.82rem;font-weight:600;transition:border-color 0.2s;}
+        .signal-chip:hover{border-color:var(--border2);}
+        .signal-chip i{color:var(--purple);font-size:0.85rem;width:16px;flex-shrink:0;}
+        .signal-chip .weight{margin-left:auto;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--cyan);font-weight:700;}
+        .score-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-top:3rem;}
+        .score-title{font-size:0.85rem;font-weight:700;color:var(--sub);margin-bottom:1.5rem;font-family:'Space Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;}
+        .score-bars{display:flex;flex-direction:column;gap:12px;}
+        .score-row{display:flex;align-items:center;gap:12px;}
+        .score-label{font-size:0.8rem;color:var(--sub);width:200px;flex-shrink:0;}
+        .score-bar-track{flex:1;height:6px;background:var(--border);border-radius:10px;overflow:hidden;}
+        .score-bar-fill{height:100%;border-radius:10px;background:var(--grad);transition:width 1.5s cubic-bezier(0.16,1,0.3,1);width:0%;}
+        .score-pct{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--cyan);width:36px;text-align:right;flex-shrink:0;}
+        .tech-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
+        @media(min-width:600px){.tech-grid{grid-template-columns:repeat(2,1fr);}}
+        @media(min-width:900px){.tech-grid{grid-template-columns:repeat(3,1fr);}}
+        .tech-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.3rem;transition:border-color 0.2s,transform 0.2s;}
+        .tech-card:hover{border-color:var(--border2);transform:translateY(-3px);}
+        .tech-card-header{display:flex;align-items:center;gap:10px;margin-bottom:0.7rem;}
+        .tech-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:0.9rem;}
+        .tech-icon.purple{background:rgba(139,92,246,0.15);color:var(--purple);}
+        .tech-icon.blue{background:rgba(59,130,246,0.15);color:var(--blue);}
+        .tech-icon.cyan{background:rgba(6,182,212,0.15);color:var(--cyan);}
+        .tech-icon.green{background:rgba(16,185,129,0.15);color:var(--green);}
+        .tech-card h4{font-size:0.9rem;font-weight:700;}
+        .tech-card .tech-tag{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--sub);font-weight:400;}
+        .tech-card p{font-size:0.8rem;color:var(--sub);line-height:1.5;}
+        .gdpr-box{display:flex;gap:1rem;align-items:flex-start;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:1.2rem 1.5rem;margin-top:2rem;}
+        .gdpr-box i{color:var(--green);font-size:1.2rem;flex-shrink:0;margin-top:2px;}
+        .gdpr-box p{font-size:0.85rem;color:var(--sub);line-height:1.6;margin:0;}
+        .gdpr-box strong{color:var(--text);}
+        .divider{position:relative;z-index:1;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:0 20px;}
+        .cta-wrap{position:relative;z-index:1;padding:80px 20px;text-align:center;}
+        .cta-box{max-width:700px;margin:0 auto;background:var(--card);border:1px solid rgba(139,92,246,0.25);border-radius:24px;padding:3rem 2rem;position:relative;overflow:hidden;}
+        .cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);}
+        .cta-box h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;letter-spacing:-0.03em;margin-bottom:0.8rem;}
+        .cta-box p{color:var(--sub);margin-bottom:2rem;font-size:0.95rem;}
+        .cta-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+        footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;max-width:1100px;margin:0 auto;color:var(--muted);font-size:0.8rem;}
+        footer a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
+        footer a:hover{color:var(--purple);}
+        .footer-brand-sm{font-family:'Space Mono',monospace;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        @media(max-width:640px){nav{padding:0.8rem 1rem;}.nav-cta span{display:none;}.score-label{width:120px;font-size:0.72rem;}}
     </style>
 </head>
 <body>
 
-    <!-- NAV -->
-    <nav>
-        <a href="#" class="nav-brand">
-            <span class="nav-logo">MIMBAI</span>
-            <div class="nav-sep"></div>
-            <span class="nav-tag">by Oslo Meet</span>
+<nav>
+    <a href="#" class="nav-brand">
+        <span class="nav-logo">MIMBAI</span>
+        <div class="nav-sep"></div>
+        <span class="nav-tag">by Oslo Meet</span>
+    </a>
+    <div class="nav-right">
+        <a href="https://oslomeet.org/start.html" class="nav-cta">
+            <i class="fas fa-rocket"></i>
+            <span data-i18n="navCta">Try MIMBAI</span>
         </a>
-        <div style="display:flex;align-items:center;gap:12px;">
-            <a href="https://oslomeet.org/start.html" class="nav-cta">
-                <i class="fas fa-rocket"></i>
-                <span>Try MIMBAI</span>
+        <div class="lang-sel">
+            <i class="fas fa-globe"></i>
+            <select id="languageSelect" onchange="changeLanguage(this.value)">
+                <option value="en">English</option>
+                <option value="no">Norsk</option>
+                <option value="pt">Português</option>
+                <option value="es">Español</option>
+            </select>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-eyebrow">
+        <div class="dot"></div>
+        <span data-i18n="heroEyebrow">AI Matching Engine · Oslo Meet</span>
+    </div>
+    <h1>
+        <span class="word-mimbai">MIMBAI</span>
+        <span class="word-sub" data-i18n="heroSub">Matching Intelligence for Modern Business & AI</span>
+    </h1>
+    <p class="hero-desc" data-i18n="heroDesc">The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections. MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies across Europe, Brazil, China and the Nordic ecosystem.</p>
+    <div class="hero-actions">
+        <a href="https://oslomeet.org/how-it-works.html" class="btn-primary">
+            <i class="fas fa-brain"></i> <span data-i18n="heroBtn1">See How It Works</span>
+        </a>
+        <a href="https://oslomeet.org/join.html" class="btn-ghost">
+            <i class="fas fa-building"></i> <span data-i18n="heroBtn2">Register Your Company</span>
+        </a>
+    </div>
+    <div class="scroll-hint">
+        <span data-i18n="scrollHint">Explore</span>
+        <div class="scroll-line"></div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHAT IS MIMBAI -->
+<div class="section">
+    <div class="section-label" data-i18n="defLabel">Definition</div>
+    <h2 class="section-title" data-i18n="whatTitle">What is <span class="accent">MIMBAI?</span></h2>
+    <p class="section-sub" data-i18n="whatSub">MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.</p>
+    <div class="what-grid">
+        <div class="what-text">
+            <p data-i18n="whatP1">MIMBAI is not a directory, a CRM, or a generic recommendation system. It is an <strong>intelligent matching layer</strong> built specifically for B2B contexts, designed to surface real strategic compatibility between companies — not just keyword overlap.</p>
+            <p data-i18n="whatP2">Every company that joins Oslo Meet is analyzed by MIMBAI. Its profile is converted into <strong>high-dimensional semantic vectors</strong>, compared against other companies, and assigned a <strong>compatibility score</strong> based on industry fit, shared goals, technology synergies, and market alignment.</p>
+            <p data-i18n="whatP3">MIMBAI runs continuously in the background — learning from interactions, refining scores, and surfacing new matches as the Oslo Meet network grows.</p>
+        </div>
+        <div class="what-card">
+            <div class="brand-stack">
+                <div class="brand-item company">
+                    <i class="fas fa-globe"></i>
+                    <div>
+                        <span data-i18n="brandParent">Digital Solutions</span>
+                        <span class="label" data-i18n="brandParentLabel">Parent company</span>
+                    </div>
+                </div>
+                <div class="arrow-down">↓</div>
+                <div class="brand-item platform">
+                    <i class="fas fa-handshake"></i>
+                    <div>
+                        <span>Oslo Meet</span>
+                        <span class="label" data-i18n="brandPlatformLabel">B2B platform — oslomeet.org</span>
+                    </div>
+                </div>
+                <div class="arrow-down">↓</div>
+                <div class="brand-item engine">
+                    <i class="fas fa-brain"></i>
+                    <div>
+                        <span>MIMBAI</span>
+                        <span class="label" data-i18n="brandEngineLabel">AI matching engine — mimbai.com</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+    <div class="section-label" data-i18n="processLabel">Process</div>
+    <h2 class="section-title"><span data-i18n="processTitle">How MIMBAI Works</span></h2>
+    <p class="section-sub" data-i18n="processSub">A 4-step pipeline from raw company data to high-confidence match recommendations.</p>
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">// 01</div>
+            <div class="step-icon"><i class="fas fa-user-edit"></i></div>
+            <h3 data-i18n="step1Title">Profile Ingestion</h3>
+            <p data-i18n="step1Desc">Company data — sector, goals, technologies, markets, collaboration preferences — is structured into semantic tags and normalized business vectors.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">// 02</div>
+            <div class="step-icon"><i class="fas fa-project-diagram"></i></div>
+            <h3 data-i18n="step2Title">Embedding Generation</h3>
+            <p data-i18n="step2Desc">Text fields are converted into high-dimensional embeddings using the OpenAI API. Each company becomes a point in a shared semantic space.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">// 03</div>
+            <div class="step-icon"><i class="fas fa-calculator"></i></div>
+            <h3 data-i18n="step3Title">Compatibility Scoring</h3>
+            <p data-i18n="step3Desc">MIMBAI computes a 0–100% compatibility score using weighted signals: industry fit, strategic goals, tech synergy, market overlap, and collaboration intent.</p>
+        </div>
+        <div class="step">
+            <div class="step-num">// 04</div>
+            <div class="step-icon"><i class="fas fa-paper-plane"></i></div>
+            <h3 data-i18n="step4Title">Match Delivery</h3>
+            <p data-i18n="step4Desc">Top matches are surfaced in each company's dashboard feed. The AI Concierge can draft personalized introductions based on match context.</p>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SIGNALS -->
+<div class="section">
+    <div class="section-label" data-i18n="signalsLabel">Signals</div>
+    <h2 class="section-title">50+ <span class="accent" data-i18n="signalsTitle">Compatibility Signals</span></h2>
+    <p class="section-sub" data-i18n="signalsSub">MIMBAI goes far beyond keyword matching. It evaluates strategic, operational, and cultural dimensions of business fit.</p>
+    <div class="signals-intro">
+        <div class="signals-number">50+</div>
+        <div class="signals-label">
+            <strong data-i18n="signalsStrong">Business signals analyzed</strong>
+            <span data-i18n="signalsCycle">per company pair, per match cycle</span>
+        </div>
+    </div>
+    <div class="signals-grid">
+        <div class="signal-chip"><i class="fas fa-industry"></i> <span data-i18n="sig1">Industry complementarity</span> <span class="weight">30%</span></div>
+        <div class="signal-chip"><i class="fas fa-bullseye"></i> <span data-i18n="sig2">Strategic goals alignment</span> <span class="weight">25%</span></div>
+        <div class="signal-chip"><i class="fas fa-map-marked-alt"></i> <span data-i18n="sig3">Market overlap</span> <span class="weight">20%</span></div>
+        <div class="signal-chip"><i class="fas fa-code"></i> <span data-i18n="sig4">Tech stack synergy</span> <span class="weight">15%</span></div>
+        <div class="signal-chip"><i class="fas fa-handshake"></i> <span data-i18n="sig5">Collaboration preferences</span> <span class="weight">10%</span></div>
+        <div class="signal-chip"><i class="fas fa-globe-europe"></i> <span data-i18n="sig6">Geographic focus</span></div>
+        <div class="signal-chip"><i class="fas fa-chart-line"></i> <span data-i18n="sig7">Growth stage</span></div>
+        <div class="signal-chip"><i class="fas fa-users"></i> <span data-i18n="sig8">Company size fit</span></div>
+        <div class="signal-chip"><i class="fas fa-leaf"></i> <span data-i18n="sig9">Sustainability values</span></div>
+        <div class="signal-chip"><i class="fas fa-language"></i> <span data-i18n="sig10">Language & culture</span></div>
+        <div class="signal-chip"><i class="fas fa-network-wired"></i> <span data-i18n="sig11">Ecosystem position</span></div>
+        <div class="signal-chip"><i class="fas fa-tags"></i> <span data-i18n="sig12">Semantic tag overlap</span></div>
+    </div>
+    <div class="score-section">
+        <div class="score-title" data-i18n="scoreTitle">// Sample match score breakdown</div>
+        <div class="score-bars">
+            <div class="score-row"><div class="score-label" data-i18n="sig1">Industry complementarity</div><div class="score-bar-track"><div class="score-bar-fill" data-w="92"></div></div><div class="score-pct">92%</div></div>
+            <div class="score-row"><div class="score-label" data-i18n="sig2">Strategic goals alignment</div><div class="score-bar-track"><div class="score-bar-fill" data-w="88"></div></div><div class="score-pct">88%</div></div>
+            <div class="score-row"><div class="score-label" data-i18n="sig3">Market overlap</div><div class="score-bar-track"><div class="score-bar-fill" data-w="76"></div></div><div class="score-pct">76%</div></div>
+            <div class="score-row"><div class="score-label" data-i18n="sig4">Tech stack synergy</div><div class="score-bar-track"><div class="score-bar-fill" data-w="84"></div></div><div class="score-pct">84%</div></div>
+            <div class="score-row"><div class="score-label" data-i18n="sig5">Collaboration preferences</div><div class="score-bar-track"><div class="score-bar-fill" data-w="95"></div></div><div class="score-pct">95%</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TECH STACK -->
+<div class="section">
+    <div class="section-label" data-i18n="archLabel">Architecture</div>
+    <h2 class="section-title"><span class="accent" data-i18n="archTitle">Technical Foundation</span></h2>
+    <p class="section-sub" data-i18n="archSub">MIMBAI is built on a modern, GDPR-compliant stack designed for performance, privacy, and scalability.</p>
+    <div class="tech-grid">
+        <div class="tech-card">
+            <div class="tech-card-header">
+                <div class="tech-icon purple"><i class="fas fa-brain"></i></div>
+                <div><h4 data-i18n="tech1Title">Semantic Embeddings</h4><span class="tech-tag">OpenAI API</span></div>
+            </div>
+            <p data-i18n="tech1Desc">Company profiles are converted into high-dimensional vector representations using OpenAI's embedding models, enabling deep semantic comparison beyond keyword matching.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-header">
+                <div class="tech-icon blue"><i class="fas fa-database"></i></div>
+                <div><h4 data-i18n="tech2Title">Vector Storage</h4><span class="tech-tag">Supabase + pgvector</span></div>
+            </div>
+            <p data-i18n="tech2Desc">All embeddings and company data are stored in a GDPR-compliant, EU-hosted Supabase database with Row-Level Security enforcing strict data access policies.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-header">
+                <div class="tech-icon cyan"><i class="fas fa-calculator"></i></div>
+                <div><h4 data-i18n="tech3Title">Scoring Engine</h4><span class="tech-tag">Rule-based + ML</span></div>
+            </div>
+            <p data-i18n="tech3Desc">A hybrid scoring engine combines cosine similarity on embeddings with rule-based weights for sector-specific signals, producing a single interpretable compatibility score.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-header">
+                <div class="tech-icon green"><i class="fas fa-shield-alt"></i></div>
+                <div><h4 data-i18n="tech4Title">GDPR Compliance</h4><span class="tech-tag">EU/EEA standard</span></div>
+            </div>
+            <p data-i18n="tech4Desc">Data is encrypted at rest and in transit. Users can opt out of AI processing, request human review of decisions, or export/delete their data at any time.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-header">
+                <div class="tech-icon purple"><i class="fas fa-bolt"></i></div>
+                <div><h4 data-i18n="tech5Title">Realtime Updates</h4><span class="tech-tag">Supabase Realtime</span></div>
+            </div>
+            <p data-i18n="tech5Desc">Match feeds and messages update in real time via WebSocket subscriptions. New companies trigger automatic re-scoring across the existing member base.</p>
+        </div>
+        <div class="tech-card">
+            <div class="tech-card-header">
+                <div class="tech-icon blue"><i class="fas fa-robot"></i></div>
+                <div><h4 data-i18n="tech6Title">AI Concierge</h4><span class="tech-tag">LLM-powered drafts</span></div>
+            </div>
+            <p data-i18n="tech6Desc">Once a high-confidence match is found, the AI Concierge generates a personalized introduction draft. Users always approve before any message is sent.</p>
+        </div>
+    </div>
+    <div class="gdpr-box">
+        <i class="fas fa-lock"></i>
+        <p data-i18n="gdprText"><strong>Privacy by design.</strong> Your business data is processed only for matching within Oslo Meet. MIMBAI never uses company profiles to train public AI models, never sells data to third parties, and is fully auditable by registered members under GDPR Article 22.</p>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<div class="cta-wrap">
+    <div class="cta-box">
+        <h2 data-i18n="ctaTitle">Your company deserves better matches.</h2>
+        <p data-i18n="ctaDesc">Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.</p>
+        <div class="cta-btns">
+            <a href="https://oslomeet.org/join.html" class="btn-primary">
+                <i class="fas fa-rocket"></i> <span data-i18n="ctaBtn1">Register Your Company</span>
             </a>
-            <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:6px 12px;display:flex;align-items:center;gap:8px;">
-                <i class="fas fa-globe" style="color:#3b82f6;font-size:0.9rem"></i>
-                <select id="languageSelect" onchange="changeLanguage(this.value)" style="background:transparent;border:none;color:white;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;">
-                    <option value="en">English</option>
-                    <option value="no">Norsk</option>
-                    <option value="pt">Português</option>
-                    <option value="es">Español</option>
-                </select>
-            </div>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-glow"></div>
-        <div class="hero-eyebrow">
-            <div class="dot"></div>
-            <span data-i18n="heroEyebrow">AI Matching Engine · Oslo Meet</span>
-        </div>
-        <h1>
-            <span class="word-mimbai">MIMBAI</span>
-            <span class="word-sub" data-i18n="heroSub">Matching Intelligence for Modern Business & AI</span>
-        </h1>
-        <p class="hero-desc">
-            <span data-i18n="heroDesc">The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections. MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies across Europe, Brazil, China and the Nordic ecosystem.</span>
-        </p>
-        <div class="hero-actions">
-            <a href="https://oslomeet.org/how-it-works.html" class="btn-primary">
-                <i class="fas fa-brain"></i> <span data-i18n="heroBtn1">See How It Works</span>
-            </a>
-            <a href="https://oslomeet.org/join.html" class="btn-ghost">
-                <i class="fas fa-building"></i> <span data-i18n="heroBtn2">Register Your Company</span>
+            <a href="https://oslomeet.org/how-it-works.html" class="btn-ghost">
+                <i class="fas fa-arrow-right"></i> <span data-i18n="ctaBtn2">Full Platform Details</span>
             </a>
         </div>
-        <div class="scroll-hint">
-            Explore
-            <div class="scroll-line"></div>
-        </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <!-- WHAT IS MIMBAI -->
-    <div class="section">
-        <div class="section-label" data-i18n="defLabel">Definition</div>
-        <h2 class="section-title">What is <span class="accent">MIMBAI?</span></h2>
-        <p class="section-sub" data-i18n="whatSub">MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.</p>
-
-        <div class="what-grid">
-            <div class="what-text">
-                <p>
-                    MIMBAI is not a directory, a CRM, or a generic recommendation system.
-                    It is an <strong>intelligent matching layer</strong> built specifically for B2B contexts,
-                    designed to surface real strategic compatibility between companies — not just keyword overlap.
-                </p>
-                <p>
-                    Every company that joins Oslo Meet is analyzed by MIMBAI. Its profile is converted into
-                    <strong>high-dimensional semantic vectors</strong>, compared against other companies,
-                    and assigned a <strong>compatibility score</strong> based on industry fit, shared goals,
-                    technology synergies, and market alignment.
-                </p>
-                <p>
-                    MIMBAI runs continuously in the background — learning from interactions,
-                    refining scores, and surfacing new matches as the Oslo Meet network grows.
-                </p>
-            </div>
-
-            <div class="what-card">
-                <div class="brand-stack">
-                    <div class="brand-item company">
-                        <i class="fas fa-globe"></i>
-                        <div>
-                            <span>Digital Solutions</span>
-                            <span class="label">Parent company</span>
-                        </div>
-                    </div>
-                    <div class="arrow-down">↓</div>
-                    <div class="brand-item platform">
-                        <i class="fas fa-handshake"></i>
-                        <div>
-                            <span>Oslo Meet</span>
-                            <span class="label">B2B platform — oslomeet.org</span>
-                        </div>
-                    </div>
-                    <div class="arrow-down">↓</div>
-                    <div class="brand-item engine">
-                        <i class="fas fa-brain"></i>
-                        <div>
-                            <span>MIMBAI</span>
-                            <span class="label">AI matching engine — mimbai.com</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+</div>
 
-    <div class="divider"></div>
-
-    <!-- HOW IT WORKS -->
-    <div class="section">
-        <div class="section-label" data-i18n="processLabel">Process</div>
-        <h2 class="section-title">How MIMBAI <span class="accent" data-i18n="processTitle">Works</span></h2>
-        <p class="section-sub"><span data-i18n="processSub">A 4-step pipeline from raw company data to high-confidence match recommendations.</span></p>
-
-        <div class="steps">
-            <div class="step">
-                <div class="step-num">// 01</div>
-                <div class="step-icon"><i class="fas fa-user-edit"></i></div>
-                <h3>Profile Ingestion</h3>
-                <p>Company data — sector, goals, technologies, markets, collaboration preferences — is structured into semantic tags and normalized business vectors.</p>
-            </div>
-            <div class="step">
-                <div class="step-num">// 02</div>
-                <div class="step-icon"><i class="fas fa-project-diagram"></i></div>
-                <h3>Embedding Generation</h3>
-                <p>Text fields are converted into high-dimensional embeddings using the OpenAI API. Each company becomes a point in a shared semantic space.</p>
-            </div>
-            <div class="step">
-                <div class="step-num">// 03</div>
-                <div class="step-icon"><i class="fas fa-calculator"></i></div>
-                <h3>Compatibility Scoring</h3>
-                <p>MIMBAI computes a 0–100% compatibility score using weighted signals: industry fit, strategic goals, tech synergy, market overlap, and collaboration intent.</p>
-            </div>
-            <div class="step">
-                <div class="step-num">// 04</div>
-                <div class="step-icon"><i class="fas fa-paper-plane"></i></div>
-                <h3>Match Delivery</h3>
-                <p>Top matches are surfaced in each company's dashboard feed. The AI Concierge can draft personalized introductions based on match context.</p>
-            </div>
-        </div>
+<!-- FOOTER -->
+<footer>
+    <div>
+        <span class="footer-brand-sm">MIMBAI</span>
+        <span style="margin-left:8px" data-i18n="footerTag">— AI Matching Engine by Oslo Meet</span>
     </div>
-
-    <div class="divider"></div>
-
-    <!-- SIGNALS -->
-    <div class="section">
-        <div class="section-label">Signals</div>
-        <h2 class="section-title">50+ <span class="accent">Compatibility Signals</span></h2>
-        <p class="section-sub">MIMBAI goes far beyond keyword matching. It evaluates strategic, operational, and cultural dimensions of business fit.</p>
-
-        <div class="signals-intro">
-            <div class="signals-number">50+</div>
-            <div class="signals-label">
-                <strong>Business signals analyzed</strong>
-                per company pair, per match cycle
-            </div>
-        </div>
-
-        <div class="signals-grid">
-            <div class="signal-chip"><i class="fas fa-industry"></i> Industry complementarity <span class="weight">30%</span></div>
-            <div class="signal-chip"><i class="fas fa-bullseye"></i> Strategic goals alignment <span class="weight">25%</span></div>
-            <div class="signal-chip"><i class="fas fa-map-marked-alt"></i> Market overlap <span class="weight">20%</span></div>
-            <div class="signal-chip"><i class="fas fa-code"></i> Tech stack synergy <span class="weight">15%</span></div>
-            <div class="signal-chip"><i class="fas fa-handshake"></i> Collaboration preferences <span class="weight">10%</span></div>
-            <div class="signal-chip"><i class="fas fa-globe-europe"></i> Geographic focus</div>
-            <div class="signal-chip"><i class="fas fa-chart-line"></i> Growth stage</div>
-            <div class="signal-chip"><i class="fas fa-users"></i> Company size fit</div>
-            <div class="signal-chip"><i class="fas fa-leaf"></i> Sustainability values</div>
-            <div class="signal-chip"><i class="fas fa-language"></i> Language & culture</div>
-            <div class="signal-chip"><i class="fas fa-network-wired"></i> Ecosystem position</div>
-            <div class="signal-chip"><i class="fas fa-tags"></i> Semantic tag overlap</div>
-        </div>
-
-        <div class="score-section">
-            <div class="score-title">// Sample match score breakdown</div>
-            <div class="score-bars">
-                <div class="score-row">
-                    <div class="score-label">Industry complementarity</div>
-                    <div class="score-bar-track"><div class="score-bar-fill" data-w="92"></div></div>
-                    <div class="score-pct">92%</div>
-                </div>
-                <div class="score-row">
-                    <div class="score-label">Strategic goals alignment</div>
-                    <div class="score-bar-track"><div class="score-bar-fill" data-w="88"></div></div>
-                    <div class="score-pct">88%</div>
-                </div>
-                <div class="score-row">
-                    <div class="score-label">Market overlap</div>
-                    <div class="score-bar-track"><div class="score-bar-fill" data-w="76"></div></div>
-                    <div class="score-pct">76%</div>
-                </div>
-                <div class="score-row">
-                    <div class="score-label">Tech stack synergy</div>
-                    <div class="score-bar-track"><div class="score-bar-fill" data-w="84"></div></div>
-                    <div class="score-pct">84%</div>
-                </div>
-                <div class="score-row">
-                    <div class="score-label">Collaboration preferences</div>
-                    <div class="score-bar-track"><div class="score-bar-fill" data-w="95"></div></div>
-                    <div class="score-pct">95%</div>
-                </div>
-            </div>
-        </div>
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+        <a href="https://oslomeet.org">oslomeet.org</a>
+        <a href="https://oslomeet.org/privacy-policy.html" data-i18n="footerPrivacy">Privacy</a>
+        <a href="https://oslomeet.org/terms-of-use.html" data-i18n="footerTerms">Terms</a>
+        <a href="https://oslomeet.org/contact.html" data-i18n="footerContact">Contact</a>
     </div>
+    <div data-i18n="footerCopy">© 2026 Oslo Meet · Digital Solutions</div>
+</footer>
 
-    <div class="divider"></div>
+<script>
+const i18n = {
+    en: {
+        navCta:"Try MIMBAI",
+        heroEyebrow:"AI Matching Engine · Oslo Meet",
+        heroSub:"Matching Intelligence for Modern Business & AI",
+        heroDesc:"The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections. MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies across Europe, Brazil, China and the Nordic ecosystem.",
+        heroBtn1:"See How It Works", heroBtn2:"Register Your Company",
+        scrollHint:"Explore",
+        defLabel:"Definition",
+        whatTitle:"What is <span class='accent'>MIMBAI?</span>",
+        whatSub:"MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.",
+        whatP1:"MIMBAI is not a directory, a CRM, or a generic recommendation system. It is an <strong>intelligent matching layer</strong> built specifically for B2B contexts, designed to surface real strategic compatibility between companies — not just keyword overlap.",
+        whatP2:"Every company that joins Oslo Meet is analyzed by MIMBAI. Its profile is converted into <strong>high-dimensional semantic vectors</strong>, compared against other companies, and assigned a <strong>compatibility score</strong> based on industry fit, shared goals, technology synergies, and market alignment.",
+        whatP3:"MIMBAI runs continuously in the background — learning from interactions, refining scores, and surfacing new matches as the Oslo Meet network grows.",
+        brandParent:"Digital Solutions", brandParentLabel:"Parent company",
+        brandPlatformLabel:"B2B platform — oslomeet.org",
+        brandEngineLabel:"AI matching engine — mimbai.com",
+        processLabel:"Process", processTitle:"How MIMBAI Works",
+        processSub:"A 4-step pipeline from raw company data to high-confidence match recommendations.",
+        step1Title:"Profile Ingestion", step1Desc:"Company data — sector, goals, technologies, markets, collaboration preferences — is structured into semantic tags and normalized business vectors.",
+        step2Title:"Embedding Generation", step2Desc:"Text fields are converted into high-dimensional embeddings using the OpenAI API. Each company becomes a point in a shared semantic space.",
+        step3Title:"Compatibility Scoring", step3Desc:"MIMBAI computes a 0–100% compatibility score using weighted signals: industry fit, strategic goals, tech synergy, market overlap, and collaboration intent.",
+        step4Title:"Match Delivery", step4Desc:"Top matches are surfaced in each company's dashboard feed. The AI Concierge can draft personalized introductions based on match context.",
+        signalsLabel:"Signals", signalsTitle:"Compatibility Signals",
+        signalsSub:"MIMBAI goes far beyond keyword matching. It evaluates strategic, operational, and cultural dimensions of business fit.",
+        signalsStrong:"Business signals analyzed", signalsCycle:"per company pair, per match cycle",
+        sig1:"Industry complementarity", sig2:"Strategic goals alignment", sig3:"Market overlap",
+        sig4:"Tech stack synergy", sig5:"Collaboration preferences", sig6:"Geographic focus",
+        sig7:"Growth stage", sig8:"Company size fit", sig9:"Sustainability values",
+        sig10:"Language & culture", sig11:"Ecosystem position", sig12:"Semantic tag overlap",
+        scoreTitle:"// Sample match score breakdown",
+        archLabel:"Architecture", archTitle:"Technical Foundation",
+        archSub:"MIMBAI is built on a modern, GDPR-compliant stack designed for performance, privacy, and scalability.",
+        tech1Title:"Semantic Embeddings", tech1Desc:"Company profiles are converted into high-dimensional vector representations using OpenAI's embedding models, enabling deep semantic comparison beyond keyword matching.",
+        tech2Title:"Vector Storage", tech2Desc:"All embeddings and company data are stored in a GDPR-compliant, EU-hosted Supabase database with Row-Level Security enforcing strict data access policies.",
+        tech3Title:"Scoring Engine", tech3Desc:"A hybrid scoring engine combines cosine similarity on embeddings with rule-based weights for sector-specific signals, producing a single interpretable compatibility score.",
+        tech4Title:"GDPR Compliance", tech4Desc:"Data is encrypted at rest and in transit. Users can opt out of AI processing, request human review of decisions, or export/delete their data at any time.",
+        tech5Title:"Realtime Updates", tech5Desc:"Match feeds and messages update in real time via WebSocket subscriptions. New companies trigger automatic re-scoring across the existing member base.",
+        tech6Title:"AI Concierge", tech6Desc:"Once a high-confidence match is found, the AI Concierge generates a personalized introduction draft. Users always approve before any message is sent.",
+        gdprText:"<strong>Privacy by design.</strong> Your business data is processed only for matching within Oslo Meet. MIMBAI never uses company profiles to train public AI models, never sells data to third parties, and is fully auditable by registered members under GDPR Article 22.",
+        ctaTitle:"Your company deserves better matches.", ctaDesc:"Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.",
+        ctaBtn1:"Register Your Company", ctaBtn2:"Full Platform Details",
+        footerTag:"— AI Matching Engine by Oslo Meet", footerPrivacy:"Privacy", footerTerms:"Terms", footerContact:"Contact", footerCopy:"© 2026 Oslo Meet · Digital Solutions"
+    },
+    no: {
+        navCta:"Prøv MIMBAI",
+        heroEyebrow:"AI-matchingsmotor · Oslo Meet",
+        heroSub:"Matching Intelligence for Modern Business & AI",
+        heroDesc:"Den proprietære motoren bak <strong>Oslo Meet</strong>s B2B-forbindelser. MIMBAI bruker semantiske embeddings og 50+ kompatibilitetssignaler for å matche selskaper i Europa, Brasil, Kina og det nordiske økosystemet.",
+        heroBtn1:"Se hvordan det fungerer", heroBtn2:"Registrer din bedrift",
+        scrollHint:"Utforsk",
+        defLabel:"Definisjon",
+        whatTitle:"Hva er <span class='accent'>MIMBAI?</span>",
+        whatSub:"MIMBAI står for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meets proprietære B2B-matchingsmotor.",
+        whatP1:"MIMBAI er ikke et register, et CRM eller et generisk anbefalingssystem. Det er et <strong>intelligent matching-lag</strong> bygget spesifikt for B2B-kontekster, designet for å avdekke reell strategisk kompatibilitet mellom selskaper — ikke bare søkeordoverlapp.",
+        whatP2:"Hvert selskap som blir med i Oslo Meet analyseres av MIMBAI. Profilen konverteres til <strong>høydimensjonale semantiske vektorer</strong>, sammenlignes med andre selskaper og tildeles en <strong>kompatibilitetsscore</strong> basert på bransjefitness, felles mål, teknologisynergier og markedsaligment.",
+        whatP3:"MIMBAI kjører kontinuerlig i bakgrunnen — lærer av interaksjoner, forfiner scorer og avdekker nye matcher etter hvert som Oslo Meet-nettverket vokser.",
+        brandParent:"Digital Solutions", brandParentLabel:"Morselskap",
+        brandPlatformLabel:"B2B-plattform — oslomeet.org",
+        brandEngineLabel:"AI-matchingsmotor — mimbai.com",
+        processLabel:"Prosess", processTitle:"Slik fungerer MIMBAI",
+        processSub:"En 4-trinns pipeline fra rådata til høy-konfidensielle matchanbefalinger.",
+        step1Title:"Profilinnhenting", step1Desc:"Bedriftsdata — sektor, mål, teknologier, markeder, samarbeidspreferanser — struktureres til semantiske tagger og normaliserte forretningsvektorer.",
+        step2Title:"Embedding-generering", step2Desc:"Tekstfelt konverteres til høydimensjonale embeddings ved hjelp av OpenAI API. Hvert selskap blir et punkt i et delt semantisk rom.",
+        step3Title:"Kompatibilitetsscore", step3Desc:"MIMBAI beregner en 0–100% kompatibilitetsscore ved hjelp av vektede signaler: bransjefitness, strategiske mål, tech-synergi, markedsoverlapp og samarbeidsintensjon.",
+        step4Title:"Match-levering", step4Desc:"Toppresultater vises i hvert selskaps dashbord-feed. AI Concierge kan lage personlige introduksjoner basert på matchkontekst.",
+        signalsLabel:"Signaler", signalsTitle:"Kompatibilitetssignaler",
+        signalsSub:"MIMBAI går langt utover søkeordmatching. Den evaluerer strategiske, operasjonelle og kulturelle dimensjoner av forretningstilpasning.",
+        signalsStrong:"Forretningssignaler analysert", signalsCycle:"per selskapspar, per matchsyklus",
+        sig1:"Bransjekomplementaritet", sig2:"Strategisk målsamsvar", sig3:"Markedsoverlapp",
+        sig4:"Tech-stack-synergi", sig5:"Samarbeidspreferanser", sig6:"Geografisk fokus",
+        sig7:"Vekststadium", sig8:"Selskapsstørrelsesfitness", sig9:"Bærekraftsverdier",
+        sig10:"Språk og kultur", sig11:"Økosystemposisjon", sig12:"Semantisk tag-overlapp",
+        scoreTitle:"// Eksempel på matchscore-fordeling",
+        archLabel:"Arkitektur", archTitle:"Teknisk Fundament",
+        archSub:"MIMBAI er bygd på en moderne, GDPR-kompatibel stack designet for ytelse, personvern og skalerbarhet.",
+        tech1Title:"Semantiske Embeddings", tech1Desc:"Bedriftsprofiler konverteres til høydimensjonale vektorrepresentasjoner ved hjelp av OpenAIs embedding-modeller, noe som muliggjør dyp semantisk sammenligning utover søkeordmatching.",
+        tech2Title:"Vektorlagring", tech2Desc:"Alle embeddings og bedriftsdata lagres i en GDPR-kompatibel, EU-hostet Supabase-database med Row-Level Security som håndhever strenge datatilgangspolicyer.",
+        tech3Title:"Scoring-motor", tech3Desc:"En hybrid scoring-motor kombinerer cosinuslikhet på embeddings med regelbaserte vekter for sektorspesifikke signaler, og produserer en enkelt tolkbar kompatibilitetsscore.",
+        tech4Title:"GDPR-overholdelse", tech4Desc:"Data er kryptert i ro og under overføring. Brukere kan reservere seg mot AI-behandling, be om menneskelig gjennomgang av beslutninger, eller eksportere/slette dataene sine når som helst.",
+        tech5Title:"Sanntidsoppdateringer", tech5Desc:"Matchfeeder og meldinger oppdateres i sanntid via WebSocket-abonnementer. Nye selskaper utløser automatisk re-scoring av hele eksisterende medlemsbase.",
+        tech6Title:"AI Concierge", tech6Desc:"Når en høy-konfidensmatch er funnet, genererer AI Concierge et personlig introduksjonsutkast. Brukere godkjenner alltid før noen melding sendes.",
+        gdprText:"<strong>Personvern som design.</strong> Dine bedriftsdata behandles kun for matching innen Oslo Meet. MIMBAI bruker aldri bedriftsprofiler til å trene offentlige AI-modeller, selger aldri data til tredjeparter, og er fullt revisorbar av registrerte medlemmer under GDPR artikkel 22.",
+        ctaTitle:"Bedriften din fortjener bedre matcher.", ctaDesc:"Bli med i Oslo Meet og la MIMBAI finne dine mest kompatible forretningspartnere — i Norden og videre.",
+        ctaBtn1:"Registrer din bedrift", ctaBtn2:"Full plattforminfo",
+        footerTag:"— AI-matchingsmotor av Oslo Meet", footerPrivacy:"Personvern", footerTerms:"Vilkår", footerContact:"Kontakt", footerCopy:"© 2026 Oslo Meet · Digital Solutions"
+    },
+    pt: {
+        navCta:"Experimente o MIMBAI",
+        heroEyebrow:"Motor de Matching com IA · Oslo Meet",
+        heroSub:"Matching Intelligence for Modern Business & AI",
+        heroDesc:"O motor proprietário por trás das conexões B2B da <strong>Oslo Meet</strong>. O MIMBAI usa embeddings semânticos e 50+ sinais de compatibilidade para conectar empresas na Europa, Brasil, China e no ecossistema nórdico.",
+        heroBtn1:"Ver como funciona", heroBtn2:"Cadastre sua empresa",
+        scrollHint:"Explorar",
+        defLabel:"Definição",
+        whatTitle:"O que é <span class='accent'>MIMBAI?</span>",
+        whatSub:"MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — o motor proprietário de matching B2B da Oslo Meet.",
+        whatP1:"O MIMBAI não é um diretório, um CRM ou um sistema genérico de recomendação. É uma <strong>camada inteligente de matching</strong> construída especificamente para contextos B2B, projetada para revelar compatibilidade estratégica real entre empresas — não apenas sobreposição de palavras-chave.",
+        whatP2:"Cada empresa que entra na Oslo Meet é analisada pelo MIMBAI. Seu perfil é convertido em <strong>vetores semânticos de alta dimensão</strong>, comparado com outras empresas e recebe um <strong>score de compatibilidade</strong> baseado em fit de indústria, objetivos compartilhados, sinergias tecnológicas e alinhamento de mercado.",
+        whatP3:"O MIMBAI opera continuamente em segundo plano — aprendendo com as interações, refinando scores e revelando novos matches conforme a rede Oslo Meet cresce.",
+        brandParent:"Digital Solutions", brandParentLabel:"Empresa matriz",
+        brandPlatformLabel:"Plataforma B2B — oslomeet.org",
+        brandEngineLabel:"Motor de matching com IA — mimbai.com",
+        processLabel:"Processo", processTitle:"Como o MIMBAI Funciona",
+        processSub:"Um pipeline de 4 etapas: do dado bruto da empresa até recomendações de matches com alta confiança.",
+        step1Title:"Ingestão de Perfil", step1Desc:"Dados da empresa — setor, objetivos, tecnologias, mercados, preferências de colaboração — são estruturados em tags semânticas e vetores de negócio normalizados.",
+        step2Title:"Geração de Embeddings", step2Desc:"Campos de texto são convertidos em embeddings de alta dimensão usando a API da OpenAI. Cada empresa se torna um ponto em um espaço semântico compartilhado.",
+        step3Title:"Cálculo de Compatibilidade", step3Desc:"O MIMBAI calcula um score de compatibilidade de 0–100% usando sinais ponderados: fit de indústria, objetivos estratégicos, sinergia tecnológica, sobreposição de mercado e intenção de colaboração.",
+        step4Title:"Entrega dos Matches", step4Desc:"Os melhores matches aparecem no feed do dashboard de cada empresa. A IA Concierge pode redigir introduções personalizadas com base no contexto do match.",
+        signalsLabel:"Sinais", signalsTitle:"Sinais de Compatibilidade",
+        signalsSub:"O MIMBAI vai muito além da correspondência por palavras-chave. Ele avalia dimensões estratégicas, operacionais e culturais do fit empresarial.",
+        signalsStrong:"Sinais de negócio analisados", signalsCycle:"por par de empresas, por ciclo de matching",
+        sig1:"Complementaridade setorial", sig2:"Alinhamento de objetivos estratégicos", sig3:"Sobreposição de mercado",
+        sig4:"Sinergia tecnológica", sig5:"Preferências de colaboração", sig6:"Foco geográfico",
+        sig7:"Estágio de crescimento", sig8:"Compatibilidade de porte", sig9:"Valores de sustentabilidade",
+        sig10:"Idioma e cultura", sig11:"Posição no ecossistema", sig12:"Sobreposição de tags semânticas",
+        scoreTitle:"// Exemplo de breakdown de score",
+        archLabel:"Arquitetura", archTitle:"Fundação Técnica",
+        archSub:"O MIMBAI é construído sobre uma stack moderna e compatível com GDPR, projetada para desempenho, privacidade e escalabilidade.",
+        tech1Title:"Embeddings Semânticos", tech1Desc:"Os perfis das empresas são convertidos em representações vetoriais de alta dimensão usando os modelos de embedding da OpenAI, permitindo comparação semântica profunda além da correspondência por palavras-chave.",
+        tech2Title:"Armazenamento de Vetores", tech2Desc:"Todos os embeddings e dados das empresas são armazenados em um banco Supabase hospedado na UE, compatível com GDPR, com Row-Level Security que impõe políticas rígidas de acesso aos dados.",
+        tech3Title:"Motor de Scoring", tech3Desc:"Um motor de scoring híbrido combina similaridade cosseno nos embeddings com pesos baseados em regras para sinais específicos do setor, produzindo um único score de compatibilidade interpretável.",
+        tech4Title:"Conformidade com GDPR", tech4Desc:"Os dados são criptografados em repouso e em trânsito. Os usuários podem optar por não usar o processamento com IA, solicitar revisão humana de decisões ou exportar/excluir seus dados a qualquer momento.",
+        tech5Title:"Atualizações em Tempo Real", tech5Desc:"Feeds de matches e mensagens são atualizados em tempo real via assinaturas WebSocket. Novas empresas disparam o re-scoring automático em toda a base de membros existente.",
+        tech6Title:"IA Concierge", tech6Desc:"Quando um match de alta confiança é encontrado, a IA Concierge gera um rascunho de introdução personalizado. Os usuários sempre aprovam antes de qualquer mensagem ser enviada.",
+        gdprText:"<strong>Privacidade por design.</strong> Seus dados empresariais são processados apenas para matching dentro da Oslo Meet. O MIMBAI nunca usa perfis de empresas para treinar modelos públicos de IA, nunca vende dados a terceiros e é totalmente auditável pelos membros registrados sob o Artigo 22 do GDPR.",
+        ctaTitle:"Sua empresa merece matches melhores.", ctaDesc:"Junte-se à Oslo Meet e deixe o MIMBAI encontrar seus parceiros de negócios mais compatíveis — nos países nórdicos e além.",
+        ctaBtn1:"Cadastre sua empresa", ctaBtn2:"Detalhes da plataforma",
+        footerTag:"— Motor de Matching com IA by Oslo Meet", footerPrivacy:"Privacidade", footerTerms:"Termos", footerContact:"Contato", footerCopy:"© 2026 Oslo Meet · Digital Solutions"
+    },
+    es: {
+        navCta:"Prueba MIMBAI",
+        heroEyebrow:"Motor de Matching con IA · Oslo Meet",
+        heroSub:"Matching Intelligence for Modern Business & AI",
+        heroDesc:"El motor propietario detrás de las conexiones B2B de <strong>Oslo Meet</strong>. MIMBAI usa embeddings semánticos y 50+ señales de compatibilidad para conectar empresas en Europa, Brasil, China y el ecosistema nórdico.",
+        heroBtn1:"Ver cómo funciona", heroBtn2:"Registra tu empresa",
+        scrollHint:"Explorar",
+        defLabel:"Definición",
+        whatTitle:"¿Qué es <span class='accent'>MIMBAI?</span>",
+        whatSub:"MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — el motor propietario de matching B2B de Oslo Meet.",
+        whatP1:"MIMBAI no es un directorio, un CRM ni un sistema genérico de recomendación. Es una <strong>capa inteligente de matching</strong> construida específicamente para contextos B2B, diseñada para revelar compatibilidad estratégica real entre empresas — no solo superposición de palabras clave.",
+        whatP2:"Cada empresa que se une a Oslo Meet es analizada por MIMBAI. Su perfil se convierte en <strong>vectores semánticos de alta dimensión</strong>, se compara con otras empresas y recibe una <strong>puntuación de compatibilidad</strong> basada en encaje de industria, objetivos compartidos, sinergias tecnológicas y alineamiento de mercado.",
+        whatP3:"MIMBAI opera continuamente en segundo plano — aprendiendo de las interacciones, refinando puntuaciones y revelando nuevos matches a medida que la red Oslo Meet crece.",
+        brandParent:"Digital Solutions", brandParentLabel:"Empresa matriz",
+        brandPlatformLabel:"Plataforma B2B — oslomeet.org",
+        brandEngineLabel:"Motor de matching con IA — mimbai.com",
+        processLabel:"Proceso", processTitle:"Cómo Funciona MIMBAI",
+        processSub:"Un pipeline de 4 pasos: desde datos brutos de la empresa hasta recomendaciones de matches de alta confianza.",
+        step1Title:"Ingesta de Perfil", step1Desc:"Los datos de la empresa — sector, objetivos, tecnologías, mercados, preferencias de colaboración — se estructuran en etiquetas semánticas y vectores de negocio normalizados.",
+        step2Title:"Generación de Embeddings", step2Desc:"Los campos de texto se convierten en embeddings de alta dimensión usando la API de OpenAI. Cada empresa se convierte en un punto en un espacio semántico compartido.",
+        step3Title:"Cálculo de Compatibilidad", step3Desc:"MIMBAI calcula una puntuación de compatibilidad del 0–100% usando señales ponderadas: encaje de industria, objetivos estratégicos, sinergia tecnológica, superposición de mercado e intención de colaboración.",
+        step4Title:"Entrega de Matches", step4Desc:"Los mejores matches aparecen en el feed del dashboard de cada empresa. La IA Concierge puede redactar introducciones personalizadas basadas en el contexto del match.",
+        signalsLabel:"Señales", signalsTitle:"Señales de Compatibilidad",
+        signalsSub:"MIMBAI va mucho más allá de la coincidencia por palabras clave. Evalúa dimensiones estratégicas, operacionales y culturales del encaje empresarial.",
+        signalsStrong:"Señales de negocio analizadas", signalsCycle:"por par de empresas, por ciclo de matching",
+        sig1:"Complementariedad sectorial", sig2:"Alineamiento de objetivos estratégicos", sig3:"Superposición de mercado",
+        sig4:"Sinergia tecnológica", sig5:"Preferencias de colaboración", sig6:"Enfoque geográfico",
+        sig7:"Etapa de crecimiento", sig8:"Compatibilidad de tamaño", sig9:"Valores de sostenibilidad",
+        sig10:"Idioma y cultura", sig11:"Posición en el ecosistema", sig12:"Superposición de etiquetas semánticas",
+        scoreTitle:"// Ejemplo de desglose de puntuación",
+        archLabel:"Arquitectura", archTitle:"Fundación Técnica",
+        archSub:"MIMBAI está construido sobre una stack moderna y compatible con GDPR, diseñada para rendimiento, privacidad y escalabilidad.",
+        tech1Title:"Embeddings Semánticos", tech1Desc:"Los perfiles de las empresas se convierten en representaciones vectoriales de alta dimensión usando los modelos de embedding de OpenAI, permitiendo comparación semántica profunda más allá de la coincidencia por palabras clave.",
+        tech2Title:"Almacenamiento Vectorial", tech2Desc:"Todos los embeddings y datos de empresas se almacenan en una base de datos Supabase alojada en la UE, compatible con GDPR, con Row-Level Security que impone políticas estrictas de acceso a los datos.",
+        tech3Title:"Motor de Scoring", tech3Desc:"Un motor de scoring híbrido combina similitud coseno en embeddings con pesos basados en reglas para señales específicas del sector, produciendo una única puntuación de compatibilidad interpretable.",
+        tech4Title:"Cumplimiento GDPR", tech4Desc:"Los datos están cifrados en reposo y en tránsito. Los usuarios pueden optar por no usar el procesamiento con IA, solicitar revisión humana de decisiones o exportar/eliminar sus datos en cualquier momento.",
+        tech5Title:"Actualizaciones en Tiempo Real", tech5Desc:"Los feeds de matches y mensajes se actualizan en tiempo real mediante suscripciones WebSocket. Las nuevas empresas disparan el re-scoring automático en toda la base de miembros existente.",
+        tech6Title:"IA Concierge", tech6Desc:"Una vez encontrado un match de alta confianza, la IA Concierge genera un borrador de introducción personalizada. Los usuarios siempre aprueban antes de que se envíe cualquier mensaje.",
+        gdprText:"<strong>Privacidad por diseño.</strong> Tus datos empresariales se procesan solo para matching dentro de Oslo Meet. MIMBAI nunca usa perfiles de empresas para entrenar modelos públicos de IA, nunca vende datos a terceros y es totalmente auditable por los miembros registrados bajo el Artículo 22 del GDPR.",
+        ctaTitle:"Tu empresa merece mejores matches.", ctaDesc:"Únete a Oslo Meet y deja que MIMBAI encuentre tus socios comerciales más compatibles — en los países nórdicos y más allá.",
+        ctaBtn1:"Registra tu empresa", ctaBtn2:"Detalles de la plataforma",
+        footerTag:"— Motor de Matching con IA by Oslo Meet", footerPrivacy:"Privacidad", footerTerms:"Términos", footerContact:"Contacto", footerCopy:"© 2026 Oslo Meet · Digital Solutions"
+    }
+};
 
-    <!-- TECH STACK -->
-    <div class="section">
-        <div class="section-label">Architecture</div>
-        <h2 class="section-title">Technical <span class="accent">Foundation</span></h2>
-        <p class="section-sub">MIMBAI is built on a modern, GDPR-compliant stack designed for performance, privacy, and scalability.</p>
+function changeLanguage(lang) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang]?.[key] !== undefined) el.innerHTML = i18n[lang][key];
+    });
+    document.documentElement.lang = lang;
+    localStorage.setItem('preferredLanguage', lang);
+}
 
-        <div class="tech-grid">
-            <div class="tech-card">
-                <div class="tech-card-header">
-                    <div class="tech-icon purple"><i class="fas fa-brain"></i></div>
-                    <div>
-                        <h4>Semantic Embeddings</h4>
-                        <span class="tech-tag">OpenAI API</span>
-                    </div>
-                </div>
-                <p>Company profiles are converted into high-dimensional vector representations using OpenAI's embedding models, enabling deep semantic comparison beyond keyword matching.</p>
-            </div>
-            <div class="tech-card">
-                <div class="tech-card-header">
-                    <div class="tech-icon blue"><i class="fas fa-database"></i></div>
-                    <div>
-                        <h4>Vector Storage</h4>
-                        <span class="tech-tag">Supabase + pgvector</span>
-                    </div>
-                </div>
-                <p>All embeddings and company data are stored in a GDPR-compliant, EU-hosted Supabase database with Row-Level Security enforcing strict data access policies.</p>
-            </div>
-            <div class="tech-card">
-                <div class="tech-card-header">
-                    <div class="tech-icon cyan"><i class="fas fa-calculator"></i></div>
-                    <div>
-                        <h4>Scoring Engine</h4>
-                        <span class="tech-tag">Rule-based + ML</span>
-                    </div>
-                </div>
-                <p>A hybrid scoring engine combines cosine similarity on embeddings with rule-based weights for sector-specific signals, producing a single interpretable compatibility score.</p>
-            </div>
-            <div class="tech-card">
-                <div class="tech-card-header">
-                    <div class="tech-icon green"><i class="fas fa-shield-alt"></i></div>
-                    <div>
-                        <h4>GDPR Compliance</h4>
-                        <span class="tech-tag">EU/EEA standard</span>
-                    </div>
-                </div>
-                <p>Data is encrypted at rest and in transit. Users can opt out of AI processing, request human review of decisions, or export/delete their data at any time.</p>
-            </div>
-            <div class="tech-card">
-                <div class="tech-card-header">
-                    <div class="tech-icon purple"><i class="fas fa-bolt"></i></div>
-                    <div>
-                        <h4>Realtime Updates</h4>
-                        <span class="tech-tag">Supabase Realtime</span>
-                    </div>
-                </div>
-                <p>Match feeds and messages update in real time via WebSocket subscriptions. New companies trigger automatic re-scoring across the existing member base.</p>
-            </div>
-            <div class="tech-card">
-                <div class="tech-card-header">
-                    <div class="tech-icon blue"><i class="fas fa-robot"></i></div>
-                    <div>
-                        <h4>AI Concierge</h4>
-                        <span class="tech-tag">LLM-powered drafts</span>
-                    </div>
-                </div>
-                <p>Once a high-confidence match is found, the AI Concierge generates a personalized introduction draft. Users always approve before any message is sent.</p>
-            </div>
-        </div>
-
-        <div class="gdpr-box">
-            <i class="fas fa-lock"></i>
-            <p>
-                <strong>Privacy by design.</strong> Your business data is processed only for matching within Oslo Meet.
-                MIMBAI never uses company profiles to train public AI models, never sells data to third parties,
-                and is fully auditable by registered members under GDPR Article 22.
-            </p>
-        </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <!-- CTA -->
-    <div class="cta-wrap">
-        <div class="cta-box">
-            <h2>Your company deserves<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">better matches.</span></h2>
-            <p><span data-i18n="ctaDesc">Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.</span></p>
-            <div class="cta-btns">
-                <a href="https://oslomeet.org/join.html" class="btn-primary">
-                    <i class="fas fa-rocket"></i> <span data-i18n="ctaBtn1">Register Your Company</span>
-                </a>
-                <a href="https://oslomeet.org/how-it-works.html" class="btn-ghost">
-                    <i class="fas fa-arrow-right"></i> <span data-i18n="ctaBtn2">Full Platform Details</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
-    <footer>
-        <div>
-            <span class="footer-brand-sm">MIMBAI</span>
-            <span style="margin-left:8px">— AI Matching Engine by Oslo Meet</span>
-        </div>
-        <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
-            <a href="https://oslomeet.org">oslomeet.org</a>
-            <a href="https://oslomeet.org/privacy-policy.html">Privacy</a>
-            <a href="https://oslomeet.org/terms-of-use.html">Terms</a>
-            <a href="https://oslomeet.org/contact.html">Contact</a>
-        </div>
-        <div>© 2026 Oslo Meet · Digital Solutions</div>
-    </footer>
-
-    <script>
-        // Animate score bars on scroll
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.querySelectorAll('.score-bar-fill').forEach(bar => {
-                        bar.style.width = bar.dataset.w + '%';
-                    });
-                    observer.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        const scoreSection = document.querySelector('.score-section');
-        if (scoreSection) observer.observe(scoreSection);
-
-        // Fade in sections on scroll
-        const fadeObs = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.style.opacity = '1';
-                    e.target.style.transform = 'translateY(0)';
-                    fadeObs.unobserve(e.target);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.step, .tech-card, .signal-chip').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(16px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            fadeObs.observe(el);
-        });
-
-        const i18n = {
-            en: {
-                heroEyebrow: "AI Matching Engine · Oslo Meet",
-                heroSub: "Matching Intelligence for Modern Business & AI",
-                heroDesc: "The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections. MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies across Europe, Brazil, China and the Nordic ecosystem.",
-                heroBtn1: "See How It Works", heroBtn2: "Register Your Company",
-                defLabel: "Definition", whatSub: "MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.",
-                processLabel: "Process", processTitle: "Works", processSub: "A 4-step pipeline from raw company data to high-confidence match recommendations.",
-                ctaDesc: "Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.",
-                ctaBtn1: "Register Your Company", ctaBtn2: "Full Platform Details"
-            },
-            no: {
-                heroEyebrow: "AI-matchingsmotor · Oslo Meet",
-                heroSub: "Matching Intelligence for Modern Business & AI",
-                heroDesc: "Den proprietære motoren bak <strong>Oslo Meet</strong>s B2B-forbindelser. MIMBAI bruker semantiske embeddings og 50+ kompatibilitetssignaler for å matche selskaper i Europa, Brasil, Kina og det nordiske økosystemet.",
-                heroBtn1: "Se hvordan det fungerer", heroBtn2: "Registrer din bedrift",
-                defLabel: "Definisjon", whatSub: "MIMBAI står for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meets proprietære B2B-matchingsmotor.",
-                processLabel: "Prosess", processTitle: "Fungerer", processSub: "En 4-trinns pipeline fra rådata til høy-konfidensielle matchanbefalinger.",
-                ctaDesc: "Bli med i Oslo Meet og la MIMBAI finne dine mest kompatible forretningspartnere — i Norden og videre.",
-                ctaBtn1: "Registrer din bedrift", ctaBtn2: "Full plattforminfo"
-            },
-            pt: {
-                heroEyebrow: "Motor de Matching com IA · Oslo Meet",
-                heroSub: "Matching Intelligence for Modern Business & AI",
-                heroDesc: "O motor proprietário por trás das conexões B2B da <strong>Oslo Meet</strong>. O MIMBAI usa embeddings semânticos e 50+ sinais de compatibilidade para conectar empresas na Europa, Brasil, China e no ecossistema nórdico.",
-                heroBtn1: "Ver como funciona", heroBtn2: "Cadastre sua empresa",
-                defLabel: "Definição", whatSub: "MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — o motor proprietário de matching B2B da Oslo Meet.",
-                processLabel: "Processo", processTitle: "Funciona", processSub: "Um pipeline de 4 etapas: do dado bruto da empresa até recomendações de matches com alta confiança.",
-                ctaDesc: "Junte-se à Oslo Meet e deixe o MIMBAI encontrar seus parceiros de negócios mais compatíveis — nos países nórdicos e além.",
-                ctaBtn1: "Cadastre sua empresa", ctaBtn2: "Detalhes da plataforma"
-            },
-            es: {
-                heroEyebrow: "Motor de Matching con IA · Oslo Meet",
-                heroSub: "Matching Intelligence for Modern Business & AI",
-                heroDesc: "El motor propietario detrás de las conexiones B2B de <strong>Oslo Meet</strong>. MIMBAI usa embeddings semánticos y 50+ señales de compatibilidad para conectar empresas en Europa, Brasil, China y el ecosistema nórdico.",
-                heroBtn1: "Ver cómo funciona", heroBtn2: "Registra tu empresa",
-                defLabel: "Definición", whatSub: "MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — el motor propietario de matching B2B de Oslo Meet.",
-                processLabel: "Proceso", processTitle: "Funciona", processSub: "Un pipeline de 4 pasos: desde datos brutos de la empresa hasta recomendaciones de matches de alta confianza.",
-                ctaDesc: "Únete a Oslo Meet y deja que MIMBAI encuentre tus socios comerciales más compatibles — en los países nórdicos y más allá.",
-                ctaBtn1: "Registra tu empresa", ctaBtn2: "Detalles de la plataforma"
-            }
-        };
-
-        function changeLanguage(lang) {
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (i18n[lang]?.[key]) el.innerHTML = i18n[lang][key];
-            });
-            document.documentElement.lang = lang;
-            localStorage.setItem('preferredLanguage', lang);
+// Score bar animation
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.querySelectorAll('.score-bar-fill').forEach(bar => { bar.style.width = bar.dataset.w + '%'; });
+            observer.unobserve(e.target);
         }
+    });
+}, { threshold: 0.3 });
+const ss = document.querySelector('.score-section');
+if (ss) observer.observe(ss);
 
-        // Init language
-        window.addEventListener('load', () => {
-            const saved = localStorage.getItem('preferredLanguage') || 'en';
-            const sel = document.getElementById('languageSelect');
-            if (sel) sel.value = saved;
-            changeLanguage(saved);
-        });
-    </script>
+// Fade in
+const fadeObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; fadeObs.unobserve(e.target); }
+    });
+}, { threshold: 0.1 });
+document.querySelectorAll('.step, .tech-card, .signal-chip').forEach(el => {
+    el.style.opacity='0'; el.style.transform='translateY(16px)'; el.style.transition='opacity 0.5s ease,transform 0.5s ease';
+    fadeObs.observe(el);
+});
 
+// Init
+window.addEventListener('load', () => {
+    const saved = localStorage.getItem('preferredLanguage') || 'en';
+    const sel = document.getElementById('languageSelect');
+    if (sel) sel.value = saved;
+    changeLanguage(saved);
+});
+</script>
 </body>
 </html>
