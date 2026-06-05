@@ -8,196 +8,57 @@
     <meta name="apple-mobile-web-app-title" content="Oslo Meet" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#8b5cf6" />
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Successful — Oslo Meet</title>
     <meta name="description" content="Your subscription is active. Start connecting with AI-powered business matches.">
-
     <meta property="og:image" content="https://oslomeet.org/web.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Oslo Meet - AI-Powered Global Business Network">
     <meta property="og:site_name" content="Oslo Meet">
     <meta property="og:locale" content="en_US">
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Oslo Meet — Global AI Business Matching">
     <meta name="twitter:description" content="Strategic connections across Europe, Brazil, China & Nordics.">
     <meta name="twitter:image" content="https://oslomeet.org/web.png">
     <meta name="twitter:image:alt" content="Oslo Meet - AI Business Matching Platform">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <meta name="google-site-verification" content="CRM-dMkWd--H5ZUbXfcT6P4OILoxyN9HrYl3ZJ7EDrk" />
     <meta name="robots" content="noindex, follow">
-
-    <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-C5E3B7CKET"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX', {
-    'anonymize_ip': true,
-    'cookie_flags': 'SameSite=None;Secure'
-  });
-</script>
-
-    <!-- hreflang tags para multi-idioma -->
-<link rel="alternate" hreflang="en" href="https://oslomeet.org/" />
-<link rel="alternate" hreflang="no" href="https://oslomeet.org/?lang=no" />
-<link rel="alternate" hreflang="pt" href="https://oslomeet.org/?lang=pt" />
-<link rel="alternate" hreflang="es" href="https://oslomeet.org/?lang=es" />
-<link rel="alternate" hreflang="x-default" href="https://oslomeet.org/" />
-    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5E3B7CKET"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX',{'anonymize_ip':true,'cookie_flags':'SameSite=None;Secure'});</script>
+    <link rel="alternate" hreflang="en" href="https://oslomeet.org/" />
+    <link rel="alternate" hreflang="no" href="https://oslomeet.org/?lang=no" />
+    <link rel="alternate" hreflang="pt" href="https://oslomeet.org/?lang=pt" />
+    <link rel="alternate" hreflang="es" href="https://oslomeet.org/?lang=es" />
+    <link rel="alternate" hreflang="x-default" href="https://oslomeet.org/" />
     <style>
-        :root {
-            --dark-bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: #334155;
-            --accent-purple: #8b5cf6;
-            --success-green: #10b981;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        /* Success Card */
-        .success-card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 2.5rem 2rem;
-            max-width: 520px;
-            width: 100%;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 0.6s ease-out;
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .success-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 4px;
-            background: linear-gradient(90deg, var(--success-green), #3b82f6, var(--accent-purple));
-        }
-        .icon-circle {
-            width: 90px; height: 90px;
-            background: rgba(16,185,129,0.15);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2.8rem; color: var(--success-green);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
-            50% { box-shadow: 0 0 0 15px rgba(16,185,129,0); }
-        }
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff, #a5b4fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .subtitle { color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6; font-size: 1rem; }
-        
-        /* Benefits List */
-        .benefits {
-            text-align: left;
-            background: rgba(255,255,255,0.03);
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .benefit-item {
-            display: flex; align-items: center; gap: 12px;
-            margin-bottom: 12px; font-size: 0.95rem; color: var(--text-secondary);
-        }
-        .benefit-item:last-child { margin-bottom: 0; }
-        .benefit-item i { color: var(--success-green); font-size: 1rem; }
-        
-        /* Button */
-        .btn-primary {
-            display: block; width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--accent-purple), #3b82f6);
-            color: white;
-            border: none; border-radius: 12px;
-            font-size: 1.1rem; font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(139,92,246,0.4);
-        }
-        
-        /* Progress Bar & Timer */
-        .progress-container {
-            margin-top: 1.5rem;
-            width: 100%;
-            height: 6px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            position: relative;
-        }
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success-green), var(--accent-purple));
-            width: 100%;
-            transition: width 1s linear;
-            border-radius: 3px;
-        }
-        .auto-redirect {
-            margin-top: 0.8rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .countdown { 
-            color: var(--accent-purple); 
-            font-weight: 700; 
-            font-size: 1rem;
-        }
-
-        /* Language Selector */
-        .language-selector {
-            position: fixed; top: 12px; right: 12px; z-index: 1000;
-            background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
-            padding: 6px 12px; display: flex; align-items: center; gap: 8px;
-        }
-        .language-selector select {
-            background: transparent; border: none; color: white;
-            font-family: inherit; font-weight: 600; font-size: 0.85rem;
-            cursor: pointer; outline: none; padding: 4px;
-            -webkit-appearance: none;
-        }
-        .language-selector select option { background: var(--dark-bg); }
-        .language-selector i { color: var(--accent-purple); }
+        :root{--dark-bg:#0f172a;--card-bg:#1e293b;--text-primary:#f8fafc;--text-secondary:#94a3b8;--border-color:#334155;--accent-purple:#8b5cf6;--success-green:#10b981;}
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Inter',sans-serif;background:var(--dark-bg);color:var(--text-primary);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
+        .success-card{background:var(--card-bg);border-radius:24px;padding:2.5rem 2rem;max-width:520px;width:100%;text-align:center;border:1px solid var(--border-color);box-shadow:0 20px 50px rgba(0,0,0,0.5);position:relative;overflow:hidden;animation:slideUp 0.6s ease-out;}
+        @keyframes slideUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+        .success-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--success-green),#3b82f6,var(--accent-purple));}
+        .icon-circle{width:90px;height:90px;background:rgba(16,185,129,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2.8rem;color:var(--success-green);animation:pulse 2s infinite;}
+        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,0.4);}50%{box-shadow:0 0 0 15px rgba(16,185,129,0);}}
+        h1{font-size:1.8rem;margin-bottom:0.5rem;background:linear-gradient(135deg,#fff,#a5b4fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .subtitle{color:var(--text-secondary);margin-bottom:2rem;line-height:1.6;font-size:1rem;}
+        .benefits{text-align:left;background:rgba(255,255,255,0.03);padding:1.5rem;border-radius:12px;margin-bottom:2rem;border:1px solid rgba(255,255,255,0.05);}
+        .benefit-item{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:0.95rem;color:var(--text-secondary);}
+        .benefit-item:last-child{margin-bottom:0;}
+        .benefit-item i{color:var(--success-green);font-size:1rem;}
+        .btn-primary{display:block;width:100%;padding:16px;background:linear-gradient(135deg,var(--accent-purple),#3b82f6);color:white;border:none;border-radius:12px;font-size:1.1rem;font-weight:700;cursor:pointer;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(139,92,246,0.4);}
+        .progress-container{margin-top:1.5rem;width:100%;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;position:relative;}
+        .progress-bar{height:100%;background:linear-gradient(90deg,var(--success-green),var(--accent-purple));width:100%;transition:width 1s linear;border-radius:3px;}
+        .auto-redirect{margin-top:0.8rem;font-size:0.85rem;color:var(--text-secondary);display:flex;justify-content:space-between;align-items:center;}
+        .countdown{color:var(--accent-purple);font-weight:700;font-size:1rem;}
+        .language-selector{position:fixed;top:12px;right:12px;z-index:1000;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:6px 12px;display:flex;align-items:center;gap:8px;}
+        .language-selector select{background:transparent;border:none;color:white;font-family:inherit;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;}
+        .language-selector select option{background:var(--dark-bg);}
+        .language-selector i{color:var(--accent-purple);}
     </style>
 </head>
 <body>
@@ -212,18 +73,15 @@
     </div>
 
     <div class="success-card">
-        <div class="icon-circle">
-            <i class="fas fa-check"></i>
-        </div>
+        <div class="icon-circle"><i class="fas fa-check"></i></div>
         <h1 data-i18n="title">Payment Successful!</h1>
         <p class="subtitle" data-i18n="subtitle">
-            Welcome to the Founding Members circle. Your AI dashboard is ready to find your perfect business matches.
+            Welcome to the Founding Members circle. Your MIMBAI dashboard is ready to find your perfect business matches.
         </p>
-
         <div class="benefits">
             <div class="benefit-item">
                 <i class="fas fa-check-circle"></i>
-                <span data-i18n="benefit1">Unlimited AI matches unlocked</span>
+                <span data-i18n="benefit1">Unlimited MIMBAI matches unlocked</span>
             </div>
             <div class="benefit-item">
                 <i class="fas fa-check-circle"></i>
@@ -234,11 +92,9 @@
                 <span data-i18n="benefit3">Priority support enabled</span>
             </div>
         </div>
-
         <a href="dashboard.html" class="btn-primary" id="dashboardBtn">
             <i class="fas fa-rocket"></i> <span data-i18n="btnText">Go to Dashboard</span>
         </a>
-
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
         </div>
@@ -252,8 +108,8 @@
         const translations = {
             en: {
                 title: "Payment Successful!",
-                subtitle: "Welcome to the Founding Members circle. Your AI dashboard is ready to find your perfect business matches.",
-                benefit1: "Unlimited AI matches unlocked",
+                subtitle: "Welcome to the Founding Members circle. Your MIMBAI dashboard is ready to find your perfect business matches.",
+                benefit1: "Unlimited MIMBAI matches unlocked",
                 benefit2: "Direct messaging active",
                 benefit3: "Priority support enabled",
                 btnText: "Go to Dashboard",
@@ -261,8 +117,8 @@
             },
             no: {
                 title: "Betaling vellykket!",
-                subtitle: "Velkommen til grunnleggernes sirkel. Ditt AI-dashbord er klart til å finne dine perfekte bedriftsmatcher.",
-                benefit1: "Ubegrensede AI-matcher låst opp",
+                subtitle: "Velkommen til grunnleggernes sirkel. Ditt MIMBAI-dashbord er klart til å finne dine perfekte bedriftsmatcher.",
+                benefit1: "Ubegrensede MIMBAI-matcher låst opp",
                 benefit2: "Direktemeldinger aktivert",
                 benefit3: "Prioritert support tilgjengelig",
                 btnText: "Gå til dashbordet",
@@ -270,8 +126,8 @@
             },
             pt: {
                 title: "Pagamento Concluído!",
-                subtitle: "Bem-vindo ao círculo dos Membros Fundadores. Seu dashboard com IA está pronto para encontrar seus matches perfeitos.",
-                benefit1: "Matches com IA ilimitados desbloqueados",
+                subtitle: "Bem-vindo ao círculo dos Membros Fundadores. Seu dashboard MIMBAI está pronto para encontrar seus matches perfeitos.",
+                benefit1: "Matches MIMBAI ilimitados desbloqueados",
                 benefit2: "Mensagens diretas ativas",
                 benefit3: "Suporte prioritário habilitado",
                 btnText: "Ir para o Dashboard",
@@ -279,8 +135,8 @@
             },
             es: {
                 title: "¡Pago Exitoso!",
-                subtitle: "Bienvenido al círculo de Miembros Fundadores. Tu dashboard con IA está listo para encontrar tus matches perfectos.",
-                benefit1: "Matches con IA ilimitados desbloqueados",
+                subtitle: "Bienvenido al círculo de Miembros Fundadores. Tu dashboard MIMBAI está listo para encontrar tus matches perfectos.",
+                benefit1: "Matches MIMBAI ilimitados desbloqueados",
                 benefit2: "Mensajería directa activa",
                 benefit3: "Soporte prioritario habilitado",
                 btnText: "Ir al Dashboard",
@@ -297,7 +153,6 @@
             localStorage.setItem('preferredLanguage', lang);
         }
 
-        // Auto-redirect logic com barra de progresso
         let seconds = 30;
         const countdownEl = document.getElementById('countdown');
         const progressBar = document.getElementById('progressBar');
@@ -306,18 +161,10 @@
         const timer = setInterval(() => {
             seconds--;
             countdownEl.textContent = seconds;
-            
-            // Atualizar barra de progresso
-            const progress = (seconds / totalSeconds) * 100;
-            progressBar.style.width = progress + '%';
-            
-            if (seconds <= 0) {
-                clearInterval(timer);
-                window.location.href = 'dashboard.html';
-            }
+            progressBar.style.width = ((seconds / totalSeconds) * 100) + '%';
+            if (seconds <= 0) { clearInterval(timer); window.location.href = 'dashboard.html'; }
         }, 1000);
 
-        // Init Language
         window.addEventListener('load', () => {
             const saved = localStorage.getItem('preferredLanguage') || 'en';
             document.getElementById('languageSelect').value = saved;
@@ -326,4 +173,3 @@
     </script>
 </body>
 </html>
-
