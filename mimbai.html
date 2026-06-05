@@ -654,22 +654,22 @@
             <div class="nav-sep"></div>
             <span class="nav-tag">by Oslo Meet</span>
         </a>
-        <a href="https://oslomeet.org/start.html" class="nav-cta">
-            <i class="fas fa-rocket"></i>
-            <span>Try MIMBAI</span>
-        </a>
+        <div style="display:flex;align-items:center;gap:12px;">
+            <a href="https://oslomeet.org/start.html" class="nav-cta">
+                <i class="fas fa-rocket"></i>
+                <span>Try MIMBAI</span>
+            </a>
+            <div style="background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:6px 12px;display:flex;align-items:center;gap:8px;">
+                <i class="fas fa-globe" style="color:#3b82f6;font-size:0.9rem"></i>
+                <select id="languageSelect" onchange="changeLanguage(this.value)" style="background:transparent;border:none;color:white;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;">
+                    <option value="en">English</option>
+                    <option value="no">Norsk</option>
+                    <option value="pt">Português</option>
+                    <option value="es">Español</option>
+                </select>
+            </div>
+        </div>
     </nav>
-
-    <!-- Language Selector -->
-    <div style="position:fixed;top:16px;right:160px;z-index:200;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:6px 12px;display:flex;align-items:center;gap:8px;">
-        <i class="fas fa-globe" style="color:#3b82f6;font-size:0.9rem"></i>
-        <select id="languageSelect" onchange="changeLanguage(this.value)" style="background:transparent;border:none;color:white;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;">
-            <option value="en">English</option>
-            <option value="no">Norsk</option>
-            <option value="pt">Português</option>
-            <option value="es">Español</option>
-        </select>
-    </div>
 
     <!-- HERO -->
     <section class="hero">
