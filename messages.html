@@ -222,7 +222,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
       <div class="chat-empty" id="chatEmpty">
         <div class="chat-empty-icon"><i class="fas fa-comments"></i></div>
         <h3 id="emptyTitle">Select a conversation</h3>
-        <p id="emptyDesc">Choose a conversation from the list to start chatting with your business partners.</p>
+        <p id="emptyDesc">Choose a conversation from the list to start chatting with your MIMBAI-matched business partners.</p>
       </div>
       <div class="chat-head" id="chatHead" style="display:none">
         <button class="ch-back" onclick="showConvPanel()"><i class="fas fa-chevron-left"></i></button>
@@ -522,10 +522,10 @@ function fmtTime(iso){
 }
 
 const i18n={
-  en:{convTitle:'Conversations',emptyTitle:'Select a conversation',emptyDesc:'Choose a conversation from the list to start chatting with your business partners.',tbTag:'Messages'},
-  no:{convTitle:'Samtaler',emptyTitle:'Velg en samtale',emptyDesc:'Velg en samtale for å begynne å chatte.',tbTag:'Meldinger'},
-  pt:{convTitle:'Conversas',emptyTitle:'Selecione uma conversa',emptyDesc:'Escolha uma conversa para começar a conversar com seus parceiros.',tbTag:'Mensagens'},
-  es:{convTitle:'Conversaciones',emptyTitle:'Selecciona una conversación',emptyDesc:'Elige una conversación para empezar a chatear.',tbTag:'Mensajes'},
+  en:{convTitle:'Conversations',emptyTitle:'Select a conversation',emptyDesc:'Choose a conversation from the list to start chatting with your MIMBAI-matched business partners.',tbTag:'Messages'},
+  no:{convTitle:'Samtaler',emptyTitle:'Velg en samtale',emptyDesc:'Velg en MIMBAI-samtale for å begynne å chatte.',tbTag:'Meldinger'},
+  pt:{convTitle:'Conversas',emptyTitle:'Selecione uma conversa',emptyDesc:'Escolha uma conversa MIMBAI para começar a conversar com seus parceiros.',tbTag:'Mensagens'},
+  es:{convTitle:'Conversaciones',emptyTitle:'Selecciona una conversación',emptyDesc:'Elige una conversación MIMBAI para empezar a chatear.',tbTag:'Mensajes'},
 };
 function applyLang(){
   const lang=localStorage.getItem('preferredLanguage')||'en';
