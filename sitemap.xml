@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-
   <!-- PÁGINA PRINCIPAL (Home) -->
   <url>
     <loc>https://oslomeet.org/</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://oslomeet.org/?lang=en"/>
@@ -14,105 +13,112 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://oslomeet.org/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://oslomeet.org/"/>
   </url>
-
+  <!-- MIMBAI — AI Matching Engine (nova página, alta prioridade SEO) -->
+  <url>
+    <loc>https://oslomeet.org/mimbai.html</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://oslomeet.org/mimbai.html?lang=en"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://oslomeet.org/mimbai.html?lang=no"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://oslomeet.org/mimbai.html?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://oslomeet.org/mimbai.html?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://oslomeet.org/mimbai.html"/>
+  </url>
   <!-- PREÇOS E PLANOS -->
   <url>
     <loc>https://oslomeet.org/pricing.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-
   <!-- CADASTRO / CHECKOUT -->
   <url>
     <loc>https://oslomeet.org/join.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
-
+  <!-- COMO COMEÇAR -->
+  <url>
+    <loc>https://oslomeet.org/start.html</loc>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
   <!-- COMO FUNCIONA -->
   <url>
     <loc>https://oslomeet.org/how-it-works.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- BLOG / INSIGHTS (Conteúdo frequente = Alta prioridade) -->
+  <!-- BLOG / INSIGHTS -->
   <url>
     <loc>https://oslomeet.org/insights.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
-  <!-- SOBRE A EMPRESA (Confiança e Branding) -->
+  <!-- SOBRE A EMPRESA -->
   <url>
     <loc>https://oslomeet.org/about.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- CONTATO (Suporte e Conversão) -->
+  <!-- CONTATO -->
   <url>
     <loc>https://oslomeet.org/contact.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
-
   <!-- SUPORTE -->
   <url>
     <loc>https://oslomeet.org/support.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-
-  <!-- DASHBOARD (Área restrita, baixa prioridade para busca pública) -->
+  <!-- DASHBOARD (Área restrita) -->
   <url>
     <loc>https://oslomeet.org/dashboard.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.3</priority>
   </url>
-
-  <!-- MENSAGENS (Área do App - Não indexar para SEO) -->
+  <!-- MENSAGENS (Área do App) -->
   <url>
     <loc>https://oslomeet.org/messages.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.2</priority>
   </url>
-
-  <!-- SUCESSO PÓS-PAGAMENTO (Página de confirmação) -->
+  <!-- SUCESSO PÓS-PAGAMENTO -->
   <url>
-    <loc>https://oslomeet.org/success.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <loc>https://oslomeet.org/payment-success.html</loc>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.1</priority>
   </url>
-
   <!-- PÁGINAS LEGAIS -->
   <url>
     <loc>https://oslomeet.org/terms-of-use.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://oslomeet.org/privacy-policy.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
     <loc>https://oslomeet.org/cookie-notice.html</loc>
-    <lastmod>2026-05-28</lastmod>
+    <lastmod>2026-06-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-
 </urlset>
