@@ -637,6 +637,17 @@
             <i class="fas fa-rocket"></i>
             <span>Try MIMBAI</span>
         </a>
+
+    <!-- Language Selector -->
+    <div style="position:fixed;top:12px;right:12px;z-index:1000;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:6px 12px;display:flex;align-items:center;gap:8px;">
+        <i class="fas fa-globe" style="color:#3b82f6;font-size:0.9rem"></i>
+        <select id="languageSelect" onchange="changeLanguage(this.value)" style="background:transparent;border:none;color:white;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="pt">Português</option>
+            <option value="es">Español</option>
+        </select>
+    </div>
     </nav>
 
     <!-- HERO -->
@@ -644,23 +655,21 @@
         <div class="hero-glow"></div>
         <div class="hero-eyebrow">
             <div class="dot"></div>
-            AI Matching Engine · Oslo Meet
+            <span data-i18n="heroEyebrow">AI Matching Engine · Oslo Meet</span>
         </div>
         <h1>
             <span class="word-mimbai">MIMBAI</span>
             <span class="word-sub">Matching Intelligence for Modern Business & AI</span>
         </h1>
         <p class="hero-desc">
-            The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections.
-            MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies
-            across Europe, Brazil, China and the Nordic ecosystem.
+            <span data-i18n="heroDesc">The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections. MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies across Europe, Brazil, China and the Nordic ecosystem.</span>
         </p>
         <div class="hero-actions">
             <a href="https://oslomeet.org/how-it-works.html" class="btn-primary">
-                <i class="fas fa-brain"></i> See How It Works
+                <i class="fas fa-brain"></i> <span data-i18n="heroBtn1">See How It Works</span>
             </a>
             <a href="https://oslomeet.org/join.html" class="btn-ghost">
-                <i class="fas fa-building"></i> Register Your Company
+                <i class="fas fa-building"></i> <span data-i18n="heroBtn2">Register Your Company</span>
             </a>
         </div>
         <div class="scroll-hint">
@@ -673,7 +682,7 @@
 
     <!-- WHAT IS MIMBAI -->
     <div class="section">
-        <div class="section-label">Definition</div>
+        <div class="section-label" data-i18n="defLabel">Definition</div>
         <h2 class="section-title">What is <span class="accent">MIMBAI?</span></h2>
         <p class="section-sub">MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.</p>
 
@@ -730,9 +739,9 @@
 
     <!-- HOW IT WORKS -->
     <div class="section">
-        <div class="section-label">Process</div>
-        <h2 class="section-title">How MIMBAI <span class="accent">Works</span></h2>
-        <p class="section-sub">A 4-step pipeline from raw company data to high-confidence match recommendations.</p>
+        <div class="section-label" data-i18n="processLabel">Process</div>
+        <h2 class="section-title">How MIMBAI <span class="accent" data-i18n="processTitle">Works</span></h2>
+        <p class="section-sub"><span data-i18n="processSub">A 4-step pipeline from raw company data to high-confidence match recommendations.</span></p>
 
         <div class="steps">
             <div class="step">
@@ -912,13 +921,13 @@
     <div class="cta-wrap">
         <div class="cta-box">
             <h2>Your company deserves<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent">better matches.</span></h2>
-            <p>Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.</p>
+            <p><span data-i18n="ctaDesc">Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.</span></p>
             <div class="cta-btns">
                 <a href="https://oslomeet.org/join.html" class="btn-primary">
-                    <i class="fas fa-rocket"></i> Register Your Company
+                    <i class="fas fa-rocket"></i> <span data-i18n="ctaBtn1">Register Your Company</span>
                 </a>
                 <a href="https://oslomeet.org/how-it-works.html" class="btn-ghost">
-                    <i class="fas fa-arrow-right"></i> Full Platform Details
+                    <i class="fas fa-arrow-right"></i> <span data-i18n="ctaBtn2">Full Platform Details</span>
                 </a>
             </div>
         </div>
@@ -971,6 +980,66 @@
             el.style.transform = 'translateY(16px)';
             el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             fadeObs.observe(el);
+        });
+
+        const i18n = {
+            en: {
+                heroEyebrow: "AI Matching Engine · Oslo Meet",
+                heroSub: "Matching Intelligence for Modern Business & AI",
+                heroDesc: "The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections. MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies across Europe, Brazil, China and the Nordic ecosystem.",
+                heroBtn1: "See How It Works", heroBtn2: "Register Your Company",
+                defLabel: "Definition", whatSub: "MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.",
+                processLabel: "Process", processTitle: "Works", processSub: "A 4-step pipeline from raw company data to high-confidence match recommendations.",
+                ctaDesc: "Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.",
+                ctaBtn1: "Register Your Company", ctaBtn2: "Full Platform Details"
+            },
+            no: {
+                heroEyebrow: "AI-matchingsmotor · Oslo Meet",
+                heroSub: "Matching Intelligence for Modern Business & AI",
+                heroDesc: "Den proprietære motoren bak <strong>Oslo Meet</strong>s B2B-forbindelser. MIMBAI bruker semantiske embeddings og 50+ kompatibilitetssignaler for å matche selskaper i Europa, Brasil, Kina og det nordiske økosystemet.",
+                heroBtn1: "Se hvordan det fungerer", heroBtn2: "Registrer din bedrift",
+                defLabel: "Definisjon", whatSub: "MIMBAI står for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meets proprietære B2B-matchingsmotor.",
+                processLabel: "Prosess", processTitle: "Fungerer", processSub: "En 4-trinns pipeline fra rådata til høy-konfidensielle matchanbefalinger.",
+                ctaDesc: "Bli med i Oslo Meet og la MIMBAI finne dine mest kompatible forretningspartnere — i Norden og videre.",
+                ctaBtn1: "Registrer din bedrift", ctaBtn2: "Full plattforminfo"
+            },
+            pt: {
+                heroEyebrow: "Motor de Matching com IA · Oslo Meet",
+                heroSub: "Matching Intelligence for Modern Business & AI",
+                heroDesc: "O motor proprietário por trás das conexões B2B da <strong>Oslo Meet</strong>. O MIMBAI usa embeddings semânticos e 50+ sinais de compatibilidade para conectar empresas na Europa, Brasil, China e no ecossistema nórdico.",
+                heroBtn1: "Ver como funciona", heroBtn2: "Cadastre sua empresa",
+                defLabel: "Definição", whatSub: "MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — o motor proprietário de matching B2B da Oslo Meet.",
+                processLabel: "Processo", processTitle: "Funciona", processSub: "Um pipeline de 4 etapas: do dado bruto da empresa até recomendações de matches com alta confiança.",
+                ctaDesc: "Junte-se à Oslo Meet e deixe o MIMBAI encontrar seus parceiros de negócios mais compatíveis — nos países nórdicos e além.",
+                ctaBtn1: "Cadastre sua empresa", ctaBtn2: "Detalhes da plataforma"
+            },
+            es: {
+                heroEyebrow: "Motor de Matching con IA · Oslo Meet",
+                heroSub: "Matching Intelligence for Modern Business & AI",
+                heroDesc: "El motor propietario detrás de las conexiones B2B de <strong>Oslo Meet</strong>. MIMBAI usa embeddings semánticos y 50+ señales de compatibilidad para conectar empresas en Europa, Brasil, China y el ecosistema nórdico.",
+                heroBtn1: "Ver cómo funciona", heroBtn2: "Registra tu empresa",
+                defLabel: "Definición", whatSub: "MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — el motor propietario de matching B2B de Oslo Meet.",
+                processLabel: "Proceso", processTitle: "Funciona", processSub: "Un pipeline de 4 pasos: desde datos brutos de la empresa hasta recomendaciones de matches de alta confianza.",
+                ctaDesc: "Únete a Oslo Meet y deja que MIMBAI encuentre tus socios comerciales más compatibles — en los países nórdicos y más allá.",
+                ctaBtn1: "Registra tu empresa", ctaBtn2: "Detalles de la plataforma"
+            }
+        };
+
+        function changeLanguage(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang]?.[key]) el.innerHTML = i18n[lang][key];
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Init language
+        window.addEventListener('load', () => {
+            const saved = localStorage.getItem('preferredLanguage') || 'en';
+            const sel = document.getElementById('languageSelect');
+            if (sel) sel.value = saved;
+            changeLanguage(saved);
         });
     </script>
 
