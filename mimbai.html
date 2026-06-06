@@ -36,7 +36,7 @@
     <link rel="alternate" hreflang="x-default" href="https://mimbai.com/" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -47,7 +47,7 @@
         }
         *{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}
-        body{font-family:'Syne',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;}
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;}
         body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");opacity:0.4;}
         body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(139,92,246,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,0.04) 1px,transparent 1px);background-size:60px 60px;}
         nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(5,8,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(139,92,246,0.1);}
@@ -60,7 +60,7 @@
         .nav-cta:hover{opacity:0.88;transform:translateY(-1px);}
         .lang-sel{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:6px 12px;display:flex;align-items:center;gap:8px;}
         .lang-sel i{color:#3b82f6;font-size:0.9rem;}
-        .lang-sel select{background:transparent;border:none;color:white;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;}
+        .lang-sel select{background:transparent;border:none;color:white;font-family:'Inter',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;}
         .lang-sel select option{background:var(--bg);}
         .hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 20px 80px;text-align:center;overflow:hidden;}
         .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(139,92,246,0.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
@@ -194,7 +194,7 @@
         <span class="word-mimbai">MIMBAI</span>
         <span class="word-sub" data-i18n="heroSub">Matching Intelligence for Modern Business & AI</span>
     </h1>
-    <p class="hero-desc" data-i18n="heroDesc">The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections. MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies across Europe, Brazil, China and the Nordic ecosystem.</p>
+    <p class="hero-desc" data-i18n="heroDesc">MIMBAI is a multipurpose AI platform developed by <strong>Digital Solutions</strong>. Its B2B Matching Engine powers <strong>Oslo Meet</strong>, connecting companies across Europe, Brazil, China and the Nordic ecosystem — and beyond.</p>
     <div class="hero-actions">
         <a href="https://oslomeet.org/how-it-works.html" class="btn-primary">
             <i class="fas fa-brain"></i> <span data-i18n="heroBtn1">See How It Works</span>
@@ -215,10 +215,10 @@
 <div class="section">
     <div class="section-label" data-i18n="defLabel">Definition</div>
     <h2 class="section-title" data-i18n="whatTitle">What is <span class="accent">MIMBAI?</span></h2>
-    <p class="section-sub" data-i18n="whatSub">MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.</p>
+    <p class="section-sub" data-i18n="whatSub">MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — a multipurpose AI platform by Digital Solutions, used as Oslo Meet's B2B matching engine and deployable for a wide range of AI-powered solutions.</p>
     <div class="what-grid">
         <div class="what-text">
-            <p data-i18n="whatP1">MIMBAI is not a directory, a CRM, or a generic recommendation system. It is an <strong>intelligent matching layer</strong> built specifically for B2B contexts, designed to surface real strategic compatibility between companies — not just keyword overlap.</p>
+            <p data-i18n="whatP1">MIMBAI is a proprietary AI platform built by <strong>Digital Solutions</strong>. It is not limited to matching — it is an <strong>intelligent AI layer</strong> deployable across multiple domains: B2B matching, content generation, semantic search, recommendations, and custom AI workflows.</p>
             <p data-i18n="whatP2">Every company that joins Oslo Meet is analyzed by MIMBAI. Its profile is converted into <strong>high-dimensional semantic vectors</strong>, compared against other companies, and assigned a <strong>compatibility score</strong> based on industry fit, shared goals, technology synergies, and market alignment.</p>
             <p data-i18n="whatP3">MIMBAI runs continuously in the background — learning from interactions, refining scores, and surfacing new matches as the Oslo Meet network grows.</p>
         </div>
@@ -244,7 +244,7 @@
                     <i class="fas fa-brain"></i>
                     <div>
                         <span>MIMBAI</span>
-                        <span class="label" data-i18n="brandEngineLabel">AI matching engine — mimbai.com</span>
+                        <span class="label" data-i18n="brandEngineLabel">AI platform — mimbai.com</span>
                     </div>
                 </div>
             </div>
@@ -414,7 +414,7 @@
         <a href="https://oslomeet.org/terms-of-use.html" data-i18n="footerTerms">Terms</a>
         <a href="https://oslomeet.org/contact.html" data-i18n="footerContact">Contact</a>
     </div>
-    <div data-i18n="footerCopy">© 2026 Oslo Meet · Digital Solutions</div>
+    <div>© 2026 Oslo Meet · <a href="https://app-algoritmo.github.io/digital-solutions" style="color:#fbbf24;text-decoration:none;"><i class="fas fa-code"></i> Digital Solutions</a></div>
 </footer>
 
 <script>
@@ -423,18 +423,18 @@ const i18n = {
         navCta:"Try MIMBAI",
         heroEyebrow:"AI Matching Engine · Oslo Meet",
         heroSub:"Matching Intelligence for Modern Business & AI",
-        heroDesc:"The proprietary engine behind <strong>Oslo Meet</strong>'s B2B connections. MIMBAI uses semantic embeddings and 50+ compatibility signals to match companies across Europe, Brazil, China and the Nordic ecosystem.",
+        heroDesc:"MIMBAI is a multipurpose AI platform developed by <strong>Digital Solutions</strong>. Its B2B Matching Engine powers <strong>Oslo Meet</strong>, connecting companies across Europe, Brazil, China and the Nordic ecosystem — and beyond.",
         heroBtn1:"See How It Works", heroBtn2:"Register Your Company",
         scrollHint:"Explore",
         defLabel:"Definition",
         whatTitle:"What is <span class='accent'>MIMBAI?</span>",
-        whatSub:"MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meet's proprietary B2B matching engine.",
-        whatP1:"MIMBAI is not a directory, a CRM, or a generic recommendation system. It is an <strong>intelligent matching layer</strong> built specifically for B2B contexts, designed to surface real strategic compatibility between companies — not just keyword overlap.",
+        whatSub:"MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — a multipurpose AI platform by Digital Solutions, used as Oslo Meet's B2B matching engine and deployable for a wide range of AI-powered solutions.",
+        whatP1:"MIMBAI is a proprietary AI platform built by <strong>Digital Solutions</strong>. It is not limited to matching — it is an <strong>intelligent AI layer</strong> deployable across multiple domains: B2B matching, content generation, semantic search, recommendations, and custom AI workflows.",
         whatP2:"Every company that joins Oslo Meet is analyzed by MIMBAI. Its profile is converted into <strong>high-dimensional semantic vectors</strong>, compared against other companies, and assigned a <strong>compatibility score</strong> based on industry fit, shared goals, technology synergies, and market alignment.",
         whatP3:"MIMBAI runs continuously in the background — learning from interactions, refining scores, and surfacing new matches as the Oslo Meet network grows.",
         brandParent:"Digital Solutions", brandParentLabel:"Parent company",
         brandPlatformLabel:"B2B platform — oslomeet.org",
-        brandEngineLabel:"AI matching engine — mimbai.com",
+        brandEngineLabel:"AI platform — mimbai.com",
         processLabel:"Process", processTitle:"How MIMBAI Works",
         processSub:"A 4-step pipeline from raw company data to high-confidence match recommendations.",
         step1Title:"Profile Ingestion", step1Desc:"Company data — sector, goals, technologies, markets, collaboration preferences — is structured into semantic tags and normalized business vectors.",
@@ -460,24 +460,23 @@ const i18n = {
         gdprText:"<strong>Privacy by design.</strong> Your business data is processed only for matching within Oslo Meet. MIMBAI never uses company profiles to train public AI models, never sells data to third parties, and is fully auditable by registered members under GDPR Article 22.",
         ctaTitle:"Your company deserves better matches.", ctaDesc:"Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.",
         ctaBtn1:"Register Your Company", ctaBtn2:"Full Platform Details",
-        footerTag:"— AI Matching Engine by Oslo Meet", footerPrivacy:"Privacy", footerTerms:"Terms", footerContact:"Contact", footerCopy:"© 2026 Oslo Meet · Digital Solutions"
-    },
+        footerTag:"— AI Matching Engine by Oslo Meet", footerPrivacy:"Privacy", footerTerms:"Terms", footerContact:"Contact",     },
     no: {
         navCta:"Prøv MIMBAI",
         heroEyebrow:"AI-matchingsmotor · Oslo Meet",
         heroSub:"Matching Intelligence for Modern Business & AI",
-        heroDesc:"Den proprietære motoren bak <strong>Oslo Meet</strong>s B2B-forbindelser. MIMBAI bruker semantiske embeddings og 50+ kompatibilitetssignaler for å matche selskaper i Europa, Brasil, Kina og det nordiske økosystemet.",
+        heroDesc:"MIMBAI er en allsidig AI-plattform utviklet av <strong>Digital Solutions</strong>. B2B Matching Engine driver <strong>Oslo Meet</strong> og kobler selskaper i Europa, Brasil, Kina og det nordiske økosystemet — og videre.",
         heroBtn1:"Se hvordan det fungerer", heroBtn2:"Registrer din bedrift",
         scrollHint:"Utforsk",
         defLabel:"Definisjon",
         whatTitle:"Hva er <span class='accent'>MIMBAI?</span>",
-        whatSub:"MIMBAI står for <strong>Matching Intelligence for Modern Business & AI</strong> — Oslo Meets proprietære B2B-matchingsmotor.",
-        whatP1:"MIMBAI er ikke et register, et CRM eller et generisk anbefalingssystem. Det er et <strong>intelligent matching-lag</strong> bygget spesifikt for B2B-kontekster, designet for å avdekke reell strategisk kompatibilitet mellom selskaper — ikke bare søkeordoverlapp.",
+        whatSub:"MIMBAI står for <strong>Matching Intelligence for Modern Business & AI</strong> — en allsidig AI-plattform av Digital Solutions, brukt som Oslo Meets B2B-matchingsmotor og tilgjengelig for en rekke AI-drevne løsninger.",
+        whatP1:"MIMBAI er en proprietær AI-plattform utviklet av <strong>Digital Solutions</strong>. Den er ikke begrenset til matching — det er et <strong>intelligent AI-lag</strong> som kan brukes på tvers av domener: B2B-matching, innholdsgenerering, semantisk søk, anbefalinger og skreddersydde AI-arbeidsflyter.",
         whatP2:"Hvert selskap som blir med i Oslo Meet analyseres av MIMBAI. Profilen konverteres til <strong>høydimensjonale semantiske vektorer</strong>, sammenlignes med andre selskaper og tildeles en <strong>kompatibilitetsscore</strong> basert på bransjefitness, felles mål, teknologisynergier og markedsaligment.",
         whatP3:"MIMBAI kjører kontinuerlig i bakgrunnen — lærer av interaksjoner, forfiner scorer og avdekker nye matcher etter hvert som Oslo Meet-nettverket vokser.",
         brandParent:"Digital Solutions", brandParentLabel:"Morselskap",
         brandPlatformLabel:"B2B-plattform — oslomeet.org",
-        brandEngineLabel:"AI-matchingsmotor — mimbai.com",
+        brandEngineLabel:"AI platform — mimbai.com",
         processLabel:"Prosess", processTitle:"Slik fungerer MIMBAI",
         processSub:"En 4-trinns pipeline fra rådata til høy-konfidensielle matchanbefalinger.",
         step1Title:"Profilinnhenting", step1Desc:"Bedriftsdata — sektor, mål, teknologier, markeder, samarbeidspreferanser — struktureres til semantiske tagger og normaliserte forretningsvektorer.",
@@ -503,24 +502,23 @@ const i18n = {
         gdprText:"<strong>Personvern som design.</strong> Dine bedriftsdata behandles kun for matching innen Oslo Meet. MIMBAI bruker aldri bedriftsprofiler til å trene offentlige AI-modeller, selger aldri data til tredjeparter, og er fullt revisorbar av registrerte medlemmer under GDPR artikkel 22.",
         ctaTitle:"Bedriften din fortjener bedre matcher.", ctaDesc:"Bli med i Oslo Meet og la MIMBAI finne dine mest kompatible forretningspartnere — i Norden og videre.",
         ctaBtn1:"Registrer din bedrift", ctaBtn2:"Full plattforminfo",
-        footerTag:"— AI-matchingsmotor av Oslo Meet", footerPrivacy:"Personvern", footerTerms:"Vilkår", footerContact:"Kontakt", footerCopy:"© 2026 Oslo Meet · Digital Solutions"
-    },
+        footerTag:"— AI-matchingsmotor av Oslo Meet", footerPrivacy:"Personvern", footerTerms:"Vilkår", footerContact:"Kontakt",     },
     pt: {
         navCta:"Experimente o MIMBAI",
         heroEyebrow:"Motor de Matching com IA · Oslo Meet",
         heroSub:"Matching Intelligence for Modern Business & AI",
-        heroDesc:"O motor proprietário por trás das conexões B2B da <strong>Oslo Meet</strong>. O MIMBAI usa embeddings semânticos e 50+ sinais de compatibilidade para conectar empresas na Europa, Brasil, China e no ecossistema nórdico.",
+        heroDesc:"MIMBAI é uma plataforma de IA multiuso desenvolvida pela <strong>Digital Solutions</strong>. Seu motor de matching B2B alimenta a <strong>Oslo Meet</strong>, conectando empresas na Europa, Brasil, China e no ecossistema nórdico — e além.",
         heroBtn1:"Ver como funciona", heroBtn2:"Cadastre sua empresa",
         scrollHint:"Explorar",
         defLabel:"Definição",
         whatTitle:"O que é <span class='accent'>MIMBAI?</span>",
-        whatSub:"MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — o motor proprietário de matching B2B da Oslo Meet.",
-        whatP1:"O MIMBAI não é um diretório, um CRM ou um sistema genérico de recomendação. É uma <strong>camada inteligente de matching</strong> construída especificamente para contextos B2B, projetada para revelar compatibilidade estratégica real entre empresas — não apenas sobreposição de palavras-chave.",
+        whatSub:"MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — uma plataforma de IA multiuso da Digital Solutions, usada como motor de matching B2B da Oslo Meet e implantável em uma ampla gama de soluções com IA.",
+        whatP1:"O MIMBAI é uma plataforma de IA proprietária desenvolvida pela <strong>Digital Solutions</strong>. Não se limita ao matching — é uma <strong>camada inteligente de IA</strong> implantável em múltiplos domínios: matching B2B, geração de conteúdo, busca semântica, recomendações e fluxos de trabalho personalizados com IA.",
         whatP2:"Cada empresa que entra na Oslo Meet é analisada pelo MIMBAI. Seu perfil é convertido em <strong>vetores semânticos de alta dimensão</strong>, comparado com outras empresas e recebe um <strong>score de compatibilidade</strong> baseado em fit de indústria, objetivos compartilhados, sinergias tecnológicas e alinhamento de mercado.",
         whatP3:"O MIMBAI opera continuamente em segundo plano — aprendendo com as interações, refinando scores e revelando novos matches conforme a rede Oslo Meet cresce.",
         brandParent:"Digital Solutions", brandParentLabel:"Empresa matriz",
         brandPlatformLabel:"Plataforma B2B — oslomeet.org",
-        brandEngineLabel:"Motor de matching com IA — mimbai.com",
+        brandEngineLabel:"AI platform — mimbai.com",
         processLabel:"Processo", processTitle:"Como o MIMBAI Funciona",
         processSub:"Um pipeline de 4 etapas: do dado bruto da empresa até recomendações de matches com alta confiança.",
         step1Title:"Ingestão de Perfil", step1Desc:"Dados da empresa — setor, objetivos, tecnologias, mercados, preferências de colaboração — são estruturados em tags semânticas e vetores de negócio normalizados.",
@@ -546,24 +544,23 @@ const i18n = {
         gdprText:"<strong>Privacidade por design.</strong> Seus dados empresariais são processados apenas para matching dentro da Oslo Meet. O MIMBAI nunca usa perfis de empresas para treinar modelos públicos de IA, nunca vende dados a terceiros e é totalmente auditável pelos membros registrados sob o Artigo 22 do GDPR.",
         ctaTitle:"Sua empresa merece matches melhores.", ctaDesc:"Junte-se à Oslo Meet e deixe o MIMBAI encontrar seus parceiros de negócios mais compatíveis — nos países nórdicos e além.",
         ctaBtn1:"Cadastre sua empresa", ctaBtn2:"Detalhes da plataforma",
-        footerTag:"— Motor de Matching com IA by Oslo Meet", footerPrivacy:"Privacidade", footerTerms:"Termos", footerContact:"Contato", footerCopy:"© 2026 Oslo Meet · Digital Solutions"
-    },
+        footerTag:"— Motor de Matching com IA by Oslo Meet", footerPrivacy:"Privacidade", footerTerms:"Termos", footerContact:"Contato",     },
     es: {
         navCta:"Prueba MIMBAI",
         heroEyebrow:"Motor de Matching con IA · Oslo Meet",
         heroSub:"Matching Intelligence for Modern Business & AI",
-        heroDesc:"El motor propietario detrás de las conexiones B2B de <strong>Oslo Meet</strong>. MIMBAI usa embeddings semánticos y 50+ señales de compatibilidad para conectar empresas en Europa, Brasil, China y el ecosistema nórdico.",
+        heroDesc:"MIMBAI es una plataforma de IA multiusos desarrollada por <strong>Digital Solutions</strong>. Su motor de matching B2B impulsa a <strong>Oslo Meet</strong>, conectando empresas en Europa, Brasil, China y el ecosistema nórdico — y más allá.",
         heroBtn1:"Ver cómo funciona", heroBtn2:"Registra tu empresa",
         scrollHint:"Explorar",
         defLabel:"Definición",
         whatTitle:"¿Qué es <span class='accent'>MIMBAI?</span>",
-        whatSub:"MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — el motor propietario de matching B2B de Oslo Meet.",
-        whatP1:"MIMBAI no es un directorio, un CRM ni un sistema genérico de recomendación. Es una <strong>capa inteligente de matching</strong> construida específicamente para contextos B2B, diseñada para revelar compatibilidad estratégica real entre empresas — no solo superposición de palabras clave.",
+        whatSub:"MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — una plataforma de IA multiusos de Digital Solutions, utilizada como motor de matching B2B de Oslo Meet y desplegable para una amplia gama de soluciones con IA.",
+        whatP1:"MIMBAI es una plataforma de IA propietaria desarrollada por <strong>Digital Solutions</strong>. No se limita al matching — es una <strong>capa inteligente de IA</strong> desplegable en múltiples dominios: matching B2B, generación de contenido, búsqueda semántica, recomendaciones y flujos de trabajo personalizados con IA.",
         whatP2:"Cada empresa que se une a Oslo Meet es analizada por MIMBAI. Su perfil se convierte en <strong>vectores semánticos de alta dimensión</strong>, se compara con otras empresas y recibe una <strong>puntuación de compatibilidad</strong> basada en encaje de industria, objetivos compartidos, sinergias tecnológicas y alineamiento de mercado.",
         whatP3:"MIMBAI opera continuamente en segundo plano — aprendiendo de las interacciones, refinando puntuaciones y revelando nuevos matches a medida que la red Oslo Meet crece.",
         brandParent:"Digital Solutions", brandParentLabel:"Empresa matriz",
         brandPlatformLabel:"Plataforma B2B — oslomeet.org",
-        brandEngineLabel:"Motor de matching con IA — mimbai.com",
+        brandEngineLabel:"AI platform — mimbai.com",
         processLabel:"Proceso", processTitle:"Cómo Funciona MIMBAI",
         processSub:"Un pipeline de 4 pasos: desde datos brutos de la empresa hasta recomendaciones de matches de alta confianza.",
         step1Title:"Ingesta de Perfil", step1Desc:"Los datos de la empresa — sector, objetivos, tecnologías, mercados, preferencias de colaboración — se estructuran en etiquetas semánticas y vectores de negocio normalizados.",
@@ -589,8 +586,7 @@ const i18n = {
         gdprText:"<strong>Privacidad por diseño.</strong> Tus datos empresariales se procesan solo para matching dentro de Oslo Meet. MIMBAI nunca usa perfiles de empresas para entrenar modelos públicos de IA, nunca vende datos a terceros y es totalmente auditable por los miembros registrados bajo el Artículo 22 del GDPR.",
         ctaTitle:"Tu empresa merece mejores matches.", ctaDesc:"Únete a Oslo Meet y deja que MIMBAI encuentre tus socios comerciales más compatibles — en los países nórdicos y más allá.",
         ctaBtn1:"Registra tu empresa", ctaBtn2:"Detalles de la plataforma",
-        footerTag:"— Motor de Matching con IA by Oslo Meet", footerPrivacy:"Privacidad", footerTerms:"Términos", footerContact:"Contacto", footerCopy:"© 2026 Oslo Meet · Digital Solutions"
-    }
+        footerTag:"— Motor de Matching con IA by Oslo Meet", footerPrivacy:"Privacidad", footerTerms:"Términos", footerContact:"Contacto",     }
 };
 
 function changeLanguage(lang) {
