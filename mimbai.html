@@ -10,16 +10,16 @@
     <meta name="theme-color" content="#8b5cf6" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIMBAI — AI Matching Engine by Oslo Meet</title>
-    <meta name="description" content="MIMBAI is Oslo Meet's proprietary AI B2B matching engine. Semantic embeddings, compatibility scoring, and intelligent business connections across Europe and the Nordics.">
-    <meta property="og:title" content="MIMBAI — AI B2B Matching Engine">
-    <meta property="og:description" content="The intelligence behind Oslo Meet's business connections. Powered by semantic embeddings and 50+ compatibility signals.">
+    <title>MIMBAI — AI Platform for Smart Organizations | Oslo Meet</title>
+    <meta name="description" content="MIMBAI is an AI Platform for Smart Organizations by Digital Solutions. Powered by Anthropic Claude. Oslo Meet uses MIMBAI's intelligence to connect businesses across Europe and the Nordics.">
+    <meta property="og:title" content="MIMBAI — AI Platform for Smart Organizations">
+    <meta property="og:description" content="7 AI modules. Project Generator, Excel, Finance, HR, Presentations, Content and RegTech. Powered by Anthropic Claude.">
     <meta property="og:image" content="https://oslomeet.org/web.png">
-    <meta property="og:site_name" content="MIMBAI by Oslo Meet">
+    <meta property="og:site_name" content="MIMBAI by Digital Solutions">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MIMBAI — AI B2B Matching Engine">
-    <meta name="twitter:description" content="The intelligence behind Oslo Meet's business connections.">
+    <meta name="twitter:title" content="MIMBAI — AI Platform for Smart Organizations">
+    <meta name="twitter:description" content="7 AI modules powered by Anthropic Claude. Oslo Meet uses MIMBAI to connect businesses.">
     <meta name="twitter:image" content="https://oslomeet.org/web.png">
     <meta name="google-site-verification" content="CRM-dMkWd--H5ZUbXfcT6P4OILoxyN9HrYl3ZJ7EDrk" />
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-C5E3B7CKET"></script>
@@ -36,14 +36,16 @@
     <link rel="alternate" hreflang="x-default" href="https://mimbai.com/" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg:#05080f;--surface:#0c1220;--card:#111827;--border:#1f2d45;--border2:#2a3f60;
             --text:#e8edf8;--sub:#7b8faa;--muted:#3a4d65;
             --purple:#8b5cf6;--blue:#3b82f6;--cyan:#06b6d4;--green:#10b981;
+            --amber:#f5a623;--amber2:#e8940f;
             --grad:linear-gradient(135deg,#8b5cf6,#3b82f6);
+            --grad-amber:linear-gradient(135deg,#f5a623,#e8940f);
         }
         *{margin:0;padding:0;box-sizing:border-box;}
         html{scroll-behavior:smooth;}
@@ -52,29 +54,32 @@
         body::after{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(139,92,246,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(139,92,246,0.04) 1px,transparent 1px);background-size:60px 60px;}
         nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;background:rgba(5,8,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(139,92,246,0.1);}
         .nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
-        .nav-logo{font-family:'Space Mono',monospace;font-size:1.3rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.02em;}
+        .nav-logo{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.02em;}
         .nav-sep{width:1px;height:18px;background:var(--border2);}
         .nav-tag{font-size:0.65rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--sub);}
         .nav-right{display:flex;align-items:center;gap:12px;}
         .nav-cta{display:flex;align-items:center;gap:6px;padding:7px 16px;background:var(--grad);color:white;border-radius:6px;font-size:0.8rem;font-weight:700;text-decoration:none;letter-spacing:0.05em;transition:opacity 0.2s,transform 0.15s;}
         .nav-cta:hover{opacity:0.88;transform:translateY(-1px);}
+        .nav-cta-amber{background:var(--grad-amber);}
         .lang-sel{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:6px 12px;display:flex;align-items:center;gap:8px;}
         .lang-sel i{color:#3b82f6;font-size:0.9rem;}
         .lang-sel select{background:transparent;border:none;color:white;font-family:'Inter',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;outline:none;padding:4px;-webkit-appearance:none;}
         .lang-sel select option{background:var(--bg);}
         .hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:120px 20px 80px;text-align:center;overflow:hidden;}
         .hero-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(139,92,246,0.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
-        .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.25);border-radius:50px;font-family:'Space Mono',monospace;font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:1.5rem;animation:fadeUp 0.7s ease backwards;}
+        .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.25);border-radius:50px;font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:1.5rem;animation:fadeUp 0.7s ease backwards;}
         .hero-eyebrow .dot{width:6px;height:6px;background:var(--purple);border-radius:50%;animation:blink 2s infinite;}
         @keyframes blink{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
         .hero h1{font-size:clamp(3.5rem,10vw,7rem);font-weight:800;letter-spacing:-0.04em;line-height:0.95;margin-bottom:1rem;animation:fadeUp 0.7s ease 0.1s backwards;}
-        .word-mimbai{display:block;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .word-mimbai{display:block;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-family:'Syne',sans-serif;}
         .word-sub{display:block;font-size:0.45em;font-weight:600;letter-spacing:0.05em;color:var(--sub);-webkit-text-fill-color:var(--sub);margin-top:0.3em;}
         .hero-desc{max-width:600px;font-size:1.1rem;color:var(--sub);line-height:1.7;margin:1.5rem auto 2.5rem;animation:fadeUp 0.7s ease 0.2s backwards;}
         .hero-desc strong{color:var(--text);}
         .hero-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:fadeUp 0.7s ease 0.3s backwards;}
         .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:var(--grad);color:white;border-radius:8px;font-weight:700;font-size:0.95rem;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;}
         .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(139,92,246,0.35);}
+        .btn-primary-amber{background:var(--grad-amber);}
+        .btn-primary-amber:hover{box-shadow:0 10px 30px rgba(245,166,35,0.35);}
         .btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:transparent;border:1px solid var(--border2);color:var(--text);border-radius:8px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:border-color 0.2s,background 0.2s;}
         .btn-ghost:hover{border-color:var(--purple);background:rgba(139,92,246,0.07);}
         .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--muted);font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;animation:fadeUp 1s ease 0.8s backwards;}
@@ -82,10 +87,11 @@
         @keyframes scrollLine{0%{opacity:0;transform:scaleY(0);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}100%{opacity:0;transform:scaleY(1);transform-origin:bottom;}}
         @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
         .section{position:relative;z-index:1;padding:80px 20px;max-width:1100px;margin:0 auto;}
-        .section-label{display:inline-flex;align-items:center;gap:8px;font-family:'Space Mono',monospace;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem;}
+        .section-label{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--purple);margin-bottom:1rem;}
         .section-label::before{content:'//';opacity:0.5;}
         .section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1rem;}
         .section-title .accent{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .section-title .accent-amber{background:var(--grad-amber);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
         .section-sub{color:var(--sub);font-size:1rem;max-width:560px;line-height:1.7;margin-bottom:3rem;}
         .what-grid{display:grid;grid-template-columns:1fr;gap:2rem;align-items:center;}
         @media(min-width:768px){.what-grid{grid-template-columns:1fr 1fr;}}
@@ -97,20 +103,34 @@
         .brand-item{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;font-size:0.85rem;font-weight:600;}
         .brand-item.company{background:rgba(139,92,246,0.08);color:var(--purple);}
         .brand-item.platform{background:rgba(59,130,246,0.08);color:var(--blue);}
-        .brand-item.engine{background:rgba(6,182,212,0.08);color:var(--cyan);border:1px solid rgba(6,182,212,0.2);}
+        .brand-item.engine{background:rgba(245,166,35,0.1);color:var(--amber);border:1px solid rgba(245,166,35,0.25);}
         .brand-item i{font-size:1rem;width:20px;flex-shrink:0;}
         .brand-item .label{font-size:0.7rem;opacity:0.7;font-weight:400;display:block;}
         .arrow-down{text-align:center;color:var(--muted);font-size:0.8rem;padding:2px 0;}
+        /* MODULES GRID */
+        .modules-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
+        @media(min-width:600px){.modules-grid{grid-template-columns:repeat(4,1fr);}}
+        .module-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.2rem;transition:border-color 0.2s,transform 0.2s;cursor:default;}
+        .module-card:hover{border-color:var(--border2);transform:translateY(-3px);}
+        .module-card.featured{border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.04);}
+        .module-icon{font-size:1.4rem;margin-bottom:8px;display:block;}
+        .module-name{font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+        .module-desc{font-size:0.75rem;color:var(--sub);line-height:1.45;}
+        .module-badge{display:inline-block;margin-top:8px;font-size:0.62rem;font-weight:700;letter-spacing:0.08em;padding:2px 7px;border-radius:20px;}
+        .module-badge.free{background:rgba(16,185,129,0.15);color:var(--green);}
+        .module-badge.pro{background:rgba(245,166,35,0.12);color:var(--amber);}
+        /* STEPS */
         .steps{display:grid;grid-template-columns:1fr;gap:1px;background:var(--border);border-radius:16px;overflow:hidden;border:1px solid var(--border);}
         @media(min-width:600px){.steps{grid-template-columns:repeat(2,1fr);}}
         @media(min-width:900px){.steps{grid-template-columns:repeat(4,1fr);}}
         .step{background:var(--card);padding:1.5rem;}
-        .step-num{font-family:'Space Mono',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;color:var(--purple);margin-bottom:1rem;opacity:0.8;}
+        .step-num{font-family:'Syne',sans-serif;font-size:0.65rem;font-weight:700;letter-spacing:0.1em;color:var(--purple);margin-bottom:1rem;opacity:0.8;}
         .step-icon{width:44px;height:44px;background:rgba(139,92,246,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--purple);margin-bottom:1rem;}
         .step h3{font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;color:var(--text);}
         .step p{font-size:0.82rem;color:var(--sub);line-height:1.5;}
+        /* SIGNALS */
         .signals-intro{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;}
-        .signals-number{font-family:'Space Mono',monospace;font-size:3.5rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+        .signals-number{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
         .signals-label{color:var(--sub);font-size:0.95rem;line-height:1.5;}
         .signals-label strong{color:var(--text);display:block;font-size:1.1rem;}
         .signals-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
@@ -118,15 +138,16 @@
         .signal-chip{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;font-size:0.82rem;font-weight:600;transition:border-color 0.2s;}
         .signal-chip:hover{border-color:var(--border2);}
         .signal-chip i{color:var(--purple);font-size:0.85rem;width:16px;flex-shrink:0;}
-        .signal-chip .weight{margin-left:auto;font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--cyan);font-weight:700;}
+        .signal-chip .weight{margin-left:auto;font-family:'Syne',monospace;font-size:0.7rem;color:var(--cyan);font-weight:700;}
         .score-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-top:3rem;}
-        .score-title{font-size:0.85rem;font-weight:700;color:var(--sub);margin-bottom:1.5rem;font-family:'Space Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;}
+        .score-title{font-size:0.85rem;font-weight:700;color:var(--sub);margin-bottom:1.5rem;font-family:'Syne',sans-serif;letter-spacing:0.1em;text-transform:uppercase;}
         .score-bars{display:flex;flex-direction:column;gap:12px;}
         .score-row{display:flex;align-items:center;gap:12px;}
         .score-label{font-size:0.8rem;color:var(--sub);width:200px;flex-shrink:0;}
         .score-bar-track{flex:1;height:6px;background:var(--border);border-radius:10px;overflow:hidden;}
         .score-bar-fill{height:100%;border-radius:10px;background:var(--grad);transition:width 1.5s cubic-bezier(0.16,1,0.3,1);width:0%;}
-        .score-pct{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--cyan);width:36px;text-align:right;flex-shrink:0;}
+        .score-pct{font-family:'Syne',sans-serif;font-size:0.75rem;color:var(--cyan);width:36px;text-align:right;flex-shrink:0;}
+        /* TECH */
         .tech-grid{display:grid;grid-template-columns:1fr;gap:1rem;}
         @media(min-width:600px){.tech-grid{grid-template-columns:repeat(2,1fr);}}
         @media(min-width:900px){.tech-grid{grid-template-columns:repeat(3,1fr);}}
@@ -138,25 +159,54 @@
         .tech-icon.blue{background:rgba(59,130,246,0.15);color:var(--blue);}
         .tech-icon.cyan{background:rgba(6,182,212,0.15);color:var(--cyan);}
         .tech-icon.green{background:rgba(16,185,129,0.15);color:var(--green);}
+        .tech-icon.amber{background:rgba(245,166,35,0.15);color:var(--amber);}
         .tech-card h4{font-size:0.9rem;font-weight:700;}
-        .tech-card .tech-tag{font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--sub);font-weight:400;}
+        .tech-card .tech-tag{font-family:'Syne',sans-serif;font-size:0.65rem;color:var(--sub);font-weight:400;}
         .tech-card p{font-size:0.8rem;color:var(--sub);line-height:1.5;}
         .gdpr-box{display:flex;gap:1rem;align-items:flex-start;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:1.2rem 1.5rem;margin-top:2rem;}
         .gdpr-box i{color:var(--green);font-size:1.2rem;flex-shrink:0;margin-top:2px;}
         .gdpr-box p{font-size:0.85rem;color:var(--sub);line-height:1.6;margin:0;}
         .gdpr-box strong{color:var(--text);}
         .divider{position:relative;z-index:1;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:0 20px;}
+        /* OSLO MEET SECTION */
+        .oslo-box{background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:20px;padding:2.5rem;margin-top:2rem;display:flex;gap:2rem;align-items:flex-start;flex-wrap:wrap;}
+        .oslo-box-icon{width:56px;height:56px;background:rgba(59,130,246,0.12);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;}
+        .oslo-box-content h3{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+        .oslo-box-content p{font-size:0.88rem;color:var(--sub);line-height:1.7;margin-bottom:12px;}
+        .oslo-box-content a{display:inline-flex;align-items:center;gap:6px;font-size:0.85rem;font-weight:700;color:var(--blue);text-decoration:none;transition:opacity .2s;}
+        .oslo-box-content a:hover{opacity:.75;}
+        /* CTA standard */
         .cta-wrap{position:relative;z-index:1;padding:80px 20px;text-align:center;}
         .cta-box{max-width:700px;margin:0 auto;background:var(--card);border:1px solid rgba(139,92,246,0.25);border-radius:24px;padding:3rem 2rem;position:relative;overflow:hidden;}
         .cta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);}
         .cta-box h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;letter-spacing:-0.03em;margin-bottom:0.8rem;}
         .cta-box p{color:var(--sub);margin-bottom:2rem;font-size:0.95rem;}
         .cta-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+        /* ── MIMBAI CTA SECTION — amber ── */
+        .mimbai-cta{position:relative;z-index:1;padding:80px 20px;}
+        .mimbai-cta-inner{max-width:900px;margin:0 auto;background:linear-gradient(135deg,rgba(245,166,35,0.12),rgba(232,148,15,0.06));border:1.5px solid rgba(245,166,35,0.35);border-radius:28px;padding:3.5rem 2.5rem;position:relative;overflow:hidden;text-align:center;}
+        .mimbai-cta-inner::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad-amber);}
+        .mimbai-cta-inner::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(245,166,35,0.08) 0%,transparent 60%);pointer-events:none;}
+        .mimbai-cta-logo{display:inline-flex;align-items:center;gap:12px;margin-bottom:1.5rem;}
+        .mimbai-cta-mark{width:52px;height:52px;background:var(--grad-amber);border-radius:14px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:#fff;box-shadow:0 4px 20px rgba(245,166,35,0.35);}
+        .mimbai-cta-name{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;background:var(--grad-amber);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .mimbai-cta-inner h2{font-size:clamp(1.4rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-0.03em;margin-bottom:1rem;color:var(--text);}
+        .mimbai-cta-inner p{color:var(--sub);font-size:1rem;line-height:1.7;max-width:580px;margin:0 auto 2rem;}
+        .mimbai-modules-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:2.5rem;}
+        .mimbai-mod-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.2);border-radius:20px;padding:5px 14px;font-size:0.8rem;font-weight:600;color:var(--amber);}
+        .mimbai-cta-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+        .btn-amber-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--grad-amber);color:#fff;border-radius:10px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 20px rgba(245,166,35,0.3);}
+        .btn-amber-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(245,166,35,0.45);}
+        .btn-amber-ghost{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;border:1.5px solid rgba(245,166,35,0.4);color:var(--amber);border-radius:10px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:all 0.2s;}
+        .btn-amber-ghost:hover{background:rgba(245,166,35,0.08);border-color:var(--amber);}
+        .mimbai-cta-note{margin-top:1.5rem;font-size:0.78rem;color:var(--muted);}
+        .mimbai-cta-note a{color:rgba(245,166,35,0.6);text-decoration:none;}
+        /* FOOTER */
         footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2rem 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;max-width:1100px;margin:0 auto;color:var(--muted);font-size:0.8rem;}
         footer a{color:var(--muted);text-decoration:none;transition:color 0.2s;}
         footer a:hover{color:var(--purple);}
-        .footer-brand-sm{font-family:'Space Mono',monospace;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-        @media(max-width:640px){nav{padding:0.8rem 1rem;}.nav-cta span{display:none;}.score-label{width:120px;font-size:0.72rem;}}
+        .footer-brand-sm{font-family:'Syne',sans-serif;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        @media(max-width:640px){nav{padding:0.8rem 1rem;}.nav-cta span{display:none;}.score-label{width:120px;font-size:0.72rem;}.mimbai-cta-inner{padding:2rem 1.2rem;}}
     </style>
 </head>
 <body>
@@ -165,12 +215,12 @@
     <a href="#" class="nav-brand">
         <span class="nav-logo">MIMBAI</span>
         <div class="nav-sep"></div>
-        <span class="nav-tag">by Oslo Meet</span>
+        <span class="nav-tag" data-i18n="navTag">by Digital Solutions</span>
     </a>
     <div class="nav-right">
-        <a href="https://oslomeet.org/start.html" class="nav-cta">
+        <a href="https://mimbai.com" class="nav-cta nav-cta-amber" target="_blank">
             <i class="fas fa-rocket"></i>
-            <span data-i18n="navCta">Try MIMBAI</span>
+            <span data-i18n="navCta">Try MIMBAI Free</span>
         </a>
         <div class="lang-sel">
             <i class="fas fa-globe"></i>
@@ -188,19 +238,19 @@
     <div class="hero-glow"></div>
     <div class="hero-eyebrow">
         <div class="dot"></div>
-        <span data-i18n="heroEyebrow">AI Matching Engine · Oslo Meet</span>
+        <span data-i18n="heroEyebrow">AI Platform for Smart Organizations · Digital Solutions</span>
     </div>
     <h1>
         <span class="word-mimbai">MIMBAI</span>
-        <span class="word-sub" data-i18n="heroSub">Matching Intelligence for Modern Business & AI</span>
+        <span class="word-sub" data-i18n="heroSub">Multipurpose Intelligent Modular Business AI</span>
     </h1>
-    <p class="hero-desc" data-i18n="heroDesc">MIMBAI is a multipurpose AI platform developed by <strong>Digital Solutions</strong>. Its B2B Matching Engine powers <strong>Oslo Meet</strong>, connecting companies across Europe, Brazil, China and the Nordic ecosystem — and beyond.</p>
+    <p class="hero-desc" data-i18n="heroDesc">MIMBAI is an AI platform for smart organizations, built by <strong>Digital Solutions</strong> and powered by <strong>Anthropic Claude</strong>. Oslo Meet uses MIMBAI's intelligence to connect businesses across Europe, Brazil and the Nordic ecosystem.</p>
     <div class="hero-actions">
-        <a href="https://oslomeet.org/how-it-works.html" class="btn-primary">
-            <i class="fas fa-brain"></i> <span data-i18n="heroBtn1">See How It Works</span>
+        <a href="https://mimbai.com" class="btn-primary btn-primary-amber" target="_blank">
+            <i class="fas fa-brain"></i> <span data-i18n="heroBtn1">Try MIMBAI Free</span>
         </a>
         <a href="https://oslomeet.org/join.html" class="btn-ghost">
-            <i class="fas fa-building"></i> <span data-i18n="heroBtn2">Register Your Company</span>
+            <i class="fas fa-building"></i> <span data-i18n="heroBtn2">Join Oslo Meet</span>
         </a>
     </div>
     <div class="scroll-hint">
@@ -213,14 +263,14 @@
 
 <!-- WHAT IS MIMBAI -->
 <div class="section">
-    <div class="section-label" data-i18n="defLabel">Definition</div>
-    <h2 class="section-title" data-i18n="whatTitle">What is <span class="accent">MIMBAI?</span></h2>
-    <p class="section-sub" data-i18n="whatSub">MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — a multipurpose AI platform by Digital Solutions, used as Oslo Meet's B2B matching engine and deployable for a wide range of AI-powered solutions.</p>
+    <div class="section-label" data-i18n="defLabel">Platform</div>
+    <h2 class="section-title">What is <span class="accent-amber">MIMBAI?</span></h2>
+    <p class="section-sub" data-i18n="whatSub">MIMBAI stands for <strong>Multipurpose Intelligent Modular Business AI</strong> — an independent AI platform by Digital Solutions with 7 specialized modules, a project dashboard and AI-generated downloads.</p>
     <div class="what-grid">
         <div class="what-text">
-            <p data-i18n="whatP1">MIMBAI is a proprietary AI platform built by <strong>Digital Solutions</strong>. It is not limited to matching — it is an <strong>intelligent AI layer</strong> deployable across multiple domains: B2B matching, content generation, semantic search, recommendations, and custom AI workflows.</p>
-            <p data-i18n="whatP2">Every company that joins Oslo Meet is analyzed by MIMBAI. Its profile is converted into <strong>high-dimensional semantic vectors</strong>, compared against other companies, and assigned a <strong>compatibility score</strong> based on industry fit, shared goals, technology synergies, and market alignment.</p>
-            <p data-i18n="whatP3">MIMBAI runs continuously in the background — learning from interactions, refining scores, and surfacing new matches as the Oslo Meet network grows.</p>
+            <p data-i18n="whatP1">MIMBAI is a <strong>standalone AI platform</strong> built by Digital Solutions and powered by Anthropic Claude. It delivers specialized intelligence across 7 modules: Project Generator, Excel & Reports, Finance & ROI, HR & People, Presentations, Content Engine and RegTech.</p>
+            <p data-i18n="whatP2"><strong>Oslo Meet uses MIMBAI</strong> as its B2B matching intelligence layer — analyzing company profiles, computing compatibility scores and surfacing high-confidence business connections across the Nordic ecosystem and beyond.</p>
+            <p data-i18n="whatP3">Beyond matching, MIMBAI generates complete project dashboards with code <code style="background:rgba(245,166,35,0.1);color:var(--amber);padding:2px 8px;border-radius:4px;font-size:0.85em;">PRJ-2026-GEN-F3K9</code>, structured documents and exports — ready to download as Excel, PDF or PowerPoint.</p>
         </div>
         <div class="what-card">
             <div class="brand-stack">
@@ -228,15 +278,7 @@
                     <i class="fas fa-globe"></i>
                     <div>
                         <span data-i18n="brandParent">Digital Solutions</span>
-                        <span class="label" data-i18n="brandParentLabel">Parent company</span>
-                    </div>
-                </div>
-                <div class="arrow-down">↓</div>
-                <div class="brand-item platform">
-                    <i class="fas fa-handshake"></i>
-                    <div>
-                        <span>Oslo Meet</span>
-                        <span class="label" data-i18n="brandPlatformLabel">B2B platform — oslomeet.org</span>
+                        <span class="label" data-i18n="brandParentLabel">Builder & owner · ds.barros.no</span>
                     </div>
                 </div>
                 <div class="arrow-down">↓</div>
@@ -244,7 +286,15 @@
                     <i class="fas fa-brain"></i>
                     <div>
                         <span>MIMBAI</span>
-                        <span class="label" data-i18n="brandEngineLabel">AI platform — mimbai.com</span>
+                        <span class="label" data-i18n="brandEngineLabel">AI Platform · mimbai.com</span>
+                    </div>
+                </div>
+                <div class="arrow-down">↓ uses</div>
+                <div class="brand-item platform">
+                    <i class="fas fa-handshake"></i>
+                    <div>
+                        <span>Oslo Meet</span>
+                        <span class="label" data-i18n="brandPlatformLabel">B2B platform · oslomeet.org</span>
                     </div>
                 </div>
             </div>
@@ -254,11 +304,70 @@
 
 <div class="divider"></div>
 
-<!-- HOW IT WORKS -->
+<!-- 7 MODULES -->
+<div class="section">
+    <div class="section-label" data-i18n="modulesLabel">Modules</div>
+    <h2 class="section-title">7 <span class="accent-amber" data-i18n="modulesTitle">AI Modules</span></h2>
+    <p class="section-sub" data-i18n="modulesSub">Each module has a dedicated AI system, specialized prompts and generates structured output — text, dashboards, Excel files, PDFs and PowerPoint presentations.</p>
+    <div class="modules-grid">
+        <div class="module-card featured">
+            <span class="module-icon">📋</span>
+            <div class="module-name" data-i18n="mod0name">Project Generator</div>
+            <div class="module-desc" data-i18n="mod0desc">Full project dashboard with timeline, budget, KPIs and risk matrix. Generates code PRJ-.</div>
+            <span class="module-badge free">FREE</span>
+        </div>
+        <div class="module-card">
+            <span class="module-icon">🧠</span>
+            <div class="module-name" data-i18n="mod1name">General Assistant</div>
+            <div class="module-desc" data-i18n="mod1desc">Base Claude — professional Q&A for any business question.</div>
+            <span class="module-badge free">FREE</span>
+        </div>
+        <div class="module-card">
+            <span class="module-icon">📊</span>
+            <div class="module-name" data-i18n="mod2name">Excel & Reports</div>
+            <div class="module-desc" data-i18n="mod2desc">KPI dashboards, sales reports and spreadsheet-ready data.</div>
+            <span class="module-badge pro">PRO</span>
+        </div>
+        <div class="module-card">
+            <span class="module-icon">💰</span>
+            <div class="module-name" data-i18n="mod3name">Finance & ROI</div>
+            <div class="module-desc" data-i18n="mod3desc">ROI calculator, triple bottom line, financial projections.</div>
+            <span class="module-badge pro">PRO</span>
+        </div>
+        <div class="module-card">
+            <span class="module-icon">👥</span>
+            <div class="module-name" data-i18n="mod4name">HR & People</div>
+            <div class="module-desc" data-i18n="mod4desc">Employee evaluations, onboarding plans, job descriptions.</div>
+            <span class="module-badge pro">PRO</span>
+        </div>
+        <div class="module-card">
+            <span class="module-icon">🖥</span>
+            <div class="module-name" data-i18n="mod5name">Presentations</div>
+            <div class="module-desc" data-i18n="mod5desc">Slide decks, pitch presentations and board reports.</div>
+            <span class="module-badge pro">PRO</span>
+        </div>
+        <div class="module-card">
+            <span class="module-icon">✍️</span>
+            <div class="module-name" data-i18n="mod6name">Content Engine</div>
+            <div class="module-desc" data-i18n="mod6desc">Blog posts, social media copy and marketing content.</div>
+            <span class="module-badge pro">PRO</span>
+        </div>
+        <div class="module-card">
+            <span class="module-icon">⚖️</span>
+            <div class="module-name" data-i18n="mod7name">RegTech</div>
+            <div class="module-desc" data-i18n="mod7desc">GDPR, Finanstilsynet and EU regulatory compliance.</div>
+            <span class="module-badge pro">PRO</span>
+        </div>
+    </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- HOW OSLO MEET USES MIMBAI -->
 <div class="section">
     <div class="section-label" data-i18n="processLabel">Process</div>
-    <h2 class="section-title"><span data-i18n="processTitle">How MIMBAI Works</span></h2>
-    <p class="section-sub" data-i18n="processSub">A 4-step pipeline from raw company data to high-confidence match recommendations.</p>
+    <h2 class="section-title"><span data-i18n="processTitle">How Oslo Meet Uses MIMBAI</span></h2>
+    <p class="section-sub" data-i18n="processSub">A 4-step pipeline from raw company data to high-confidence business match recommendations.</p>
     <div class="steps">
         <div class="step">
             <div class="step-num">// 01</div>
@@ -269,8 +378,8 @@
         <div class="step">
             <div class="step-num">// 02</div>
             <div class="step-icon"><i class="fas fa-project-diagram"></i></div>
-            <h3 data-i18n="step2Title">Embedding Generation</h3>
-            <p data-i18n="step2Desc">Text fields are converted into high-dimensional embeddings using the OpenAI API. Each company becomes a point in a shared semantic space.</p>
+            <h3 data-i18n="step2Title">AI Analysis</h3>
+            <p data-i18n="step2Desc">MIMBAI analyzes each company profile using Anthropic Claude, extracting intent, strategic fit and market positioning into structured intelligence.</p>
         </div>
         <div class="step">
             <div class="step-num">// 03</div>
@@ -282,7 +391,16 @@
             <div class="step-num">// 04</div>
             <div class="step-icon"><i class="fas fa-paper-plane"></i></div>
             <h3 data-i18n="step4Title">Match Delivery</h3>
-            <p data-i18n="step4Desc">Top matches are surfaced in each company's dashboard feed. The AI Concierge can draft personalized introductions based on match context.</p>
+            <p data-i18n="step4Desc">Top matches surface in each company's Oslo Meet dashboard. MIMBAI can draft personalized introductions based on match context and shared goals.</p>
+        </div>
+    </div>
+
+    <div class="oslo-box">
+        <div class="oslo-box-icon">🤝</div>
+        <div class="oslo-box-content">
+            <h3 data-i18n="osloTitle">Oslo Meet — Powered by MIMBAI</h3>
+            <p data-i18n="osloDesc">Oslo Meet is a B2B matching platform connecting companies across Europe, Brazil, China and the Nordic ecosystem. Every match on Oslo Meet is scored by MIMBAI — ensuring high-confidence, strategic business connections rather than simple keyword matches.</p>
+            <a href="https://oslomeet.org" target="_blank"><i class="fas fa-arrow-right"></i> <span data-i18n="osloLink">Visit oslomeet.org</span></a>
         </div>
     </div>
 </div>
@@ -293,7 +411,7 @@
 <div class="section">
     <div class="section-label" data-i18n="signalsLabel">Signals</div>
     <h2 class="section-title">50+ <span class="accent" data-i18n="signalsTitle">Compatibility Signals</span></h2>
-    <p class="section-sub" data-i18n="signalsSub">MIMBAI goes far beyond keyword matching. It evaluates strategic, operational, and cultural dimensions of business fit.</p>
+    <p class="section-sub" data-i18n="signalsSub">MIMBAI goes far beyond keyword matching. It evaluates strategic, operational and cultural dimensions of business fit.</p>
     <div class="signals-intro">
         <div class="signals-number">50+</div>
         <div class="signals-label">
@@ -333,60 +451,60 @@
 <div class="section">
     <div class="section-label" data-i18n="archLabel">Architecture</div>
     <h2 class="section-title"><span class="accent" data-i18n="archTitle">Technical Foundation</span></h2>
-    <p class="section-sub" data-i18n="archSub">MIMBAI is built on a modern, GDPR-compliant stack designed for performance, privacy, and scalability.</p>
+    <p class="section-sub" data-i18n="archSub">MIMBAI is built on a modern, GDPR-compliant stack designed for performance, privacy and scalability.</p>
     <div class="tech-grid">
         <div class="tech-card">
             <div class="tech-card-header">
-                <div class="tech-icon purple"><i class="fas fa-brain"></i></div>
-                <div><h4 data-i18n="tech1Title">Semantic Embeddings</h4><span class="tech-tag">OpenAI API</span></div>
+                <div class="tech-icon amber"><i class="fas fa-brain"></i></div>
+                <div><h4 data-i18n="tech1Title">Anthropic Claude</h4><span class="tech-tag">Sonnet 4 · Haiku 4.5</span></div>
             </div>
-            <p data-i18n="tech1Desc">Company profiles are converted into high-dimensional vector representations using OpenAI's embedding models, enabling deep semantic comparison beyond keyword matching.</p>
+            <p data-i18n="tech1Desc">MIMBAI is powered by Anthropic Claude — one of the most capable and safe AI models available. Sonnet for complex generation, Haiku for fast responses.</p>
         </div>
         <div class="tech-card">
             <div class="tech-card-header">
                 <div class="tech-icon blue"><i class="fas fa-database"></i></div>
-                <div><h4 data-i18n="tech2Title">Vector Storage</h4><span class="tech-tag">Supabase + pgvector</span></div>
+                <div><h4 data-i18n="tech2Title">MySQL · Domeneshop</h4><span class="tech-tag">Norway · GDPR compliant</span></div>
             </div>
-            <p data-i18n="tech2Desc">All embeddings and company data are stored in a GDPR-compliant, EU-hosted Supabase database with Row-Level Security enforcing strict data access policies.</p>
+            <p data-i18n="tech2Desc">All project data, user sessions and chat history stored in a GDPR-compliant MySQL database hosted in Norway, with strict access controls per user.</p>
         </div>
         <div class="tech-card">
             <div class="tech-card-header">
                 <div class="tech-icon cyan"><i class="fas fa-calculator"></i></div>
-                <div><h4 data-i18n="tech3Title">Scoring Engine</h4><span class="tech-tag">Rule-based + ML</span></div>
+                <div><h4 data-i18n="tech3Title">Project Dashboard</h4><span class="tech-tag">PRJ- · ISO code</span></div>
             </div>
-            <p data-i18n="tech3Desc">A hybrid scoring engine combines cosine similarity on embeddings with rule-based weights for sector-specific signals, producing a single interpretable compatibility score.</p>
+            <p data-i18n="tech3Desc">Every generation creates a structured dashboard with ISO project code, phases, KPIs, triple constraint and exports — Excel, PDF and PowerPoint.</p>
         </div>
         <div class="tech-card">
             <div class="tech-card-header">
                 <div class="tech-icon green"><i class="fas fa-shield-alt"></i></div>
                 <div><h4 data-i18n="tech4Title">GDPR Compliance</h4><span class="tech-tag">EU/EEA standard</span></div>
             </div>
-            <p data-i18n="tech4Desc">Data is encrypted at rest and in transit. Users can opt out of AI processing, request human review of decisions, or export/delete their data at any time.</p>
+            <p data-i18n="tech4Desc">Data is encrypted at rest and in transit. Users can export or delete all their data at any time. No data is ever used to train AI models.</p>
         </div>
         <div class="tech-card">
             <div class="tech-card-header">
-                <div class="tech-icon purple"><i class="fas fa-bolt"></i></div>
-                <div><h4 data-i18n="tech5Title">Realtime Updates</h4><span class="tech-tag">Supabase Realtime</span></div>
+                <div class="tech-icon purple"><i class="fas fa-language"></i></div>
+                <div><h4 data-i18n="tech5Title">4 Languages</h4><span class="tech-tag">EN · NO · PT · ES</span></div>
             </div>
-            <p data-i18n="tech5Desc">Match feeds and messages update in real time via WebSocket subscriptions. New companies trigger automatic re-scoring across the existing member base.</p>
+            <p data-i18n="tech5Desc">Full interface and AI responses in English, Norwegian, Portuguese and Spanish. Language is detected automatically from the browser.</p>
         </div>
         <div class="tech-card">
             <div class="tech-card-header">
-                <div class="tech-icon blue"><i class="fas fa-robot"></i></div>
-                <div><h4 data-i18n="tech6Title">AI Concierge</h4><span class="tech-tag">LLM-powered drafts</span></div>
+                <div class="tech-icon blue"><i class="fas fa-file-export"></i></div>
+                <div><h4 data-i18n="tech6Title">Export & Present</h4><span class="tech-tag">Excel · PDF · PPTX · Browser</span></div>
             </div>
-            <p data-i18n="tech6Desc">Once a high-confidence match is found, the AI Concierge generates a personalized introduction draft. Users always approve before any message is sent.</p>
+            <p data-i18n="tech6Desc">All generated dashboards can be exported as Excel workbooks, executive PDFs or PowerPoint presentations — and presented fullscreen in the browser.</p>
         </div>
     </div>
     <div class="gdpr-box">
         <i class="fas fa-lock"></i>
-        <p data-i18n="gdprText"><strong>Privacy by design.</strong> Your business data is processed only for matching within Oslo Meet. MIMBAI never uses company profiles to train public AI models, never sells data to third parties, and is fully auditable by registered members under GDPR Article 22.</p>
+        <p data-i18n="gdprText"><strong>Privacy by design.</strong> Your data is processed only within your MIMBAI account. MIMBAI never uses your content to train public AI models, never sells data to third parties, and is fully auditable under GDPR Article 22. Hosted in Norway.</p>
     </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- CTA -->
+<!-- OSLO MEET CTA -->
 <div class="cta-wrap">
     <div class="cta-box">
         <h2 data-i18n="ctaTitle">Your company deserves better matches.</h2>
@@ -402,191 +520,280 @@
     </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ── MIMBAI FEATURED CTA ── -->
+<div class="mimbai-cta">
+    <div class="mimbai-cta-inner">
+        <div class="mimbai-cta-logo">
+            <div class="mimbai-cta-mark">M</div>
+            <span class="mimbai-cta-name">MIMBAI</span>
+        </div>
+        <h2 data-i18n="mimbaiCtaTitle">The full AI platform is waiting for you.</h2>
+        <p data-i18n="mimbaiCtaDesc">Oslo Meet uses MIMBAI to match businesses — but MIMBAI does much more. Generate projects, financial analysis, HR documents, presentations and content with AI. Free to start.</p>
+        <div class="mimbai-modules-row">
+            <span class="mimbai-mod-chip">📋 Project Generator</span>
+            <span class="mimbai-mod-chip">📊 Excel & Reports</span>
+            <span class="mimbai-mod-chip">💰 Finance & ROI</span>
+            <span class="mimbai-mod-chip">👥 HR & People</span>
+            <span class="mimbai-mod-chip">🖥 Presentations</span>
+            <span class="mimbai-mod-chip">✍️ Content Engine</span>
+            <span class="mimbai-mod-chip">⚖️ RegTech</span>
+        </div>
+        <div class="mimbai-cta-btns">
+            <a href="https://mimbai.com" class="btn-amber-primary" target="_blank">
+                <i class="fas fa-brain"></i> <span data-i18n="mimbaiCtaBtn1">Try MIMBAI Free — mimbai.com</span>
+            </a>
+            <a href="https://mimbai.com/pricing.html" class="btn-amber-ghost" target="_blank">
+                <i class="fas fa-star"></i> <span data-i18n="mimbaiCtaBtn2">See Plans & Pricing</span>
+            </a>
+        </div>
+        <div class="mimbai-cta-note">
+            <span data-i18n="mimbaiCtaNote">Free plan available · No credit card required · Built by</span>
+            <a href="https://ds.barros.no" target="_blank"> Digital Solutions</a>
+        </div>
+    </div>
+</div>
+
 <footer>
     <div>
         <span class="footer-brand-sm">MIMBAI</span>
-        <span style="margin-left:8px" data-i18n="footerTag">— AI Matching Engine by Oslo Meet</span>
+        <span style="margin-left:8px" data-i18n="footerTag">— AI Platform by Digital Solutions</span>
     </div>
     <div style="display:flex;gap:1.5rem;flex-wrap:wrap">
+        <a href="https://mimbai.com" target="_blank">mimbai.com</a>
         <a href="https://oslomeet.org">oslomeet.org</a>
-        <a href="https://oslomeet.org/privacy-policy.html" data-i18n="footerPrivacy">Privacy</a>
-        <a href="https://oslomeet.org/terms-of-use.html" data-i18n="footerTerms">Terms</a>
-        <a href="https://oslomeet.org/contact.html" data-i18n="footerContact">Contact</a>
+        <a href="https://mimbai.com/privacy.html" data-i18n="footerPrivacy">Privacy</a>
+        <a href="https://mimbai.com/terms.html" data-i18n="footerTerms">Terms</a>
+        <a href="https://mimbai.com/contact.html" data-i18n="footerContact">Contact</a>
     </div>
-    <div>© 2026 Oslo Meet · <a href="https://app-algoritmo.github.io/digital-solutions" style="color:#fbbf24;text-decoration:none;"><i class="fas fa-code"></i> Digital Solutions</a></div>
+    <div>© 2026 Digital Solutions · <a href="https://ds.barros.no" target="_blank" style="color:#f5a623;text-decoration:none;"><i class="fas fa-code"></i> ds.barros.no</a></div>
 </footer>
 
 <script>
 const i18n = {
-    en: {
-        navCta:"Try MIMBAI",
-        heroEyebrow:"AI Matching Engine · Oslo Meet",
-        heroSub:"Matching Intelligence for Modern Business & AI",
-        heroDesc:"MIMBAI is a multipurpose AI platform developed by <strong>Digital Solutions</strong>. Its B2B Matching Engine powers <strong>Oslo Meet</strong>, connecting companies across Europe, Brazil, China and the Nordic ecosystem — and beyond.",
-        heroBtn1:"See How It Works", heroBtn2:"Register Your Company",
-        scrollHint:"Explore",
-        defLabel:"Definition",
-        whatTitle:"What is <span class='accent'>MIMBAI?</span>",
-        whatSub:"MIMBAI stands for <strong>Matching Intelligence for Modern Business & AI</strong> — a multipurpose AI platform by Digital Solutions, used as Oslo Meet's B2B matching engine and deployable for a wide range of AI-powered solutions.",
-        whatP1:"MIMBAI is a proprietary AI platform built by <strong>Digital Solutions</strong>. It is not limited to matching — it is an <strong>intelligent AI layer</strong> deployable across multiple domains: B2B matching, content generation, semantic search, recommendations, and custom AI workflows.",
-        whatP2:"Every company that joins Oslo Meet is analyzed by MIMBAI. Its profile is converted into <strong>high-dimensional semantic vectors</strong>, compared against other companies, and assigned a <strong>compatibility score</strong> based on industry fit, shared goals, technology synergies, and market alignment.",
-        whatP3:"MIMBAI runs continuously in the background — learning from interactions, refining scores, and surfacing new matches as the Oslo Meet network grows.",
-        brandParent:"Digital Solutions", brandParentLabel:"Parent company",
-        brandPlatformLabel:"B2B platform — oslomeet.org",
-        brandEngineLabel:"AI platform — mimbai.com",
-        processLabel:"Process", processTitle:"How MIMBAI Works",
-        processSub:"A 4-step pipeline from raw company data to high-confidence match recommendations.",
-        step1Title:"Profile Ingestion", step1Desc:"Company data — sector, goals, technologies, markets, collaboration preferences — is structured into semantic tags and normalized business vectors.",
-        step2Title:"Embedding Generation", step2Desc:"Text fields are converted into high-dimensional embeddings using the OpenAI API. Each company becomes a point in a shared semantic space.",
-        step3Title:"Compatibility Scoring", step3Desc:"MIMBAI computes a 0–100% compatibility score using weighted signals: industry fit, strategic goals, tech synergy, market overlap, and collaboration intent.",
-        step4Title:"Match Delivery", step4Desc:"Top matches are surfaced in each company's dashboard feed. The AI Concierge can draft personalized introductions based on match context.",
-        signalsLabel:"Signals", signalsTitle:"Compatibility Signals",
-        signalsSub:"MIMBAI goes far beyond keyword matching. It evaluates strategic, operational, and cultural dimensions of business fit.",
-        signalsStrong:"Business signals analyzed", signalsCycle:"per company pair, per match cycle",
-        sig1:"Industry complementarity", sig2:"Strategic goals alignment", sig3:"Market overlap",
-        sig4:"Tech stack synergy", sig5:"Collaboration preferences", sig6:"Geographic focus",
-        sig7:"Growth stage", sig8:"Company size fit", sig9:"Sustainability values",
-        sig10:"Language & culture", sig11:"Ecosystem position", sig12:"Semantic tag overlap",
-        scoreTitle:"// Sample match score breakdown",
-        archLabel:"Architecture", archTitle:"Technical Foundation",
-        archSub:"MIMBAI is built on a modern, GDPR-compliant stack designed for performance, privacy, and scalability.",
-        tech1Title:"Semantic Embeddings", tech1Desc:"Company profiles are converted into high-dimensional vector representations using OpenAI's embedding models, enabling deep semantic comparison beyond keyword matching.",
-        tech2Title:"Vector Storage", tech2Desc:"All embeddings and company data are stored in a GDPR-compliant, EU-hosted Supabase database with Row-Level Security enforcing strict data access policies.",
-        tech3Title:"Scoring Engine", tech3Desc:"A hybrid scoring engine combines cosine similarity on embeddings with rule-based weights for sector-specific signals, producing a single interpretable compatibility score.",
-        tech4Title:"GDPR Compliance", tech4Desc:"Data is encrypted at rest and in transit. Users can opt out of AI processing, request human review of decisions, or export/delete their data at any time.",
-        tech5Title:"Realtime Updates", tech5Desc:"Match feeds and messages update in real time via WebSocket subscriptions. New companies trigger automatic re-scoring across the existing member base.",
-        tech6Title:"AI Concierge", tech6Desc:"Once a high-confidence match is found, the AI Concierge generates a personalized introduction draft. Users always approve before any message is sent.",
-        gdprText:"<strong>Privacy by design.</strong> Your business data is processed only for matching within Oslo Meet. MIMBAI never uses company profiles to train public AI models, never sells data to third parties, and is fully auditable by registered members under GDPR Article 22.",
-        ctaTitle:"Your company deserves better matches.", ctaDesc:"Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.",
-        ctaBtn1:"Register Your Company", ctaBtn2:"Full Platform Details",
-        footerTag:"— AI Matching Engine by Oslo Meet", footerPrivacy:"Privacy", footerTerms:"Terms", footerContact:"Contact",     },
-    no: {
-        navCta:"Prøv MIMBAI",
-        heroEyebrow:"AI-matchingsmotor · Oslo Meet",
-        heroSub:"Matching Intelligence for Modern Business & AI",
-        heroDesc:"MIMBAI er en allsidig AI-plattform utviklet av <strong>Digital Solutions</strong>. B2B Matching Engine driver <strong>Oslo Meet</strong> og kobler selskaper i Europa, Brasil, Kina og det nordiske økosystemet — og videre.",
-        heroBtn1:"Se hvordan det fungerer", heroBtn2:"Registrer din bedrift",
-        scrollHint:"Utforsk",
-        defLabel:"Definisjon",
-        whatTitle:"Hva er <span class='accent'>MIMBAI?</span>",
-        whatSub:"MIMBAI står for <strong>Matching Intelligence for Modern Business & AI</strong> — en allsidig AI-plattform av Digital Solutions, brukt som Oslo Meets B2B-matchingsmotor og tilgjengelig for en rekke AI-drevne løsninger.",
-        whatP1:"MIMBAI er en proprietær AI-plattform utviklet av <strong>Digital Solutions</strong>. Den er ikke begrenset til matching — det er et <strong>intelligent AI-lag</strong> som kan brukes på tvers av domener: B2B-matching, innholdsgenerering, semantisk søk, anbefalinger og skreddersydde AI-arbeidsflyter.",
-        whatP2:"Hvert selskap som blir med i Oslo Meet analyseres av MIMBAI. Profilen konverteres til <strong>høydimensjonale semantiske vektorer</strong>, sammenlignes med andre selskaper og tildeles en <strong>kompatibilitetsscore</strong> basert på bransjefitness, felles mål, teknologisynergier og markedsaligment.",
-        whatP3:"MIMBAI kjører kontinuerlig i bakgrunnen — lærer av interaksjoner, forfiner scorer og avdekker nye matcher etter hvert som Oslo Meet-nettverket vokser.",
-        brandParent:"Digital Solutions", brandParentLabel:"Morselskap",
-        brandPlatformLabel:"B2B-plattform — oslomeet.org",
-        brandEngineLabel:"AI platform — mimbai.com",
-        processLabel:"Prosess", processTitle:"Slik fungerer MIMBAI",
-        processSub:"En 4-trinns pipeline fra rådata til høy-konfidensielle matchanbefalinger.",
-        step1Title:"Profilinnhenting", step1Desc:"Bedriftsdata — sektor, mål, teknologier, markeder, samarbeidspreferanser — struktureres til semantiske tagger og normaliserte forretningsvektorer.",
-        step2Title:"Embedding-generering", step2Desc:"Tekstfelt konverteres til høydimensjonale embeddings ved hjelp av OpenAI API. Hvert selskap blir et punkt i et delt semantisk rom.",
-        step3Title:"Kompatibilitetsscore", step3Desc:"MIMBAI beregner en 0–100% kompatibilitetsscore ved hjelp av vektede signaler: bransjefitness, strategiske mål, tech-synergi, markedsoverlapp og samarbeidsintensjon.",
-        step4Title:"Match-levering", step4Desc:"Toppresultater vises i hvert selskaps dashbord-feed. AI Concierge kan lage personlige introduksjoner basert på matchkontekst.",
-        signalsLabel:"Signaler", signalsTitle:"Kompatibilitetssignaler",
-        signalsSub:"MIMBAI går langt utover søkeordmatching. Den evaluerer strategiske, operasjonelle og kulturelle dimensjoner av forretningstilpasning.",
-        signalsStrong:"Forretningssignaler analysert", signalsCycle:"per selskapspar, per matchsyklus",
-        sig1:"Bransjekomplementaritet", sig2:"Strategisk målsamsvar", sig3:"Markedsoverlapp",
-        sig4:"Tech-stack-synergi", sig5:"Samarbeidspreferanser", sig6:"Geografisk fokus",
-        sig7:"Vekststadium", sig8:"Selskapsstørrelsesfitness", sig9:"Bærekraftsverdier",
-        sig10:"Språk og kultur", sig11:"Økosystemposisjon", sig12:"Semantisk tag-overlapp",
-        scoreTitle:"// Eksempel på matchscore-fordeling",
-        archLabel:"Arkitektur", archTitle:"Teknisk Fundament",
-        archSub:"MIMBAI er bygd på en moderne, GDPR-kompatibel stack designet for ytelse, personvern og skalerbarhet.",
-        tech1Title:"Semantiske Embeddings", tech1Desc:"Bedriftsprofiler konverteres til høydimensjonale vektorrepresentasjoner ved hjelp av OpenAIs embedding-modeller, noe som muliggjør dyp semantisk sammenligning utover søkeordmatching.",
-        tech2Title:"Vektorlagring", tech2Desc:"Alle embeddings og bedriftsdata lagres i en GDPR-kompatibel, EU-hostet Supabase-database med Row-Level Security som håndhever strenge datatilgangspolicyer.",
-        tech3Title:"Scoring-motor", tech3Desc:"En hybrid scoring-motor kombinerer cosinuslikhet på embeddings med regelbaserte vekter for sektorspesifikke signaler, og produserer en enkelt tolkbar kompatibilitetsscore.",
-        tech4Title:"GDPR-overholdelse", tech4Desc:"Data er kryptert i ro og under overføring. Brukere kan reservere seg mot AI-behandling, be om menneskelig gjennomgang av beslutninger, eller eksportere/slette dataene sine når som helst.",
-        tech5Title:"Sanntidsoppdateringer", tech5Desc:"Matchfeeder og meldinger oppdateres i sanntid via WebSocket-abonnementer. Nye selskaper utløser automatisk re-scoring av hele eksisterende medlemsbase.",
-        tech6Title:"AI Concierge", tech6Desc:"Når en høy-konfidensmatch er funnet, genererer AI Concierge et personlig introduksjonsutkast. Brukere godkjenner alltid før noen melding sendes.",
-        gdprText:"<strong>Personvern som design.</strong> Dine bedriftsdata behandles kun for matching innen Oslo Meet. MIMBAI bruker aldri bedriftsprofiler til å trene offentlige AI-modeller, selger aldri data til tredjeparter, og er fullt revisorbar av registrerte medlemmer under GDPR artikkel 22.",
-        ctaTitle:"Bedriften din fortjener bedre matcher.", ctaDesc:"Bli med i Oslo Meet og la MIMBAI finne dine mest kompatible forretningspartnere — i Norden og videre.",
-        ctaBtn1:"Registrer din bedrift", ctaBtn2:"Full plattforminfo",
-        footerTag:"— AI-matchingsmotor av Oslo Meet", footerPrivacy:"Personvern", footerTerms:"Vilkår", footerContact:"Kontakt",     },
-    pt: {
-        navCta:"Experimente o MIMBAI",
-        heroEyebrow:"Motor de Matching com IA · Oslo Meet",
-        heroSub:"Matching Intelligence for Modern Business & AI",
-        heroDesc:"MIMBAI é uma plataforma de IA multiuso desenvolvida pela <strong>Digital Solutions</strong>. Seu motor de matching B2B alimenta a <strong>Oslo Meet</strong>, conectando empresas na Europa, Brasil, China e no ecossistema nórdico — e além.",
-        heroBtn1:"Ver como funciona", heroBtn2:"Cadastre sua empresa",
-        scrollHint:"Explorar",
-        defLabel:"Definição",
-        whatTitle:"O que é <span class='accent'>MIMBAI?</span>",
-        whatSub:"MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — uma plataforma de IA multiuso da Digital Solutions, usada como motor de matching B2B da Oslo Meet e implantável em uma ampla gama de soluções com IA.",
-        whatP1:"O MIMBAI é uma plataforma de IA proprietária desenvolvida pela <strong>Digital Solutions</strong>. Não se limita ao matching — é uma <strong>camada inteligente de IA</strong> implantável em múltiplos domínios: matching B2B, geração de conteúdo, busca semântica, recomendações e fluxos de trabalho personalizados com IA.",
-        whatP2:"Cada empresa que entra na Oslo Meet é analisada pelo MIMBAI. Seu perfil é convertido em <strong>vetores semânticos de alta dimensão</strong>, comparado com outras empresas e recebe um <strong>score de compatibilidade</strong> baseado em fit de indústria, objetivos compartilhados, sinergias tecnológicas e alinhamento de mercado.",
-        whatP3:"O MIMBAI opera continuamente em segundo plano — aprendendo com as interações, refinando scores e revelando novos matches conforme a rede Oslo Meet cresce.",
-        brandParent:"Digital Solutions", brandParentLabel:"Empresa matriz",
-        brandPlatformLabel:"Plataforma B2B — oslomeet.org",
-        brandEngineLabel:"AI platform — mimbai.com",
-        processLabel:"Processo", processTitle:"Como o MIMBAI Funciona",
-        processSub:"Um pipeline de 4 etapas: do dado bruto da empresa até recomendações de matches com alta confiança.",
-        step1Title:"Ingestão de Perfil", step1Desc:"Dados da empresa — setor, objetivos, tecnologias, mercados, preferências de colaboração — são estruturados em tags semânticas e vetores de negócio normalizados.",
-        step2Title:"Geração de Embeddings", step2Desc:"Campos de texto são convertidos em embeddings de alta dimensão usando a API da OpenAI. Cada empresa se torna um ponto em um espaço semântico compartilhado.",
-        step3Title:"Cálculo de Compatibilidade", step3Desc:"O MIMBAI calcula um score de compatibilidade de 0–100% usando sinais ponderados: fit de indústria, objetivos estratégicos, sinergia tecnológica, sobreposição de mercado e intenção de colaboração.",
-        step4Title:"Entrega dos Matches", step4Desc:"Os melhores matches aparecem no feed do dashboard de cada empresa. A IA Concierge pode redigir introduções personalizadas com base no contexto do match.",
-        signalsLabel:"Sinais", signalsTitle:"Sinais de Compatibilidade",
-        signalsSub:"O MIMBAI vai muito além da correspondência por palavras-chave. Ele avalia dimensões estratégicas, operacionais e culturais do fit empresarial.",
-        signalsStrong:"Sinais de negócio analisados", signalsCycle:"por par de empresas, por ciclo de matching",
-        sig1:"Complementaridade setorial", sig2:"Alinhamento de objetivos estratégicos", sig3:"Sobreposição de mercado",
-        sig4:"Sinergia tecnológica", sig5:"Preferências de colaboração", sig6:"Foco geográfico",
-        sig7:"Estágio de crescimento", sig8:"Compatibilidade de porte", sig9:"Valores de sustentabilidade",
-        sig10:"Idioma e cultura", sig11:"Posição no ecossistema", sig12:"Sobreposição de tags semânticas",
-        scoreTitle:"// Exemplo de breakdown de score",
-        archLabel:"Arquitetura", archTitle:"Fundação Técnica",
-        archSub:"O MIMBAI é construído sobre uma stack moderna e compatível com GDPR, projetada para desempenho, privacidade e escalabilidade.",
-        tech1Title:"Embeddings Semânticos", tech1Desc:"Os perfis das empresas são convertidos em representações vetoriais de alta dimensão usando os modelos de embedding da OpenAI, permitindo comparação semântica profunda além da correspondência por palavras-chave.",
-        tech2Title:"Armazenamento de Vetores", tech2Desc:"Todos os embeddings e dados das empresas são armazenados em um banco Supabase hospedado na UE, compatível com GDPR, com Row-Level Security que impõe políticas rígidas de acesso aos dados.",
-        tech3Title:"Motor de Scoring", tech3Desc:"Um motor de scoring híbrido combina similaridade cosseno nos embeddings com pesos baseados em regras para sinais específicos do setor, produzindo um único score de compatibilidade interpretável.",
-        tech4Title:"Conformidade com GDPR", tech4Desc:"Os dados são criptografados em repouso e em trânsito. Os usuários podem optar por não usar o processamento com IA, solicitar revisão humana de decisões ou exportar/excluir seus dados a qualquer momento.",
-        tech5Title:"Atualizações em Tempo Real", tech5Desc:"Feeds de matches e mensagens são atualizados em tempo real via assinaturas WebSocket. Novas empresas disparam o re-scoring automático em toda a base de membros existente.",
-        tech6Title:"IA Concierge", tech6Desc:"Quando um match de alta confiança é encontrado, a IA Concierge gera um rascunho de introdução personalizado. Os usuários sempre aprovam antes de qualquer mensagem ser enviada.",
-        gdprText:"<strong>Privacidade por design.</strong> Seus dados empresariais são processados apenas para matching dentro da Oslo Meet. O MIMBAI nunca usa perfis de empresas para treinar modelos públicos de IA, nunca vende dados a terceiros e é totalmente auditável pelos membros registrados sob o Artigo 22 do GDPR.",
-        ctaTitle:"Sua empresa merece matches melhores.", ctaDesc:"Junte-se à Oslo Meet e deixe o MIMBAI encontrar seus parceiros de negócios mais compatíveis — nos países nórdicos e além.",
-        ctaBtn1:"Cadastre sua empresa", ctaBtn2:"Detalhes da plataforma",
-        footerTag:"— Motor de Matching com IA by Oslo Meet", footerPrivacy:"Privacidade", footerTerms:"Termos", footerContact:"Contato",     },
-    es: {
-        navCta:"Prueba MIMBAI",
-        heroEyebrow:"Motor de Matching con IA · Oslo Meet",
-        heroSub:"Matching Intelligence for Modern Business & AI",
-        heroDesc:"MIMBAI es una plataforma de IA multiusos desarrollada por <strong>Digital Solutions</strong>. Su motor de matching B2B impulsa a <strong>Oslo Meet</strong>, conectando empresas en Europa, Brasil, China y el ecosistema nórdico — y más allá.",
-        heroBtn1:"Ver cómo funciona", heroBtn2:"Registra tu empresa",
-        scrollHint:"Explorar",
-        defLabel:"Definición",
-        whatTitle:"¿Qué es <span class='accent'>MIMBAI?</span>",
-        whatSub:"MIMBAI significa <strong>Matching Intelligence for Modern Business & AI</strong> — una plataforma de IA multiusos de Digital Solutions, utilizada como motor de matching B2B de Oslo Meet y desplegable para una amplia gama de soluciones con IA.",
-        whatP1:"MIMBAI es una plataforma de IA propietaria desarrollada por <strong>Digital Solutions</strong>. No se limita al matching — es una <strong>capa inteligente de IA</strong> desplegable en múltiples dominios: matching B2B, generación de contenido, búsqueda semántica, recomendaciones y flujos de trabajo personalizados con IA.",
-        whatP2:"Cada empresa que se une a Oslo Meet es analizada por MIMBAI. Su perfil se convierte en <strong>vectores semánticos de alta dimensión</strong>, se compara con otras empresas y recibe una <strong>puntuación de compatibilidad</strong> basada en encaje de industria, objetivos compartidos, sinergias tecnológicas y alineamiento de mercado.",
-        whatP3:"MIMBAI opera continuamente en segundo plano — aprendiendo de las interacciones, refinando puntuaciones y revelando nuevos matches a medida que la red Oslo Meet crece.",
-        brandParent:"Digital Solutions", brandParentLabel:"Empresa matriz",
-        brandPlatformLabel:"Plataforma B2B — oslomeet.org",
-        brandEngineLabel:"AI platform — mimbai.com",
-        processLabel:"Proceso", processTitle:"Cómo Funciona MIMBAI",
-        processSub:"Un pipeline de 4 pasos: desde datos brutos de la empresa hasta recomendaciones de matches de alta confianza.",
-        step1Title:"Ingesta de Perfil", step1Desc:"Los datos de la empresa — sector, objetivos, tecnologías, mercados, preferencias de colaboración — se estructuran en etiquetas semánticas y vectores de negocio normalizados.",
-        step2Title:"Generación de Embeddings", step2Desc:"Los campos de texto se convierten en embeddings de alta dimensión usando la API de OpenAI. Cada empresa se convierte en un punto en un espacio semántico compartido.",
-        step3Title:"Cálculo de Compatibilidad", step3Desc:"MIMBAI calcula una puntuación de compatibilidad del 0–100% usando señales ponderadas: encaje de industria, objetivos estratégicos, sinergia tecnológica, superposición de mercado e intención de colaboración.",
-        step4Title:"Entrega de Matches", step4Desc:"Los mejores matches aparecen en el feed del dashboard de cada empresa. La IA Concierge puede redactar introducciones personalizadas basadas en el contexto del match.",
-        signalsLabel:"Señales", signalsTitle:"Señales de Compatibilidad",
-        signalsSub:"MIMBAI va mucho más allá de la coincidencia por palabras clave. Evalúa dimensiones estratégicas, operacionales y culturales del encaje empresarial.",
-        signalsStrong:"Señales de negocio analizadas", signalsCycle:"por par de empresas, por ciclo de matching",
-        sig1:"Complementariedad sectorial", sig2:"Alineamiento de objetivos estratégicos", sig3:"Superposición de mercado",
-        sig4:"Sinergia tecnológica", sig5:"Preferencias de colaboración", sig6:"Enfoque geográfico",
-        sig7:"Etapa de crecimiento", sig8:"Compatibilidad de tamaño", sig9:"Valores de sostenibilidad",
-        sig10:"Idioma y cultura", sig11:"Posición en el ecosistema", sig12:"Superposición de etiquetas semánticas",
-        scoreTitle:"// Ejemplo de desglose de puntuación",
-        archLabel:"Arquitectura", archTitle:"Fundación Técnica",
-        archSub:"MIMBAI está construido sobre una stack moderna y compatible con GDPR, diseñada para rendimiento, privacidad y escalabilidad.",
-        tech1Title:"Embeddings Semánticos", tech1Desc:"Los perfiles de las empresas se convierten en representaciones vectoriales de alta dimensión usando los modelos de embedding de OpenAI, permitiendo comparación semántica profunda más allá de la coincidencia por palabras clave.",
-        tech2Title:"Almacenamiento Vectorial", tech2Desc:"Todos los embeddings y datos de empresas se almacenan en una base de datos Supabase alojada en la UE, compatible con GDPR, con Row-Level Security que impone políticas estrictas de acceso a los datos.",
-        tech3Title:"Motor de Scoring", tech3Desc:"Un motor de scoring híbrido combina similitud coseno en embeddings con pesos basados en reglas para señales específicas del sector, produciendo una única puntuación de compatibilidad interpretable.",
-        tech4Title:"Cumplimiento GDPR", tech4Desc:"Los datos están cifrados en reposo y en tránsito. Los usuarios pueden optar por no usar el procesamiento con IA, solicitar revisión humana de decisiones o exportar/eliminar sus datos en cualquier momento.",
-        tech5Title:"Actualizaciones en Tiempo Real", tech5Desc:"Los feeds de matches y mensajes se actualizan en tiempo real mediante suscripciones WebSocket. Las nuevas empresas disparan el re-scoring automático en toda la base de miembros existente.",
-        tech6Title:"IA Concierge", tech6Desc:"Una vez encontrado un match de alta confianza, la IA Concierge genera un borrador de introducción personalizada. Los usuarios siempre aprueban antes de que se envíe cualquier mensaje.",
-        gdprText:"<strong>Privacidad por diseño.</strong> Tus datos empresariales se procesan solo para matching dentro de Oslo Meet. MIMBAI nunca usa perfiles de empresas para entrenar modelos públicos de IA, nunca vende datos a terceros y es totalmente auditable por los miembros registrados bajo el Artículo 22 del GDPR.",
-        ctaTitle:"Tu empresa merece mejores matches.", ctaDesc:"Únete a Oslo Meet y deja que MIMBAI encuentre tus socios comerciales más compatibles — en los países nórdicos y más allá.",
-        ctaBtn1:"Registra tu empresa", ctaBtn2:"Detalles de la plataforma",
-        footerTag:"— Motor de Matching con IA by Oslo Meet", footerPrivacy:"Privacidad", footerTerms:"Términos", footerContact:"Contacto",     }
+  en: {
+    navTag:'by Digital Solutions', navCta:'Try MIMBAI Free',
+    heroEyebrow:'AI Platform for Smart Organizations · Digital Solutions',
+    heroSub:'Multipurpose Intelligent Modular Business AI',
+    heroDesc:'MIMBAI is an AI platform for smart organizations, built by <strong>Digital Solutions</strong> and powered by <strong>Anthropic Claude</strong>. Oslo Meet uses MIMBAI\'s intelligence to connect businesses across Europe, Brazil and the Nordic ecosystem.',
+    heroBtn1:'Try MIMBAI Free', heroBtn2:'Join Oslo Meet', scrollHint:'Explore',
+    defLabel:'Platform',
+    whatSub:'MIMBAI stands for <strong>Multipurpose Intelligent Modular Business AI</strong> — an independent AI platform by Digital Solutions with 7 specialized modules, a project dashboard and AI-generated downloads.',
+    whatP1:'MIMBAI is a <strong>standalone AI platform</strong> built by Digital Solutions and powered by Anthropic Claude. It delivers specialized intelligence across 7 modules: Project Generator, Excel & Reports, Finance & ROI, HR & People, Presentations, Content Engine and RegTech.',
+    whatP2:'<strong>Oslo Meet uses MIMBAI</strong> as its B2B matching intelligence layer — analyzing company profiles, computing compatibility scores and surfacing high-confidence business connections across the Nordic ecosystem and beyond.',
+    whatP3:'Beyond matching, MIMBAI generates complete project dashboards with structured documents and exports — ready to download as Excel, PDF or PowerPoint.',
+    brandParent:'Digital Solutions', brandParentLabel:'Builder & owner · ds.barros.no',
+    brandEngineLabel:'AI Platform · mimbai.com', brandPlatformLabel:'B2B platform · oslomeet.org',
+    modulesLabel:'Modules', modulesTitle:'AI Modules',
+    modulesSub:'Each module has a dedicated AI system, specialized prompts and generates structured output — text, dashboards, Excel files, PDFs and PowerPoint presentations.',
+    mod0name:'Project Generator', mod0desc:'Full project dashboard with timeline, budget, KPIs and risk matrix. Generates code PRJ-.',
+    mod1name:'General Assistant', mod1desc:'Base Claude — professional Q&A for any business question.',
+    mod2name:'Excel & Reports', mod2desc:'KPI dashboards, sales reports and spreadsheet-ready data.',
+    mod3name:'Finance & ROI', mod3desc:'ROI calculator, triple bottom line, financial projections.',
+    mod4name:'HR & People', mod4desc:'Employee evaluations, onboarding plans, job descriptions.',
+    mod5name:'Presentations', mod5desc:'Slide decks, pitch presentations and board reports.',
+    mod6name:'Content Engine', mod6desc:'Blog posts, social media copy and marketing content.',
+    mod7name:'RegTech', mod7desc:'GDPR, Finanstilsynet and EU regulatory compliance.',
+    processLabel:'Process', processTitle:'How Oslo Meet Uses MIMBAI',
+    processSub:'A 4-step pipeline from raw company data to high-confidence business match recommendations.',
+    step1Title:'Profile Ingestion', step1Desc:'Company data — sector, goals, technologies, markets, collaboration preferences — is structured into semantic tags and normalized business vectors.',
+    step2Title:'AI Analysis', step2Desc:'MIMBAI analyzes each company profile using Anthropic Claude, extracting intent, strategic fit and market positioning into structured intelligence.',
+    step3Title:'Compatibility Scoring', step3Desc:'MIMBAI computes a 0–100% compatibility score using weighted signals: industry fit, strategic goals, tech synergy, market overlap, and collaboration intent.',
+    step4Title:'Match Delivery', step4Desc:'Top matches surface in each company\'s Oslo Meet dashboard. MIMBAI can draft personalized introductions based on match context and shared goals.',
+    osloTitle:'Oslo Meet — Powered by MIMBAI', osloLink:'Visit oslomeet.org',
+    osloDesc:'Oslo Meet is a B2B matching platform connecting companies across Europe, Brazil, China and the Nordic ecosystem. Every match on Oslo Meet is scored by MIMBAI — ensuring high-confidence, strategic business connections rather than simple keyword matches.',
+    signalsLabel:'Signals', signalsTitle:'Compatibility Signals',
+    signalsSub:'MIMBAI goes far beyond keyword matching. It evaluates strategic, operational and cultural dimensions of business fit.',
+    signalsStrong:'Business signals analyzed', signalsCycle:'per company pair, per match cycle',
+    sig1:'Industry complementarity', sig2:'Strategic goals alignment', sig3:'Market overlap',
+    sig4:'Tech stack synergy', sig5:'Collaboration preferences', sig6:'Geographic focus',
+    sig7:'Growth stage', sig8:'Company size fit', sig9:'Sustainability values',
+    sig10:'Language & culture', sig11:'Ecosystem position', sig12:'Semantic tag overlap',
+    scoreTitle:'// Sample match score breakdown',
+    archLabel:'Architecture', archTitle:'Technical Foundation',
+    archSub:'MIMBAI is built on a modern, GDPR-compliant stack designed for performance, privacy and scalability.',
+    tech1Title:'Anthropic Claude', tech1Desc:'MIMBAI is powered by Anthropic Claude — one of the most capable and safe AI models available. Sonnet for complex generation, Haiku for fast responses.',
+    tech2Title:'MySQL · Domeneshop', tech2Desc:'All project data, user sessions and chat history stored in a GDPR-compliant MySQL database hosted in Norway, with strict access controls per user.',
+    tech3Title:'Project Dashboard', tech3Desc:'Every generation creates a structured dashboard with ISO project code, phases, KPIs, triple constraint and exports — Excel, PDF and PowerPoint.',
+    tech4Title:'GDPR Compliance', tech4Desc:'Data is encrypted at rest and in transit. Users can export or delete all their data at any time. No data is ever used to train AI models.',
+    tech5Title:'4 Languages', tech5Desc:'Full interface and AI responses in English, Norwegian, Portuguese and Spanish. Language is detected automatically from the browser.',
+    tech6Title:'Export & Present', tech6Desc:'All generated dashboards can be exported as Excel workbooks, executive PDFs or PowerPoint presentations — and presented fullscreen in the browser.',
+    gdprText:'<strong>Privacy by design.</strong> Your data is processed only within your MIMBAI account. MIMBAI never uses your content to train public AI models, never sells data to third parties, and is fully auditable under GDPR Article 22. Hosted in Norway.',
+    ctaTitle:'Your company deserves better matches.', ctaDesc:'Join Oslo Meet and let MIMBAI find your most compatible business partners — in the Nordics and beyond.',
+    ctaBtn1:'Register Your Company', ctaBtn2:'Full Platform Details',
+    mimbaiCtaTitle:'The full AI platform is waiting for you.',
+    mimbaiCtaDesc:'Oslo Meet uses MIMBAI to match businesses — but MIMBAI does much more. Generate projects, financial analysis, HR documents, presentations and content with AI. Free to start.',
+    mimbaiCtaBtn1:'Try MIMBAI Free — mimbai.com', mimbaiCtaBtn2:'See Plans & Pricing',
+    mimbaiCtaNote:'Free plan available · No credit card required · Built by',
+    footerTag:'— AI Platform by Digital Solutions', footerPrivacy:'Privacy', footerTerms:'Terms', footerContact:'Contact'
+  },
+  no: {
+    navTag:'av Digital Solutions', navCta:'Prøv MIMBAI gratis',
+    heroEyebrow:'AI-plattform for smarte organisasjoner · Digital Solutions',
+    heroSub:'Multipurpose Intelligent Modular Business AI',
+    heroDesc:'MIMBAI er en AI-plattform for smarte organisasjoner, bygget av <strong>Digital Solutions</strong> og drevet av <strong>Anthropic Claude</strong>. Oslo Meet bruker MIMABIs intelligens til å koble bedrifter i Europa, Brasil og det nordiske økosystemet.',
+    heroBtn1:'Prøv MIMBAI gratis', heroBtn2:'Bli med i Oslo Meet', scrollHint:'Utforsk',
+    defLabel:'Plattform',
+    whatSub:'MIMBAI står for <strong>Multipurpose Intelligent Modular Business AI</strong> — en uavhengig AI-plattform av Digital Solutions med 7 spesialiserte moduler, et prosjektdashboard og AI-genererte nedlastinger.',
+    whatP1:'MIMBAI er en <strong>selvstendig AI-plattform</strong> bygget av Digital Solutions og drevet av Anthropic Claude. Den leverer spesialisert intelligens på tvers av 7 moduler: Prosjektgenerator, Excel og rapporter, Økonomi og ROI, HR og personal, Presentasjoner, Innholdsmotor og RegTech.',
+    whatP2:'<strong>Oslo Meet bruker MIMBAI</strong> som sitt B2B-matchings-intelligens-lag — analyserer bedriftsprofiler, beregner kompatibilitetsscore og avdekker høy-konfidensielle forretningsforbindelser i det nordiske økosystemet og videre.',
+    whatP3:'Utover matching genererer MIMBAI komplette prosjektdashboards med strukturerte dokumenter og eksporter — klare til nedlasting som Excel, PDF eller PowerPoint.',
+    brandParent:'Digital Solutions', brandParentLabel:'Bygger og eier · ds.barros.no',
+    brandEngineLabel:'AI-plattform · mimbai.com', brandPlatformLabel:'B2B-plattform · oslomeet.org',
+    modulesLabel:'Moduler', modulesTitle:'AI-moduler',
+    modulesSub:'Hver modul har et dedikert AI-system, spesialiserte prompter og genererer strukturert output — tekst, dashboards, Excel-filer, PDF-er og PowerPoint-presentasjoner.',
+    mod0name:'Prosjektgenerator', mod0desc:'Komplett prosjektdashboard med tidslinje, budsjett, KPIer og risikoanalyse. Genererer kode PRJ-.',
+    mod1name:'Generell assistent', mod1desc:'Base Claude — profesjonell Q&A for ethvert forretningsspørsmål.',
+    mod2name:'Excel og rapporter', mod2desc:'KPI-dashboards, salgsrapporter og regneark-klar data.',
+    mod3name:'Økonomi og ROI', mod3desc:'ROI-kalkulator, trippel bunnlinje, finansielle prognoser.',
+    mod4name:'HR og personal', mod4desc:'Medarbeiderevalueringer, onboardingplaner, stillingsbeskrivelser.',
+    mod5name:'Presentasjoner', mod5desc:'Lysbildeserier, pitch-presentasjoner og styrerrapporter.',
+    mod6name:'Innholdsmotor', mod6desc:'Blogginnlegg, sosiale medier-kopi og markedsinnhold.',
+    mod7name:'RegTech', mod7desc:'GDPR, Finanstilsynet og EU regulatorisk samsvar.',
+    processLabel:'Prosess', processTitle:'Slik bruker Oslo Meet MIMBAI',
+    processSub:'En 4-trinns pipeline fra rådata til høy-konfidensielle matchanbefalinger.',
+    step1Title:'Profilinnhenting', step1Desc:'Bedriftsdata — sektor, mål, teknologier, markeder, samarbeidspreferanser — struktureres til semantiske tagger og normaliserte forretningsvektorer.',
+    step2Title:'AI-analyse', step2Desc:'MIMBAI analyserer hver bedriftsprofil ved hjelp av Anthropic Claude, og trekker ut intensjon, strategisk tilpasning og markedsposisjonering til strukturert intelligens.',
+    step3Title:'Kompatibilitetsscore', step3Desc:'MIMBAI beregner en 0–100% kompatibilitetsscore ved hjelp av vektede signaler: bransjefitness, strategiske mål, tech-synergi, markedsoverlapp og samarbeidsintensjon.',
+    step4Title:'Match-levering', step4Desc:'Toppresultater vises i hvert selskaps Oslo Meet-dashboard. MIMBAI kan lage personlige introduksjoner basert på matchkontekst og felles mål.',
+    osloTitle:'Oslo Meet — Drevet av MIMBAI', osloLink:'Besøk oslomeet.org',
+    osloDesc:'Oslo Meet er en B2B-matchingsplattform som kobler selskaper i Europa, Brasil, Kina og det nordiske økosystemet. Hvert match på Oslo Meet scores av MIMBAI — noe som sikrer høy-konfidensielle, strategiske forretningsforbindelser fremfor enkle søkeordtreff.',
+    signalsLabel:'Signaler', signalsTitle:'Kompatibilitetssignaler',
+    signalsSub:'MIMBAI går langt utover søkeordmatching. Den evaluerer strategiske, operasjonelle og kulturelle dimensjoner av forretningstilpasning.',
+    signalsStrong:'Forretningssignaler analysert', signalsCycle:'per selskapspar, per matchsyklus',
+    sig1:'Bransjekomplementaritet', sig2:'Strategisk målsamsvar', sig3:'Markedsoverlapp',
+    sig4:'Tech-stack-synergi', sig5:'Samarbeidspreferanser', sig6:'Geografisk fokus',
+    sig7:'Vekststadium', sig8:'Selskapsstørrelsesfitness', sig9:'Bærekraftsverdier',
+    sig10:'Språk og kultur', sig11:'Økosystemposisjon', sig12:'Semantisk tag-overlapp',
+    scoreTitle:'// Eksempel på matchscore-fordeling',
+    archLabel:'Arkitektur', archTitle:'Teknisk Fundament',
+    archSub:'MIMBAI er bygd på en moderne, GDPR-kompatibel stack designet for ytelse, personvern og skalerbarhet.',
+    tech1Title:'Anthropic Claude', tech1Desc:'MIMBAI drives av Anthropic Claude — en av de mest kapable og trygge AI-modellene tilgjengelig. Sonnet for kompleks generering, Haiku for raske svar.',
+    tech2Title:'MySQL · Domeneshop', tech2Desc:'Alle prosjektdata, brukerøkter og chat-historikk lagres i en GDPR-kompatibel MySQL-database hostet i Norge, med strenge tilgangskontroller per bruker.',
+    tech3Title:'Prosjektdashboard', tech3Desc:'Hver generering oppretter et strukturert dashboard med ISO-prosjektkode, faser, KPIer, trippel begrensning og eksporter — Excel, PDF og PowerPoint.',
+    tech4Title:'GDPR-overholdelse', tech4Desc:'Data er kryptert i ro og under overføring. Brukere kan eksportere eller slette alle dataene sine når som helst. Ingen data brukes noen gang til å trene AI-modeller.',
+    tech5Title:'4 Språk', tech5Desc:'Fullt grensesnitt og AI-svar på engelsk, norsk, portugisisk og spansk. Språk oppdages automatisk fra nettleseren.',
+    tech6Title:'Eksporter og presenter', tech6Desc:'Alle genererte dashboards kan eksporteres som Excel-arbeidsbøker, executive PDF-er eller PowerPoint-presentasjoner — og presenteres i fullskjerm i nettleseren.',
+    gdprText:'<strong>Personvern som design.</strong> Dine data behandles kun innen din MIMBAI-konto. MIMBAI bruker aldri innholdet ditt til å trene offentlige AI-modeller, selger aldri data til tredjeparter, og er fullt revisorbar under GDPR artikkel 22. Hostet i Norge.',
+    ctaTitle:'Bedriften din fortjener bedre matcher.', ctaDesc:'Bli med i Oslo Meet og la MIMBAI finne dine mest kompatible forretningspartnere — i Norden og videre.',
+    ctaBtn1:'Registrer din bedrift', ctaBtn2:'Full plattforminfo',
+    mimbaiCtaTitle:'Den komplette AI-plattformen venter på deg.',
+    mimbaiCtaDesc:'Oslo Meet bruker MIMBAI til å matche bedrifter — men MIMBAI gjør mye mer. Generer prosjekter, finansanalyser, HR-dokumenter, presentasjoner og innhold med AI. Gratis å starte.',
+    mimbaiCtaBtn1:'Prøv MIMBAI gratis — mimbai.com', mimbaiCtaBtn2:'Se planer og priser',
+    mimbaiCtaNote:'Gratis plan tilgjengelig · Ingen kredittkort nødvendig · Bygget av',
+    footerTag:'— AI-plattform av Digital Solutions', footerPrivacy:'Personvern', footerTerms:'Vilkår', footerContact:'Kontakt'
+  },
+  pt: {
+    navTag:'por Digital Solutions', navCta:'Experimente o MIMBAI',
+    heroEyebrow:'Plataforma de IA para Organizações Inteligentes · Digital Solutions',
+    heroSub:'Multipurpose Intelligent Modular Business AI',
+    heroDesc:'MIMBAI é uma plataforma de IA para organizações inteligentes, construída pela <strong>Digital Solutions</strong> e alimentada pelo <strong>Anthropic Claude</strong>. A Oslo Meet usa a inteligência do MIMBAI para conectar empresas na Europa, Brasil e no ecossistema nórdico.',
+    heroBtn1:'Experimente o MIMBAI', heroBtn2:'Entre na Oslo Meet', scrollHint:'Explorar',
+    defLabel:'Plataforma',
+    whatSub:'MIMBAI significa <strong>Multipurpose Intelligent Modular Business AI</strong> — uma plataforma de IA independente da Digital Solutions com 7 módulos especializados, um dashboard de projetos e downloads gerados por IA.',
+    whatP1:'MIMBAI é uma <strong>plataforma de IA independente</strong> construída pela Digital Solutions e alimentada pelo Anthropic Claude. Oferece inteligência especializada em 7 módulos: Gerador de Projetos, Excel e Relatórios, Finanças e ROI, RH e Pessoas, Apresentações, Motor de Conteúdo e RegTech.',
+    whatP2:'<strong>A Oslo Meet usa o MIMBAI</strong> como sua camada de inteligência de matching B2B — analisando perfis de empresas, calculando scores de compatibilidade e revelando conexões de negócios de alta confiança no ecossistema nórdico e além.',
+    whatP3:'Além do matching, o MIMBAI gera dashboards completos de projetos com documentos estruturados e exportações — prontos para download como Excel, PDF ou PowerPoint.',
+    brandParent:'Digital Solutions', brandParentLabel:'Criador e proprietário · ds.barros.no',
+    brandEngineLabel:'Plataforma de IA · mimbai.com', brandPlatformLabel:'Plataforma B2B · oslomeet.org',
+    modulesLabel:'Módulos', modulesTitle:'Módulos de IA',
+    modulesSub:'Cada módulo tem um sistema de IA dedicado, prompts especializados e gera output estruturado — texto, dashboards, ficheiros Excel, PDFs e apresentações PowerPoint.',
+    mod0name:'Gerador de Projetos', mod0desc:'Dashboard completo com cronograma, orçamento, KPIs e análise de riscos. Gera código PRJ-.',
+    mod1name:'Assistente Geral', mod1desc:'Base Claude — Q&A profissional para qualquer questão de negócios.',
+    mod2name:'Excel e Relatórios', mod2desc:'Dashboards de KPI, relatórios de vendas e dados prontos para planilha.',
+    mod3name:'Finanças e ROI', mod3desc:'Calculadora de ROI, tripla linha de base, projeções financeiras.',
+    mod4name:'RH e Pessoas', mod4desc:'Avaliações de funcionários, planos de onboarding, descrições de cargos.',
+    mod5name:'Apresentações', mod5desc:'Decks de slides, apresentações de pitch e relatórios para diretoria.',
+    mod6name:'Motor de Conteúdo', mod6desc:'Posts de blog, copy para redes sociais e conteúdo de marketing.',
+    mod7name:'RegTech', mod7desc:'GDPR, Finanstilsynet e conformidade regulatória da UE.',
+    processLabel:'Processo', processTitle:'Como a Oslo Meet Usa o MIMBAI',
+    processSub:'Um pipeline de 4 etapas: do dado bruto da empresa até recomendações de matches de alta confiança.',
+    step1Title:'Ingestão de Perfil', step1Desc:'Dados da empresa — setor, objetivos, tecnologias, mercados, preferências de colaboração — são estruturados em tags semânticas e vetores de negócio normalizados.',
+    step2Title:'Análise de IA', step2Desc:'O MIMBAI analisa cada perfil de empresa usando o Anthropic Claude, extraindo intenção, adequação estratégica e posicionamento de mercado em inteligência estruturada.',
+    step3Title:'Cálculo de Compatibilidade', step3Desc:'O MIMBAI calcula um score de compatibilidade de 0–100% usando sinais ponderados: fit de indústria, objetivos estratégicos, sinergia tecnológica, sobreposição de mercado e intenção de colaboração.',
+    step4Title:'Entrega dos Matches', step4Desc:'Os melhores matches aparecem no dashboard da Oslo Meet de cada empresa. O MIMBAI pode redigir introduções personalizadas com base no contexto do match e objetivos compartilhados.',
+    osloTitle:'Oslo Meet — Alimentada pelo MIMBAI', osloLink:'Visite oslomeet.org',
+    osloDesc:'Oslo Meet é uma plataforma de matching B2B que conecta empresas na Europa, Brasil, China e no ecossistema nórdico. Cada match na Oslo Meet é pontuado pelo MIMBAI — garantindo conexões de negócios estratégicas de alta confiança em vez de simples correspondências por palavras-chave.',
+    signalsLabel:'Sinais', signalsTitle:'Sinais de Compatibilidade',
+    signalsSub:'O MIMBAI vai muito além da correspondência por palavras-chave. Ele avalia dimensões estratégicas, operacionais e culturais do fit empresarial.',
+    signalsStrong:'Sinais de negócio analisados', signalsCycle:'por par de empresas, por ciclo de matching',
+    sig1:'Complementaridade setorial', sig2:'Alinhamento de objetivos estratégicos', sig3:'Sobreposição de mercado',
+    sig4:'Sinergia tecnológica', sig5:'Preferências de colaboração', sig6:'Foco geográfico',
+    sig7:'Estágio de crescimento', sig8:'Compatibilidade de porte', sig9:'Valores de sustentabilidade',
+    sig10:'Idioma e cultura', sig11:'Posição no ecossistema', sig12:'Sobreposição de tags semânticas',
+    scoreTitle:'// Exemplo de breakdown de score',
+    archLabel:'Arquitetura', archTitle:'Fundação Técnica',
+    archSub:'O MIMBAI é construído sobre uma stack moderna e compatível com GDPR, projetada para desempenho, privacidade e escalabilidade.',
+    tech1Title:'Anthropic Claude', tech1Desc:'O MIMBAI é alimentado pelo Anthropic Claude — um dos modelos de IA mais capazes e seguros disponíveis. Sonnet para geração complexa, Haiku para respostas rápidas.',
+    tech2Title:'MySQL · Domeneshop', tech2Desc:'Todos os dados de projeto, sessões de utilizador e histórico de chat armazenados em banco MySQL compatível com GDPR hospedado na Noruega, com controles de acesso rigorosos por utilizador.',
+    tech3Title:'Dashboard de Projetos', tech3Desc:'Cada geração cria um dashboard estruturado com código ISO de projeto, fases, KPIs, tríplice restrição e exportações — Excel, PDF e PowerPoint.',
+    tech4Title:'Conformidade com GDPR', tech4Desc:'Os dados são criptografados em repouso e em trânsito. Os utilizadores podem exportar ou excluir todos os seus dados a qualquer momento. Nenhum dado é usado para treinar modelos de IA.',
+    tech5Title:'4 Idiomas', tech5Desc:'Interface completa e respostas de IA em inglês, norueguês, português e espanhol. O idioma é detectado automaticamente pelo browser.',
+    tech6Title:'Exportar e Apresentar', tech6Desc:'Todos os dashboards gerados podem ser exportados como livros Excel, PDFs executivos ou apresentações PowerPoint — e apresentados em ecrã cheio no browser.',
+    gdprText:'<strong>Privacidade por design.</strong> Seus dados são processados apenas na sua conta MIMBAI. O MIMBAI nunca usa seu conteúdo para treinar modelos públicos de IA, nunca vende dados a terceiros e é totalmente auditável sob o Artigo 22 do GDPR. Hospedado na Noruega.',
+    ctaTitle:'Sua empresa merece matches melhores.', ctaDesc:'Junte-se à Oslo Meet e deixe o MIMBAI encontrar seus parceiros de negócios mais compatíveis — nos países nórdicos e além.',
+    ctaBtn1:'Cadastre sua empresa', ctaBtn2:'Detalhes da plataforma',
+    mimbaiCtaTitle:'A plataforma de IA completa está esperando por você.',
+    mimbaiCtaDesc:'A Oslo Meet usa o MIMBAI para fazer matching de empresas — mas o MIMBAI faz muito mais. Gere projetos, análises financeiras, documentos de RH, apresentações e conteúdo com IA. Gratuito para começar.',
+    mimbaiCtaBtn1:'Experimente o MIMBAI — mimbai.com', mimbaiCtaBtn2:'Ver planos e preços',
+    mimbaiCtaNote:'Plano gratuito disponível · Sem cartão de crédito · Criado por',
+    footerTag:'— Plataforma de IA por Digital Solutions', footerPrivacy:'Privacidade', footerTerms:'Termos', footerContact:'Contato'
+  },
+  es: {
+    navTag:'por Digital Solutions', navCta:'Prueba MIMBAI gratis',
+    heroEyebrow:'Plataforma de IA para Organizaciones Inteligentes · Digital Solutions',
+    heroSub:'Multipurpose Intelligent Modular Business AI',
+    heroDesc:'MIMBAI es una plataforma de IA para organizaciones inteligentes, desarrollada por <strong>Digital Solutions</strong> e impulsada por <strong>Anthropic Claude</strong>. Oslo Meet usa la inteligencia de MIMBAI para conectar empresas en Europa, Brasil y el ecosistema nórdico.',
+    heroBtn1:'Prueba MIMBAI gratis', heroBtn2:'Únete a Oslo Meet', scrollHint:'Explorar',
+    defLabel:'Plataforma',
+    whatSub:'MIMBAI significa <strong>Multipurpose Intelligent Modular Business AI</strong> — una plataforma de IA independiente de Digital Solutions con 7 módulos especializados, un dashboard de proyectos y descargas generadas por IA.',
+    whatP1:'MIMBAI es una <strong>plataforma de IA independiente</strong> desarrollada por Digital Solutions e impulsada por Anthropic Claude. Ofrece inteligencia especializada en 7 módulos: Generador de Proyectos, Excel e Informes, Finanzas y ROI, RRHH y Personas, Presentaciones, Motor de Contenido y RegTech.',
+    whatP2:'<strong>Oslo Meet usa MIMBAI</strong> como su capa de inteligencia de matching B2B — analizando perfiles de empresas, calculando puntuaciones de compatibilidad y revelando conexiones de negocios de alta confianza en el ecosistema nórdico y más allá.',
+    whatP3:'Más allá del matching, MIMBAI genera dashboards completos de proyectos con documentos estructurados y exportaciones — listos para descargar como Excel, PDF o PowerPoint.',
+    brandParent:'Digital Solutions', brandParentLabel:'Creador y propietario · ds.barros.no',
+    brandEngineLabel:'Plataforma de IA · mimbai.com', brandPlatformLabel:'Plataforma B2B · oslomeet.org',
+    modulesLabel:'Módulos', modulesTitle:'Módulos de IA',
+    modulesSub:'Cada módulo tiene un sistema de IA dedicado, prompts especializados y genera output estructurado — texto, dashboards, archivos Excel, PDFs y presentaciones PowerPoint.',
+    mod0name:'Generador de Proyectos', mod0desc:'Dashboard completo con cronograma, presupuesto, KPIs y análisis de riesgos. Genera código PRJ-.',
+    mod1name:'Asistente General', mod1desc:'Base Claude — Q&A profesional para cualquier pregunta de negocio.',
+    mod2name:'Excel e Informes', mod2desc:'Dashboards KPI, informes de ventas y datos listos para hojas de cálculo.',
+    mod3name:'Finanzas y ROI', mod3desc:'Calculadora de ROI, triple balance, proyecciones financieras.',
+    mod4name:'RRHH y Personas', mod4desc:'Evaluaciones de empleados, planes de onboarding, descripciones de puestos.',
+    mod5name:'Presentaciones', mod5desc:'Decks de diapositivas, pitch presentations e informes para directivos.',
+    mod6name:'Motor de Contenido', mod6desc:'Posts de blog, copy para redes sociales y contenido de marketing.',
+    mod7name:'RegTech', mod7desc:'GDPR, Finanstilsynet y cumplimiento regulatorio de la UE.',
+    processLabel:'Proceso', processTitle:'Cómo Oslo Meet Usa MIMBAI',
+    processSub:'Un pipeline de 4 pasos: desde datos brutos de la empresa hasta recomendaciones de matches de alta confianza.',
+    step1Title:'Ingesta de Perfil', step1Desc:'Los datos de la empresa — sector, objetivos, tecnologías, mercados, preferencias de colaboración — se estructuran en etiquetas semánticas y vectores de negocio normalizados.',
+    step2Title:'Análisis de IA', step2Desc:'MIMBAI analiza cada perfil de empresa usando Anthropic Claude, extrayendo intención, adecuación estratégica y posicionamiento de mercado en inteligencia estructurada.',
+    step3Title:'Cálculo de Compatibilidad', step3Desc:'MIMBAI calcula una puntuación de compatibilidad del 0–100% usando señales ponderadas: encaje de industria, objetivos estratégicos, sinergia tecnológica, superposición de mercado e intención de colaboración.',
+    step4Title:'Entrega de Matches', step4Desc:'Los mejores matches aparecen en el dashboard de Oslo Meet de cada empresa. MIMBAI puede redactar introducciones personalizadas basadas en el contexto del match y objetivos compartidos.',
+    osloTitle:'Oslo Meet — Impulsada por MIMBAI', osloLink:'Visita oslomeet.org',
+    osloDesc:'Oslo Meet es una plataforma de matching B2B que conecta empresas en Europa, Brasil, China y el ecosistema nórdico. Cada match en Oslo Meet es puntuado por MIMBAI — garantizando conexiones de negocios estratégicas de alta confianza en lugar de simples coincidencias por palabras clave.',
+    signalsLabel:'Señales', signalsTitle:'Señales de Compatibilidad',
+    signalsSub:'MIMBAI va mucho más allá de la coincidencia por palabras clave. Evalúa dimensiones estratégicas, operacionales y culturales del encaje empresarial.',
+    signalsStrong:'Señales de negocio analizadas', signalsCycle:'por par de empresas, por ciclo de matching',
+    sig1:'Complementariedad sectorial', sig2:'Alineamiento de objetivos estratégicos', sig3:'Superposición de mercado',
+    sig4:'Sinergia tecnológica', sig5:'Preferencias de colaboración', sig6:'Enfoque geográfico',
+    sig7:'Etapa de crecimiento', sig8:'Compatibilidad de tamaño', sig9:'Valores de sostenibilidad',
+    sig10:'Idioma y cultura', sig11:'Posición en el ecosistema', sig12:'Superposición de etiquetas semánticas',
+    scoreTitle:'// Ejemplo de desglose de puntuación',
+    archLabel:'Arquitectura', archTitle:'Fundación Técnica',
+    archSub:'MIMBAI está construido sobre una stack moderna y compatible con GDPR, diseñada para rendimiento, privacidad y escalabilidad.',
+    tech1Title:'Anthropic Claude', tech1Desc:'MIMBAI está impulsado por Anthropic Claude — uno de los modelos de IA más capaces y seguros disponibles. Sonnet para generación compleja, Haiku para respuestas rápidas.',
+    tech2Title:'MySQL · Domeneshop', tech2Desc:'Todos los datos de proyecto, sesiones de usuario e historial de chat almacenados en una base MySQL compatible con GDPR alojada en Noruega, con estrictos controles de acceso por usuario.',
+    tech3Title:'Dashboard de Proyectos', tech3Desc:'Cada generación crea un dashboard estructurado con código ISO de proyecto, fases, KPIs, triple restricción y exportaciones — Excel, PDF y PowerPoint.',
+    tech4Title:'Cumplimiento GDPR', tech4Desc:'Los datos están cifrados en reposo y en tránsito. Los usuarios pueden exportar o eliminar todos sus datos en cualquier momento. Ningún dato se usa para entrenar modelos de IA.',
+    tech5Title:'4 Idiomas', tech5Desc:'Interfaz completa y respuestas de IA en inglés, noruego, portugués y español. El idioma se detecta automáticamente desde el navegador.',
+    tech6Title:'Exportar y Presentar', tech6Desc:'Todos los dashboards generados pueden exportarse como libros Excel, PDFs ejecutivos o presentaciones PowerPoint — y presentarse en pantalla completa en el navegador.',
+    gdprText:'<strong>Privacidad por diseño.</strong> Tus datos se procesan solo dentro de tu cuenta MIMBAI. MIMBAI nunca usa tu contenido para entrenar modelos públicos de IA, nunca vende datos a terceros y es totalmente auditable bajo el Artículo 22 del GDPR. Alojado en Noruega.',
+    ctaTitle:'Tu empresa merece mejores matches.', ctaDesc:'Únete a Oslo Meet y deja que MIMBAI encuentre tus socios comerciales más compatibles — en los países nórdicos y más allá.',
+    ctaBtn1:'Registra tu empresa', ctaBtn2:'Detalles de la plataforma',
+    mimbaiCtaTitle:'La plataforma de IA completa te está esperando.',
+    mimbaiCtaDesc:'Oslo Meet usa MIMBAI para hacer matching de empresas — pero MIMBAI hace mucho más. Genera proyectos, análisis financieros, documentos de RRHH, presentaciones y contenido con IA. Gratis para empezar.',
+    mimbaiCtaBtn1:'Prueba MIMBAI gratis — mimbai.com', mimbaiCtaBtn2:'Ver planes y precios',
+    mimbaiCtaNote:'Plan gratuito disponible · Sin tarjeta de crédito · Creado por',
+    footerTag:'— Plataforma de IA por Digital Solutions', footerPrivacy:'Privacidad', footerTerms:'Términos', footerContact:'Contacto'
+  }
 };
 
 function changeLanguage(lang) {
@@ -613,11 +820,17 @@ if (ss) observer.observe(ss);
 // Fade in
 const fadeObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-        if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; fadeObs.unobserve(e.target); }
+        if (e.isIntersecting) {
+            e.target.style.opacity='1';
+            e.target.style.transform='translateY(0)';
+            fadeObs.unobserve(e.target);
+        }
     });
 }, { threshold: 0.1 });
-document.querySelectorAll('.step, .tech-card, .signal-chip').forEach(el => {
-    el.style.opacity='0'; el.style.transform='translateY(16px)'; el.style.transition='opacity 0.5s ease,transform 0.5s ease';
+document.querySelectorAll('.step,.tech-card,.signal-chip,.module-card').forEach(el => {
+    el.style.opacity='0';
+    el.style.transform='translateY(16px)';
+    el.style.transition='opacity 0.5s ease,transform 0.5s ease';
     fadeObs.observe(el);
 });
 
