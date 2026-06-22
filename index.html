@@ -868,8 +868,8 @@
                 <!-- Starter -->
                 <div class="pricing-card">
                     <h3 data-i18n="planStarter">Starter</h3>
-                    <div class="price">NOK 1.890<span class="period">/year</span></div>
-                    <span class="vat-note"><i class="fas fa-info-circle"></i> incl. 25% MVA</span>
+                    <div class="price">€165<span class="period">/year</span></div>
+                    <span class="vat-note"><i class="fas fa-info-circle"></i> VAT calculated at checkout</span>
                     <p class="desc" data-i18n="planStarterDesc">For startups & small businesses</p>
                     <ul class="features">
                         <li><i class="fas fa-check"></i> <span data-i18n="feat1">AI-powered profile</span></li>
@@ -877,14 +877,14 @@
                         <li><i class="fas fa-check"></i> <span data-i18n="feat3">Access to community events</span></li>
                         <li><i class="fas fa-check"></i> <span data-i18n="feat4">Basic opportunity feed</span></li>
                     </ul>
-                    <a href="join.html?plan=starter" class="cta-button secondary" data-i18n="btnStarter">Get Started</a>
+                    <a href="https://buy.stripe.com/dRm6oI6ZcenZ67c9lL0Ny03" class="cta-button secondary" data-i18n="btnStarter">Get Started</a>
                 </div>
 
                 <!-- Business (Popular) -->
                 <div class="pricing-card popular">
                     <h3 data-i18n="planBusiness">Business</h3>
-                    <div class="price">NOK 4.900<span class="period">/year</span></div>
-                    <span class="vat-note"><i class="fas fa-info-circle"></i> incl. 25% MVA</span>
+                    <div class="price">€425<span class="period">/year</span></div>
+                    <span class="vat-note"><i class="fas fa-info-circle"></i> VAT calculated at checkout</span>
                     <p class="desc" data-i18n="planBusinessDesc">For active networkers & growing companies</p>
                     <ul class="features">
                         <li><i class="fas fa-check"></i> <span data-i18n="feat5">Everything in Starter</span></li>
@@ -893,14 +893,14 @@
                         <li><i class="fas fa-check"></i> <span data-i18n="feat8">AI Concierge introductions</span></li>
                         <li><i class="fas fa-check"></i> <span data-i18n="feat9">Featured in Opportunity Feed</span></li>
                     </ul>
-                    <a href="join.html?plan=business" class="cta-button ai" data-i18n="btnBusiness">Join Business</a>
+                    <a href="https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04" class="cta-button ai" data-i18n="btnBusiness">Join Business</a>
                 </div>
 
                 <!-- Partner -->
                 <div class="pricing-card">
                     <h3 data-i18n="planPartner">Partner</h3>
-                    <div class="price">NOK 15.000+<span class="period">/year</span></div>
-                    <span class="vat-note"><i class="fas fa-info-circle"></i> incl. 25% MVA</span>
+                    <div class="price">€1,300<span class="period">/year</span></div>
+                    <span class="vat-note"><i class="fas fa-info-circle"></i> VAT calculated at checkout</span>
                     <p class="desc" data-i18n="planPartnerDesc">For sponsors & ecosystem leaders</p>
                     <ul class="features">
                         <li><i class="fas fa-check"></i> <span data-i18n="feat10">Everything in Business</span></li>
@@ -909,12 +909,12 @@
                         <li><i class="fas fa-check"></i> <span data-i18n="feat13">Brand visibility & speaking slots</span></li>
                         <li><i class="fas fa-check"></i> <span data-i18n="feat14">Dedicated success manager</span></li>
                     </ul>
-                    <a href="join.html?plan=partner" class="cta-button secondary" data-i18n="btnPartner">Contact Sales</a>
+                    <a href="https://buy.stripe.com/5kQ5kEfvI5Rt3Z469z0Ny05" class="cta-button secondary" data-i18n="btnPartner">Subscribe</a>
                 </div>
             </div>
             <p style="text-align:center;color:var(--text-secondary);margin-top:2rem;font-size:0.9rem" data-i18n="pricingNote">
-                <strong>Founding Member Offer:</strong> First 50 members get lifetime pricing at 50% off (NOK 1.290/year incl. 25% MVA). 
-                <a href="join.html?founding=true" style="color:var(--accent-purple);text-decoration:none">Reserve your spot →</a>
+                <strong>Founding Member Offer:</strong> First 50 members get lifetime pricing at 50% off (€82.50/year before VAT). 
+                <a href="https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04" style="color:var(--accent-purple);text-decoration:none">Reserve your spot →</a>
             </p>
         </div>
     </section>
@@ -931,9 +931,9 @@
                 Join the first 50 companies to shape the future of cross-border business connections across Europe, Brazil, China and the Nordics. 
                 Get lifetime pricing, exclusive badge, and priority access to all features.
             </p>
-            <a href="join.html?founding=true" class="founding-cta">
+            <a href="https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04" class="founding-cta">
                 <i class="fas fa-star"></i>
-                <span data-i18n="btnFounding">Reserve Founding Spot (NOK 1.290/year)</span>
+                <span data-i18n="btnFounding">Reserve Founding Spot (50% off with code FOUNDING50)</span>
             </a>
         </div>
     </section>
@@ -1034,10 +1034,16 @@
         // Quando desejar migrar para checkout direto, use estas constantes
         const STRIPE_CONFIG = {
             prices: {
-                starter: 'price_1TaAbdLqoEcF1Aa81cDdhrBA',
-                business: 'price_1TaAirLqoEcF1Aa81EJQs2gb',
-                partner: 'price_1TaAl4LqoEcF1Aa824RpOjWi'
+                starter: 'price_1TkufJLqoEcF1Aa8J45JqS9J',
+                business: 'price_1TkujcLqoEcF1Aa840aOwDgI',
+                partner: 'price_1TkulVLqoEcF1Aa8eq10kgKt'
             },
+            paymentLinks: {
+                starter: 'https://buy.stripe.com/dRm6oI6ZcenZ67c9lL0Ny03',
+                business: 'https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04',
+                partner: 'https://buy.stripe.com/5kQ5kEfvI5Rt3Z469z0Ny05'
+            },
+            currency: 'EUR',
             webhook: {
                 endpoint: 'https://mrparduxlvvflasgefpt.supabase.co/functions/v1/stripe-webhook',
                 events: ['checkout.session.completed', 'invoice.payment_succeeded']
@@ -1093,10 +1099,10 @@
                 planPartner: "Partner", planPartnerDesc: "For sponsors & ecosystem leaders",
                 feat10: "Everything in Business", feat11: "Custom matching criteria", feat12: "Host exclusive events", feat13: "Brand visibility & speaking slots", feat14: "Dedicated success manager",
                 btnPartner: "Contact Sales",
-                pricingNote: "<strong>Founding Member Offer:</strong> First 50 members get lifetime pricing at 50% off (NOK 1.290/year incl. 25% MVA). <a href='join.html?founding=true' style='color:var(--accent-purple);text-decoration:none'>Reserve your spot →</a>",
+                pricingNote: "<strong>Founding Member Offer:</strong> First 50 members get lifetime pricing at 50% off (€82.50/year before VAT). <a href='https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04' style='color:var(--accent-purple);text-decoration:none'>Reserve your spot →</a>",
                 foundingBadge: "Founding Members Program", foundingTitle: "Be Part of the First Global AI Business Network from Oslo",
                 foundingDesc: "Join the first 50 companies to shape the future of cross-border business connections across Europe, Brazil, China and the Nordics. Get lifetime pricing, exclusive badge, and priority access to all features.",
-                btnFounding: "Reserve Founding Spot (NOK 1.290/year)",
+                btnFounding: "Reserve Founding Spot (50% off with code FOUNDING50)",
                 footerSlogan: "AI-powered global business connections across Europe, Brazil, China and Nordics — technology by MIMBAI.",
                 navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing", navDashboard: "Dashboard",
                 navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
@@ -1147,10 +1153,10 @@
                 planPartner: "Partner", planPartnerDesc: "For sponsorer og økosystemledere",
                 feat10: "Alt i Business", feat11: "Tilpassede matchingskriterier", feat12: "Arranger eksklusive arrangementer", feat13: "Merkevaresynlighet og taleplasser", feat14: "Dedikert suksessansvarlig",
                 btnPartner: "Kontakt salg",
-                pricingNote: "<strong>Tilbud for grunnleggere:</strong> Første 50 medlemmer får livstidsprising med 50% rabatt (NOK 1.290/år inkl. 25% MVA). <a href='join.html?founding=true' style='color:var(--accent-purple);text-decoration:none'>Reserver din plass →</a>",
+                pricingNote: "<strong>Tilbud for grunnleggere:</strong> Første 50 medlemmer får livstidsprising med 50% rabatt (€82,50/år før MVA). <a href='https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04' style='color:var(--accent-purple);text-decoration:none'>Reserver din plass →</a>",
                 foundingBadge: "Grunnleggerprogram", foundingTitle: "Vær med på det første globale AI-bedriftsnettverket fra Oslo",
                 foundingDesc: "Bli med de første 50 bedriftene for å forme fremtiden for grenseoverskridende bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden. Få livstidsprising, eksklusivt merke og prioritert tilgang til alle funksjoner.",
-                btnFounding: "Reserver grunnleggerplass (NOK 1.290/år)",
+                btnFounding: "Reserver grunnleggerplass (50% rabatt med kode FOUNDING50)",
                 footerSlogan: "AI-drevne globale bedriftskoblinger på tvers av Europa, Brasil, Kina og Norden — teknologi av MIMBAI.",
                 navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser", navDashboard: "Mitt panel",
                 navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
@@ -1201,10 +1207,10 @@
                 planPartner: "Partner", planPartnerDesc: "Para patrocinadores e líderes do ecossistema",
                 feat10: "Tudo do Business", feat11: "Critérios personalizados de matching", feat12: "Organizar eventos exclusivos", feat13: "Visibilidade da marca e palestras", feat14: "Gerente de sucesso dedicado",
                 btnPartner: "Falar com Vendas",
-                pricingNote: "<strong>Oferta Membros Fundadores:</strong> Primeiros 50 membros ganham preço vitalício com 50% de desconto (NOK 1.290/ano incl. 25% IVA). <a href='join.html?founding=true' style='color:var(--accent-purple);text-decoration:none'>Reserve sua vaga →</a>",
+                pricingNote: "<strong>Oferta Membros Fundadores:</strong> Primeiros 50 membros ganham preço vitalício com 50% de desconto (€82,50/ano antes do IVA). <a href='https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04' style='color:var(--accent-purple);text-decoration:none'>Reserve sua vaga →</a>",
                 foundingBadge: "Programa Membros Fundadores", foundingTitle: "Faça Parte da Primeira Rede Empresarial Global com IA de Oslo",
                 foundingDesc: "Junte-se às primeiras 50 empresas para moldar o futuro das conexões empresariais transfronteiriças através da Europa, Brasil, China e Nórdicos. Ganhe preço vitalício, badge exclusivo e acesso prioritário.",
-                btnFounding: "Reservar Vaga Fundador (NOK 1.290/ano)",
+                btnFounding: "Reservar Vaga Fundador (50% off com código FOUNDING50)",
                 footerSlogan: "Conexões empresariais globais com IA através da Europa, Brasil, China e Nórdicos — tecnologia MIMBAI.",
                 navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços", navDashboard: "Meu Painel",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
@@ -1255,10 +1261,10 @@
                 planPartner: "Partner", planPartnerDesc: "Para patrocinadores y líderes del ecosistema",
                 feat10: "Todo lo de Business", feat11: "Criterios personalizados de matching", feat12: "Organizar eventos exclusivos", feat13: "Visibilidad de marca y espacios para hablar", feat14: "Gerente de éxito dedicado",
                 btnPartner: "Hablar con Ventas",
-                pricingNote: "<strong>Oferta Miembros Fundadores:</strong> Primeros 50 miembros obtienen precio vitalicio con 50% de descuento (NOK 1.290/año incl. 25% IVA). <a href='join.html?founding=true' style='color:var(--accent-purple);text-decoration:none'>Reserva tu lugar →</a>",
+                pricingNote: "<strong>Oferta Miembros Fundadores:</strong> Primeros 50 miembros obtienen precio vitalicio con 50% de descuento (€82,50/año antes de IVA). <a href='https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04' style='color:var(--accent-purple);text-decoration:none'>Reserva tu lugar →</a>",
                 foundingBadge: "Programa Miembros Fundadores", foundingTitle: "Sé Parte de la Primera Red Empresarial Global con IA de Oslo",
                 foundingDesc: "Únete a las primeras 50 empresas para moldear el futuro de las conexiones empresariales transfronterizas a través de Europa, Brasil, China y Nórdicos. Obtén precio vitalicio, badge exclusivo y acceso prioritario.",
-                btnFounding: "Reservar Plaza Fundador (NOK 1.290/año)",
+                btnFounding: "Reservar Plaza Fundador (50% off con código FOUNDING50)",
                 footerSlogan: "Conexiones empresariales globales con IA a través de Europa, Brasil, China y Nórdicos — tecnología MIMBAI.",
                 navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios", navDashboard: "Mi Panel",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
