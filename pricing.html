@@ -59,7 +59,7 @@
       "name": "Starter Plan",
       "price": "165",
       "priceCurrency": "EUR",
-      "priceValidUntil": "2027-06-22",
+      "priceValidUntil": "2027-05-28",
       "availability": "https://schema.org/InStock",
       "url": "https://oslomeet.org/join.html?plan=starter"
     },
@@ -68,7 +68,7 @@
       "name": "Business Plan",
       "price": "425",
       "priceCurrency": "EUR",
-      "priceValidUntil": "2027-06-22",
+      "priceValidUntil": "2027-05-28",
       "availability": "https://schema.org/InStock",
       "url": "https://oslomeet.org/join.html?plan=business",
       "priceSpecification": {
@@ -76,17 +76,8 @@
         "price": "425",
         "priceCurrency": "EUR",
         "billingDuration": "P1Y",
-        "eligibleRegion": "EU"
+        "eligibleRegion": "NO"
       }
-    },
-    {
-      "@type": "Offer",
-      "name": "Partner Plan",
-      "price": "1300",
-      "priceCurrency": "EUR",
-      "priceValidUntil": "2027-06-22",
-      "availability": "https://schema.org/InStock",
-      "url": "https://oslomeet.org/join.html?plan=partner"
     }
   ]
 }
@@ -341,7 +332,7 @@
             <div class="pricing-card">
                 <h3 data-i18n="planStarter">Starter</h3>
                 <div class="price">€165<span class="period">/year</span></div>
-                <span class="vat-note" data-i18n="vatNote"><i class="fas fa-info-circle"></i> VAT calculated automatically at checkout based on your country.</span>
+                <span class="vat-note" data-i18n="vatNote"><i class="fas fa-info-circle"></i> incl. 25% MVA. VAT-exempt for businesses with org. no.</span>
                 <p class="desc" data-i18n="planStarterDesc">For startups & small businesses</p>
                 <ul class="features">
                     <li><i class="fas fa-check"></i> <span data-i18n="feat1">AI-powered business profile</span></li>
@@ -350,14 +341,15 @@
                     <li><i class="fas fa-check"></i> <span data-i18n="feat4">Basic opportunity feed</span></li>
                     <li><i class="fas fa-check"></i> <span data-i18n="feat5">Email support</span></li>
                 </ul>
-                <a href="https://buy.stripe.com/dRm6oI6ZcenZ67c9lL0Ny03" class="cta-button secondary" data-i18n="btnStarter">Get Started</a>
+                <!-- ✅ LINK PARA JOIN.HTML (mantido conforme solicitado) -->
+                <a href="join.html?plan=starter" class="cta-button secondary" data-i18n="btnStarter">Get Started</a>
             </div>
 
             <!-- Business (Popular) -->
             <div class="pricing-card popular">
                 <h3 data-i18n="planBusiness">Business</h3>
                 <div class="price">€425<span class="period">/year</span></div>
-                <span class="vat-note" data-i18n="vatNote"><i class="fas fa-info-circle"></i> VAT calculated automatically at checkout based on your country.</span>
+                <span class="vat-note" data-i18n="vatNote"><i class="fas fa-info-circle"></i> incl. 25% MVA. VAT-exempt for businesses with org. no.</span>
                 <p class="desc" data-i18n="planBusinessDesc">For active networkers & growing companies</p>
                 <ul class="features">
                     <li><i class="fas fa-check"></i> <span data-i18n="feat6">Everything in Starter</span></li>
@@ -367,14 +359,15 @@
                     <li><i class="fas fa-check"></i> <span data-i18n="feat10">Featured in Opportunity Feed</span></li>
                     <li><i class="fas fa-check"></i> <span data-i18n="feat11">Priority email support</span></li>
                 </ul>
-                <a href="https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04" class="cta-button ai" data-i18n="btnBusiness">Join Business</a>
+                <!-- ✅ LINK PARA JOIN.HTML (mantido conforme solicitado) -->
+                <a href="join.html?plan=business" class="cta-button ai" data-i18n="btnBusiness">Join Business</a>
             </div>
 
             <!-- Partner -->
             <div class="pricing-card">
                 <h3 data-i18n="planPartner">Partner</h3>
                 <div class="price">€1,300<span class="period">/year</span></div>
-                <span class="vat-note" data-i18n="vatNote"><i class="fas fa-info-circle"></i> VAT calculated automatically at checkout based on your country.</span>
+                <span class="vat-note" data-i18n="vatNote"><i class="fas fa-info-circle"></i> incl. 25% MVA. VAT-exempt for businesses with org. no.</span>
                 <p class="desc" data-i18n="planPartnerDesc">For sponsors & ecosystem leaders</p>
                 <ul class="features">
                     <li><i class="fas fa-check"></i> <span data-i18n="feat12">Everything in Business</span></li>
@@ -384,7 +377,8 @@
                     <li><i class="fas fa-check"></i> <span data-i18n="feat16">Dedicated success manager</span></li>
                     <li><i class="fas fa-check"></i> <span data-i18n="feat17">API access & analytics</span></li>
                 </ul>
-                <a href="https://buy.stripe.com/5kQ5kEfvI5Rt3Z469z0Ny05" class="cta-button secondary" data-i18n="btnPartner">Subscribe</a>
+                <!-- ✅ LINK PARA JOIN.HTML (mantido conforme solicitado) -->
+                <a href="join.html?plan=partner" class="cta-button secondary" data-i18n="btnPartner">Subscribe</a>
             </div>
         </div>
 
@@ -397,7 +391,7 @@
                 <li>Get 50% off lifetime pricing + exclusive badge</li>
             </ol>
             <p style="font-size:0.8rem;color:var(--text-secondary);margin:0.5rem 0 0" data-i18n="couponNote">
-                <i class="fas fa-info-circle"></i> Limited to first 50 companies. VAT calculated automatically at checkout.
+                <i class="fas fa-info-circle"></i> Limited to first 50 companies. VAT-exempt for registered businesses with org. no.
             </p>
         </div>
     </section>
@@ -410,7 +404,8 @@
             Join Oslo's first AI business network as a Founding Member and lock in lifetime pricing, 
             get an exclusive badge, and receive priority access to all new features.
         </p>
-        <a href="https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04" class="founding-cta">
+        <!-- ✅ LINK PARA JOIN.HTML COM PARÂMETRO FOUNDING -->
+        <a href="join.html?plan=business&founding=true" class="founding-cta">
             <i class="fas fa-star"></i>
             <span data-i18n="btnFounding">Reserve Founding Spot (50% off with code FOUNDING50)</span>
         </a>
@@ -424,7 +419,7 @@
                 <li data-i18n="step3">Your 50% discount applies automatically — lifetime pricing locked!</li>
             </ol>
             <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.8rem" data-i18n="foundingNote">
-                <i class="fas fa-info-circle"></i> VAT calculated automatically at checkout based on your country.
+                <i class="fas fa-info-circle"></i> Founding price includes 25% MVA. VAT-exempt for registered businesses with org. no.
             </p>
         </div>
     </section>
@@ -436,8 +431,8 @@
         </div>
         <div class="faq-list">
             <div class="faq-item">
-                <button class="faq-question"><span data-i18n="q1">Is VAT included in the price?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-answer" data-i18n="a1">Prices are shown in EUR before VAT. Stripe Tax automatically calculates and applies the correct VAT rate based on your country and business registration at checkout. EU businesses with a valid VAT ID may be reverse-charged (0% VAT).</div>
+                <button class="faq-question"><span data-i18n="q1">Is VAT (MVA) included in the price?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a1">Yes, all displayed prices include 25% Norwegian VAT (MVA). However, VAT-registered businesses with a valid org. number are exempt and will only be charged the base price at checkout via Stripe Tax.</div>
             </div>
             <div class="faq-item">
                 <button class="faq-question"><span data-i18n="q2">How do I use the Founding Member discount?</span><i class="fas fa-chevron-down"></i></button>
@@ -448,8 +443,8 @@
                 <div class="faq-answer" data-i18n="a3">Yes. All memberships are annual, but you can cancel anytime. Cancellation stops auto-renewal; no refunds for elapsed periods. Founding Members have lifetime pricing locked in.</div>
             </div>
             <div class="faq-item">
-                <button class="faq-question"><span data-i18n="q4">What if I'm not in the EU?</span><i class="fas fa-chevron-down"></i></button>
-                <div class="faq-answer" data-i18n="a4">Oslo Meet is open to companies worldwide. All prices are listed in EUR. Stripe automatically applies the correct tax rules based on your location and VAT ID, whether you're inside or outside the EU.</div>
+                <button class="faq-question"><span data-i18n="q4">What if I'm not in Norway?</span><i class="fas fa-chevron-down"></i></button>
+                <div class="faq-answer" data-i18n="a4">Oslo Meet is open to companies worldwide. International businesses are not charged Norwegian VAT. Stripe automatically applies the correct tax rules based on your location and VAT ID.</div>
             </div>
         </div>
     </section>
@@ -497,19 +492,14 @@
     </footer>
 
     <script>
-        // 🟢 CONFIGURAÇÃO STRIPE - Price IDs (EUR) para referência futura
+        // 🟢 CONFIGURAÇÃO STRIPE - Price IDs para referência futura
+        // Quando desejar migrar para checkout direto, use estas constantes
         const STRIPE_CONFIG = {
             prices: {
-                starter: 'price_1TkufJLqoEcF1Aa8J45JqS9J',
-                business: 'price_1TkujcLqoEcF1Aa840aOwDgI',
-                partner: 'price_1TkulVLqoEcF1Aa8eq10kgKt'
+                starter: 'price_1TaAbdLqoEcF1Aa81cDdhrBA',
+                business: 'price_1TaAirLqoEcF1Aa81EJQs2gb',
+                partner: 'price_1TaAl4LqoEcF1Aa824RpOjWi'
             },
-            paymentLinks: {
-                starter: 'https://buy.stripe.com/dRm6oI6ZcenZ67c9lL0Ny03',
-                business: 'https://buy.stripe.com/aFa5kEcjw2FhgLQ2Xn0Ny04',
-                partner: 'https://buy.stripe.com/5kQ5kEfvI5Rt3Z469z0Ny05'
-            },
-            currency: 'EUR',
             webhook: {
                 endpoint: 'https://mrparduxlvvflasgefpt.supabase.co/functions/v1/stripe-webhook',
                 events: ['checkout.session.completed', 'invoice.payment_succeeded']
@@ -526,7 +516,7 @@
                 pageSubtitle: "Invest in intelligent connections. All plans include MIMBAI-powered matching. Cancel anytime.",
                 foundingBanner: "Founding Members:", foundingBannerDesc: "First 50 companies get lifetime pricing + exclusive badge.", foundingSpots: "Limited spots",
                 planStarter: "Starter", planStarterDesc: "For startups & small businesses",
-                vatNote: "VAT calculated automatically at checkout based on your country.",
+                vatNote: "incl. 25% MVA. VAT-exempt for businesses with org. no.",
                 feat1: "AI-powered business profile", feat2: "5 smart matches per month", feat3: "Access to community events",
                 feat4: "Basic opportunity feed", feat5: "Email support",
                 btnStarter: "Get Started",
@@ -540,7 +530,7 @@
                 btnPartner: "Subscribe",
                 couponTitle: "Founding Member Discount",
                 couponSteps: "<li>Click any plan above to start checkout</li><li>Enter code <code>FOUNDING50</code> at checkout</li><li>Get 50% off lifetime pricing + exclusive badge</li>",
-                couponNote: "<i class='fas fa-info-circle'></i> Limited to first 50 companies. VAT calculated automatically at checkout.",
+                couponNote: "<i class='fas fa-info-circle'></i> Limited to first 50 companies. VAT-exempt for registered businesses with org. no.",
                 foundingBadge: "Founding Members Program", foundingTitle: "Be Among the First 50",
                 foundingDesc: "Join Oslo's first AI business network as a Founding Member and lock in lifetime pricing, get an exclusive badge, and receive priority access to all new features.",
                 btnFounding: "Reserve Founding Spot (50% off with code FOUNDING50)",
@@ -548,12 +538,12 @@
                 step1: "Click the button above to start checkout",
                 step2: "Enter coupon code <code>FOUNDING50</code> when prompted",
                 step3: "Your 50% discount applies automatically — lifetime pricing locked!",
-                foundingNote: "<i class='fas fa-info-circle'></i> VAT calculated automatically at checkout based on your country.",
+                foundingNote: "<i class='fas fa-info-circle'></i> Founding price includes 25% MVA. VAT-exempt for registered businesses with org. no.",
                 faqTitle: "Frequently Asked Questions",
-                q1: "Is VAT included in the price?", a1: "Prices are shown in EUR before VAT. Stripe Tax automatically calculates and applies the correct VAT rate based on your country and business registration at checkout. EU businesses with a valid VAT ID may be reverse-charged (0% VAT).",
+                q1: "Is VAT (MVA) included in the price?", a1: "Yes, all displayed prices include 25% Norwegian VAT (MVA). However, VAT-registered businesses with a valid org. number are exempt and will only be charged the base price at checkout via Stripe Tax.",
                 q2: "How do I use the Founding Member discount?", a2: "During Stripe checkout, enter the coupon code <strong>FOUNDING50</strong>. This applies 50% off the base price, locked for life. Limited to the first 50 companies.",
                 q3: "Can I cancel anytime?", a3: "Yes. All memberships are annual, but you can cancel anytime. Cancellation stops auto-renewal; no refunds for elapsed periods. Founding Members have lifetime pricing locked in.",
-                q4: "What if I'm not in the EU?", a4: "Oslo Meet is open to companies worldwide. All prices are listed in EUR. Stripe automatically applies the correct tax rules based on your location and VAT ID, whether you're inside or outside the EU.",
+                q4: "What if I'm not in Norway?", a4: "Oslo Meet is open to companies worldwide. International businesses are not charged Norwegian VAT. Stripe automatically applies the correct tax rules based on your location and VAT ID.",
                 footerSlogan: "AI-powered business connections for Oslo's innovators, founders, and growth companies — by MIMBAI.",
                 navHome: "Home", navPlatform: "Platform", navHow: "How Matching Works", navJoin: "Join Now", navPricing: "Pricing",
                 navCompany: "Company", navAbout: "About", navBlog: "Insights", navContact: "Contact",
@@ -564,7 +554,7 @@
                 pageSubtitle: "Invester i intelligente koblinger. Alle planer inkluderer MIMBAI-drevet matching. Avbryt når som helst.",
                 foundingBanner: "Grunnleggere:", foundingBannerDesc: "Første 50 bedrifter får livstidsprising + eksklusivt merke.", foundingSpots: "Begrensede plasser",
                 planStarter: "Starter", planStarterDesc: "For startups og små bedrifter",
-                vatNote: "MVA beregnes automatisk ved checkout basert på ditt land.",
+                vatNote: "inkl. 25% MVA. MVA-fritak for bedrifter med org.nr.",
                 feat1: "AI-drevet bedriftsprofil", feat2: "5 smarte matcher per måned", feat3: "Tilgang til fellesskapsarrangementer",
                 feat4: "Grunnleggende mulighetsfeed", feat5: "E-poststøtte",
                 btnStarter: "Kom i gang",
@@ -578,7 +568,7 @@
                 btnPartner: "Abonner",
                 couponTitle: "Grunnleggerrabatt",
                 couponSteps: "<li>Klikk på en plan over for å starte checkout</li><li>Skriv inn kode <code>FOUNDING50</code> ved checkout</li><li>Få 50% rabatt på livstidsprising + eksklusivt merke</li>",
-                couponNote: "<i class='fas fa-info-circle'></i> Begrenset til første 50 bedrifter. MVA beregnes automatisk ved checkout.",
+                couponNote: "<i class='fas fa-info-circle'></i> Begrenset til første 50 bedrifter. MVA-fritak for registrerte bedrifter med org.nr.",
                 foundingBadge: "Grunnleggerprogram", foundingTitle: "Vær blant de første 50",
                 foundingDesc: "Bli med i Oslos første AI-bedriftsnettverk som grunnlegger og lås livstidsprising, få et eksklusivt merke, og motta prioritert tilgang til alle nye funksjoner.",
                 btnFounding: "Reserver grunnleggerplass (50% rabatt med kode FOUNDING50)",
@@ -586,12 +576,12 @@
                 step1: "Klikk knappen over for å starte checkout",
                 step2: "Skriv inn kupongkode <code>FOUNDING50</code> når du blir bedt om det",
                 step3: "Din 50% rabatt gjelder automatisk — livstidsprising låst!",
-                foundingNote: "<i class='fas fa-info-circle'></i> MVA beregnes automatisk ved checkout basert på ditt land.",
+                foundingNote: "<i class='fas fa-info-circle'></i> Grunnleggerpris inkluderer 25% MVA. MVA-fritak for registrerte bedrifter med org.nr.",
                 faqTitle: "Ofte stilte spørsmål",
-                q1: "Er MVA inkludert i prisen?", a1: "Priser vises i EUR før MVA. Stripe Tax beregner og anvender automatisk korrekt MVA-sats basert på ditt land og bedriftsregistrering ved checkout. EU-bedrifter med gyldig MVA-ID kan bli omvendt avgiftspliktige (0% MVA).",
+                q1: "Er MVA inkludert i prisen?", a1: "Ja, alle viste priser inkluderer 25% norsk MVA. Imidlertid er MVA-registrerte bedrifter med gyldig org.nr. fritatt og vil kun bli belastet grunnprisen ved checkout via Stripe Tax.",
                 q2: "Hvordan bruker jeg grunnleggerrabatten?", a2: "Under Stripe checkout, skriv inn kupongkoden <strong>FOUNDING50</strong>. Dette gir 50% rabatt på grunnprisen, låst for livet. Begrenset til de første 50 bedriftene.",
                 q3: "Kan jeg avbryte når som helst?", a3: "Ja. Alle medlemskap er årlige, men du kan avbryte når som helst. Oppsigelse stopper automatisk fornyelse; ingen refusjon for allerede forløpte perioder. Grunnleggere har livstidsprising låst.",
-                q4: "Hva hvis jeg ikke er i EU?", a4: "Oslo Meet er åpent for bedrifter verden over. Alle priser vises i EUR. Stripe bruker automatisk korrekte skatteregler basert på din lokasjon og MVA-ID, uansett om du er innenfor eller utenfor EU.",
+                q4: "Hva hvis jeg ikke er i Norge?", a4: "Oslo Meet er åpent for bedrifter verden over. Internasjonale bedrifter belastes ikke norsk MVA. Stripe bruker automatisk korrekte skatteregler basert på din lokasjon og MVA-ID.",
                 footerSlogan: "AI-drevne bedriftskoblinger for Oslos innovatører, gründere og vekstbedrifter — av MIMBAI.",
                 navHome: "Hjem", navPlatform: "Plattform", navHow: "Hvordan matching virker", navJoin: "Bli med nå", navPricing: "Priser",
                 navCompany: "Selskap", navAbout: "Om", navBlog: "Innsikt", navContact: "Kontakt",
@@ -602,7 +592,7 @@
                 pageSubtitle: "Invista em conexões inteligentes. Todos os planos incluem matching com MIMBAI. Cancele quando quiser.",
                 foundingBanner: "Membros Fundadores:", foundingBannerDesc: "Primeiras 50 empresas ganham preço vitalício + badge exclusivo.", foundingSpots: "Vagas limitadas",
                 planStarter: "Starter", planStarterDesc: "Para startups e pequenas empresas",
-                vatNote: "IVA calculado automaticamente no checkout com base no seu país.",
+                vatNote: "incl. 25% IVA. Isento para empresas com registo fiscal.",
                 feat1: "Perfil empresarial com IA", feat2: "5 matches inteligentes por mês", feat3: "Acesso a eventos da comunidade",
                 feat4: "Feed básico de oportunidades", feat5: "Suporte por email",
                 btnStarter: "Começar",
@@ -616,7 +606,7 @@
                 btnPartner: "Assinar",
                 couponTitle: "Desconto Membro Fundador",
                 couponSteps: "<li>Clique em qualquer plano acima para iniciar o checkout</li><li>Insira o código <code>FOUNDING50</code> no checkout</li><li>Receba 50% de desconto no preço vitalício + badge exclusivo</li>",
-                couponNote: "<i class='fas fa-info-circle'></i> Limitado às primeiras 50 empresas. IVA calculado automaticamente no checkout.",
+                couponNote: "<i class='fas fa-info-circle'></i> Limitado às primeiras 50 empresas. Isento de IVA para empresas registradas com número fiscal.",
                 foundingBadge: "Programa Membros Fundadores", foundingTitle: "Seja Entre os Primeiros 50",
                 foundingDesc: "Entre na primeira rede empresarial com IA de Oslo como Membro Fundador e garanta preço vitalício, receba um badge exclusivo e tenha acesso prioritário a todos os novos recursos.",
                 btnFounding: "Reservar Vaga Fundador (50% off com código FOUNDING50)",
@@ -624,12 +614,12 @@
                 step1: "Clique no botão acima para iniciar o checkout",
                 step2: "Insira o código de cupom <code>FOUNDING50</code> quando solicitado",
                 step3: "Seu desconto de 50% é aplicado automaticamente — preço vitalício garantido!",
-                foundingNote: "<i class='fas fa-info-circle'></i> IVA calculado automaticamente no checkout com base no seu país.",
+                foundingNote: "<i class='fas fa-info-circle'></i> Preço fundador inclui 25% IVA. Isento para empresas registradas com número fiscal.",
                 faqTitle: "Perguntas Frequentes",
-                q1: "O IVA está incluído no preço?", a1: "Os preços são mostrados em EUR antes do IVA. O Stripe Tax calcula e aplica automaticamente a taxa de IVA correta com base no seu país e registo fiscal no checkout. Empresas da UE com número de IVA válido podem estar sujeitas a reverse charge (0% IVA).",
+                q1: "O IVA está incluído no preço?", a1: "Sim, todos os preços exibidos incluem 25% de IVA norueguês. No entanto, empresas registradas com número fiscal válido estão isentas e serão cobradas apenas pelo preço base no checkout via Stripe Tax.",
                 q2: "Como uso o desconto de Membro Fundador?", a2: "Durante o checkout do Stripe, insira o código de cupom <strong>FOUNDING50</strong>. Isso aplica 50% de desconto no preço base, garantido vitaliciamente. Limitado às primeiras 50 empresas.",
                 q3: "Posso cancelar quando quiser?", a3: "Sim. Todos os memberships são anuais, mas você pode cancelar a qualquer momento. O cancelamento interrompe a renovação automática; sem reembolso para períodos já decorridos. Membros Fundadores têm preço vitalício garantido.",
-                q4: "E se eu não estiver na UE?", a4: "O Oslo Meet está aberto a empresas do mundo todo. Todos os preços são exibidos em EUR. O Stripe aplica automaticamente as regras fiscais corretas com base na sua localização e ID fiscal, dentro ou fora da UE.",
+                q4: "E se eu não estiver na Noruega?", a4: "O Oslo Meet está aberto a empresas do mundo todo. Empresas internacionais não são cobradas com IVA norueguês. O Stripe aplica automaticamente as regras fiscais corretas com base na sua localização e ID fiscal.",
                 footerSlogan: "Conexões empresariais com IA para inovadores, fundadores e empresas em crescimento de Oslo — by MIMBAI.",
                 navHome: "Início", navPlatform: "Plataforma", navHow: "Como Funciona", navJoin: "Entrar Agora", navPricing: "Preços",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contato",
@@ -640,7 +630,7 @@
                 pageSubtitle: "Invierte en conexiones inteligentes. Todos los planes incluyen matching con MIMBAI. Cancela cuando quieras.",
                 foundingBanner: "Miembros Fundadores:", foundingBannerDesc: "Primeras 50 empresas obtienen precio vitalicio + badge exclusivo.", foundingSpots: "Plazas limitadas",
                 planStarter: "Starter", planStarterDesc: "Para startups y pequeñas empresas",
-                vatNote: "IVA calculado automáticamente en el checkout según tu país.",
+                vatNote: "incl. 25% IVA. Exento para empresas con registro fiscal.",
                 feat1: "Perfil empresarial con IA", feat2: "5 matches inteligentes por mes", feat3: "Acceso a eventos de la comunidad",
                 feat4: "Feed básico de oportunidades", feat5: "Soporte por email",
                 btnStarter: "Comenzar",
@@ -654,7 +644,7 @@
                 btnPartner: "Suscribirse",
                 couponTitle: "Descuento Miembro Fundador",
                 couponSteps: "<li>Haz clic en cualquier plan arriba para iniciar el checkout</li><li>Ingresa el código <code>FOUNDING50</code> en el checkout</li><li>Obtén 50% de descuento en precio vitalicio + badge exclusivo</li>",
-                couponNote: "<i class='fas fa-info-circle'></i> Limitado a las primeras 50 empresas. IVA calculado automáticamente en el checkout.",
+                couponNote: "<i class='fas fa-info-circle'></i> Limitado a las primeras 50 empresas. Exento de IVA para empresas registradas con número fiscal.",
                 foundingBadge: "Programa Miembros Fundadores", foundingTitle: "Sé Entre los Primeros 50",
                 foundingDesc: "Únete a la primera red empresarial con IA de Oslo como Miembro Fundador y asegura precio vitalicio, recibe un badge exclusivo y obtén acceso prioritario a todos los nuevos recursos.",
                 btnFounding: "Reservar Plaza Fundador (50% off con código FOUNDING50)",
@@ -662,12 +652,12 @@
                 step1: "Haz clic en el botón arriba para iniciar el checkout",
                 step2: "Ingresa el código de cupón <code>FOUNDING50</code> cuando se solicite",
                 step3: "¡Tu descuento del 50% se aplica automáticamente — precio vitalicio asegurado!",
-                foundingNote: "<i class='fas fa-info-circle'></i> IVA calculado automáticamente en el checkout según tu país.",
+                foundingNote: "<i class='fas fa-info-circle'></i> Precio fundador incluye 25% IVA. Exento para empresas registradas con número fiscal.",
                 faqTitle: "Preguntas Frecuentes",
-                q1: "¿El IVA está incluido en el precio?", a1: "Los precios se muestran en EUR antes de IVA. Stripe Tax calcula y aplica automáticamente la tasa de IVA correcta según tu país y registro fiscal en el checkout. Las empresas de la UE con un ID de IVA válido pueden estar sujetas a inversión del sujeto pasivo (0% IVA).",
+                q1: "¿El IVA está incluido en el precio?", a1: "Sí, todos los precios mostrados incluyen 25% de IVA noruego. Sin embargo, las empresas registradas con número fiscal válido están exentas y solo se les cobrará el precio base en el checkout vía Stripe Tax.",
                 q2: "¿Cómo uso el descuento de Miembro Fundador?", a2: "Durante el checkout de Stripe, ingresa el código de cupón <strong>FOUNDING50</strong>. Esto aplica 50% de descuento en el precio base, garantizado de por vida. Limitado a las primeras 50 empresas.",
                 q3: "¿Puedo cancelar cuando quiera?", a3: "Sí. Todos los memberships son anuales, pero puedes cancelar en cualquier momento. La cancelación detiene la renovación automática; sin reembolso para períodos ya transcurridos. Los Miembros Fundadores tienen precio vitalicio garantizado.",
-                q4: "¿Y si no estoy en la UE?", a4: "Oslo Meet está abierto a empresas de todo el mundo. Todos los precios se muestran en EUR. Stripe aplica automáticamente las reglas fiscales correctas según tu ubicación e ID fiscal, dentro o fuera de la UE.",
+                q4: "¿Y si no estoy en Noruega?", a4: "Oslo Meet está abierto a empresas de todo el mundo. Las empresas internacionales no son cobradas con IVA noruego. Stripe aplica automáticamente las reglas fiscales correctas según tu ubicación e ID fiscal.",
                 footerSlogan: "Conexiones empresariales con IA para innovadores, fundadores y empresas en crecimiento de Oslo — by MIMBAI.",
                 navHome: "Inicio", navPlatform: "Plataforma", navHow: "Cómo Funciona el Matching", navJoin: "Unirse Ahora", navPricing: "Precios",
                 navCompany: "Empresa", navAbout: "Sobre", navBlog: "Insights", navContact: "Contacto",
